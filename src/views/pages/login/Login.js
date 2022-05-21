@@ -1,168 +1,120 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCardFooter,
-  CCardGroup,
-  CCardHeader,
-  CCol,
-  CContainer,
-  CForm,
-  CInput,
-  CInputGroup,
-  CInputGroupPrepend,
-  CInputGroupText,
-  CRow
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react';
-import {request} from '../../../util/axios';
-import {useUserDispatch, loginUser} from '../../../context/UserContext';
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-
-const Login = props => {
-  // global
-  var userDispatch = useUserDispatch();
-
-  // local
-  var [isLoading, setIsLoading] = useState(false);
-  var [error, setError] = useState(null);
-  var [activeTabId, setActiveTabId] = useState(0);
-  var [userId, setUserId] = useState("");
-  var [password, setPassword] = useState("");
-
-  //로그인 이벤트
-  const userLogin = e => {
-    e.preventDefault();
-
-    if(userId === ""){
-      alert("USER ID를 입력하세요.");
-      return false;
-    }
-    if(password === ""){
-      alert("비밀번호를 입력하세요.");
-      return false;
-    }
-
-    request("post", "/authenticate", {
-        username : userId,
-        password
-      }
-    ).then(res => {
-      if(res !== undefined){
-        sessionStorage.setItem("token", res.token);
-        sessionStorage.setItem("USER_ID", userId);
-
-        //사용자 정보 조회
-        request("post", "/api/user_dtl", {
-          userId : userId,
-          }
-        ).then(res => {
-          if(res !== undefined){
-            sessionStorage.setItem("GRP_ID", res.GRP_ID);
-          }
-        })
-
-        props.history.push("/dashboard");
-      }
-
-      
-    })
-  }
-
-  const appKeyPress = e => {
-    if(e.key === 'Enter'){
-      loginUser(
-        userDispatch,
-        userId,
-        password,
-        props.history,
-        setIsLoading,
-        setError,
-      )
-   }
-  }
-
+function Copyright(props) {
   return (
-    <div className="c-app c-default-layout flex-row align-items-center">
-      <CContainer>
-        <CRow className="justify-content-center">
-          <CCol md="6">
-            <CCardGroup>
-              <CCard className="p-4">
-                <CCardBody>
-                  <CForm>
-                    <div style={{width:"100%", textAlign:"center"}}>
-                      <img src="/images/engineerStory2.png"/>
-                    </div>
-                    <div style={{width:"100%", textAlign:"end"}}>
-                    <h5>WEB TMS</h5>
-                    <p className="text-muted">Sign In to your account</p>
-                    </div>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupPrepend>
-                        <CInputGroupText>
-                          <CIcon name="cil-user" />
-                        </CInputGroupText>
-                      </CInputGroupPrepend>
-                      
-                      <CInput 
-                        type="text" 
-                        placeholder="USER ID" 
-                        autoComplete="userId" 
-                        name="userId"
-                        value={userId}
-                        onChange={e => setUserId(e.target.value)}
-                        />
-                    </CInputGroup>
-                    <CInputGroup className="mb-4">
-                      <CInputGroupPrepend>
-                        <CInputGroupText>
-                          <CIcon name="cil-lock-locked" />
-                        </CInputGroupText>
-                      </CInputGroupPrepend>
-                      <CInput
-                        type="password" 
-                        placeholder="Password" 
-                        autoComplete="current-password" 
-                        name="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        onKeyPress={(appKeyPress)}
-                      />
-                    </CInputGroup>
-                    <CRow>
-                      <CCol xs="12" className="text-center">
-                        <CButton 
-                          color="primary" 
-                          className="px-4" 
-                          onClick={() => loginUser(
-                            userDispatch,
-                            userId,
-                            password,
-                            props.history,
-                            setIsLoading,
-                            setError,
-                          )}
-                          block
-                        >Login</CButton>
-                      </CCol>
-                    </CRow>
-                  </CForm>
-                </CCardBody>
-              </CCard>
-            </CCardGroup>
-          </CCol>
-        </CRow>
-        <CRow className="justify-content-center">
-          <CCol md="6" className="text-right">
-            <h7>Copyright 2020. EngineerStory All Rights Reserved</h7>
-          </CCol>
-        </CRow>
-      </CContainer>
-    </div>
-  )
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
 }
 
-export default Login
+const theme = createTheme();
+
+export default function SignIn() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="#" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: 8, mb: 4 }} />
+      </Container>
+    </ThemeProvider>
+  );
+}
