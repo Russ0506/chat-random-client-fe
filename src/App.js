@@ -1,18 +1,8 @@
 import React, { Component } from "react";
-import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
-import Login from "./login";
-// import "./scss/style.scss";
-// import Interceptors from "./Interceptors";
-
-// context
-import { useUserState } from "./context/UserContext";
-import Loading from './views/common/Loading'
-
 function App() {
   return (
     <div>
       <Home />
-      {/* <Loading /> */}
     </div>
   );
 }
