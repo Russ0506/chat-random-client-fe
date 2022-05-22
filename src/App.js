@@ -1,19 +1,18 @@
 import { CssBaseline } from "@mui/material";
 import React from "react";
 import "./styles/App.css";
-import ForgotPassword from "./views/pages/forgotPassword/ForgotPassword";
-import ChangePassword from "./views/pages/changePassword/ChangePassword";
+import ForgotPassword from "./views/pages/authenticator/ForgotPassword";
+import ChangePassword from "./views/pages/authenticator/ChangePassword";
 import { theme } from "./views/theme/fonts/Font";
 import { ThemeProvider } from "@mui/material/styles";
+import Login from "./views/pages/authenticator/Login";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <ChangePassword />
-      {/* <Home /> */}
-      <ForgotPassword />
-    </ThemeProvider>
+    <Login />
+    // <ThemeProvider theme={theme}>
+    
+    // </ThemeProvider>
   );
 }
 

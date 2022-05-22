@@ -1,20 +1,12 @@
-import { createStore } from "redux";
-
-const initialState = {
-  sidebarShow: "responsive",
-};
-
-const changeState = (state = initialState, { type, ...rest }) => {
-  switch (type) {
-    case "set":
-      return { ...state, ...rest };
-    default:
-      return state;
-  }
-};
-
-const store = createStore(
-  changeState,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+import { configureStore } from '@reduxjs/toolkit'
+import authReducer from "../features/auth";
+import messageReducer from "../features/message";
+const reducer = {
+  auth: authReducer,
+  message: messageReducer
+}
+const store = configureStore({
+  reducer: reducer,
+  devTools: true,
+})
 export default store;

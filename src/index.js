@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import store from "./store/store"
 
-// ✅ now importing from react-dom/client
 import {createRoot} from 'react-dom/client';
 import { icons } from "./assets/icons";
+import { Provider } from "react-redux";
 // import rootReducer from "./reducers";
 
 React.icons = icons;
@@ -14,8 +15,8 @@ const root = createRoot(document.getElementById("root"));
 
 root.render(
   // <UserProvider>
-  //   <Provider store={store}>
+    <Provider store={store}>
       <App />
-  //   </Provider>
+     </Provider>
   // </UserProvider>
 );
