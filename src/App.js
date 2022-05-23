@@ -6,10 +6,13 @@ import ChangePassword from "./views/pages/authenticator/ChangePassword";
 import { theme } from "./views/theme/fonts/Font";
 import { ThemeProvider } from "@mui/material/styles";
 import Login from "./views/pages/authenticator/Login";
+import ChangePwdEmailConfirm from "./views/pages/authenticator/ChangePwdEmailConfirm";
 
 function App() {
   return (
-    <Login />
+    // <Login />
+    // <ChangePwdEmailConfirm />
+    <ChangePassword/>
     // <ThemeProvider theme={theme}>
     
     // </ThemeProvider>
