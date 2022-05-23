@@ -6,6 +6,7 @@ import { theme } from "./views/theme/fonts/Font";
 import { ThemeProvider } from "@mui/material/styles";
 import Login from "./views/pages/authenticator/Login";
 import ResetPwdEmailConfirm from "./views/pages/authenticator/ResetPwdEmailConfirm";
+// import Register from "./views/pages/register/Register";
 
 function App() {
   return (

@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from '../../../features/auth'
 import { clearMessage } from "../../../features/message";
 import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../constant/css_constant"
-// import "../../../styles/login.css";
+// import "../../../styles/login.scss"
 
 function Copyright(props) {
   return (
@@ -111,6 +111,11 @@ export default function SignIn(props) {
                     color: GRP_COLOR.WHITECODE
                   }
                 }}
+                InputProps={{
+                  style: {
+                    color: GRP_COLOR.WHITECODE
+                  }
+                }}
               />
               <TextField
                 sx={{ bgcolor: GRP_COLOR.CODE016, borderRadius: BORDER_RADIUS.normal, color: GRP_COLOR.WHITECODE }}
@@ -123,6 +128,11 @@ export default function SignIn(props) {
                 id="password"
                 autoComplete="current-password"
                 InputLabelProps={{
+                  style: {
+                    color: GRP_COLOR.WHITECODE
+                  }
+                }}
+                InputProps={{
                   style: {
                     color: GRP_COLOR.WHITECODE
                   }
