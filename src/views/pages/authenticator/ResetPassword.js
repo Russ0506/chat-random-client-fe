@@ -1,9 +1,10 @@
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { resetPwd } from "../../../features/auth";
 import { clearMessage } from "../../../features/message";
-import { resetPwdEmailConfirm } from "../../../features/auth";
-export default function ChangePwdEmailConfirm(props) {
+
+export default function ChangePassword(props) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -14,12 +15,15 @@ export default function ChangePwdEmailConfirm(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("ahihi")
     const data = new FormData(event.currentTarget);
     console.log(data);
     dispatch(
-      resetPwdEmailConfirm({
-        user: { email: data.get("email") },
+      resetPwd({
+        user: {
+          reset_password_token: data.get("resetPasswordToken"),
+          password: data.get("newPassword"),
+          password_confirmation: data.get("confirmNewPassword"),
+        },
       })
     )
       .unwrap()
@@ -45,7 +49,7 @@ export default function ChangePwdEmailConfirm(props) {
       <Box
         component="form"
         onSubmit={handleSubmit}
-        noValidate
+        // noValidate
         sx={{
           width: "50%",
           height: "50%",
@@ -60,18 +64,37 @@ export default function ChangePwdEmailConfirm(props) {
             gutterBottom
             sx={{ fontWeight: "bold" }}
           >
-            Email Confirmation
+            Change Password
+          </Typography>
+          <Typography variant="subtitle1" sx={{ color: "#637381" }}>
+            Please enter your OTP from gmail you have receive and then set your
+            new Password
           </Typography>
         </Stack>
         <Stack direction="column" spacing={3}>
           <TextField
-            id="email"
+            id="pwd-request-token"
+            label="Request OTP"
+            name="resetPasswordToken"
+            type="text"
             required
-            label="Email"
-            type="email"
-            name="email"
-            autoComplete="email"
-            autoFocus
+            autoComplete="current-OTP"
+          />
+          <TextField
+            id="new-password"
+            label="New password"
+            name="newPassword"
+            type="password"
+            required
+            autoComplete="current-new-password"
+          />
+          <TextField
+            id="confirm-new-password"
+            label="Confirm new password"
+            name="confirmNewPassword"
+            type="password"
+            required
+            autoComplete="current-confirm-new-password"
           />
         </Stack>
         <Stack direction="column" sx={{ mt: 5 }}>
@@ -82,7 +105,7 @@ export default function ChangePwdEmailConfirm(props) {
             size="large"
             sx={{ fontWeight: "bold" }}
           >
-            Send Email
+            Update Password
           </Button>
         </Stack>
         <Stack direction="column" sx={{ mt: 1.5 }}>
