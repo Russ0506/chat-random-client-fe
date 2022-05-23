@@ -1,17 +1,19 @@
 import { CssBaseline } from "@mui/material";
 import React from "react";
 import "./styles/App.css";
-import ForgotPassword from "./views/pages/authenticator/ForgotPassword";
-import ChangePassword from "./views/pages/authenticator/ChangePassword";
+import ResetPassword from "./views/pages/authenticator/ResetPassword";
 import { theme } from "./views/theme/fonts/Font";
 import { ThemeProvider } from "@mui/material/styles";
 import Login from "./views/pages/authenticator/Login";
+import ResetPwdEmailConfirm from "./views/pages/authenticator/ResetPwdEmailConfirm";
 
 function App() {
   return (
-    <Login />
+    // <Login />
+    // <ResetPwdEmailConfirm /> //done
+    <ResetPassword />
     // <ThemeProvider theme={theme}>
-    
+
     // </ThemeProvider>
   );
 }

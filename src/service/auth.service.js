@@ -20,9 +20,18 @@ const login = (params) => {
 const logout = () => {
   localStorage.removeItem("user");
 };
+const resetPwdEmailConfirm = (params) => {
+  return axios.post(API_URL + "/users/password", params);
+};
+
+const resetPwd = (params) => {
+  return axios.put(API_URL + "/users/password", params);
+}
 const authService = {
   register,
   login,
   logout,
+  resetPwdEmailConfirm,
+  resetPwd
 };
 export default authService;
