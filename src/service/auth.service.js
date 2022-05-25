@@ -25,11 +25,11 @@ const logout = () => {
   localStorage.removeItem("user");
 };
 const resetPwdEmailConfirm = (params) => {
-  return axios.post(API_URL + "/users/password", params);
+  return axios.post(`${URL}/password`, params);
 };
 
 const resetPwd = (params) => {
-  return axios.put(API_URL + "/users/password", params);
+  return axios.put(`${URL}/password`, params);
 }
 
 const authService = {
