@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearMessage } from "../../../features/message";
 import { resetPwdEmailConfirm } from "../../../features/auth";
-export default function ChangePwdEmailConfirm(props) {
+export default function ResetPwdEmailConfirm(props) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);

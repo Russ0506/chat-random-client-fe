@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetPwd } from "../../../features/auth";
 import { clearMessage } from "../../../features/message";
 
-export default function ChangePassword(props) {
+export default function ResetPassword(props) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
