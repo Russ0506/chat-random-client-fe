@@ -52,7 +52,6 @@ export default function ChangePassword(props) {
         // noValidate
         sx={{
           width: "50%",
-          height: "50%",
           minWidth: "365px",
           maxWidth: "480px",
         }}
