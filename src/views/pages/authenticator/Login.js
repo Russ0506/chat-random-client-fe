@@ -7,6 +7,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import Link from "@mui/material/Link"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -15,8 +16,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from '../../../features/auth'
 import { clearMessage } from "../../../features/message";
 import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../constant/css_constant"
-import { Link } from "react-router-dom";
-// import "../../../styles/login.scss"
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+import "../../../styles/login.scss"
 
 function Copyright(props) {
   return (
@@ -36,13 +38,26 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
-
 export default function SignIn(props) {
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
+
+  const initialValues = {
+    username: '',
+    password: '',
+    remember: false
+  }
+
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().email('please enter valid email').required("Required"),
+    password: Yup.string().required("Required").matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      "Your password must contain at least 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+    ),
+  })
+
   useEffect(() => {
     dispatch(clearMessage());
   }, [dispatch]);
@@ -65,26 +80,22 @@ export default function SignIn(props) {
         setLoading(false);
       });
 
+    if(this.isLoggedIn) console.log(this.isLoggedIn);
+
   };
 
+  const onSubmit = (values, props) => {
+    console.log(values)
+    setTimeout(() => {
+        props.resetForm()
+        props.setSubmitting(false)
+    }, 2000)
+
+}
+
   return (
-    <div
-      className="login-main"
-      style={{
-        background: GRP_COLOR.CODE017,
-        height: "100vh",
-        color: GRP_COLOR.CODE016,
-      }}
-    >
-      <ThemeProvider theme={theme}>
-        <Container
-          component="main"
-          maxWidth="xs"
-          sx={{
-            fontWeight: FONT_WEIGHT.normal,
-            lineHeight: LINE_HEIGHT.normal,
-          }}
-        >
+    <div style={{ background: GRP_COLOR.CODE017, height: "100vh", color: GRP_COLOR.CODE016, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+        <Container component="main" maxWidth="xs" sx={{ fontWeight: FONT_WEIGHT.normal, lineHeight: LINE_HEIGHT.normal }}>
           <CssBaseline />
           <Box
             sx={{
@@ -124,6 +135,7 @@ export default function SignIn(props) {
                   color: GRP_COLOR.WHITECODE,
                 }}
                 margin="normal"
+                variant="filled"
                 required
                 fullWidth
                 id="email"
@@ -149,6 +161,7 @@ export default function SignIn(props) {
                   color: GRP_COLOR.WHITECODE,
                 }}
                 margin="normal"
+                variant="filled"
                 required
                 fullWidth
                 name="password"
@@ -215,7 +228,7 @@ export default function SignIn(props) {
                 </Grid>
                 <Grid item>
                   <Link
-                    to="/"
+                    to="/chat-main-screen"
                     variant="body2"
                     sx={{
                       lineHeight: LINE_HEIGHT.lh17,
@@ -230,9 +243,9 @@ export default function SignIn(props) {
               </Grid>
             </Box>
           </Box>
-          <Copyright sx={{ mt: 8, mb: 4 }} />
+          
         </Container>
-      </ThemeProvider>
+        <Box className="login-main"></Box>
     </div>
   );
 }
