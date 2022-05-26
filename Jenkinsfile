@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage ('check jenkins') {
             steps {
-                echo 'hello world 2ssssasssssadadaadadaddadadssaasssasaadadadadasssssssss'
+                echo 'build source test'
             }
         }
 
