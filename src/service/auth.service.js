@@ -3,14 +3,14 @@ import { axiosClient } from '../setup/axiosClient'
 
 const URL = "users"
 
-const register = (username, email, password) => {
-  return axios.post(`${URL}/signup`, {
-    username,
-    email,
-    password,
-  });
+const register = async (params) => {
+  try {
+    const res = await axiosClient.post(`${URL}`, params)
+    return res
+  } catch (error) {
+    console.log(error)
+  }
 };
-
 
 const login = async (params) => {
   try {
