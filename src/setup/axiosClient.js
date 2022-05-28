@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const baseURL = process.env.REACT_APP_API_URL;
-const baseURL = "https://random-chat-api-server.herokuapp.com"
+const baseURL = process.env.REACT_APP_API_URL;
+// const baseURL = "https://random-chat-api-server.herokuapp.com"
 
 export const axiosClient = axios.create({
     baseURL,
