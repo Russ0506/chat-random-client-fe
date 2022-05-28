@@ -50,3 +50,5 @@ export const BORDER_RADIUS = {
 export const BOX_SHADOW = {
     CODE001: "0px 4px 4px rgba(0, 0, 0, 0.3)",
 }
+
+export const DRAWER_WITH = 240;

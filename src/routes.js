@@ -27,7 +27,7 @@ export default function Routes() {
         {path: "resetPassword", element: <ResetPassword />},
         {path: "resetPasswordEmailConfirm", element: <ResetPwdEmailConfirm />},
         { path: "login", element: <Login /> },
-        { path: "logout", element: <Login /> },
+        { path: "logout", element: <Welcome /> },
       ], 
     },
     {
