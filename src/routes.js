@@ -21,28 +21,30 @@ export default function Routes() {
       ],
     },
     {
-      path: "/users",
+      path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/users",
       children: [
-        {path: "resetPassword", element: <ResetPassword />},
-        {path: "resetPasswordEmailConfirm", element: <ResetPwdEmailConfirm />},
+        { path: "resetPassword", element: <ResetPassword /> },
+        {
+          path: "resetPasswordEmailConfirm",
+          element: <ResetPwdEmailConfirm />,
+        },
         { path: "login", element: <Login /> },
         { path: "logout", element: <Welcome /> },
-      ], 
+      ],
     },
     {
       path: "/register",
       element: <SignUp />,
-      children: [
-        {path: "", element: ""},
-      ],
+      children: [{ path: "", element: "" }],
     },
     {
       path: "/chat-main-screen",
       element: <ChatMainScreen />,
-      children: [
-        {path: "", element: ""},
-      ],
+      children: [{ path: "", element: "" }],
     },
   ]);
   return routes;

@@ -21,12 +21,11 @@ import { makeStyles } from "@mui/styles";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.black, 0.1),
-  // "&:hover": {
-  //   backgroundColor: alpha(theme.palette.common.black, 0.45),
-  // },
-  "&:focus": {
-    backgroundColor: alpha(theme.palette.common.black, 0.45),
+  backgroundColor: alpha(theme.palette.common.white, 1),
+  color: alpha(theme.palette.common.black, 0.5),
+  "& .Mui-focused": {
+    color: alpha(theme.palette.common.black, 1),
+    // backgroundColor: alpha(theme.palette.common.black, 0.2),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -49,6 +48,9 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
+  "& input::placeholder": {
+    color: "gray",
+  },
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
@@ -61,9 +63,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-// const StyledAppBarBase = styled(AppBar)(({ theme }) => ({
-//   backgroundColor: alpha(theme.palette.common.white, 1),
-// }));
+const StyledAppBarBase = styled(AppBar)(({ theme }) => ({
+  backgroundColor: alpha(theme.palette.common.white, 1),
+}));
 
 export default function AppBarComponent() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -130,28 +132,28 @@ export default function AppBarComponent() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails">
+        <IconButton size="medium" aria-label="show 4 new mails">
           <Badge badgeContent={4} color="error">
-            <MailIcon/>
+            <MailIcon />
           </Badge>
         </IconButton>
         <p>Messages</p>
       </MenuItem>
       <MenuItem>
         <IconButton
-          size="large"
+          size="medium"
           aria-label="show 17 new notifications"
-          color="inherit"
+          // color="inherit"
         >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
+          <Badge badgeContent={15} color="error">
+            <NotificationsIcon color="primary" />
           </Badge>
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
-          size="large"
+          size="medium"
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
           aria-haspopup="true"
@@ -166,20 +168,20 @@ export default function AppBarComponent() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <StyledAppBarBase position="static" elevation={0}>
         <Toolbar>
           <IconButton
-            size="large"
+            size="medium"
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            sx={{ mr: 2 }}
+            sx={{ mr: 0 }}
           >
-            <MenuIcon />
+            <MenuIcon sx={{ color: "gray" }} />
           </IconButton>
           <Search>
             <SearchIconWrapper>
-              <SearchIcon />
+              <SearchIcon sx={{ color: "gray" }} />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
@@ -188,24 +190,24 @@ export default function AppBarComponent() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
+            {/* <IconButton
+              size="medium"
               aria-label="show 4 new mails"
               color="inherit"
             >
               <Badge badgeContent={4} color="error">
-                <MailIcon />
+                <MailIcon sx={{ color: "gray" }} />
               </Badge>
             </IconButton>
             <IconButton
-              size="large"
+              size="medium"
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
+              <Badge badgeContent={15} color="error">
+                <NotificationsIcon sx={{ color: "gray" }} />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             <IconButton
               size="large"
               edge="end"
@@ -215,12 +217,12 @@ export default function AppBarComponent() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              <AccountCircle fontSize="medium" sx={{ color: "gray" }} />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
-              size="large"
+              size="medium"
               aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
@@ -231,7 +233,7 @@ export default function AppBarComponent() {
             </IconButton>
           </Box>
         </Toolbar>
-      </AppBar>
+      </StyledAppBarBase>
       {renderMobileMenu}
       {renderMenu}
     </Box>
