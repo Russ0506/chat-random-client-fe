@@ -10,7 +10,8 @@ export const RandomChatSideBarItem = [
     name: "GENERAL",
     items: [
       { index: 0, name: "Chats", icon: <ChatIcon />, link: "#" },
-      { index: 1, name: "Group Chats", icon: <GroupsIcon />, link: "#" },
+      { index: 1, name: "Group", icon: <GroupsIcon />, link: "#" },
+      { index: 1, name: "Setting Chat", icon: <GroupsIcon />, link: "#" },
     ],
   },
   {
@@ -28,7 +29,6 @@ export const RandomChatSideBarItem = [
         icon: <ManageSearchIcon />,
         link: "#",
       },
-      { index: 2, name: "Chat History", icon: <HistoryIcon />, link: "#" },
       { index: 3, name: "Block History", icon: <BlockIcon />, link: "#" },
     ],
   },
