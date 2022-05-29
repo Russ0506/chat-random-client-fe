@@ -6,6 +6,7 @@ export default function DrawerAppBar() {
   return (
     <AppBar
       position="fixed"
+      elevation={0}
       sx={{
         width: { sm: `calc(100% - ${DRAWER_WITH}px)` },
         ml: { sm: `${DRAWER_WITH}px` },

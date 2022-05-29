@@ -7,29 +7,33 @@ import BlockIcon from "@mui/icons-material/Block";
 
 export const RandomChatSideBarItem = [
   {
-    name: "GENERAL",
+    name: "CHATS",
     items: [
-      { index: 0, name: "Chats", icon: <ChatIcon />, link: "#" },
-      { index: 1, name: "Group Chats", icon: <GroupsIcon />, link: "#" },
+      { index: 0, name: "Hieu", icon: null, link: "#" },
+      { index: 1, name: "Hieu2", icon: null, link: "#" },
+      { index: 1, name: "Hieu3", icon: null, link: "#" },
     ],
   },
   {
-    name: "MANAGEMENT",
+    name: "GROUPS",
     items: [
       {
         index: 0,
-        name: "Notifications",
-        icon: <NotificationsIcon />,
+        name: "VnsGroup",
+        icon: null,
         link: "#",
       },
       {
         index: 1,
-        name: "Random Settings",
-        icon: <ManageSearchIcon />,
+        name: "VnsGroup",
+        icon: null,
         link: "#",
       },
-      { index: 2, name: "Chat History", icon: <HistoryIcon />, link: "#" },
-      { index: 3, name: "Block History", icon: <BlockIcon />, link: "#" },
+      { index: 3, name: "VnsGroup", icon: null, link: "#" },
     ],
   },
+   {
+    name: "NEW CONVERSATION",
+  items: [],
+   }
 ];
