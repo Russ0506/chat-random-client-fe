@@ -6,7 +6,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -19,10 +18,16 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import DateFnsUtils from '@date-io/date-fns';
-
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../constant/css_constant"
 import Stack from '@mui/material/Stack'
+import { DatePicker } from "@material-ui/pickers";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 function Copyright(props) {
   return (
@@ -41,7 +46,7 @@ const theme = createTheme();
 
 
 export default function SignUp(props) {
-  
+
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -57,7 +62,7 @@ export default function SignUp(props) {
 
     dispatch(register(
       {
-        user: { first_name: data.get("firstName"), last_name: data.get("lastName"), birthday: "06/02/2000", email: data.get("email"), password: data.get("password"), gender: 1 }
+        user: { first_name: data.get("firstName"), last_name: data.get("lastName"), birthday: data.get("birthday"), email: data.get("email"), password: data.get("password"), gender: data.get("gender") }
       }
     ))
       .unwrap()
@@ -156,44 +161,35 @@ export default function SignUp(props) {
             <Grid item xs={12} >
 
               <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <Stack spacing={3}>
-                  <DateTimePicker
-                    renderInput={(params) => <TextField {...params} />}
-                    label="Ignore date and time"
-                    value={value}
-                    onChange={(newValue) => {
-                      setValue(newValue);
-                    }}
-                    minDateTime={new Date()}
-                  />
-                  
-                </Stack>
-              </LocalizationProvider>
-
-              {/* <LocalizationProvider dateAdapter={AdapterDateFns}> */}
-              {/* <DatePicker
-                  views={['day']}
-                  label="Just date"
+                <DesktopDatePicker
+                  label="Birthday"
                   value={value}
+                  minDate={new Date('1920-01-01')}
                   onChange={(newValue) => {
                     setValue(newValue);
                   }}
-                  renderInput={(params) => <TextField {...params} helperText={null} />}
-                /> */}
-              {/* </LocalizationProvider> */}
+                  renderInput={(params) => <TextField {...params} />}
+                  id="birthday"
+                  name="birthday"
+                />
+                
+              </LocalizationProvider>
             </Grid>
-            {/* <Grid item xs={12} >
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DatePicker
-                    label="Basic example"
-                    value={value}
-                    onChange={(newValue) => {
-                      setValue(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </LocalizationProvider>
-              </Grid> */}
+
+            <Grid item xs={12} >
+              <FormControl>
+                <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="gender"
+                  id="gender"
+                >
+                  <FormControlLabel value="female" control={<Radio />} label="Female" />
+                  <FormControlLabel value="male" control={<Radio />} label="Male" />
+                </RadioGroup>
+              </FormControl>
+            </Grid>
 
             <Grid item xs={12}>
               <FormControlLabel
