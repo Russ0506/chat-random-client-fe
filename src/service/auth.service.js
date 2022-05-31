@@ -12,6 +12,15 @@ const register = async (params) => {
   }
 };
 
+const confirmRegister = async (params) => {
+  try {
+    const res = await axiosClient.post(`${URL}/confirmation`, params)
+    return res
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const login = async (params) => {
   try {
     const res = await axiosClient.post(`${URL}/sign_in`, params)
@@ -34,6 +43,7 @@ const resetPwd = (params) => {
 
 const authService = {
   register,
+  confirmRegister,
   login,
   logout,
   resetPwdEmailConfirm,

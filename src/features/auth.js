@@ -24,6 +24,21 @@ export const resetPwd = createAsyncThunk(
     }
   }
 );
+
+export const registerConfirm = createAsyncThunk(
+  "auth/register-confirm",
+  async (params, thunkAPI) => {
+    try {
+      const response = await AuthService.confirmRegister(params);
+      thunkAPI.dispatch(setMessage(response.data.message));
+      return response.data;
+    } catch (error) {
+      thunkAPI.dispatch(setMessage(error.toString()));
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
+
 export const resetPwdEmailConfirm = createAsyncThunk(
   "auth/resetPwdConfirm",
   async (params, thunkAPI) => {
