@@ -57,20 +57,19 @@ export default function SignUp(props) {
     const data = new FormData(event.currentTarget);
 
     const birthday = moment(date).format("DD/MM/YYYY");
-    console.log(birthday);
-    // dispatch(register(
-    //   {
-    //     user: { first_name: data.get("firstName"), last_name: data.get("lastName"), birthday: data.get("birthday"), email: data.get("email"), password: data.get("password"), gender: data.get("gender") }
-    //   }
-    // ))
-    //   .unwrap()
-    //   .then(() => {
-    //     props.history.push("/profile");
-    //     window.location.reload();
-    //   })
-    //   .catch(() => {
-    //     setLoading(false);
-    //   });
+    dispatch(register(
+      {
+        user: { first_name: data.get("firstName"), last_name: data.get("lastName"), birthday: birthday, email: data.get("email"), password: data.get("password"), gender: data.get("gender") }
+      }
+    ))
+      .unwrap()
+      .then(() => {
+        props.history.push("/profile");
+        window.location.reload();
+      })
+      .catch(() => {
+        setLoading(false);
+      });
 
   }
 
