@@ -12,6 +12,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import moment from 'moment'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import DateFnsUtils from '@date-io/date-fns';
@@ -46,7 +47,7 @@ export default function SignUp(props) {
   const [loading, setLoading] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
-  const [value, setValue] = useState(new Date());
+  const [date, setDate] = useState(new Date());
   useEffect(() => {
     dispatch(clearMessage());
   }, [dispatch]);
@@ -55,19 +56,21 @@ export default function SignUp(props) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    dispatch(register(
-      {
-        user: { first_name: data.get("firstName"), last_name: data.get("lastName"), birthday: data.get("birthday"), email: data.get("email"), password: data.get("password"), gender: data.get("gender") }
-      }
-    ))
-      .unwrap()
-      .then(() => {
-        props.history.push("/profile");
-        window.location.reload();
-      })
-      .catch(() => {
-        setLoading(false);
-      });
+    const birthday = moment(date).format("DD/MM/YYYY");
+    console.log(birthday);
+    // dispatch(register(
+    //   {
+    //     user: { first_name: data.get("firstName"), last_name: data.get("lastName"), birthday: data.get("birthday"), email: data.get("email"), password: data.get("password"), gender: data.get("gender") }
+    //   }
+    // ))
+    //   .unwrap()
+    //   .then(() => {
+    //     props.history.push("/profile");
+    //     window.location.reload();
+    //   })
+    //   .catch(() => {
+    //     setLoading(false);
+    //   });
 
   }
 
@@ -158,16 +161,16 @@ export default function SignUp(props) {
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopDatePicker
                   label="Birthday"
-                  value={value}
+                  value={date}
                   minDate={new Date('1920-01-01')}
                   onChange={(newValue) => {
-                    setValue(newValue);
+                    setDate(newValue);
                   }}
                   renderInput={(params) => <TextField {...params} />}
                   id="birthday"
                   name="birthday"
                 />
-                
+             
               </LocalizationProvider>
             </Grid>
 
