@@ -76,6 +76,7 @@ export default function SignIn(props) {
       .unwrap()
       .then(() => {
         navigate("/chat-main-screen");
+        window.location.reload();
         
       })
       .catch(() => {
