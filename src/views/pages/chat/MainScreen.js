@@ -1,10 +1,12 @@
 import Box from "@mui/material/Box"
+import DrawerLayout from "../../common/drawer/DrawerLayout"
+import ChatConversation from "./ChatConversation"
 
 
-export const ChatMainScreen = () => {
+export default function  ChatMainScreen () {
     return (
         <Box>
-            Main Screen
+            <DrawerLayout body={<ChatConversation />}/>
         </Box>
     )
 }

@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from '../../../features/auth'
 import { clearMessage } from "../../../features/message";
 import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../constant/css_constant"
+import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import "../../../styles/login.scss"
@@ -39,6 +40,7 @@ function Copyright(props) {
 }
 
 export default function SignIn(props) {
+  const navigate = useNavigate();
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -73,179 +75,186 @@ export default function SignIn(props) {
     ))
       .unwrap()
       .then(() => {
-        props.history.push("/profile");
-        window.location.reload();
+        navigate("/chat-main-screen");
+        
       })
       .catch(() => {
         setLoading(false);
       });
-
-    if(this.isLoggedIn) console.log(this.isLoggedIn);
 
   };
 
   const onSubmit = (values, props) => {
     console.log(values)
     setTimeout(() => {
-        props.resetForm()
-        props.setSubmitting(false)
+      props.resetForm()
+      props.setSubmitting(false)
     }, 2000)
 
-}
+  }
+
+  const typeButton = {
+    mt: 3,
+    mb: 2,
+    bgcolor: GRP_COLOR.BACKGROUND01,
+    color: GRP_COLOR.CODE016,
+    borderRadius: BORDER_RADIUS.br10,
+    boxShadow: BOX_SHADOW.CODE001,
+    height: "45px",
+  }
 
   return (
     <div style={{ background: GRP_COLOR.CODE017, height: "100vh", color: GRP_COLOR.CODE016, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-        <Container component="main" maxWidth="xs" sx={{ fontWeight: FONT_WEIGHT.normal, lineHeight: LINE_HEIGHT.normal }}>
-          <CssBaseline />
-          <Box
-            sx={{
-              paddingTop: "100px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
+      <Container component="main" maxWidth="xs" sx={{ fontWeight: FONT_WEIGHT.normal, lineHeight: LINE_HEIGHT.normal }}>
+        <CssBaseline />
+        <Box
+          sx={{
+            paddingTop: "100px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            component="h1"
+            variant="h5"
+            fontSize={FONT_SIZE.formHeader}
           >
-            {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar> */}
-            <Typography
-              component="h1"
-              variant="h5"
-              fontSize={FONT_SIZE.formHeader}
-            >
-              Sign in
-            </Typography>
-            <Typography
-              component="h1"
-              variant="h5"
-              fontSize={FONT_SIZE.formNormalText}
-            >
-              Sign in and start finding your friends!
-            </Typography>
-            <Box
-              component="form"
-              onSubmit={handleSubmit}
-              noValidate
-              sx={{ mt: 1, fontSize: FONT_SIZE.smallText }}
-            >
-              <TextField
-                sx={{
-                  bgcolor: GRP_COLOR.CODE016,
-                  borderRadius: BORDER_RADIUS.normal,
+            Sign in
+          </Typography>
+          <Typography
+            component="h1"
+            variant="h5"
+            fontSize={FONT_SIZE.formNormalText}
+          >
+            Sign in and start finding your friends!
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1, fontSize: FONT_SIZE.smallText }}
+          >
+            <TextField
+              sx={{
+                bgcolor: GRP_COLOR.CODE016,
+                borderRadius: BORDER_RADIUS.normal,
+                color: GRP_COLOR.WHITECODE,
+              }}
+              margin="normal"
+              variant="filled"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              InputLabelProps={{
+                style: {
                   color: GRP_COLOR.WHITECODE,
-                }}
-                margin="normal"
-                variant="filled"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                InputLabelProps={{
-                  style: {
-                    color: GRP_COLOR.WHITECODE,
-                  },
-                }}
-                InputProps={{
-                  style: {
-                    color: GRP_COLOR.WHITECODE,
-                  },
-                }}
-              />
-              <TextField
-                sx={{
-                  bgcolor: GRP_COLOR.CODE016,
-                  borderRadius: BORDER_RADIUS.normal,
+                },
+              }}
+              InputProps={{
+                style: {
                   color: GRP_COLOR.WHITECODE,
-                }}
-                margin="normal"
-                variant="filled"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                InputLabelProps={{
-                  style: {
-                    color: GRP_COLOR.WHITECODE,
-                  },
-                }}
-                InputProps={{
-                  style: {
-                    color: GRP_COLOR.WHITECODE,
-                  },
-                }}
-              />
-              <FormControlLabel
-                sx={{
-                  lineHeight: LINE_HEIGHT.lh17,
-                  fontWeight: FONT_WEIGHT.middle,
-                }}
-                control={
-                  <Checkbox
-                    value="remember"
-                    style={{
-                      color: GRP_COLOR.CODE016,
-                    }}
-                  />
-                }
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{
-                  mt: 3,
-                  mb: 2,
-                  bgcolor: GRP_COLOR.BACKGROUND01,
-                  color: GRP_COLOR.CODE016,
-                  borderRadius: BORDER_RADIUS.br10,
-                  boxShadow: BOX_SHADOW.CODE001,
-                  height: "45px",
-                }}
+                },
+              }}
+            />
+            <TextField
+              sx={{
+                bgcolor: GRP_COLOR.CODE016,
+                borderRadius: BORDER_RADIUS.normal,
+                color: GRP_COLOR.WHITECODE,
+              }}
+              margin="normal"
+              variant="filled"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              InputLabelProps={{
+                style: {
+                  color: GRP_COLOR.WHITECODE,
+                },
+              }}
+              InputProps={{
+                style: {
+                  color: GRP_COLOR.WHITECODE,
+                },
+              }}
+            />
+            <FormControlLabel
+              sx={{
+                lineHeight: LINE_HEIGHT.lh17,
+                fontWeight: FONT_WEIGHT.middle,
+              }}
+              control={
+                <Checkbox
+                  value="remember"
+                  style={{
+                    color: GRP_COLOR.CODE016,
+                  }}
+                />
+              }
+              label="Remember me"
+            />
+            {
+              message ? 
+              <Box
+                component="div"
+                variant="h5"
+                color="red"
+                fontSize={FONT_SIZE.smallText}
               >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link
-                    to="/forgotPwd"
-                    variant="body2"
-                    sx={{
-                      lineHeight: LINE_HEIGHT.lh17,
-                      fontWeight: FONT_WEIGHT.middle,
-                      color: GRP_COLOR.CODE016,
-                      textDecoration: "none",
-                    }}
-                  >
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link
-                    to="/chat-main-screen"
-                    variant="body2"
-                    sx={{
-                      lineHeight: LINE_HEIGHT.lh17,
-                      fontWeight: FONT_WEIGHT.middle,
-                      color: GRP_COLOR.CODE016,
-                      textDecoration: "none",
-                    }}
-                  >
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
+                {message}
+              </Box> : ''}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={typeButton}
+            >
+              Sign In
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link
+                  to="/forgotPwd"
+                  variant="body2"
+                  sx={{
+                    lineHeight: LINE_HEIGHT.lh17,
+                    fontWeight: FONT_WEIGHT.middle,
+                    color: GRP_COLOR.CODE016,
+                    textDecoration: "none",
+                  }}
+                >
+                  Forgot password?
+                </Link>
               </Grid>
-            </Box>
+              <Grid item>
+                <Link
+                  to="/chat-main-screen"
+                  variant="body2"
+                  sx={{
+                    lineHeight: LINE_HEIGHT.lh17,
+                    fontWeight: FONT_WEIGHT.middle,
+                    color: GRP_COLOR.CODE016,
+                    textDecoration: "none",
+                  }}
+                >
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
           </Box>
-          
-        </Container>
-        <Box className="login-main"></Box>
+        </Box>
+
+      </Container>
+      <Box className="login-main"></Box>
     </div>
   );
 }

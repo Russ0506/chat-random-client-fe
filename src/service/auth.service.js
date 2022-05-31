@@ -17,7 +17,7 @@ const login = async (params) => {
     const res = await axiosClient.post(`${URL}/sign_in`, params)
     return res
   } catch (error) {
-    console.log(error)
+    return error.response.data.errors[0]
   }
 }
 
