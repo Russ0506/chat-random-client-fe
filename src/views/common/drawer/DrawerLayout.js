@@ -10,6 +10,7 @@ import DrawerAppBar from "./DrawerAppBar";
 import { DRAWER_WITH } from "../../../constant/css_constant";
 
 export default function DrawerLayout(props) {
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -30,17 +31,13 @@ export default function DrawerLayout(props) {
         }}
       >
         <Toolbar />
-        {props.body == 'undefined' ? props.body : <DefaultBody/>}
+        {props.body === undefined ? <DefaultBody/> : props.body}
       </Box>
     </Box>
   );
 }
 
 DrawerLayout.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
 };
 

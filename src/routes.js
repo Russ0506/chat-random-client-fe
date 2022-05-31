@@ -6,7 +6,7 @@ import ResetPassword from "./views/pages/authenticator/ResetPassword";
 import SignUp from "./views/pages/register/Register";
 import ResetPwdEmailConfirm from "./views/pages/authenticator/ResetPwdEmailConfirm";
 import Welcome from "./views/pages/welcome/Welcome";
-import { ChatMainScreen } from "./views/pages/chat/MainScreen";
+import ChatMainScreen from "./views/pages/chat/MainScreen";
 
 export default function Routes() {
   const routes = useRoutes([
@@ -19,10 +19,6 @@ export default function Routes() {
         // { path: "/pending", element: <Pending /> },
         // { path: "/complete", element: <Complete /> },
       ],
-    },
-    {
-      path: "/login",
-      element: <Login />,
     },
     {
       path: "/users",
