@@ -89,13 +89,13 @@ export const login = createAsyncThunk(
       thunkAPI.dispatch(setMessage( await AuthService.login(params)));
       return data
     } catch (error) {
-      // const message =
-      //   (error.response &&
-      //     error.response.data &&
-      //     error.response.data.message) ||
-      //   error.message ||
-      //   error.toString();
-      // thunkAPI.dispatch(setMessage(message));
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      thunkAPI.dispatch(setMessage(message));
       return thunkAPI.rejectWithValue();
     }
   }

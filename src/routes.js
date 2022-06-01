@@ -8,6 +8,7 @@ import ResetPwdEmailConfirm from "./views/pages/authenticator/ResetPwdEmailConfi
 import Welcome from "./views/pages/welcome/Welcome";
 import ChatMainScreen from "./views/pages/chat/MainScreen";
 import RegisterConfirm from "./views/pages/register/RegisterConfirm";
+import ForgotPassword from "./views/pages/authenticator/ForgotPassword";
 
 export default function Routes() {
   const routes = useRoutes([
@@ -21,13 +22,17 @@ export default function Routes() {
     {
       path: "/users",
       children: [
+        { path: "login", element: <Login /> },
+        { path: "logout", element: <Welcome /> },
         { path: "resetPassword", element: <ResetPassword /> },
         {
           path: "resetPasswordEmailConfirm",
           element: <ResetPwdEmailConfirm />,
         },
-        { path: "login", element: <Login /> },
-        { path: "logout", element: <Welcome /> },
+        {
+          path: "forgotPassword",
+          element: <ForgotPassword />,
+        },
       ],
     },
     {
