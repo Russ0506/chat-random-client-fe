@@ -24,6 +24,21 @@ export const resetPwd = createAsyncThunk(
     }
   }
 );
+
+export const registerConfirm = createAsyncThunk(
+  "auth/register-confirm",
+  async (params, thunkAPI) => {
+    try {
+      const response = await AuthService.confirmRegister(params);
+      thunkAPI.dispatch(setMessage(response.data.message));
+      return response.data;
+    } catch (error) {
+      thunkAPI.dispatch(setMessage(error.toString()));
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
+
 export const resetPwdEmailConfirm = createAsyncThunk(
   "auth/resetPwdConfirm",
   async (params, thunkAPI) => {
@@ -74,13 +89,13 @@ export const login = createAsyncThunk(
       thunkAPI.dispatch(setMessage( await AuthService.login(params)));
       return data
     } catch (error) {
-      // const message =
-      //   (error.response &&
-      //     error.response.data &&
-      //     error.response.data.message) ||
-      //   error.message ||
-      //   error.toString();
-      // thunkAPI.dispatch(setMessage(message));
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      thunkAPI.dispatch(setMessage(message));
       return thunkAPI.rejectWithValue();
     }
   }

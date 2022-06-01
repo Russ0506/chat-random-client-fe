@@ -75,24 +75,16 @@ export default function SignIn(props) {
     ))
       .unwrap()
       .then(() => {
-        navigate("/chat-main-screen");
-        window.location.reload();
-        
+        if(isLoggedIn) {
+          navigate("/chat-main-screen");
+          window.location.reload();
+        } 
       })
       .catch(() => {
         setLoading(false);
       });
 
   };
-
-  const onSubmit = (values, props) => {
-    console.log(values)
-    setTimeout(() => {
-      props.resetForm()
-      props.setSubmitting(false)
-    }, 2000)
-
-  }
 
   const typeButton = {
     mt: 3,
@@ -224,7 +216,7 @@ export default function SignIn(props) {
             <Grid container>
               <Grid item xs>
                 <Link
-                  to="/forgotPwd"
+                  href="/users/forgotPassword"
                   variant="body2"
                   sx={{
                     lineHeight: LINE_HEIGHT.lh17,
@@ -238,7 +230,7 @@ export default function SignIn(props) {
               </Grid>
               <Grid item>
                 <Link
-                  to="/chat-main-screen"
+                  href="/register"
                   variant="body2"
                   sx={{
                     lineHeight: LINE_HEIGHT.lh17,

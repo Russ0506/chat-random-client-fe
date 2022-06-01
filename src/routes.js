@@ -7,6 +7,8 @@ import SignUp from "./views/pages/register/Register";
 import ResetPwdEmailConfirm from "./views/pages/authenticator/ResetPwdEmailConfirm";
 import Welcome from "./views/pages/welcome/Welcome";
 import ChatMainScreen from "./views/pages/chat/MainScreen";
+import RegisterConfirm from "./views/pages/register/RegisterConfirm";
+import ForgotPassword from "./views/pages/authenticator/ForgotPassword";
 
 export default function Routes() {
   const routes = useRoutes([
@@ -15,21 +17,22 @@ export default function Routes() {
       path: "/admin",
       element: <HomePage />,
       children: [
-        // { path: ":id", element: <Invoice /> },
-        // { path: "/pending", element: <Pending /> },
-        // { path: "/complete", element: <Complete /> },
       ],
     },
     {
       path: "/users",
       children: [
+        { path: "login", element: <Login /> },
+        { path: "logout", element: <Welcome /> },
         { path: "resetPassword", element: <ResetPassword /> },
         {
           path: "resetPasswordEmailConfirm",
           element: <ResetPwdEmailConfirm />,
         },
-        { path: "login", element: <Login /> },
-        { path: "logout", element: <Welcome /> },
+        {
+          path: "forgotPassword",
+          element: <ForgotPassword />,
+        },
       ],
     },
     {
@@ -41,6 +44,11 @@ export default function Routes() {
       path: "/chat-main-screen",
       element: <ChatMainScreen />,
       children: [{ path: "", element: "" }],
+    },
+    {
+      path: "/confirm-email-register",
+      element: <RegisterConfirm />,
+      children: [{ path: ":token", element: <RegisterConfirm /> }],
     },
   ]);
   return routes;
