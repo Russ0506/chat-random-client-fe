@@ -1,4 +1,4 @@
-import  Login  from "./views/pages/authenticator/Login";
+import Login from "./views/pages/authenticator/Login";
 import React from "react";
 import { useRoutes } from "react-router-dom";
 import HomePage from "./views/admin/homePage/HomePage";
@@ -7,6 +7,7 @@ import SignUp from "./views/pages/register/Register";
 import ResetPwdEmailConfirm from "./views/pages/authenticator/ResetPwdEmailConfirm";
 import Welcome from "./views/pages/welcome/Welcome";
 import { ChatMainScreen } from "./views/pages/chat/MainScreen";
+import ResetPwdEmailConfirmSuccess from "./views/pages/authenticator/ResetPwdEmailConfirmSuccess";
 
 export default function Routes() {
   const routes = useRoutes([
@@ -25,22 +26,35 @@ export default function Routes() {
       element: <Login />,
     },
     {
-      path: "/users",
-      children: [
-        { path: "resetPassword", element: <ResetPassword /> },
-        {
-          path: "resetPasswordEmailConfirm",
-          element: <ResetPwdEmailConfirm />,
-        },
-        { path: "login", element: <Login /> },
-        { path: "logout", element: <Welcome /> },
-      ],
-    },
-    {
-      path: "/register",
+      path: "/sign-up",
       element: <SignUp />,
       children: [{ path: "", element: "" }],
     },
+    {
+      path: "/reset-password",
+      element: <ResetPassword />,
+      children: [{ path: "", element: "" }],
+    },
+    {
+      path: "/reset-password-email-confirm",
+
+      children: [
+        { path: "", element: <ResetPwdEmailConfirm /> },
+        { path: "success", element: <ResetPwdEmailConfirmSuccess /> },
+      ],
+    },
+    // {
+    //   path: "/users",
+    //   children: [
+    //     { path: "resetPassword", element: <ResetPassword /> },
+    //     {
+    //       path: "resetPasswordEmailConfirm",
+    //       element: <ResetPwdEmailConfirm />,
+    //     },
+    //     { path: "login", element: <Login /> },
+    //     { path: "logout", element: <Welcome /> },
+    //   ],
+    // },
     {
       path: "/chat-main-screen",
       element: <ChatMainScreen />,
