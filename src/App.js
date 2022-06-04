@@ -1,21 +1,32 @@
 import React from "react";
 import "./styles/App.css";
-// import Register from "./views/pages/register/Register";
 import { BrowserRouter, useRoutes } from "react-router-dom";
-import Welcome from "./views/pages/welcome/Welcome";
-import HomePage from "./views/admin/homePage/HomePage";
-import { Login } from "@mui/icons-material";
-import ResetPassword from "./views/pages/authenticator/ResetPassword";
-import ResetPwdEmailConfirm from "./views/pages/authenticator/ResetPwdEmailConfirm";
 import Routes from "./routes";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "./constant/css_constant"
+
 function App() {
+
+  const themeDefault = createTheme({
+    palette: {
+      text: {
+        primary: GRP_COLOR.CODE016
+      },
+      background: {
+        default: GRP_COLOR.CODE017
+      },
+      primary: {
+        main: GRP_COLOR.CODE016,
+      },
+    },
+  });
   
   return (
-    <>
+    <ThemeProvider theme={themeDefault}>
       <BrowserRouter>
         <Routes />
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   );
 }
 

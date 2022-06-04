@@ -1,5 +1,6 @@
 export const GRP_COLOR = {
     WHITECODE: "#FFFFFF",
+    GREYYELLOW: "c4c4c4",
     CODE001: "#CB25AE",
     CODE002: "#06CB28",
     CODE003: "#6C50F1",
@@ -34,6 +35,7 @@ export const FONT_SIZE = {
 export const FONT_WEIGHT = {
     normal : 400,
     bold: 800,
+    overmiddle: 650,
     middle: 500,
 }
 
