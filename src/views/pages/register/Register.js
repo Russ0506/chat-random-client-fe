@@ -10,19 +10,15 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-// import { DatePicker } from "@material-ui/pickers";
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
+import moment from 'moment'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import DateFnsUtils from '@date-io/date-fns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../constant/css_constant"
-import Stack from '@mui/material/Stack'
-import { DatePicker } from "@material-ui/pickers";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -51,7 +47,7 @@ export default function SignUp(props) {
   const [loading, setLoading] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
-  const [value, setValue] = useState(new Date());
+  const [date, setDate] = useState(new Date());
   useEffect(() => {
     dispatch(clearMessage());
   }, [dispatch]);
@@ -60,9 +56,10 @@ export default function SignUp(props) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
+    const birthday = moment(date).format("DD/MM/YYYY");
     dispatch(register(
       {
-        user: { first_name: data.get("firstName"), last_name: data.get("lastName"), birthday: data.get("birthday"), email: data.get("email"), password: data.get("password"), gender: data.get("gender") }
+        user: { first_name: data.get("firstName"), last_name: data.get("lastName"), birthday: birthday, email: data.get("email"), password: data.get("password"), gender: data.get("gender") }
       }
     ))
       .unwrap()
@@ -163,16 +160,16 @@ export default function SignUp(props) {
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopDatePicker
                   label="Birthday"
-                  value={value}
+                  value={date}
                   minDate={new Date('1920-01-01')}
                   onChange={(newValue) => {
-                    setValue(newValue);
+                    setDate(newValue);
                   }}
                   renderInput={(params) => <TextField {...params} />}
                   id="birthday"
                   name="birthday"
                 />
-                
+             
               </LocalizationProvider>
             </Grid>
 
@@ -208,7 +205,7 @@ export default function SignUp(props) {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/users/login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
