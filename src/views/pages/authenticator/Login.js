@@ -70,6 +70,9 @@ export default function SignIn(props) {
     mb: 2,
     bgcolor: GRP_COLOR.BACKGROUND01,
     color: GRP_COLOR.CODE016,
+    '&:hover': {
+      color: GRP_COLOR.WHITECODE,
+    },
     borderRadius: BORDER_RADIUS.br10,
     boxShadow: BOX_SHADOW.CODE001,
     height: "45px",

@@ -28,6 +28,7 @@ export const FONT_FAMILY = {
 
 export const FONT_SIZE = {
     formHeader : "64px",
+    formHeaderSmall : "30px",
     formNormalText: "16px",
     smallText: "14px",
 }
