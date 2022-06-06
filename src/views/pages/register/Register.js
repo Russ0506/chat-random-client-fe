@@ -22,6 +22,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import swal from 'sweetalert';
 
 function Copyright(props) {
   return (
@@ -70,6 +71,11 @@ export default function SignUp(props) {
       });
 
   }
+
+  function alertclick() {
+    swal("Registration completed successfully!","Please check your registered email for email verification","success")
+  }
+
 
   const signup_button_style = {
     mt: 3, mb: 2,
@@ -179,6 +185,7 @@ export default function SignUp(props) {
                   >
                     <FormControlLabel value="female" control={<Radio />} label="Female" />
                     <FormControlLabel value="male" control={<Radio />} label="Male" />
+                    <FormControlLabel value="other" control={<Radio />} label="Other" />
                   </RadioGroup>
                 </FormControl>
               </Grid>
@@ -191,6 +198,7 @@ export default function SignUp(props) {
               </Grid>
             </Grid>
             <Button
+
               type="submit"
               fullWidth
               variant="contained"
@@ -207,7 +215,6 @@ export default function SignUp(props) {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </Box>
   );
