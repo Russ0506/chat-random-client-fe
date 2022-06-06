@@ -11,6 +11,7 @@ import {
 import React from "react";
 import { RandomChatSideBarItem } from "../../../constant/RandomChatSideBarItem";
 import MediaControlCard from "../base/card/MediaControlCard";
+import { FixedSizeList } from 'react-window';
 
 export default function DrawerSideBar(props) {
   const { window } = props;
@@ -34,12 +35,14 @@ export default function DrawerSideBar(props) {
           </ListItem>
           <List>
             {component.items.map((item, k) => (
-              <ListItem key={k} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.name} />
-                </ListItemButton>
-              </ListItem>
+              // <FixedSizeList height={400} width={360} itemSize={46} itemCount={200}>
+                <ListItem key={k} disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                </ListItem>
+              // </FixedSizeList>
             ))}
           </List>
         </>

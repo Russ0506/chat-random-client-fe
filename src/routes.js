@@ -9,6 +9,8 @@ import Welcome from "./views/pages/welcome/Welcome";
 import ChatMainScreen from "./views/pages/chat/MainScreen";
 import RegisterConfirm from "./views/pages/register/RegisterConfirm";
 import ForgotPassword from "./views/pages/authenticator/ForgotPassword";
+import ResetPwdEmailConfirmSuccess from "./views/pages/authenticator/ResetPwdEmailConfirmSuccess";
+import { PlacesWithStandaloneSearchBox } from "./components/googleMapAPI/GoogleMapAPI";
 
 export default function Routes() {
   const routes = useRoutes([
@@ -60,6 +62,10 @@ export default function Routes() {
     //     { path: "logout", element: <Welcome /> },
     //   ],
     // },
+    {
+      path: "/ggmap-api-testing",
+      element: <PlacesWithStandaloneSearchBox />
+    },
     {
       path: "/chat-main-screen",
       element: <ChatMainScreen />,
