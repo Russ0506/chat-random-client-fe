@@ -120,7 +120,7 @@ const typeButton = {
   height: "45px",
 }
 
-export default function PartnerSetting(props) {
+export default function PartnerSettingView(props) {
   const [personName, setPersonName] = React.useState([]);
   const [gender, setGender] = React.useState("");
 
@@ -151,7 +151,6 @@ export default function PartnerSetting(props) {
 
     }
     console.log("saveDataSearchPartnerSetting", mockData);
-    // open popup view here
   }
 
   return (
