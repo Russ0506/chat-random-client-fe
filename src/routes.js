@@ -9,6 +9,7 @@ import Welcome from "./views/pages/welcome/Welcome";
 import ChatMainScreen from "./views/pages/chat/MainScreen";
 import RegisterConfirm from "./views/pages/register/RegisterConfirm";
 import ForgotPassword from "./views/pages/authenticator/ForgotPassword";
+import ResetPasswordConfirm from "./views/pages/authenticator/ResetPasswordConfirm";
 
 export default function Routes() {
   const routes = useRoutes([
@@ -49,6 +50,11 @@ export default function Routes() {
       path: "/confirm-email-register",
       element: <RegisterConfirm />,
       children: [{ path: ":token", element: <RegisterConfirm /> }],
+    },
+    {
+      path: "/confirm-email-reset-password",
+      element: <ResetPasswordConfirm />,
+      children: [{ path: ":token", element: <ResetPasswordConfirm /> }],
     },
   ]);
   return routes;
