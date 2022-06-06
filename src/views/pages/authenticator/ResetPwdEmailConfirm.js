@@ -4,32 +4,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearMessage } from "../../../features/message";
 import { resetPwdEmailConfirm } from "../../../features/auth";
 export default function ResetPwdEmailConfirm(props) {
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const { isLoggedIn } = useSelector((state) => state.auth);
-  const { message } = useSelector((state) => state.message);
-  useEffect(() => {
-    dispatch(clearMessage());
-  }, [dispatch]);
+  // const dispatch = useDispatch();
+  // const [loading, setLoading] = useState(false);
+  // const { isLoggedIn } = useSelector((state) => state.auth);
+  // const { message } = useSelector((state) => state.message);
+  // useEffect(() => {
+  //   dispatch(clearMessage());
+  // }, [dispatch]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log(data);
-    dispatch(
-      resetPwdEmailConfirm({
-        user: { email: data.get("email") },
-      })
-    )
-      .unwrap()
-      .then(() => {
-        props.history.push("/profile");
-        window.location.reload();
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   console.log(data);
+  //   dispatch(
+  //     resetPwdEmailConfirm({
+  //       user: { email: data.get("email") },
+  //     })
+  //   )
+  //     .unwrap()
+  //     .then(() => {
+  //       props.history.push("/profile");
+  //       window.location.reload();
+  //     })
+  //     .catch(() => {
+  //       setLoading(false);
+  //     });
+  // };
 
   return (
     <Box
@@ -41,7 +41,7 @@ export default function ResetPwdEmailConfirm(props) {
         height: "100vh",
       }}
     >
-      <Box
+      {/* <Box
         component="form"
         onSubmit={handleSubmit}
         noValidate
@@ -93,7 +93,7 @@ export default function ResetPwdEmailConfirm(props) {
             Back
           </Button>
         </Stack>
-      </Box>
+      </Box> */}
     </Box>
   );
 }

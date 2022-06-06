@@ -30,15 +30,30 @@ const login = async (params) => {
   }
 }
 
+const sendMailResetPass = async (params) => {
+  try {
+    const res = await axiosClient.post(`${URL}/password`, params)
+    return res
+  } catch (error) {
+    return error.response.data.errors[0]
+  }
+}
+
 const logout = () => {
   localStorage.removeItem("user");
 };
-const resetPwdEmailConfirm = (params) => {
-  return axios.post(`${URL}/password`, params);
-};
+// const resetPwdEmailConfirm = (params) => {
+//   return axios.post(`${URL}/password`, params);
+// };
 
-const resetPwd = (params) => {
-  return axios.put(`${URL}/password`, params);
+const resetPwd = async (params) => {
+  try {
+    const res = await axiosClient.put(`${URL}/password`, params)
+    return res
+  } catch (error) {
+    console.log(error.response.data.errors[0]);
+    return error.response.data.errors[0]
+  }
 }
 
 const authService = {
@@ -46,7 +61,8 @@ const authService = {
   confirmRegister,
   login,
   logout,
-  resetPwdEmailConfirm,
-  resetPwd
+  // resetPwdEmailConfirm,
+  resetPwd,
+  sendMailResetPass,
 };
 export default authService;

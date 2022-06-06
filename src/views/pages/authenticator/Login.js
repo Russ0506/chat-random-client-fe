@@ -1,43 +1,22 @@
 import React, { useState, useEffect } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+import Button from "@mui/material/Button"
+import CssBaseline from "@mui/material/CssBaseline"
+import TextField from "@mui/material/TextField"
+import FormControlLabel from "@mui/material/FormControlLabel"
+import Checkbox from "@mui/material/Checkbox"
+import Grid from "@mui/material/Grid"
+import Box from "@mui/material/Box"
 import Link from "@mui/material/Link"
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useDispatch, useSelector } from "react-redux";
+import Typography from "@mui/material/Typography"
+import Container from "@mui/material/Container"
+import { useDispatch, useSelector } from "react-redux"
 import { login } from '../../../features/auth'
-import { clearMessage } from "../../../features/message";
+import { clearMessage } from "../../../features/message"
 import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../constant/css_constant"
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import "../../../styles/login.scss"
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" to="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 export default function SignIn(props) {
   const navigate = useNavigate();
@@ -91,13 +70,16 @@ export default function SignIn(props) {
     mb: 2,
     bgcolor: GRP_COLOR.BACKGROUND01,
     color: GRP_COLOR.CODE016,
+    '&:hover': {
+      color: GRP_COLOR.WHITECODE,
+    },
     borderRadius: BORDER_RADIUS.br10,
     boxShadow: BOX_SHADOW.CODE001,
     height: "45px",
   }
 
   return (
-    <div style={{ background: GRP_COLOR.CODE017, height: "100vh", color: GRP_COLOR.CODE016, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+    <Box sx={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
       <Container component="main" maxWidth="xs" sx={{ fontWeight: FONT_WEIGHT.normal, lineHeight: LINE_HEIGHT.normal }}>
         <CssBaseline />
         <Box
@@ -188,9 +170,6 @@ export default function SignIn(props) {
               control={
                 <Checkbox
                   value="remember"
-                  style={{
-                    color: GRP_COLOR.CODE016,
-                  }}
                 />
               }
               label="Remember me"
@@ -221,7 +200,6 @@ export default function SignIn(props) {
                   sx={{
                     lineHeight: LINE_HEIGHT.lh17,
                     fontWeight: FONT_WEIGHT.middle,
-                    color: GRP_COLOR.CODE016,
                     textDecoration: "none",
                   }}
                 >
@@ -235,7 +213,6 @@ export default function SignIn(props) {
                   sx={{
                     lineHeight: LINE_HEIGHT.lh17,
                     fontWeight: FONT_WEIGHT.middle,
-                    color: GRP_COLOR.CODE016,
                     textDecoration: "none",
                   }}
                 >
@@ -248,6 +225,6 @@ export default function SignIn(props) {
 
       </Container>
       <Box className="login-main"></Box>
-    </div>
+    </Box>
   );
 }
