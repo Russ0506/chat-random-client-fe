@@ -11,6 +11,7 @@ import RegisterConfirm from "./views/pages/register/RegisterConfirm";
 import ForgotPassword from "./views/pages/authenticator/ForgotPassword";
 import ResetPwdEmailConfirmSuccess from "./views/pages/authenticator/ResetPwdEmailConfirmSuccess";
 import { PlacesWithStandaloneSearchBox } from "./components/googleMapAPI/GoogleMapAPI";
+import ResetPasswordConfirm from "./views/pages/authenticator/ResetPasswordConfirm";
 
 export default function Routes() {
   const routes = useRoutes([
@@ -75,6 +76,11 @@ export default function Routes() {
       path: "/confirm-email-register",
       element: <RegisterConfirm />,
       children: [{ path: ":token", element: <RegisterConfirm /> }],
+    },
+    {
+      path: "/confirm-email-reset-password",
+      element: <ResetPasswordConfirm />,
+      children: [{ path: ":token", element: <ResetPasswordConfirm /> }],
     },
   ]);
   return routes;

@@ -12,10 +12,21 @@ import React from "react";
 import { RandomChatSideBarItem } from "../../../constant/RandomChatSideBarItem";
 import MediaControlCard from "../base/card/MediaControlCard";
 import { FixedSizeList } from 'react-window';
+import PartnerSetting from '../../pages/chat/popup/PartnerSetting'
 
 export default function DrawerSideBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [openPartnerDialog, setOpenPartnerDialog] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenPartnerDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenPartnerDialog(false);
+  };
+
   const drawerWidth = 240;
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -29,9 +40,16 @@ export default function DrawerSideBar(props) {
       {RandomChatSideBarItem.map((component, i) => (
         <>
           <ListItem key={i}>
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-              {component.name}
-            </Typography>
+              {
+                (i===2) ?
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }} onClick={handleClickOpen}>
+                  {component.name}
+                </Typography>
+                :
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                  {component.name}
+                  </Typography>
+              }
           </ListItem>
           <List>
             {component.items.map((item, k) => (
@@ -47,6 +65,8 @@ export default function DrawerSideBar(props) {
           </List>
         </>
       ))}
+      <PartnerSetting open={openPartnerDialog} onClose={handleClose}>
+      </PartnerSetting>
       {/* <Divider variant="middle" /> */}
     </div>
   );
