@@ -1,4 +1,5 @@
 import { axiosClient } from '../setup/axiosClient'
+import { setMessage } from "../features/message";
 
 const URL = "users"
 
@@ -25,6 +26,7 @@ const login = async (params) => {
     const res = await axiosClient.post(`${URL}/sign_in`, params)
     return res
   } catch (error) {
+    setMessage(error.response.data.errors[0])
     return error.response.data.errors[0]
   }
 }
@@ -60,7 +62,6 @@ const authService = {
   confirmRegister,
   login,
   logout,
-  // resetPwdEmailConfirm,
   resetPwd,
   sendMailResetPass,
 };
