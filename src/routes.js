@@ -1,4 +1,4 @@
-import  Login  from "./views/pages/authenticator/Login";
+import Login from "./views/pages/authenticator/Login";
 import React from "react";
 import { useRoutes } from "react-router-dom";
 import HomePage from "./views/admin/homePage/HomePage";
@@ -8,6 +8,8 @@ import Welcome from "./views/pages/welcome/Welcome";
 import ChatMainScreen from "./views/pages/chat/MainScreen";
 import RegisterConfirm from "./views/pages/register/RegisterConfirm";
 import ForgotPassword from "./views/pages/authenticator/ForgotPassword";
+import ResetPwdEmailConfirmSuccess from "./views/pages/authenticator/ResetPwdEmailConfirmSuccess";
+import { PlacesWithStandaloneSearchBox } from "./components/googleMapAPI/GoogleMapAPI";
 import ResetPasswordConfirm from "./views/pages/authenticator/ResetPasswordConfirm";
 
 export default function Routes() {
@@ -36,9 +38,33 @@ export default function Routes() {
       ],
     },
     {
-      path: "/register",
-      element: <SignUp />,
+      path: "/reset-password",
+      element: <ResetPassword />,
       children: [{ path: "", element: "" }],
+    },
+    {
+      path: "/reset-password-email-confirm",
+
+      children: [
+        // { path: "", element: <ResetPwdEmailConfirm /> },
+        { path: "success", element: <ResetPwdEmailConfirmSuccess /> },
+      ],
+    },
+    // {
+    //   path: "/users",
+    //   children: [
+    //     { path: "resetPassword", element: <ResetPassword /> },
+    //     {
+    //       path: "resetPasswordEmailConfirm",
+    //       element: <ResetPwdEmailConfirm />,
+    //     },
+    //     { path: "login", element: <Login /> },
+    //     { path: "logout", element: <Welcome /> },
+    //   ],
+    // },
+    {
+      path: "/ggmap-api-testing",
+      element: <PlacesWithStandaloneSearchBox />
     },
     {
       path: "/chat-main-screen",

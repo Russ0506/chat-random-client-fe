@@ -1,9 +1,49 @@
-import { Box, Button, Stack, TextField, Typography } from "@mui/material";
+import { Backdrop, Box, Button, CircularProgress, Stack, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearMessage } from "../../../features/message";
 import { resetPwdEmailConfirm } from "../../../features/auth";
+import AlertDialogSlide from "../../common/base/dialog/AlertDialogSlide";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 export default function ResetPwdEmailConfirm(props) {
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { message } = useSelector((state) => state.message);
+   const [open, setOpen] = React.useState(false);
+   const handleClose = () => {
+     setOpen(false);
+   };
+   const handleToggle = () => {
+     setOpen(!open);
+   };
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(clearMessage());
+  }, [dispatch]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log(data.get("email"));
+    handleToggle();
+    dispatch(
+      resetPwdEmailConfirm({
+        user: { email: data.get("email") },
+      })
+    )
+      .unwrap()
+      .then(() => {
+        navigate("/reset-password-email-confirm/success");
+      })
+      .catch(() => {
+        // setLoading(false);
+        alert("false");
+      });
+  };
   // const dispatch = useDispatch();
   // const [loading, setLoading] = useState(false);
   // const { isLoggedIn } = useSelector((state) => state.auth);
@@ -41,6 +81,13 @@ export default function ResetPwdEmailConfirm(props) {
         height: "100vh",
       }}
     >
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       {/* <Box
         component="form"
         onSubmit={handleSubmit}
@@ -93,7 +140,8 @@ export default function ResetPwdEmailConfirm(props) {
             Back
           </Button>
         </Stack>
-      </Box> */}
-    </Box>
+      </Box>
+      <Box className="login-main"></Box> */}
+      </Box> 
   );
 }

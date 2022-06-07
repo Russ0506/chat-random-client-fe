@@ -1,6 +1,6 @@
 import { axiosClient } from '../setup/axiosClient'
 
-const URL = "users"
+const URL = "https://random-chat-api-server.herokuapp.com/users";
 
 const register = async (params) => {
   try {
