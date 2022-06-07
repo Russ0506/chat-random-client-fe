@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import React from "react";
 import { RandomChatSideBarItem } from "../../../constant/RandomChatSideBarItem";
+import MediaControlCard from "../base/card/MediaControlCard";
+import { FixedSizeList } from 'react-window';
 import PartnerSetting from '../../pages/chat/popup/PartnerSetting'
 import Box from "@mui/material/Box"
 
@@ -51,13 +53,15 @@ export default function DrawerSideBar(props) {
               }
           </ListItem>
           <List>
-            {component.items.map((item, index) => (
-              <ListItem key={index} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.name} />
-                </ListItemButton>
-              </ListItem>
+            {component.items.map((item, k) => (
+              // <FixedSizeList height={400} width={360} itemSize={46} itemCount={200}>
+                <ListItem key={k} disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                </ListItem>
+              // </FixedSizeList>
             ))}
           </List>
         </Box>
