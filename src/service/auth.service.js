@@ -13,7 +13,7 @@ const register = async (params) => {
 
 const confirmRegister = async (params) => {
   try {
-    const res = await axiosClient.get(`${URL}/confirmation`, params)
+    const res = await axiosClient.get(`${URL}/confirmation`, {params: params})
     return res
   } catch (error) {
     console.log(error)
