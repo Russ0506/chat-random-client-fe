@@ -1,19 +1,9 @@
 import { Box, Button, Typography } from "@mui/material";
-import React, {useEffect} from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { resetPwdEmailConfirm } from "../../../features/auth";
 import { GRP_COLOR, BORDER_RADIUS, BOX_SHADOW } from "../../../constant/css_constant"
 
 export default function ResetPasswordConfirm() {
-
-    const dispatch = useDispatch()
-    const { token } = useParams();
-
-
-    useEffect(() => {
-        dispatch(resetPwdEmailConfirm({confirmation_token: token }));
-      }, [dispatch]);
 
     const button_style = {
         mt: 3, mb: 2,
@@ -37,7 +27,7 @@ export default function ResetPasswordConfirm() {
           </Typography>
         <br></br><br></br>
           <Typography component="h3" color="green">
-          Congratulations, your account have been change password. 
+          Congratulations, your account have been change password. Please login again to explore more about random chat universal.
           </Typography>
           <Button
           type="submit"

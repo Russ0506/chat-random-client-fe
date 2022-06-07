@@ -13,6 +13,7 @@ import { RandomChatSideBarItem } from "../../../constant/RandomChatSideBarItem";
 import MediaControlCard from "../base/card/MediaControlCard";
 import { FixedSizeList } from 'react-window';
 import PartnerSetting from '../../pages/chat/popup/PartnerSetting'
+import Box from "@mui/material/Box"
 
 export default function DrawerSideBar(props) {
   const { window } = props;
@@ -34,12 +35,12 @@ export default function DrawerSideBar(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
   const drawer = (
-    <div>
+    <Box>
       <Toolbar />
       {/* <MediaControlCard /> */}
       {RandomChatSideBarItem.map((component, i) => (
-        <>
-          <ListItem key={i}>
+        <Box key={i}>
+          <ListItem>
               {
                 (i===2) ?
                   <Typography variant="subtitle1" sx={{ fontWeight: "bold" }} onClick={handleClickOpen}>
@@ -63,12 +64,12 @@ export default function DrawerSideBar(props) {
               // </FixedSizeList>
             ))}
           </List>
-        </>
+        </Box>
       ))}
       <PartnerSetting open={openPartnerDialog} onClose={handleClose}>
       </PartnerSetting>
       {/* <Divider variant="middle" /> */}
-    </div>
+    </Box>
   );
   return (
     <>

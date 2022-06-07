@@ -9,8 +9,6 @@ export const resetPwd = createAsyncThunk(
     try {
       console.log("resetPwd");
       let response = await AuthService.resetPwd(params);
-      thunkAPI.dispatch(setMessage(response.data.message));
-      console.log(response);
       return response.data;
     } catch (error) {
       const message =
@@ -39,27 +37,27 @@ export const registerConfirm = createAsyncThunk(
   }
 );
 
-export const resetPwdEmailConfirm = createAsyncThunk(
-  "auth/resetPwdConfirm",
-  async (params, thunkAPI) => {
-    try {
-      console.log("reset password email confirm");
-      let response = await AuthService.resetPwdEmailConfirm(params);
-      thunkAPI.dispatch(setMessage(response.data.message));
-      console.log(response);
-      return response.data;
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(message));
-      return thunkAPI.rejectWithValue();
-    }
-  }
-);
+// export const resetPwdEmailConfirm = createAsyncThunk(
+//   "auth/resetPwdConfirm",
+//   async (params, thunkAPI) => {
+//     try {
+//       console.log("reset password email confirm");
+//       let response = await AuthService.resetPwdEmailConfirm(params);
+//       thunkAPI.dispatch(setMessage(response.data.message));
+//       console.log(response);
+//       return response.data;
+//     } catch (error) {
+//       const message =
+//         (error.response &&
+//           error.response.data &&
+//           error.response.data.message) ||
+//         error.message ||
+//         error.toString();
+//       thunkAPI.dispatch(setMessage(message));
+//       return thunkAPI.rejectWithValue();
+//     }
+//   }
+// );
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -86,7 +84,7 @@ export const login = createAsyncThunk(
   async (params, thunkAPI) => {
     try {
       const data = await AuthService.login(params);
-      thunkAPI.dispatch(setMessage( await AuthService.login(params)));
+      thunkAPI.dispatch(setMessage(await AuthService.login(params)));
       return data
     } catch (error) {
       const message =
@@ -100,6 +98,27 @@ export const login = createAsyncThunk(
     }
   }
 );
+
+export const sendMailResetPass = createAsyncThunk(
+  "auth/send-email-reset-pas",
+  async (params, thunkAPI) => {
+    try {
+      const data = await AuthService.sendMailResetPass(params);
+      thunkAPI.dispatch(setMessage(await AuthService.sendMailResetPass(params)));
+      return data
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      thunkAPI.dispatch(setMessage(message));
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
+
 export const logout = createAsyncThunk("auth/logout", async () => {
   await AuthService.logout();
 });

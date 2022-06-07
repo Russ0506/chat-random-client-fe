@@ -44,6 +44,32 @@ export default function ResetPwdEmailConfirm(props) {
         alert("false");
       });
   };
+  // const dispatch = useDispatch();
+  // const [loading, setLoading] = useState(false);
+  // const { isLoggedIn } = useSelector((state) => state.auth);
+  // const { message } = useSelector((state) => state.message);
+  // useEffect(() => {
+  //   dispatch(clearMessage());
+  // }, [dispatch]);
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   console.log(data);
+  //   dispatch(
+  //     resetPwdEmailConfirm({
+  //       user: { email: data.get("email") },
+  //     })
+  //   )
+  //     .unwrap()
+  //     .then(() => {
+  //       props.history.push("/profile");
+  //       window.location.reload();
+  //     })
+  //     .catch(() => {
+  //       setLoading(false);
+  //     });
+  // };
 
   return (
     <Box
@@ -62,7 +88,7 @@ export default function ResetPwdEmailConfirm(props) {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <Box
+      {/* <Box
         component="form"
         onSubmit={handleSubmit}
         noValidate
@@ -115,7 +141,7 @@ export default function ResetPwdEmailConfirm(props) {
           </Button>
         </Stack>
       </Box>
-      <Box className="login-main"></Box>
-    </Box>
+      <Box className="login-main"></Box> */}
+      </Box> 
   );
 }
