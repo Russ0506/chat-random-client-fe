@@ -46,7 +46,7 @@ export default function Routes() {
       path: "/reset-password-email-confirm",
 
       children: [
-        { path: "", element: <ResetPwdEmailConfirm /> },
+        // { path: "", element: <ResetPwdEmailConfirm /> },
         { path: "success", element: <ResetPwdEmailConfirmSuccess /> },
       ],
     },
