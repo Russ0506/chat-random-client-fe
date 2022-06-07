@@ -9,7 +9,6 @@ export const resetPwd = createAsyncThunk(
     try {
       console.log("resetPwd");
       let response = await AuthService.resetPwd(params);
-      thunkAPI.dispatch(setMessage(await AuthService.resetPwd(params)));
       return response.data;
     } catch (error) {
       const message =
