@@ -1,40 +1,56 @@
 import { axiosClient } from '../setup/axiosClient'
+import { setMessage } from "../features/message";
 
-const URL = "users"
+const URL = "https://random-chat-api-server.herokuapp.com/users";
 
-const register = async (params) => {
+const register = async (params, thunkAPI) => {
   try {
     const res = await axiosClient.post(`${URL}`, params)
     return res
   } catch (error) {
-    console.log(error)
+    const message =
+      (error.response.data.errors[0]) ||
+      error.message ||
+      error.toString();
+    thunkAPI.dispatch(setMessage(message));
+    return thunkAPI.rejectWithValue();
   }
 };
 
 const confirmRegister = async (params) => {
   try {
-    const res = await axiosClient.get(`${URL}/confirmation`, {params: params})
+    const res = await axiosClient.get(`${URL}/confirmation`, { params: params })
     return res
   } catch (error) {
     console.log(error)
   }
 }
 
-const login = async (params) => {
+const login = async (params, thunkAPI) => {
   try {
     const res = await axiosClient.post(`${URL}/sign_in`, params)
     return res
   } catch (error) {
-    return error.response.data.errors[0]
+    const message =
+      (error.response.data.errors[0]) ||
+      error.message ||
+      error.toString();
+    thunkAPI.dispatch(setMessage(message));
+    return thunkAPI.rejectWithValue();
   }
 }
 
-const sendMailResetPass = async (params) => {
+const sendMailResetPass = async (params, thunkAPI) => {
   try {
     const res = await axiosClient.post(`${URL}/password`, params)
     return res
   } catch (error) {
-    return error.response.data.errors[0]
+    const message =
+      (error.response.data.errors[0]) ||
+      error.message ||
+      error.toString();
+    thunkAPI.dispatch(setMessage(message));
+    return thunkAPI.rejectWithValue();
   }
 }
 
@@ -60,7 +76,6 @@ const authService = {
   confirmRegister,
   login,
   logout,
-  // resetPwdEmailConfirm,
   resetPwd,
   sendMailResetPass,
 };

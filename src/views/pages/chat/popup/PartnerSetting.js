@@ -199,8 +199,10 @@ export default function PartnerSetting(props) {
     ))
       .unwrap()
       .then(() => {
+        props.onClose()
+        props.handleOpenViewSettingModal()
         // if(isLoggedIn) {
-        //   navigate("/chat-main-screen");
+          // navigate("/chat-main-screen");
         //   window.location.reload();
         // } 
       })
@@ -209,8 +211,6 @@ export default function PartnerSetting(props) {
       });
     // open popup view here
   }
-
-
 
   const [ageFrom, setAgeFrom] = React.useState('');
 
@@ -394,7 +394,7 @@ export default function PartnerSetting(props) {
 
       </DialogContent>
       <DialogActions sx={{ m: 2 }}>
-        <Button onClick={props.onClose} sx={typeButton}>Reset</Button>
+        <Button onClick={props.onClose} sx={typeButton}>Cancel</Button>
         <Button onClick={saveDataSearchPartnerSetting} sx={typeButton}>Save</Button>
       </DialogActions>
     </Dialog>

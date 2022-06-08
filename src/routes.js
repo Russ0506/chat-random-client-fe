@@ -1,4 +1,4 @@
-import  Login  from "./views/pages/authenticator/Login";
+import Login from "./views/pages/authenticator/Login";
 import React from "react";
 import { useRoutes } from "react-router-dom";
 import HomePage from "./views/admin/homePage/HomePage";
@@ -8,7 +8,10 @@ import Welcome from "./views/pages/welcome/Welcome";
 import ChatMainScreen from "./views/pages/chat/MainScreen";
 import RegisterConfirm from "./views/pages/register/RegisterConfirm";
 import ForgotPassword from "./views/pages/authenticator/ForgotPassword";
+import ResetPwdEmailSendSuccess from "./views/pages/authenticator/ResetPwdEmailSendSuccess";
+import { PlacesWithStandaloneSearchBox } from "./components/googleMapAPI/GoogleMapAPI";
 import ResetPasswordConfirm from "./views/pages/authenticator/ResetPasswordConfirm";
+import RegisterEmailSendSuccess from "./views/pages/register/RegisterEmailSendSuccess";
 
 export default function Routes() {
   const routes = useRoutes([
@@ -36,9 +39,42 @@ export default function Routes() {
       ],
     },
     {
-      path: "/register",
-      element: <SignUp />,
+      path: "/reset-password",
+      element: <ResetPassword />,
       children: [{ path: "", element: "" }],
+    },
+    {
+      path: "/reset-password-email-confirm",
+
+      children: [
+        // { path: "", element: <ResetPwdEmailConfirm /> },
+        { path: "success", element: <ResetPwdEmailSendSuccess /> },
+      ],
+    },
+    {
+      path: "/register",
+
+      children: [
+        // { path: "", element: <ResetPwdEmailConfirm /> },
+        { path: "", element: <SignUp/> },
+        { path: "email-success", element: <RegisterEmailSendSuccess/> },
+      ],
+    },
+    // {
+    //   path: "/users",
+    //   children: [
+    //     { path: "resetPassword", element: <ResetPassword /> },
+    //     {
+    //       path: "resetPasswordEmailConfirm",
+    //       element: <ResetPwdEmailConfirm />,
+    //     },
+    //     { path: "login", element: <Login /> },
+    //     { path: "logout", element: <Welcome /> },
+    //   ],
+    // },
+    {
+      path: "/ggmap-api-testing",
+      element: <PlacesWithStandaloneSearchBox />
     },
     {
       path: "/chat-main-screen",

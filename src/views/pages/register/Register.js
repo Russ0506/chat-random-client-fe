@@ -16,13 +16,15 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { GRP_COLOR, BORDER_RADIUS, BOX_SHADOW } from "../../../constant/css_constant"
+import { GRP_COLOR, BORDER_RADIUS, BOX_SHADOW, FONT_SIZE } from "../../../constant/css_constant"
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import swal from 'sweetalert';
+import { useNavigate } from "react-router-dom";
+import Loading from "../../common/base/loading/Loading";
 
 function Copyright(props) {
   return (
@@ -41,10 +43,10 @@ const theme = createTheme();
 
 
 export default function SignUp(props) {
-
   const dispatch = useDispatch()
-  const [loading, setLoading] = useState(false);
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const navigate = useNavigate()
+  const [isSubmit, setIsSubmit] = useState(false);
+
   const { message } = useSelector((state) => state.message);
   const [date, setDate] = useState(new Date());
   useEffect(() => {
@@ -53,6 +55,7 @@ export default function SignUp(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setIsSubmit(true)
     const data = new FormData(event.currentTarget);
 
     const birthday = moment(date).format("DD/MM/YYYY");
@@ -62,12 +65,14 @@ export default function SignUp(props) {
       }
     ))
       .unwrap()
-      .then(() => {
-        props.history.push("/profile");
-        window.location.reload();
+      .then((data) => {
+        if(data.success) {
+          navigate("email-success");
+        } 
       })
       .catch(() => {
-        setLoading(false);
+        setIsSubmit(false)
+        // setLoading(false);
       });
 
   }
@@ -87,7 +92,8 @@ export default function SignUp(props) {
 
   return (
     <Box sx={{ bgcolor: GRP_COLOR.WHITECODE, height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
-      <Container component="main" maxWidth="xs">
+      <Loading show={isSubmit}></Loading>
+      <Container component="main" maxWidth="xs" className={isSubmit? "opacity-background" : ""}>
         <CssBaseline />
         <Box
           sx={{
@@ -197,6 +203,16 @@ export default function SignUp(props) {
                 />
               </Grid>
             </Grid>
+            {
+              message ? 
+              <Box
+                component="div"
+                variant="h5"
+                color="red"
+                fontSize={FONT_SIZE.smallText}
+              >
+                {message}
+              </Box> : ''}
             <Button
 
               type="submit"
