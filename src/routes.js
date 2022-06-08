@@ -8,7 +8,7 @@ import Welcome from "./views/pages/welcome/Welcome";
 import ChatMainScreen from "./views/pages/chat/MainScreen";
 import RegisterConfirm from "./views/pages/register/RegisterConfirm";
 import ForgotPassword from "./views/pages/authenticator/ForgotPassword";
-import ResetPwdEmailConfirmSuccess from "./views/pages/authenticator/ResetPwdEmailConfirmSuccess";
+import ResetPwdEmailSendSuccess from "./views/pages/authenticator/ResetPwdEmailSendSuccess";
 import { PlacesWithStandaloneSearchBox } from "./components/googleMapAPI/GoogleMapAPI";
 import ResetPasswordConfirm from "./views/pages/authenticator/ResetPasswordConfirm";
 
@@ -47,7 +47,7 @@ export default function Routes() {
 
       children: [
         // { path: "", element: <ResetPwdEmailConfirm /> },
-        { path: "success", element: <ResetPwdEmailConfirmSuccess /> },
+        { path: "success", element: <ResetPwdEmailSendSuccess /> },
       ],
     },
     // {

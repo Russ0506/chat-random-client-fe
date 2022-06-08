@@ -82,39 +82,29 @@ export const register = createAsyncThunk(
 export const login = createAsyncThunk(
   "auth/login",
   async (params, thunkAPI) => {
-    try {
-      const data = await AuthService.login(params);
-      return data
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(message));
-      return thunkAPI.rejectWithValue();
-    }
+    const data = await AuthService.login(params, thunkAPI);
+    return data
   }
 );
 
 export const sendMailResetPass = createAsyncThunk(
   "auth/send-email-reset-pas",
   async (params, thunkAPI) => {
-    try {
-      const data = await AuthService.sendMailResetPass(params);
-      thunkAPI.dispatch(setMessage(await AuthService.sendMailResetPass(params)));
-      return data
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(message));
-      return thunkAPI.rejectWithValue();
-    }
+    return await AuthService.sendMailResetPass(params, thunkAPI);
+    // try {
+    //   const data = await AuthService.sendMailResetPass(params);
+    // thunkAPI.dispatch(setMessage(await AuthService.sendMailResetPass(params)));
+    //   return data
+    // } catch (error) {
+    //   const message =
+    //     (error.response &&
+    //       error.response.data &&
+    //       error.response.data.message) ||
+    //     error.message ||
+    //     error.toString();
+    //   thunkAPI.dispatch(setMessage(message));
+    //   return thunkAPI.rejectWithValue();
+    // }
   }
 );
 
@@ -135,7 +125,7 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
     },
     [login.fulfilled]: (state, action) => {
-      state.isLoggedIn = true;
+      state.isLoggedIn =  action.payload.success;
       state.user = action.payload.user;
     },
     [login.rejected]: (state, action) => {
