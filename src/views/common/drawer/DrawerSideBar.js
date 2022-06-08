@@ -14,18 +14,28 @@ import MediaControlCard from "../base/card/MediaControlCard";
 import { FixedSizeList } from 'react-window';
 import PartnerSetting from '../../pages/chat/popup/PartnerSetting'
 import Box from "@mui/material/Box"
+import PartnerSettingView from "../../pages/chat/popup/PartnerSettingView";
 
 export default function DrawerSideBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [openPartnerDialog, setOpenPartnerDialog] = React.useState(false);
+  const [openPartnerViewDialog, setOpenPartnerViewDialog] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpenPartnerDialog(true);
   };
 
-  const handleClose = () => {
+  const handleOpenViewSettingModal = () => {
+    setOpenPartnerViewDialog(true);
+  };
+
+  const handlePartnerSettingClose = () => {
     setOpenPartnerDialog(false);
+  };
+
+  const handleParnerSettingViewClose = () => {
+    setOpenPartnerViewDialog(false);
   };
 
   const drawerWidth = 240;
@@ -66,8 +76,10 @@ export default function DrawerSideBar(props) {
           </List>
         </Box>
       ))}
-      <PartnerSetting open={openPartnerDialog} onClose={handleClose}>
+      <PartnerSetting open={openPartnerDialog} onClose={handlePartnerSettingClose} handleOpenViewSettingModal={handleOpenViewSettingModal}>
       </PartnerSetting>
+      <PartnerSettingView open={openPartnerViewDialog} onClose={handleParnerSettingViewClose}>
+      </PartnerSettingView>
       {/* <Divider variant="middle" /> */}
     </Box>
   );
