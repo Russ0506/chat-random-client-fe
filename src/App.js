@@ -1,5 +1,6 @@
 import React from "react";
 import "./styles/App.css";
+import "./styles/loading.css"
 import { BrowserRouter, useRoutes } from "react-router-dom";
 import Routes from "./routes";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
