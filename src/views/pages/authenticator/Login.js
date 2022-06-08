@@ -57,7 +57,6 @@ export default function SignIn(props) {
     ))
       .unwrap()
       .then((data) => {
-        setIsSubmit(true)
         if(data.success) {
           navigate("/chat-main-screen");
         } 
