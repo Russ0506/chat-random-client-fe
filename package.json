@@ -13,7 +13,7 @@
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.6.2",
     "@mui/lab": "^5.0.0-alpha.83",
-    "@mui/material": "^5.8.3",
+    "@mui/material": "^5.7.0",
     "@mui/styled-engine-sc": "^5.7.0",
     "@mui/styles": "^5.8.0",
     "@mui/x-date-pickers": "^5.0.0-alpha.4",
@@ -37,7 +37,6 @@
     "sass": "^1.52.1",
     "styled-components": "^5.3.5",
     "sweetalert": "^2.1.2",
-    "sweetalert2": "^11.4.17",
     "validate.js": "^0.13.1",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
