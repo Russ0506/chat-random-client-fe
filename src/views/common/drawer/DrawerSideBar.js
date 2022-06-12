@@ -15,6 +15,7 @@ import { FixedSizeList } from 'react-window';
 import PartnerSetting from '../../pages/chat/popup/PartnerSetting'
 import Box from "@mui/material/Box"
 import PartnerSettingView from "../../pages/chat/popup/PartnerSettingView";
+import PartnerSettingModal from "../../pages/chat/popup/PartnerSettignModal";
 
 export default function DrawerSideBar(props) {
   const { window } = props;
@@ -76,11 +77,12 @@ export default function DrawerSideBar(props) {
           </List>
         </Box>
       ))}
-      <PartnerSetting open={openPartnerDialog} onClose={handlePartnerSettingClose} handleOpenViewSettingModal={handleOpenViewSettingModal}>
+      {/* <PartnerSetting open={openPartnerDialog} onClose={handlePartnerSettingClose} handleOpenViewSettingModal={handleOpenViewSettingModal}>
       </PartnerSetting>
       <PartnerSettingView open={openPartnerViewDialog} onClose={handleParnerSettingViewClose}>
-      </PartnerSettingView>
+      </PartnerSettingView> */}
       {/* <Divider variant="middle" /> */}
+      <PartnerSettingModal open={openPartnerDialog} onClose={handlePartnerSettingClose} handleOpenViewSettingModal={handleOpenViewSettingModal}></PartnerSettingModal>
     </Box>
   );
   return (
