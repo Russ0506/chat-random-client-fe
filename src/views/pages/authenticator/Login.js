@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import { useDispatch, useSelector } from "react-redux"
 import { login } from '../../../features/auth'
-import { clearMessage } from "../../../features/message"
+import { clearMessage, setMessage } from "../../../features/message"
 import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../constant/css_constant"
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
@@ -53,10 +53,11 @@ export default function SignIn(props) {
       }
     ))
       .unwrap()
-      .then(() => {
+      .then((data) => {
+        setMessage(data)
         if(isLoggedIn) {
           navigate("/chat-main-screen");
-          window.location.reload();
+          // window.location.reload();
         } 
       })
       .catch(() => {

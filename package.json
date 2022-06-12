@@ -1,5 +1,6 @@
 {
   "name": "chat-random-client-fe",
+  "proxy": "https://random-chat-api-server.herokuapp.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
