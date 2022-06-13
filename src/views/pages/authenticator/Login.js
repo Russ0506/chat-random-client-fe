@@ -17,11 +17,13 @@ import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import "../../../styles/login.scss"
+import Loading from "../../common/base/loading/Loading";
 
 export default function SignIn(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
 
@@ -45,6 +47,7 @@ export default function SignIn(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setIsSubmit(true)
     const data = new FormData(event.currentTarget);
 
     dispatch(login(
@@ -54,13 +57,12 @@ export default function SignIn(props) {
     ))
       .unwrap()
       .then((data) => {
-        setMessage(data)
-        if(isLoggedIn) {
+        if(data.success) {
           navigate("/chat-main-screen");
-          // window.location.reload();
         } 
       })
       .catch(() => {
+        setIsSubmit(false)
         setLoading(false);
       });
 
@@ -81,7 +83,8 @@ export default function SignIn(props) {
 
   return (
     <Box sx={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
-      <Container component="main" maxWidth="xs" sx={{ fontWeight: FONT_WEIGHT.normal, lineHeight: LINE_HEIGHT.normal }}>
+      <Loading show={isSubmit}></Loading>
+      <Container component="main" maxWidth="xs" sx={{ fontWeight: FONT_WEIGHT.normal, lineHeight: LINE_HEIGHT.normal }} className={isSubmit? "opacity-background" : ""}>
         <CssBaseline />
         <Box
           sx={{
@@ -190,6 +193,7 @@ export default function SignIn(props) {
               fullWidth
               variant="contained"
               sx={typeButton}
+              disabled = {isSubmit}
             >
               Sign In
             </Button>

@@ -1,5 +1,6 @@
-import React from "react";
-import "./styles/App.css";
+import React from "react"
+import "./styles/App.css"
+import "./styles/loading.css"
 import { BrowserRouter, useRoutes } from "react-router-dom";
 import Routes from "./routes";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -10,7 +11,8 @@ function App() {
   const themeDefault = createTheme({
     palette: {
       text: {
-        primary: GRP_COLOR.CODE016
+        primary: GRP_COLOR.CODE016,
+        second: GRP_COLOR.CODE016,
       },
       background: {
         default: GRP_COLOR.CODE017
@@ -18,6 +20,7 @@ function App() {
       primary: {
         main: GRP_COLOR.CODE016,
       },
+      // mode: GRP_COLOR.CODE016,
     },
   });
   
