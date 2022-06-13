@@ -1,34 +1,24 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import CardMedia from '@mui/material/CardMedia';
 import { useTheme } from '@mui/material/styles';
-import FindPartner from '../../../../assets/img/find-partner.jpg';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import ListItemText from '@mui/material/ListItemText';
-import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import Switch from '@mui/material/Switch';
-import Autocomplete from '@mui/material/Autocomplete';
 import { useDispatch, useSelector } from "react-redux"
 import { styled, alpha } from '@mui/material/styles';
 import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../../constant/css_constant"
 import { saveDataSearch } from '../../../../features/user-setting';
-import { Chip, Link } from '@mui/material';
-import partnerSetting from '../../../../styles/partnerSetting.scss'
-
+import { Chip } from '@mui/material';
+import GoogleMapPlaceSearchBox from "../../../../components/googleMapAPI/GoogleMapPlaceSearchBox";
+import GgmCurrentPlaceText2 from "../../../../components/googleMapAPI/GgmCurrentPlaceText2";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -46,78 +36,78 @@ const sxHeaderPopup = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  fontWeight: FONT_WEIGHT.overmiddle
-}
+  fontWeight: FONT_WEIGHT.overmiddle,
+};
 
 const sxJustifyContent = {
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-}
+};
 
 const sxSearch = {
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-}
+};
 
 const sxAlignItem = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-}
+};
 
 const names = [
-  'Camping',
-  'Read Book',
-  'Climb',
-  'Sport',
-  'Music',
-  'Foodt',
-  'Forest',
-  'Ocean',
-  'Animal',
-  'Romantic',
+  "Camping",
+  "Read Book",
+  "Climb",
+  "Sport",
+  "Music",
+  "Foodt",
+  "Forest",
+  "Ocean",
+  "Animal",
+  "Romantic",
 ];
 
 // For search Function
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(GRP_COLOR.WHITECODE, 0.15),
-  '&:hover': {
+  "&:hover": {
     backgroundColor: alpha(GRP_COLOR.WHITECODE, 0.25),
   },
   marginRight: theme.spacing(6),
   marginLeft: 0,
   border: `1px solid ${GRP_COLOR.GREYYELLOW}`,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(7.5),
-    width: 'auto',
+    width: "auto",
   },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
+  color: "inherit",
+  "& .MuiInputBase-input": {
     padding: theme.spacing(2, 2, 2, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
     },
   },
 }));
@@ -132,7 +122,7 @@ const typeButton = {
   borderRadius: BORDER_RADIUS.br10,
   boxShadow: BOX_SHADOW.CODE001,
   height: "45px",
-}
+};
 
 // const sxLabelAge = sxJustifyContent
 
@@ -154,6 +144,9 @@ export default function PartnerSetting(props) {
     }
   })
 
+    const [currentLocationPermision, setcurrentLocationPermision] =
+    React.useState(false);
+
   const [hobbies, setHobbies] = React.useState(initData.user_setting.hobbies);
   const [loading, setLoading] = React.useState(false);
 
@@ -161,6 +154,10 @@ export default function PartnerSetting(props) {
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   const min = 0;
   const max = 100;
+
+     const setCurrentLocationPermision = (event, child) => {
+      setcurrentLocationPermision(currentLocationPermision === false? true : false);
+    };
 
 
   useEffect(() => {
@@ -175,7 +172,7 @@ export default function PartnerSetting(props) {
     } = event;
     setHobbies(
       // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
+      typeof value === "string" ? value.split(",") : value
     );
   };
 
@@ -186,8 +183,8 @@ export default function PartnerSetting(props) {
       user_setting: {
         from_age: parseInt(data.get("from_age")),
         to_age: parseInt(data.get("to_age")),
-        lat: 111.111,
-        long: 444.444,
+        lat: document.getElementById("__curr_la").value,
+        long: document.getElementById("__curr_lo").value,
         address: "Da Nang, Viet Nam",
         radius: parseInt(data.get("radius")),
         gender: data.get("gender"),
@@ -206,7 +203,7 @@ export default function PartnerSetting(props) {
         // if(isLoggedIn) {
         // navigate("/chat-main-screen");
         //   window.location.reload();
-        // } 
+        // }
       })
       .catch(() => {
         setLoading(false);
@@ -227,18 +224,50 @@ export default function PartnerSetting(props) {
   return (
     <Box>
       <DialogContent>
-        <Box component="form" onSubmit={saveDataSearchPartnerSetting} sx={{ mt: 3, color: GRP_COLOR.CODE016, alignItems: "center" }} className="abc">
-          <Button ref={props.submitRef} type="submit" style={{ display: 'none' }} />
+        <Box
+          component="form"
+          onSubmit={saveDataSearchPartnerSetting}
+          sx={{ mt: 3, color: GRP_COLOR.CODE016, alignItems: "center" }}
+          className="abc"
+        >
+          <Button
+            ref={props.submitRef}
+            type="submit"
+            style={{ display: "none" }}
+          />
           <Grid container spacing={5}>
             {/* card */}
             <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
               <Grid container item xs={3} alignItems="center">
                 <FormLabel>Location</FormLabel>
               </Grid>
-              <Grid container item xs={9}>
-                cục search của Hiếu nằm đây   cục search của Hiếu nằm đây   cục search của Hiếu nằm đây
-                {/* cục search của Hiếu nằm đây */}
+              <Grid container item xs={9} ml={-2}>
+                <FormControl style={{ width: 300 }}>
+                  {currentLocationPermision === false ? (
+                    <GoogleMapPlaceSearchBox />
+                  ) : (
+                    <GgmCurrentPlaceText2 />
+                  )}
+                  <TextField
+                    id="__curr_lo"
+                    type="hidden"
+                    inputProps={{
+                      readOnly: true,
+                    }}
+                    sx={{ display: "none" }}
+                  />
+                  <TextField
+                    id="__curr_la"
+                    type="hidden"
+                    inputProps={{
+                      readOnly: true,
+                    }}
+                    sx={{ display: "none" }}
+                  />
+                </FormControl>
               </Grid>
+
+              {/* cục search của Hiếu nằm đây */}
             </Grid>
 
             {/* card */}
@@ -261,6 +290,22 @@ export default function PartnerSetting(props) {
                 </FormControl>
               </Grid>
             </Grid>
+            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
+              <Grid item xs={6} sm={3}></Grid>
+              <Grid item xs={6} sm={9}>
+                <Box component="div" sx={{ display: "inline" }}>
+                  <Switch
+                    {...label}
+                    id="curLocaAcesPermis"
+                    onChange={setCurrentLocationPermision}
+                  />
+                </Box>
+                <Box component="div" sx={{ display: "inline" }}>
+                  Use current location ?
+                </Box>
+              </Grid>
+            </Grid>
+
             {/* card */}
             <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
               <Grid container item xs={3} alignItems="center">
@@ -272,11 +317,17 @@ export default function PartnerSetting(props) {
                     name="gender"
                     defaultValue={initData.user_setting.gender}
                     displayEmpty
-                    inputProps={{ 'aria-label': 'Without label' }}
+                    inputProps={{ "aria-label": "Without label" }}
                   >
-                    <MenuItem key="1" value="male">Male</MenuItem>
-                    <MenuItem key="2" value="female">Female</MenuItem>
-                    <MenuItem key="3" value="others"><em>Others</em></MenuItem>
+                    <MenuItem key="1" value="male">
+                      Male
+                    </MenuItem>
+                    <MenuItem key="2" value="female">
+                      Female
+                    </MenuItem>
+                    <MenuItem key="3" value="others">
+                      <em>Others</em>
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -287,7 +338,14 @@ export default function PartnerSetting(props) {
                 <FormLabel>Age</FormLabel>
               </Grid>
               <Grid container item xs={9} ml={5}>
-                <FormControl sx={{ ml: 2, width: '15ch', display: "flex", flexDirection: "row" }}>
+                <FormControl
+                  sx={{
+                    ml: 2,
+                    width: "15ch",
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
                   <FormLabel sx={sxJustifyContent}>From</FormLabel>
                   <TextField
                     sx={{ ml: 1 }}
@@ -296,9 +354,10 @@ export default function PartnerSetting(props) {
                     defaultValue={initData.user_setting.from_age}
                     InputProps={{
                       inputProps: {
-                        type: 'number',
-                        min: 0, max: 100,
-                        maxLength: 10
+                        type: "number",
+                        min: 0,
+                        max: 100,
+                        maxLength: 10,
                       },
                     }}
                     onChange={(e) => {
@@ -311,8 +370,15 @@ export default function PartnerSetting(props) {
                     }}
                   />
                 </FormControl>
-                <FormControl sx={{ ml: 1, width: '15ch', display: "flex", flexDirection: "row" }}>
-                  <FormLabel sx={sxJustifyContent} >To</FormLabel>
+                <FormControl
+                  sx={{
+                    ml: 1,
+                    width: "15ch",
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
+                  <FormLabel sx={sxJustifyContent}>To</FormLabel>
                   <TextField
                     sx={{ ml: 1 }}
                     id="outlined-number"
@@ -320,9 +386,10 @@ export default function PartnerSetting(props) {
                     defaultValue={initData.user_setting.to_age}
                     InputProps={{
                       inputProps: {
-                        type: 'number',
-                        min: 0, max: 100,
-                        maxLength: 10
+                        type: "number",
+                        min: 0,
+                        max: 100,
+                        maxLength: 10,
                       },
                     }}
                     onChange={(e) => {
@@ -336,7 +403,6 @@ export default function PartnerSetting(props) {
                   />
                 </FormControl>
               </Grid>
-
             </Grid>
             {/* card */}
             <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
@@ -344,7 +410,7 @@ export default function PartnerSetting(props) {
                 <FormLabel>Hobbies</FormLabel>
               </Grid>
               <Grid container item xs={9}>
-                <FormControl style={{ minWidth: 300 }}>
+                <FormControl style={{ width: 300 }}>
                   <Select
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
@@ -353,7 +419,7 @@ export default function PartnerSetting(props) {
                     onChange={handleChangeHobby}
                     input={<OutlinedInput id="select-multiple-chip" />}
                     renderValue={(selected) => (
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                         {selected.map((value) => (
                           <Chip key={value} label={value} />
                         ))}
@@ -376,8 +442,7 @@ export default function PartnerSetting(props) {
             </Grid>
           </Grid>
         </Box>
-
       </DialogContent>
     </Box>
-  )
+  );
 }
