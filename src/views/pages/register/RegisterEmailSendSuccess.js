@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material';
 import React from 'react'
 
-export default function ResetPwdEmailConfirmSuccess() {
+export default function RegisterEmailSendSuccess() {
  return (
    <Box
      sx={{
@@ -27,10 +27,10 @@ export default function ResetPwdEmailConfirmSuccess() {
            gutterBottom
            sx={{ fontWeight: "bold" }}
          >
-           Forgot your password?
+           Please check your email...
          </Typography>
          <Typography variant="subtitle1" sx={{ color: "#637381" }}>
-           We have send you email to reset your password. Please check it!
+           We have send you email to confirm your new account, you have to confirm it before login
          </Typography>
        </Stack>
      </Box>
