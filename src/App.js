@@ -1,10 +1,10 @@
 import React from "react"
 import "./styles/App.css"
 import "./styles/loading.css"
-import { BrowserRouter, useRoutes } from "react-router-dom";
+import { BrowserRouter} from "react-router-dom";
 import Routes from "./routes";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "./constant/css_constant"
+import { GRP_COLOR} from "./constant/css_constant"
 
 function App() {
 
