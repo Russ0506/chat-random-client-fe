@@ -20,7 +20,6 @@ const saveDataSearch = async (params, thunkAPI) => {
 const getDataSearch = async (thunkAPI) => {
   try {
     const res = await axiosClient.get(`${URL}`)
-    console.log(res);
     return res
   } catch (error) {
     const message =

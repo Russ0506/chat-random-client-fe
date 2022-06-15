@@ -1,15 +1,11 @@
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Dialog, DialogContentText } from '@mui/material';
@@ -26,18 +22,25 @@ const theme = createTheme();
 export default function PartnerSettingModal(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isSubmit, setIsSubmit] = React.useState(false);
-  const [onClosePopUpSearch, setOnClosePopUpSearch] = React.useState(false);
+  const [isSearch, setIsSearch] = React.useState(false);
 
   const [outputData, setOutputData] = React.useState(false);
   const [isSaveDataSearch, setIsSaveDataSearch] = React.useState(false);
   const childEvents = { saveDataSearchPartnerSetting: () => { } };
   const submitRef = React.useRef();
+  const searchRef = React.useRef();
 
   const handleNext = () => {
     // childEvents.saveDataSearchPartnerSetting()
     if (activeStep === 0) {
       submitRef.current.click()
       setActiveStep(activeStep + 1);
+    }
+
+    if (activeStep === 1) {
+      setIsSearch(true)
+      searchRef.current.click()
+      // setActiveStep(activeStep + 1);
     }
   };
 
@@ -49,13 +52,17 @@ export default function PartnerSettingModal(props) {
     setOutputData(event)
   }
 
+  const outIsSearch= (event) => {
+    setIsSearch(event)
+  }
+
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <PartnerSetting submitRef={submitRef} isSubmit={isSubmit} takeDataSubmit={takeDataSubmit} />;
+        return <PartnerSetting submitRef={submitRef} isSubmit={isSubmit} takeDataSubmit={takeDataSubmit} userSetting={props.userSetting}/>;
       case 1:
         // setOnClosePopUpSearch(true)
-        return <PartnerSettingView data={outputData} />;
+        return <PartnerSettingView data={outputData} userSetting={props.userSetting} outIsSearch={outIsSearch} searchRef={searchRef}/>;
       default:
         throw new Error('Unknown step');
     }
@@ -105,6 +112,7 @@ export default function PartnerSettingModal(props) {
                     )}
 
                     <Button
+                      disabled = {isSearch && activeStep === 1}
                       variant="contained"
                       onClick={handleNext}
                       sx={{ mt: 3, ml: 1 }}
