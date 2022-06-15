@@ -12,9 +12,9 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputBase from '@mui/material/InputBase';
 import Switch from '@mui/material/Switch';
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch} from "react-redux"
 import { styled, alpha } from '@mui/material/styles';
-import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../../constant/css_constant"
+import { GRP_COLOR, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../../constant/css_constant"
 import { saveDataSearch } from '../../../../features/user-setting';
 import { Chip } from '@mui/material';
 import GoogleMapPlaceSearchBox from "../../../../components/googleMapAPI/GoogleMapPlaceSearchBox";

@@ -15,32 +15,14 @@ import moment from 'moment'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { GRP_COLOR, BORDER_RADIUS, BOX_SHADOW, FONT_SIZE } from "../../../constant/css_constant"
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import swal from 'sweetalert';
 import { useNavigate } from "react-router-dom";
 import Loading from "../../common/base/loading/Loading";
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-const theme = createTheme();
-
 
 export default function SignUp(props) {
   const dispatch = useDispatch()
@@ -66,9 +48,9 @@ export default function SignUp(props) {
     ))
       .unwrap()
       .then((data) => {
-        if(data.success) {
+        if (data.success) {
           navigate("email-success");
-        } 
+        }
       })
       .catch(() => {
         setIsSubmit(false)
@@ -76,11 +58,6 @@ export default function SignUp(props) {
       });
 
   }
-
-  function alertclick() {
-    swal("Registration completed successfully!","Please check your registered email for email verification","success")
-  }
-
 
   const signup_button_style = {
     mt: 3, mb: 2,
@@ -91,9 +68,9 @@ export default function SignUp(props) {
   }
 
   return (
-    <Box sx={{ bgcolor: GRP_COLOR.WHITECODE, height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
+    <Box sx={{ bgcolor: GRP_COLOR.WHITECODE, height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
       <Loading show={isSubmit}></Loading>
-      <Container component="main" maxWidth="xs" className={isSubmit? "opacity-background" : ""}>
+      <Container component="main" maxWidth="xs" className={isSubmit ? "opacity-background" : ""}>
         <CssBaseline />
         <Box
           sx={{
@@ -204,15 +181,15 @@ export default function SignUp(props) {
               </Grid>
             </Grid>
             {
-              message ? 
-              <Box
-                component="div"
-                variant="h5"
-                color="red"
-                fontSize={FONT_SIZE.smallText}
-              >
-                {message}
-              </Box> : ''}
+              message ?
+                <Box
+                  component="div"
+                  variant="h5"
+                  color="red"
+                  fontSize={FONT_SIZE.smallText}
+                >
+                  {message}
+                </Box> : ''}
             <Button
 
               type="submit"

@@ -35,7 +35,7 @@ export default function ResetPasswordConfirm() {
           sx={button_style}
           href="/users/login"
            >
-              Cotinue
+              Continue
           </Button>
         </Box>
     )
