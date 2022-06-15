@@ -1,3 +1,6 @@
+import {m} from 'framer-motion';
+
+
 import { Button } from "@mui/material";
 import React, { Component } from "react";
 import "../../../styles/Error.css";
