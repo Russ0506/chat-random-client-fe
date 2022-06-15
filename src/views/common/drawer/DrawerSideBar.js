@@ -8,20 +8,30 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { RandomChatSideBarItem } from "../../../constant/RandomChatSideBarItem";
-import MediaControlCard from "../base/card/MediaControlCard";
-import { FixedSizeList } from 'react-window';
-import PartnerSetting from '../../pages/chat/popup/PartnerSetting'
 import Box from "@mui/material/Box"
-import PartnerSettingView from "../../pages/chat/popup/PartnerSettingView";
 import PartnerSettingModal from "../../pages/chat/popup/PartnerSettignModal";
+// import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getDataSearch } from "../../../features/user-setting";
 
 export default function DrawerSideBar(props) {
+  const dispatch = useDispatch()
+  const [userSetting, setUserSetting] = React.useState(null);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [openPartnerDialog, setOpenPartnerDialog] = React.useState(false);
   const [openPartnerViewDialog, setOpenPartnerViewDialog] = React.useState(false);
+
+  useLayoutEffect(() => {
+    dispatch(getDataSearch()).unwrap()
+    .then((data) => {
+      setUserSetting(data);
+    })
+    .catch(() => {
+    });
+  },[])
 
   const handleClickOpen = () => {
     setOpenPartnerDialog(true);
@@ -77,12 +87,8 @@ export default function DrawerSideBar(props) {
           </List>
         </Box>
       ))}
-      {/* <PartnerSetting open={openPartnerDialog} onClose={handlePartnerSettingClose} handleOpenViewSettingModal={handleOpenViewSettingModal}>
-      </PartnerSetting>
-      <PartnerSettingView open={openPartnerViewDialog} onClose={handleParnerSettingViewClose}>
-      </PartnerSettingView> */}
-      {/* <Divider variant="middle" /> */}
-      <PartnerSettingModal open={openPartnerDialog} onClose={handlePartnerSettingClose} handleOpenViewSettingModal={handleOpenViewSettingModal}></PartnerSettingModal>
+
+      <PartnerSettingModal open={openPartnerDialog} onClose={handlePartnerSettingClose} handleOpenViewSettingModal={handleOpenViewSettingModal} userSetting={userSetting}></PartnerSettingModal>
     </Box>
   );
   return (

@@ -14,8 +14,8 @@ import InputBase from '@mui/material/InputBase';
 import Switch from '@mui/material/Switch';
 import { useDispatch} from "react-redux"
 import { styled, alpha } from '@mui/material/styles';
-import { GRP_COLOR, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../../constant/css_constant"
-import { saveDataSearch } from '../../../../features/user-setting';
+import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../../constant/css_constant"
+import { getDataSearch, saveDataSearch } from '../../../../features/user-setting';
 import { Chip } from '@mui/material';
 import GoogleMapPlaceSearchBox from "../../../../components/googleMapAPI/GoogleMapPlaceSearchBox";
 import GgmCurrentPlaceText2 from "../../../../components/googleMapAPI/GgmCurrentPlaceText2";
@@ -131,20 +131,24 @@ export default function PartnerSetting(props) {
   const useEffect = React.useEffect
   const dispatch = useDispatch()
 
+  // var initData
   const [initData, setInitData] = React.useState({
     user_setting: {
-      from_age: 10,
-      to_age: 60,
-      lat: 111.111,
-      long: 444.444,
-      address: "Da Nang, Viet Nam",
-      radius: 1000,
-      gender: 'female',
-      hobbies: ['Camping']
+      from_age: props.userSetting.from_age,
+      to_age: props.userSetting.to_age,
+      lat: props.userSetting.lat,
+      long: props.userSetting.long,
+      address: props.userSetting.address,
+      radius: props.userSetting.radius,
+      gender: props.userSetting.gender,
+      hobbies: ['Camping'],
+      enable_age_filter: props.userSetting.enable_age_filter,
+      enable_gender_filter: props.userSetting.enable_gender_filter,
+      enable_location_filter: props.userSetting.enable_location_filter,
     }
   })
 
-    const [currentLocationPermision, setcurrentLocationPermision] =
+  const [currentLocationPermision, setcurrentLocationPermision] =
     React.useState(false);
 
   const [hobbies, setHobbies] = React.useState(initData.user_setting.hobbies);
@@ -155,9 +159,9 @@ export default function PartnerSetting(props) {
   const min = 0;
   const max = 100;
 
-     const setCurrentLocationPermision = (event, child) => {
-      setcurrentLocationPermision(currentLocationPermision === false? true : false);
-    };
+  const setCurrentLocationPermision = (event, child) => {
+    setcurrentLocationPermision(currentLocationPermision === false ? true : false);
+  };
 
 
   useEffect(() => {

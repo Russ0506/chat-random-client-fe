@@ -18,6 +18,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import "../../../styles/login.scss"
 import Loading from "../../common/base/loading/Loading";
+// import { useCookies } from "react-cookie";
 
 export default function SignIn(props) {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ export default function SignIn(props) {
   const [isSubmit, setIsSubmit] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
+  // const [cookies, setCookie, removeCookie] = useCookies(['_random_chat']);
 
   const initialValues = {
     username: '',

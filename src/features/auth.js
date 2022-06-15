@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setMessage } from "./message";
 import AuthService from "../service/auth.service";
-import { async } from "validate.js";
 const user = JSON.parse(localStorage.getItem("user"));
 export const resetPwd = createAsyncThunk(
   "auth/resetPwd",
@@ -36,28 +35,6 @@ export const registerConfirm = createAsyncThunk(
     }
   }
 );
-
-// export const resetPwdEmailConfirm = createAsyncThunk(
-//   "auth/resetPwdConfirm",
-//   async (params, thunkAPI) => {
-//     try {
-//       console.log("reset password email confirm");
-//       let response = await AuthService.resetPwdEmailConfirm(params);
-//       thunkAPI.dispatch(setMessage(response.data.message));
-//       console.log(response);
-//       return response.data;
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString();
-//       thunkAPI.dispatch(setMessage(message));
-//       return thunkAPI.rejectWithValue();
-//     }
-//   }
-// );
 
 export const register = createAsyncThunk(
   "auth/register",
