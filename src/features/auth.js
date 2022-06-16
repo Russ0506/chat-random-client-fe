@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setMessage } from "./message";
 import AuthService from "../service/auth.service";
-import { async } from "validate.js";
 const user = JSON.parse(localStorage.getItem("user"));
 export const resetPwd = createAsyncThunk(
   "auth/resetPwd",
@@ -37,85 +36,39 @@ export const registerConfirm = createAsyncThunk(
   }
 );
 
-// export const resetPwdEmailConfirm = createAsyncThunk(
-//   "auth/resetPwdConfirm",
-//   async (params, thunkAPI) => {
-//     try {
-//       console.log("reset password email confirm");
-//       let response = await AuthService.resetPwdEmailConfirm(params);
-//       thunkAPI.dispatch(setMessage(response.data.message));
-//       console.log(response);
-//       return response.data;
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString();
-//       thunkAPI.dispatch(setMessage(message));
-//       return thunkAPI.rejectWithValue();
-//     }
-//   }
-// );
-
 export const register = createAsyncThunk(
   "auth/register",
   async (params, thunkAPI) => {
-    try {
-      const response = await AuthService.register(params);
-      thunkAPI.dispatch(setMessage(response.data.message));
-      return response.data;
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(message));
-      return thunkAPI.rejectWithValue();
-    }
+      return await AuthService.register(params, thunkAPI);
   }
 );
 
 export const login = createAsyncThunk(
   "auth/login",
   async (params, thunkAPI) => {
-    try {
-      const data = await AuthService.login(params);
-      thunkAPI.dispatch(setMessage(await AuthService.login(params)));
-      return data
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(message));
-      return thunkAPI.rejectWithValue();
-    }
+    const data = await AuthService.login(params, thunkAPI);
+    return data
   }
 );
 
 export const sendMailResetPass = createAsyncThunk(
   "auth/send-email-reset-pas",
   async (params, thunkAPI) => {
-    try {
-      const data = await AuthService.sendMailResetPass(params);
-      thunkAPI.dispatch(setMessage(await AuthService.sendMailResetPass(params)));
-      return data
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(message));
-      return thunkAPI.rejectWithValue();
-    }
+    return await AuthService.sendMailResetPass(params, thunkAPI);
+    // try {
+    //   const data = await AuthService.sendMailResetPass(params);
+    // thunkAPI.dispatch(setMessage(await AuthService.sendMailResetPass(params)));
+    //   return data
+    // } catch (error) {
+    //   const message =
+    //     (error.response &&
+    //       error.response.data &&
+    //       error.response.data.message) ||
+    //     error.message ||
+    //     error.toString();
+    //   thunkAPI.dispatch(setMessage(message));
+    //   return thunkAPI.rejectWithValue();
+    // }
   }
 );
 
@@ -136,7 +89,7 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
     },
     [login.fulfilled]: (state, action) => {
-      state.isLoggedIn = true;
+      state.isLoggedIn =  action.payload.success;
       state.user = action.payload.user;
     },
     [login.rejected]: (state, action) => {

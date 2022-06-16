@@ -1,16 +1,18 @@
-import React from "react";
-import "./styles/App.css";
-import { BrowserRouter, useRoutes } from "react-router-dom";
+import React from "react"
+import "./styles/App.css"
+import "./styles/loading.css"
+import { BrowserRouter} from "react-router-dom";
 import Routes from "./routes";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "./constant/css_constant"
+import { GRP_COLOR} from "./constant/css_constant"
 
 function App() {
 
   const themeDefault = createTheme({
     palette: {
       text: {
-        primary: GRP_COLOR.CODE016
+        primary: GRP_COLOR.CODE016,
+        second: GRP_COLOR.CODE016,
       },
       background: {
         default: GRP_COLOR.CODE017
@@ -18,6 +20,7 @@ function App() {
       primary: {
         main: GRP_COLOR.CODE016,
       },
+      // mode: GRP_COLOR.CODE016,
     },
   });
   

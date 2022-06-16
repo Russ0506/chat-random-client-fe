@@ -8,22 +8,45 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { RandomChatSideBarItem } from "../../../constant/RandomChatSideBarItem";
-import PartnerSetting from '../../pages/chat/popup/PartnerSetting'
 import Box from "@mui/material/Box"
+import PartnerSettingModal from "../../pages/chat/popup/PartnerSettignModal";
+// import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getDataSearch } from "../../../features/user-setting";
 
 export default function DrawerSideBar(props) {
+  const dispatch = useDispatch()
+  const [userSetting, setUserSetting] = React.useState(null);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [openPartnerDialog, setOpenPartnerDialog] = React.useState(false);
+  const [openPartnerViewDialog, setOpenPartnerViewDialog] = React.useState(false);
+
+  useLayoutEffect(() => {
+    dispatch(getDataSearch()).unwrap()
+    .then((data) => {
+      setUserSetting(data);
+    })
+    .catch(() => {
+    });
+  },[])
 
   const handleClickOpen = () => {
     setOpenPartnerDialog(true);
   };
 
-  const handleClose = () => {
+  const handleOpenViewSettingModal = () => {
+    setOpenPartnerViewDialog(true);
+  };
+
+  const handlePartnerSettingClose = () => {
     setOpenPartnerDialog(false);
+  };
+
+  const handleParnerSettingViewClose = () => {
+    setOpenPartnerViewDialog(false);
   };
 
   const drawerWidth = 240;
@@ -51,20 +74,21 @@ export default function DrawerSideBar(props) {
               }
           </ListItem>
           <List>
-            {component.items.map((item, index) => (
-              <ListItem key={index} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.name} />
-                </ListItemButton>
-              </ListItem>
+            {component.items.map((item, k) => (
+              // <FixedSizeList height={400} width={360} itemSize={46} itemCount={200}>
+                <ListItem key={k} disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                </ListItem>
+              // </FixedSizeList>
             ))}
           </List>
         </Box>
       ))}
-      <PartnerSetting open={openPartnerDialog} onClose={handleClose}>
-      </PartnerSetting>
-      {/* <Divider variant="middle" /> */}
+
+      <PartnerSettingModal open={openPartnerDialog} onClose={handlePartnerSettingClose} handleOpenViewSettingModal={handleOpenViewSettingModal} userSetting={userSetting}></PartnerSettingModal>
     </Box>
   );
   return (

@@ -6,19 +6,24 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { clearMessage } from "../../../features/message"
 import { useDispatch, useSelector } from "react-redux";
 import { BORDER_RADIUS, BOX_SHADOW, FONT_SIZE, FONT_WEIGHT, GRP_COLOR, LINE_HEIGHT } from "../../../constant/css_constant";
 import { sendMailResetPass } from "../../../features/auth";
+import { useNavigate } from "react-router-dom";
+import Loading from "../../common/base/loading/Loading";
 
 
 export default function ForgotPassword() {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const [isSubmit, setIsSubmit] = useState(false);
+
     const { message } = useSelector((state) => state.message);
     useEffect(() => {
         dispatch(clearMessage());
-      }, [dispatch]);
+    }, [dispatch]);
 
     const typeButton = {
         mt: 5,
@@ -41,8 +46,8 @@ export default function ForgotPassword() {
 
     const redirectToResetForm = (event) => {
         event.preventDefault();
+        setIsSubmit(true)
         const data = new FormData(event.currentTarget);
-        console.log(data.get("email"));
         dispatch(sendMailResetPass(
             {
                 user: { email: data.get("email") }
@@ -50,22 +55,18 @@ export default function ForgotPassword() {
         ))
             .unwrap()
             .then(() => {
-                console.log("then");
-                //   if(isLoggedIn) {
-                //     navigate("/chat-main-screen");
-                //     window.location.reload();
-                //   } 
+                navigate("/reset-password-email-confirm/success");
             })
             .catch(() => {
-                console.log("catch");
+                setIsSubmit(false)
             });
     }
 
     return (
-
         <Box sx={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <Loading show={isSubmit}></Loading>
             {/* this component to enter email and link to reset pass */}
-            <Container component="main" maxWidth="xs" sx={{ fontWeight: FONT_WEIGHT.normal, lineHeight: LINE_HEIGHT.normal }}>
+            <Container component="main" maxWidth="xs" sx={{ fontWeight: FONT_WEIGHT.normal, lineHeight: LINE_HEIGHT.normal }} className={isSubmit? "opacity-background" : ""}>
                 <CssBaseline />
                 <Box
                     sx={{
@@ -135,6 +136,7 @@ export default function ForgotPassword() {
                             fullWidth
                             variant="contained"
                             sx={typeButton}
+                            disabled={isSubmit}
                         >
                             Reset password
                         </Button>

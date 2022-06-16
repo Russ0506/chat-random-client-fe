@@ -15,36 +15,20 @@ import moment from 'moment'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { GRP_COLOR, BORDER_RADIUS, BOX_SHADOW } from "../../../constant/css_constant"
+import { GRP_COLOR, BORDER_RADIUS, BOX_SHADOW, FONT_SIZE } from "../../../constant/css_constant"
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import swal from 'sweetalert';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-const theme = createTheme();
-
+import { useNavigate } from "react-router-dom";
+import Loading from "../../common/base/loading/Loading";
 
 export default function SignUp(props) {
-
   const dispatch = useDispatch()
-  const [loading, setLoading] = useState(false);
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const navigate = useNavigate()
+  const [isSubmit, setIsSubmit] = useState(false);
+
   const { message } = useSelector((state) => state.message);
   const [date, setDate] = useState(new Date());
   useEffect(() => {
@@ -53,6 +37,7 @@ export default function SignUp(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setIsSubmit(true)
     const data = new FormData(event.currentTarget);
 
     const birthday = moment(date).format("DD/MM/YYYY");
@@ -62,20 +47,17 @@ export default function SignUp(props) {
       }
     ))
       .unwrap()
-      .then(() => {
-        props.history.push("/profile");
-        window.location.reload();
+      .then((data) => {
+        if (data.success) {
+          navigate("email-success");
+        }
       })
       .catch(() => {
-        setLoading(false);
+        setIsSubmit(false)
+        // setLoading(false);
       });
 
   }
-
-  function alertclick() {
-    swal("Registration completed successfully!","Please check your registered email for email verification","success")
-  }
-
 
   const signup_button_style = {
     mt: 3, mb: 2,
@@ -86,8 +68,9 @@ export default function SignUp(props) {
   }
 
   return (
-    <Box sx={{ bgcolor: GRP_COLOR.WHITECODE, height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
-      <Container component="main" maxWidth="xs">
+    <Box sx={{ bgcolor: GRP_COLOR.WHITECODE, height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+      <Loading show={isSubmit}></Loading>
+      <Container component="main" maxWidth="xs" className={isSubmit ? "opacity-background" : ""}>
         <CssBaseline />
         <Box
           sx={{
@@ -197,6 +180,16 @@ export default function SignUp(props) {
                 />
               </Grid>
             </Grid>
+            {
+              message ?
+                <Box
+                  component="div"
+                  variant="h5"
+                  color="red"
+                  fontSize={FONT_SIZE.smallText}
+                >
+                  {message}
+                </Box> : ''}
             <Button
 
               type="submit"

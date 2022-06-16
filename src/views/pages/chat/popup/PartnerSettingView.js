@@ -11,16 +11,19 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import CardMedia from '@mui/material/CardMedia';
-import FindPartner from '../../../../assets/img/find-partner.jpg';
 import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import ListItemText from '@mui/material/ListItemText';
-import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { styled, alpha } from '@mui/material/styles';
 import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../../constant/css_constant"
+import Switch from '@mui/material/Switch';
+import { useEffect } from 'react';
+import { Chip } from '@mui/material';
+import Loading from "../../../common/base/loading/Loading";
+import { saveDataSearch } from '../../../../features/user-setting';
+import { useDispatch, useSelector } from 'react-redux';
+import { enqueuingChat } from '../../../../features/chat';
+import { clearMessage } from '../../../../features/message';
 
 
 const ITEM_HEIGHT = 48;
@@ -66,49 +69,6 @@ const names = [
   'Romantic',
 ];
 
-// For search Function
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(GRP_COLOR.WHITECODE, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(GRP_COLOR.WHITECODE, 0.25),
-  },
-  marginRight: theme.spacing(6),
-  marginLeft: 0,
-  border: `1px solid ${GRP_COLOR.GREYYELLOW}`,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(7.5),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(2, 2, 2, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-}));
-// end // For search Function
-
 // css
 const typeButton = {
   py: 3,
@@ -121,160 +81,185 @@ const typeButton = {
 }
 
 export default function PartnerSettingView(props) {
-  const [personName, setPersonName] = React.useState([]);
-  const [gender, setGender] = React.useState("");
+  const [data, setData] = React.useState(props.data.user_setting);
+  const [isSubmit, setIsSubmit] = React.useState(false);
+  const { message } = useSelector((state) => state.message);
 
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
+  const dispatch = useDispatch();
 
-  const handleGenderChange = (event) => {
-    const {
-      target: { value },
-    } = event;
+  const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
-    console.log(value);
-    setGender(
-      // On autofill we get a stringified value.
-      value
-    );
-  };
+  useEffect(() => {
+    dispatch(clearMessage());
+  }, [dispatch]);
 
-  const saveDataSearchPartnerSetting = (event) => {
-    let mockData = {
+  const [state, setState] = React.useState({
+    checkedLocation: true,
+    checkedExpectedDistance: false,
+    checkedGender: true,
+    checkedAge: true,
+    checkedHobbies: true,
+  });
 
-    }
-    console.log("saveDataSearchPartnerSetting", mockData);
+  const handleOnChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked })
   }
 
+  const searchPartner = (event) => {
+    event.preventDefault();
+    setIsSubmit(true)
+
+    let requestFilter = {
+      user: {
+        enable_age_filter: state.checkedAge,
+        enable_gender_filter: state.checkedGender,
+        enable_location_filter: state.checkedLocation,
+      }
+    }
+
+    // this function call after enqueue success/ fail
+    if (true) {
+      // props.outIsSearch(false)
+    }
+
+    dispatch(saveDataSearch(
+      requestFilter
+    ))
+      .unwrap()
+      .then(() => {
+        // props.outIsSearch(false)
+
+        dispatch(enqueuingChat()).unwrap().then((data) => {
+          console.log(data);
+        }).catch((err) => {
+          console.log(err);
+        });
+      })
+      .catch(() => {
+        props.outIsSearch(false)
+        // setLoading(false);
+      });
+
+    // enqueue if pair = true
+
+  }
   return (
-    <Dialog open={props.open} onClose={props.onClose} sx={{ overflowY: "scroll" }}>
-      <DialogTitle fontSize={FONT_SIZE.formNormalText}
-        sx={sxHeaderPopup}>Ideal Partner</DialogTitle>
+    <Box>
       <DialogContent>
-        <DialogContentText>
-          These preferences help us suggest matches by determining who you will be matched.
-        </DialogContentText>
-        <CardMedia
-          component="img"
-          height="260"
-          image={FindPartner}
-          alt="Find Partner"
-        />
-        <Box component="form" sx={{ mt: 3, color: GRP_COLOR.CODE016 }}>
-          <Grid container spacing={2}>
-            {/* gender */}
-            <Grid item xs={12} sm={4} sx={sxJustifyContent}>
-              <FormLabel>Gender</FormLabel>
+        <Box component="form" onSubmit={searchPartner} sx={{ mt: 3, color: GRP_COLOR.CODE016, alignItems: "center" }} className="abc">
+          <Button ref={props.searchRef} type="submit" style={{ display: 'none' }} />
+          <Grid container spacing={5}>
+            {/* card */}
+            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
+              <Grid container item xs={4} alignItems="center">
+                <FormLabel>Location</FormLabel>
+              </Grid>
+              <Grid container item xs={8}>
+                <Switch {...label} name="checkedLocation" checked={state.checkedLocation} value={state.checkedLocation} size="small" onChange={(e) => handleOnChange(e)} />
+                <FormLabel>
+                  {
+                    state.checkedLocation === true ? data.address : ''
+                  }
+                </FormLabel>
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={8}>
-              <FormControl sx={{ mx: 2, minWidth: 120 }}>
-                <Select
-                  value={gender}
-                  onChange={handleGenderChange}
-                  displayEmpty
-                  inputProps={{ 'aria-label': 'Without label' }}
-                >
-                  <MenuItem key="1" value="male">Male</MenuItem>
-                  <MenuItem key="2" value="female">Female</MenuItem>
-                  <MenuItem key="3" value="others"><em>Others</em></MenuItem>
-                </Select>
-              </FormControl>
+
+            {/* card */}
+            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
+              <Grid container item xs={4} alignItems="center">
+                <FormLabel>Expected Distance</FormLabel>
+              </Grid>
+              <Grid container item xs={8}>
+                <Switch {...label} name="checkedExpectedDistance" checked={state.checkedExpectedDistance} value={state.checkedExpectedDistance} size="small" onChange={(e) => handleOnChange(e)} />
+                <FormLabel>
+
+                  {
+                    state.checkedExpectedDistance === true ? data.radius : ''
+                  }
+                </FormLabel>
+              </Grid>
             </Grid>
-            {/* age */}
-            <Grid item xs={12} sm={4} sx={sxJustifyContent}>
-              <FormLabel>Age</FormLabel>
+            {/* card */}
+            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
+              <Grid container item xs={4} alignItems="center">
+                <FormLabel>Gender</FormLabel>
+              </Grid>
+              <Grid container item xs={8}>
+                <Switch {...label} name="checkedGender" checked={state.checkedGender} value={state.checkedGender} size="small" onChange={(e) => handleOnChange(e)} />
+                <FormLabel>
+
+                  {
+                    state.checkedGender === true ? data.gender : ''
+                  }
+                </FormLabel>
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={8} sx={{ display: "flex", flexDirection: "row" }}>
-              <FormControl sx={{ ml: 2, width: '15ch', display: "flex", flexDirection: "row" }}>
-                <FormLabel sx={sxJustifyContent} marginRight="100px">From</FormLabel>
-                <TextField
-                  sx={{ ml: 1 }}
-                  id="outlined-number"
-                  type="number"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </FormControl>
-              <FormControl sx={{ ml: 1, width: '15ch', display: "flex", flexDirection: "row" }}>
-                <FormLabel sx={sxJustifyContent} marginRight="100px">To</FormLabel>
-                <TextField
-                  sx={{ ml: 1 }}
-                  id="outlined-number"
-                  type="number"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </FormControl>
+            {/* card */}
+            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
+              <Grid container item xs={4} alignItems="center">
+                <FormLabel>Age</FormLabel>
+              </Grid>
+              <Grid container item xs={8} >
+                <Switch {...label} name="checkedAge" checked={state.checkedAge} value={state.checkedAge} size="small" onChange={(e) => handleOnChange(e)} />
+                <FormLabel>
+
+                  {
+                    state.checkedAge === true ? `From ${data.from_age} to ${data.to_age}` : ''
+                  }
+                </FormLabel>
+              </Grid>
+
             </Grid>
-            {/* hobby - tag field */}
-            <Grid item xs={12} sm={4} sx={sxJustifyContent}>
-              <FormLabel>Hobby</FormLabel>
-            </Grid>
-            <Grid item xs={12} sm={8} sx={sxJustifyContent}>
-              <FormControl sx={{ m: 2, width: 300 }}>
-                <Select
-                  id="demo-multiple-checkbox"
-                  multiple
-                  value={personName}
-                  onChange={handleChange}
-                  input={<OutlinedInput />}
-                  renderValue={(selected) => selected.join(', ')}
-                  MenuProps={MenuProps}
-                >
-                  {names.map((name, i) => (
-                    <MenuItem key={i} value={name}>
-                      <Checkbox checked={personName.indexOf(name) > -1} />
-                      <ListItemText primary={name} />
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={3} sx={sxJustifyContent}>
-              <FormLabel>Location</FormLabel>
-            </Grid>
-            <Grid item xs={12} sm={9} sx={sxJustifyContent} >
-              <Search bgcolor={GRP_COLOR.CODE016}>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder="Search…"
-                  inputProps={{ 'aria-label': 'search' }}
-                />
-              </Search>
-            </Grid>
-            <Grid item xs={12} sm={3} sx={sxJustifyContent}>
-              <FormLabel>Expected Distance</FormLabel>
-            </Grid>
-            <Grid item xs={12} sm={9} sx={sxJustifyContent}>
-              <TextField
-                sx={{ ml: 8 , width: "100px"}}
-                id="outlined-number"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
+            {/* card */}
+            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
+              <Grid container item xs={4} alignItems="center">
+                <FormLabel>Hobbies</FormLabel>
+              </Grid>
+              <Grid container item xs={8}>
+                <FormControl style={{ minWidth: 300 }}>
+                  <Select
+                    labelId="demo-multiple-chip-label"
+                    id="demo-multiple-chip"
+                    multiple
+                    disabled
+                    value={data.hobbies}
+                    input={<OutlinedInput id="select-multiple-chip" />}
+                    renderValue={(selected) => (
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                        {selected.map((value) => (
+                          <Chip key={value} label={value} />
+                        ))}
+                      </Box>
+                    )}
+                  // MenuProps={MenuProps}
+                  >
+                    {/* {names.map((name) => (
+                      <MenuItem
+                        key={name}
+                        value={name}
+                        style={getStyles(name, hobbies, theme)}
+                      >
+                        {name}
+                      </MenuItem>
+                    ))} */}
+                  </Select>
+                  {
+                    message ?
+                      <Box
+                        component="div"
+                        variant="h5"
+                        color="red"
+                        fontSize={FONT_SIZE.smallText}
+                      >
+                        {message}
+                      </Box> : ''}
+                </FormControl>
+              </Grid>
             </Grid>
           </Grid>
-
         </Box>
 
       </DialogContent>
-      <DialogActions sx={{ m: 2 }}>
-        <Button onClick={props.onClose} sx={typeButton}>Reset</Button>
-        <Button onClick={saveDataSearchPartnerSetting} sx={typeButton}>Save</Button>
-      </DialogActions>
-    </Dialog>
+    </Box>
   )
 }
