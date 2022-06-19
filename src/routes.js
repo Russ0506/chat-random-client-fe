@@ -1,16 +1,16 @@
-import Login from "./views/pages/authenticator/Login";
+import Login from "./views/pages/auth/Login";
 import React from "react";
 import { useRoutes } from "react-router-dom";
 import HomePage from "./views/admin/homePage/HomePage";
-import ResetPassword from "./views/pages/authenticator/ResetPassword";
-import SignUp from "./views/pages/register/Register";
+import ResetPassword from "./views/pages/auth/ResetPassword";
+import SignUp from "./views/pages/auth/Register";
 import Welcome from "./views/pages/welcome/Welcome";
 import RegisterConfirm from "./views/pages/register/RegisterConfirm";
 import ForgotPassword from "./views/pages/authenticator/ForgotPassword";
 import ResetPwdEmailSendSuccess from "./views/pages/authenticator/ResetPwdEmailSendSuccess";
 import { PlacesWithStandaloneSearchBox } from "./components/googleMapAPI/GoogleMapAPI";
-import ResetPasswordConfirm from "./views/pages/authenticator/ResetPasswordConfirm";
-import RegisterEmailSendSuccess from "./views/pages/register/RegisterEmailSendSuccess";
+import ResetPasswordConfirm from "./views/pages/auth/ResetPasswordConfirm";
+import RegisterEmailSendSuccess from "./views/pages/auth/RegisterEmailSendSuccess";
 import Homepage from "./views/user/Homepage";
 
 export default function Routes() {
