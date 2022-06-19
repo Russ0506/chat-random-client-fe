@@ -1,5 +1,5 @@
 import Login from "./views/pages/auth/Login";
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigate, Outlet, Route, useRoutes } from "react-router-dom";
 import HomePage from "./views/admin/homePage/HomePage";
 import ResetPassword from "./views/pages/auth/ResetPassword";
@@ -15,6 +15,8 @@ import RegisterEmailSendSuccess from "./views/pages/auth/RegisterEmailSendSucces
 import { useCookies } from "react-cookie";
 import Error404 from "./views/pages/error/Error404";
 import UserHomepage from "./views/user/UserHomepage";
+import { user_verify } from "./features/auth";
+import { useDispatch } from "react-redux";
 
 const ProtectedRoute = ({
   isAllowed,
@@ -29,6 +31,21 @@ const ProtectedRoute = ({
 };
 
 export default function Routes() {
+  const dispatch = useDispatch()
+  const [data, setData] = React.useState({ role: '', logged_in: false })
+
+  useEffect(() => {
+    dispatch(user_verify()).unwrap()
+      .then((res) => {
+        setData({
+          role: res.role,
+          logged_in: res.logged_in,
+        })
+      })
+      .catch(() => {
+      });
+  }, []);
+
   const routes = useRoutes([
     { path: "/", element: <Welcome /> },
     {
@@ -46,7 +63,12 @@ export default function Routes() {
     {
       path: "/users",
       children: [
-        { path: "user-homepage", element: <UserHomepage /> },
+        {
+          path: "user-homepage", element: <ProtectedRoute
+            isAllowed={data.logged_in}
+            children={<UserHomepage />}
+          />
+        },
         { path: "login", element: <Login /> },
         { path: "logout", element: <Welcome /> },
         { path: "reset-password", element: <ResetPassword />, children: [{ path: ":token", element: <ResetPassword /> }] },
@@ -83,10 +105,10 @@ export default function Routes() {
     {
       path: "/chat-main-screen",
       element:
-      <ProtectedRoute
-        isAllowed={true}
-        children={ <ChatMainScreen/> }
-      />,
+        <ProtectedRoute
+          isAllowed={data.logged_in}
+          children={<ChatMainScreen />}
+        />,
       children: [{ path: "", element: "" }],
     },
     {
