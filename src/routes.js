@@ -12,6 +12,7 @@ import ResetPwdEmailSendSuccess from "./views/pages/authenticator/ResetPwdEmailS
 import { PlacesWithStandaloneSearchBox } from "./components/googleMapAPI/GoogleMapAPI";
 import ResetPasswordConfirm from "./views/pages/authenticator/ResetPasswordConfirm";
 import RegisterEmailSendSuccess from "./views/pages/register/RegisterEmailSendSuccess";
+import Homepage from "./views/user/Homepage";
 
 export default function Routes() {
   const routes = useRoutes([
@@ -25,6 +26,7 @@ export default function Routes() {
     {
       path: "/users",
       children: [
+        {path: "homepage", element: <Homepage />},
         { path: "login", element: <Login /> },
         { path: "logout", element: <Welcome /> },
         { path: "reset-password", element: <ResetPassword />, children: [{ path: ":token", element: <ResetPassword /> }]},
