@@ -1,3 +1,3 @@
 REACT_APP_API_URL = http://localhost:3001/api
-API_SERVER_URL = 'http://localhost:3000'
-SOCKET_URL = 'ws://localhost:3000/cable'
+REACT_APP_API_HOST_URL = 'http://localhost:3000'
+REACT_APP_SOCKET_URL = 'ws://localhost:3000/cable'
