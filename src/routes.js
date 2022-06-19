@@ -1,6 +1,6 @@
 import Login from "./views/pages/auth/Login";
 import React from "react";
-import { useRoutes } from "react-router-dom";
+import { Navigate, Outlet, Route, useRoutes } from "react-router-dom";
 import HomePage from "./views/admin/homePage/HomePage";
 import ResetPassword from "./views/pages/auth/ResetPassword";
 import SignUp from "./views/pages/auth/Register";
@@ -12,7 +12,21 @@ import ResetPwdEmailSendSuccess from "./views/pages/auth/ResetPwdEmailSendSucces
 import { PlacesWithStandaloneSearchBox } from "./components/googleMapAPI/GoogleMapAPI";
 import ResetPasswordConfirm from "./views/pages/auth/ResetPasswordConfirm";
 import RegisterEmailSendSuccess from "./views/pages/auth/RegisterEmailSendSuccess";
-import Homepage from "./views/user/Homepage";
+import { useCookies } from "react-cookie";
+import Error404 from "./views/pages/error/Error404";
+import UserHomepage from "./views/user/UserHomepage";
+
+const ProtectedRoute = ({
+  isAllowed,
+  redirectPath = '/users/login',
+  children,
+}) => {
+
+  if (!isAllowed) {
+    return <Navigate to={redirectPath} replace />;
+  }
+  return children ? children : <Outlet />;
+};
 
 export default function Routes() {
   const routes = useRoutes([
@@ -24,16 +38,18 @@ export default function Routes() {
       ],
     },
     {
+      path: "/welcome",
+      element: <Welcome />,
+      children: [
+      ],
+    },
+    {
       path: "/users",
       children: [
-        {path: "homepage", element: <Homepage />},
+        { path: "user-homepage", element: <UserHomepage /> },
         { path: "login", element: <Login /> },
         { path: "logout", element: <Welcome /> },
-        { path: "reset-password", element: <ResetPassword />, children: [{ path: ":token", element: <ResetPassword /> }]},
-        // {
-        //   path: "resetPasswordEmailConfirm",
-        //   element: <ResetPwdEmailConfirm />,
-        // },
+        { path: "reset-password", element: <ResetPassword />, children: [{ path: ":token", element: <ResetPassword /> }] },
         {
           path: "forgotPassword",
           element: <ForgotPassword />,
@@ -49,7 +65,6 @@ export default function Routes() {
       path: "/reset-password-email-confirm",
 
       children: [
-        // { path: "", element: <ResetPwdEmailConfirm /> },
         { path: "success", element: <ResetPwdEmailSendSuccess /> },
       ],
     },
@@ -57,30 +72,21 @@ export default function Routes() {
       path: "/register",
 
       children: [
-        // { path: "", element: <ResetPwdEmailConfirm /> },
-        { path: "", element: <SignUp/> },
-        { path: "email-success", element: <RegisterEmailSendSuccess/> },
+        { path: "", element: <SignUp /> },
+        { path: "email-success", element: <RegisterEmailSendSuccess /> },
       ],
     },
-    // {
-    //   path: "/users",
-    //   children: [
-    //     { path: "resetPassword", element: <ResetPassword /> },
-    //     {
-    //       path: "resetPasswordEmailConfirm",
-    //       element: <ResetPwdEmailConfirm />,
-    //     },
-    //     { path: "login", element: <Login /> },
-    //     { path: "logout", element: <Welcome /> },
-    //   ],
-    // },
     {
       path: "/ggmap-api-testing",
       element: <PlacesWithStandaloneSearchBox />
     },
     {
       path: "/chat-main-screen",
-      element: <ChatMainScreen />,
+      element:
+      <ProtectedRoute
+        isAllowed={true}
+        children={ <ChatMainScreen/> }
+      />,
       children: [{ path: "", element: "" }],
     },
     {
@@ -92,6 +98,10 @@ export default function Routes() {
       path: "/confirm-email-reset-password",
       element: <ResetPasswordConfirm />,
       children: [{ path: ":token", element: <ResetPasswordConfirm /> }],
+    },
+    {
+      path: "*",
+      element: <Error404 />,
     },
   ]);
   return routes;
