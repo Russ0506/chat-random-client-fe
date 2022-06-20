@@ -2,10 +2,25 @@ import { axiosClient } from '../setup/axiosClient'
 import { setMessage } from "../features/message";
 
 const URL = "users";
+const URL_IDENTITY = "";
 
 const register = async (params, thunkAPI) => {
   try {
     const res = await axiosClient.post(`${URL}`, params)
+    return res
+  } catch (error) {
+    const message =
+      (error.response.data.errors[0]) ||
+      error.message ||
+      error.toString();
+    thunkAPI.dispatch(setMessage(message));
+    return thunkAPI.rejectWithValue();
+  }
+};
+
+const userVerify = async (params, thunkAPI) => {
+  try {
+    const res = await axiosClient.get(`${URL_IDENTITY}/identity`)
     return res
   } catch (error) {
     const message =
@@ -78,5 +93,6 @@ const authService = {
   logout,
   resetPwd,
   sendMailResetPass,
+  userVerify
 };
 export default authService;

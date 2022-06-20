@@ -1,24 +1,22 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import DialogContent from '@mui/material/DialogContent';
-import Grid from '@mui/material/Grid';
+import { Chip } from '@mui/material';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import DialogContent from '@mui/material/DialogContent';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import { useTheme } from '@mui/material/styles';
-import Select from '@mui/material/Select';
+import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import InputBase from '@mui/material/InputBase';
+import Select from '@mui/material/Select';
+import { useTheme } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
-import { useDispatch} from "react-redux"
-import { styled, alpha } from '@mui/material/styles';
-import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../../constant/css_constant"
-import { getDataSearch, saveDataSearch } from '../../../../features/user-setting';
-import { Chip } from '@mui/material';
-import GoogleMapPlaceSearchBox from "../../../../components/googleMapAPI/GoogleMapPlaceSearchBox";
+import TextField from '@mui/material/TextField';
+import * as React from 'react';
+import { useDispatch } from "react-redux";
 import GgmCurrentPlaceText2 from "../../../../components/googleMapAPI/GgmCurrentPlaceText2";
+import GoogleMapPlaceSearchBox from "../../../../components/googleMapAPI/GoogleMapPlaceSearchBox";
+import { GRP_COLOR } from "../../../../constant/css_constant";
+import { saveDataSearch } from '../../../../features/user-setting';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -31,13 +29,6 @@ const MenuProps = {
   },
 };
 
-const sxHeaderPopup = {
-  paddingTop: "30px",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  fontWeight: FONT_WEIGHT.overmiddle,
-};
 
 const sxJustifyContent = {
   display: "flex",
@@ -45,17 +36,7 @@ const sxJustifyContent = {
   justifyContent: "center",
 };
 
-const sxSearch = {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-};
 
-const sxAlignItem = {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-};
 
 const names = [
   "Camping",
@@ -69,62 +50,6 @@ const names = [
   "Animal",
   "Romantic",
 ];
-
-// For search Function
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(GRP_COLOR.WHITECODE, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(GRP_COLOR.WHITECODE, 0.25),
-  },
-  marginRight: theme.spacing(6),
-  marginLeft: 0,
-  border: `1px solid ${GRP_COLOR.GREYYELLOW}`,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(7.5),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(2, 2, 2, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
-// end // For search Function
-
-// css
-const typeButton = {
-  py: 3,
-  px: 2,
-  bgcolor: GRP_COLOR.BACKGROUND01,
-  color: GRP_COLOR.CODE016,
-  borderRadius: BORDER_RADIUS.br10,
-  boxShadow: BOX_SHADOW.CODE001,
-  height: "45px",
-};
-
-// const sxLabelAge = sxJustifyContent
 
 export default function PartnerSetting(props) {
   const theme = useTheme();
