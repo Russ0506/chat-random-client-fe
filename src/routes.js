@@ -5,7 +5,7 @@ import HomePage from "./views/admin/homePage/HomePage";
 import ResetPassword from "./views/pages/auth/ResetPassword";
 import SignUp from "./views/pages/auth/Register";
 import Welcome from "./views/pages/welcome/Welcome";
-import ChatMainScreen from "./views/pages/chat/MainScreen";
+// import ChatMainScreen from "./views/pages/chat/MainScreen";
 import RegisterConfirm from "./views/pages/auth/RegisterConfirm";
 import ForgotPassword from "./views/pages/auth/ForgotPassword";
 import ResetPwdEmailSendSuccess from "./views/pages/auth/ResetPwdEmailSendSuccess";
@@ -17,61 +17,72 @@ import Error404 from "./views/pages/error/Error404";
 import UserHomepage from "./views/user/UserHomepage";
 import { user_verify } from "./features/auth";
 import { useDispatch } from "react-redux";
+import Loading from "./views/common/base/loading/Loading";
 
-const ProtectedRoute = ({
-  isAllowed,
-  redirectPath = '/users/login',
-  children,
-}) => {
-
-  if (!isAllowed) {
-    return <Navigate to={redirectPath} replace />;
-  }
-  return children ? children : <Outlet />;
-};
-
-export default function Routes() {
-  const dispatch = useDispatch()
-  const [data, setData] = React.useState({ role: '', logged_in: false })
+export const ProtectedRoute = ({ redirectPath = "/users/login", children }) => {
+  const dispatch = useDispatch();
+  const [data, setData] = React.useState();
 
   useEffect(() => {
-    dispatch(user_verify()).unwrap()
+    dispatch(user_verify())
+      .unwrap()
       .then((res) => {
         setData({
           role: res.role,
           logged_in: res.logged_in,
-        })
+        });
       })
       .catch(() => {
+        setData({
+          role: "",
+          logged_in: false,
+        });
       });
   }, []);
 
+  return (
+    <>
+      {data && !data.logged_in ? (
+        <>
+          <Navigate to={redirectPath} replace />
+        </>
+      ) : (
+        <>
+          <Loading show={false}></Loading>
+          {children}
+        </>
+      )}
+    </>
+  );
+};
+
+export default function Routes() {
   const routes = useRoutes([
     { path: "/", element: <Welcome /> },
     {
       path: "/admin",
       element: <HomePage />,
-      children: [
-      ],
+      children: [],
     },
     {
       path: "/welcome",
       element: <Welcome />,
-      children: [
-      ],
+      children: [],
     },
     {
       path: "/users",
       children: [
         {
-          path: "user-homepage", element: <ProtectedRoute
-            isAllowed={data.logged_in}
-            children={<UserHomepage />}
-          />
+          path: "user-homepage",
+          element: <ProtectedRoute children={<UserHomepage />} />,
         },
         { path: "login", element: <Login /> },
         { path: "logout", element: <Welcome /> },
-        { path: "reset-password", element: <ResetPassword />, children: [{ path: ":token", element: <ResetPassword /> }] },
+        {
+          path: "reset-password",
+          element: <ResetPassword />,
+          children: [{ path: ":token", element: <ResetPassword /> }],
+        },
         {
           path: "forgotPassword",
           element: <ForgotPassword />,
@@ -86,9 +97,7 @@ export default function Routes() {
     {
       path: "/reset-password-email-confirm",
 
-      children: [
-        { path: "success", element: <ResetPwdEmailSendSuccess /> },
-      ],
+      children: [{ path: "success", element: <ResetPwdEmailSendSuccess /> }],
     },
     {
       path: "/register",
@@ -100,17 +109,13 @@ export default function Routes() {
     },
     {
       path: "/ggmap-api-testing",
-      element: <PlacesWithStandaloneSearchBox />
+      element: <PlacesWithStandaloneSearchBox />,
     },
-    // {
-    //   path: "/chat-main-screen",
-    //   element:
-    //     <ProtectedRoute
-    //       isAllowed={data.logged_in}
-    //       children={<ChatMainScreen />}
-    //     />,
-    //   children: [{ path: "", element: "" }],
-    // },
+    {
+      path: "/chat-main-screen",
+      element: <ProtectedRoute children={<UserHomepage />} />,
+      children: [{ path: "", element: "" }],
+    },
     {
       path: "/confirm-email-register",
       element: <RegisterConfirm />,
