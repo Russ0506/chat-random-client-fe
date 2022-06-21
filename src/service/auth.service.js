@@ -29,6 +29,7 @@ const confirmRegister = async (params) => {
 const login = async (params, thunkAPI) => {
   try {
     const res = await axiosClient.post(`${URL}/sign_in`, params)
+    localStorage.setItem('jwt_token', res.user.jwt_token)
     return res
   } catch (error) {
     const message =
