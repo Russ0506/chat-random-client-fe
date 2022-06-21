@@ -39,6 +39,7 @@ function success(pos) {
           }
         }
       }
+      document.getElementById("__curr_address_temp").value = address;
       document.getElementById("__curr_address").value = address;
       document.getElementById("__curr_lo").value = crd.latitude;
       document.getElementById("__curr_la").value = crd.longitude;
@@ -99,7 +100,7 @@ export default class GgmCurrentPlaceText2 extends Component {
         {/* <Typography>you have agreed to share your location </Typography> */}
         <TextField
           sx={{ ml: 2, width: 300 }}
-          id="__curr_address"
+          id="__curr_address_temp"
           type="text"
           inputProps={{
             readOnly: true,
