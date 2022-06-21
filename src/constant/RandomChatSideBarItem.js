@@ -1,64 +1,45 @@
 export const RandomChatSideBarItem = [
   {
-    name: "CHATS",
-    items: [
-      { index: 0, name: "Hieu", icon: null, link: "#" },
-      { index: 1, name: "Hieu2", icon: null, link: "#" },
-      { index: 2, name: "Hieu3", icon: null, link: "#" },
-      { index: 3, name: "Hieu3", icon: null, link: "#" },
-      { index: 4, name: "Hieu3", icon: null, link: "#" },
-      { index: 5, name: "Hieu3", icon: null, link: "#" },
-      { index: 6, name: "Hieu3", icon: null, link: "#" },
-      { index: 7, name: "Hieu3", icon: null, link: "#" },
-      { index: 8, name: "Hieu3", icon: null, link: "#" },
-      { index: 9, name: "Hieu3", icon: null, link: "#" },
-      { index: 10, name: "Hieu3", icon: null, link: "#" },
-    ],
-  },
-  {
-    name: "GROUPS",
+    name: "Favourite Conversation",
     items: [
       {
         index: 0,
-        name: "VnsGroup",
+        name: "Gia Hieu",
         icon: null,
         link: "#",
       },
       {
         index: 1,
-        name: "VnsGroup",
+        name: "Tuan Anh",
         icon: null,
         link: "#",
       },
       {
         index: 1,
-        name: "VnsGroup",
+        name: "Hoang Duc",
         icon: null,
         link: "#",
       },
       {
         index: 1,
-        name: "VnsGroup",
+        name: "Hoang",
         icon: null,
         link: "#",
       },
-      {
-        index: 1,
-        name: "VnsGroup",
-        icon: null,
-        link: "#",
-      },
-      {
-        index: 1,
-        name: "VnsGroup",
-        icon: null,
-        link: "#",
-      },
-      { index: 3, name: "VnsGroup", icon: null, link: "#" },
     ],
   },
   {
-    name: "NEW CONVERSATION",
+    name: "Conversations",
+    items: [
+      { index: 0, name: "Truc Ly", icon: null, link: "#" },
+      { index: 0, name: "Tuong Vy", icon: null, link: "#" },
+      { index: 0, name: "Thuy An", icon: null, link: "#" },
+      { index: 0, name: "Hoai Nhu", icon: null, link: "#" },
+    ],
+  },
+
+  {
+    name: "Pairing setting",
     items: [],
-  }
+  },
 ];

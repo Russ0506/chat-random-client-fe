@@ -5,7 +5,6 @@ import HomePage from "./views/admin/homePage/HomePage";
 import ResetPassword from "./views/pages/authenticator/ResetPassword";
 import SignUp from "./views/pages/register/Register";
 import Welcome from "./views/pages/welcome/Welcome";
-import ChatMainScreen from "./views/pages/chat/MainScreen";
 import RegisterConfirm from "./views/pages/register/RegisterConfirm";
 import ForgotPassword from "./views/pages/authenticator/ForgotPassword";
 import ResetPwdEmailSendSuccess from "./views/pages/authenticator/ResetPwdEmailSendSuccess";
@@ -77,11 +76,6 @@ export default function Routes() {
     {
       path: "/ggmap-api-testing",
       element: <PlacesWithStandaloneSearchBox />
-    },
-    {
-      path: "/chat-main-screen",
-      element: <ChatMainScreen />,
-      children: [{ path: "", element: "" }],
     },
     {
       path: "/confirm-email-register",

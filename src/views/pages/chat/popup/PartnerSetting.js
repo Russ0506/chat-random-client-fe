@@ -153,8 +153,11 @@ export default function PartnerSetting(props) {
 
   const [hobbies, setHobbies] = React.useState(initData.user_setting.hobbies);
   const [loading, setLoading] = React.useState(false);
-
-
+  const [location, setLocation] = React.useState({
+    address: initData.user_setting.address,
+    lo: initData.user_setting.lo,
+    la: initData.user_setting.lat,
+  });
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
   const min = 0;
   const max = 100;
@@ -183,18 +186,23 @@ export default function PartnerSetting(props) {
   const saveDataSearchPartnerSetting = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    // setLocation({
+    //   address: document.getElementById("__curr_address").value,
+    //   lo: document.getElementById("__curr_lo").value,
+    //   la: document.getElementById("__curr_la").value,
+    // });
     let dataSearch = {
       user_setting: {
         from_age: parseInt(data.get("from_age")),
         to_age: parseInt(data.get("to_age")),
         lat: document.getElementById("__curr_la").value,
         long: document.getElementById("__curr_lo").value,
-        address: "Da Nang, Viet Nam",
+        address: document.getElementById("__curr_address").value,
         radius: parseInt(data.get("radius")),
         gender: data.get("gender"),
-        hobbies: hobbies
-      }
-    }
+        hobbies: hobbies,
+      },
+    };
 
     props.takeDataSubmit(dataSearch)
     dispatch(saveDataSearch(
@@ -214,7 +222,6 @@ export default function PartnerSetting(props) {
       });
     // open popup view here
   }
-
 
   function getStyles(name, selectName, theme) {
     return {
@@ -258,6 +265,16 @@ export default function PartnerSetting(props) {
                     inputProps={{
                       readOnly: true,
                     }}
+                    // value={location.lo}
+                    sx={{ display: "none" }}
+                  />
+                  <TextField
+                    id="__curr_address"
+                    type="hidden"
+                    inputProps={{
+                      readOnly: true,
+                    }}
+                    // value={location.address}
                     sx={{ display: "none" }}
                   />
                   <TextField
@@ -266,6 +283,7 @@ export default function PartnerSetting(props) {
                     inputProps={{
                       readOnly: true,
                     }}
+                    // value={location.la}
                     sx={{ display: "none" }}
                   />
                 </FormControl>
