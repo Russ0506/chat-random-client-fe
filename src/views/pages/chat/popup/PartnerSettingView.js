@@ -1,84 +1,24 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
+import { Chip } from '@mui/material';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import DialogContent from '@mui/material/DialogContent';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import Select from '@mui/material/Select';
+import Grid from '@mui/material/Grid';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import InputBase from '@mui/material/InputBase';
-import { styled, alpha } from '@mui/material/styles';
-import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../../constant/css_constant"
+import Select from '@mui/material/Select';
 import Switch from '@mui/material/Switch';
+import * as React from 'react';
 import { useEffect } from 'react';
-import { Chip } from '@mui/material';
-import Loading from "../../../common/base/loading/Loading";
-import { saveDataSearch } from '../../../../features/user-setting';
 import { useDispatch, useSelector } from 'react-redux';
+import { FONT_SIZE, GRP_COLOR } from "../../../../constant/css_constant";
 import { enqueuingChat } from '../../../../features/chat';
 import { clearMessage } from '../../../../features/message';
+import { saveDataSearch } from '../../../../features/user-setting';
 
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-const sxHeaderPopup = {
-  paddingTop: "30px",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  fontWeight: FONT_WEIGHT.overmiddle
-}
-
-const sxJustifyContent = {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-}
-const sxAlignItem = {
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-}
-
-const names = [
-  'Camping',
-  'Read Book',
-  'Climb',
-  'Sport',
-  'Music',
-  'Foodt',
-  'Forest',
-  'Ocean',
-  'Animal',
-  'Romantic',
-];
-
-// css
-const typeButton = {
-  py: 3,
-  px: 2,
-  bgcolor: GRP_COLOR.BACKGROUND01,
-  color: GRP_COLOR.CODE016,
-  borderRadius: BORDER_RADIUS.br10,
-  boxShadow: BOX_SHADOW.CODE001,
-  height: "45px",
-}
+// const ITEM_HEIGHT = 48;
+// const ITEM_PADDING_TOP = 8;
 
 export default function PartnerSettingView(props) {
   const [data, setData] = React.useState(props.data.user_setting);
@@ -94,10 +34,9 @@ export default function PartnerSettingView(props) {
   }, [dispatch]);
 
   const [state, setState] = React.useState({
-    checkedLocation: true,
-    checkedExpectedDistance: false,
-    checkedGender: true,
-    checkedAge: true,
+    checkedLocation: props.userSetting.enable_location_filter,
+    checkedGender: props.userSetting.enable_gender_filter,
+    checkedAge: props.userSetting.enable_age_filter,
     checkedHobbies: true,
   });
 
@@ -110,7 +49,7 @@ export default function PartnerSettingView(props) {
     setIsSubmit(true)
 
     let requestFilter = {
-      user: {
+      user_setting: {
         enable_age_filter: state.checkedAge,
         enable_gender_filter: state.checkedGender,
         enable_location_filter: state.checkedLocation,

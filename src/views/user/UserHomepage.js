@@ -9,7 +9,7 @@ import LeftSideBar from "../pages/chat/components/leftBar/LeftSideBar";
 import MessageLayout from "../pages/chat/components/message/MessageLayout";
 import TopBar from "../pages/chat/components/topBar/TopBar";
 
-export default function HomePage(props) {
+export default function UserHomepage() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -36,6 +36,6 @@ export default function HomePage(props) {
   );
 }
 
-HomePage.propTypes = {
+UserHomepage.propTypes = {
   window: PropTypes.func,
 };
