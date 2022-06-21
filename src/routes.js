@@ -102,15 +102,15 @@ export default function Routes() {
       path: "/ggmap-api-testing",
       element: <PlacesWithStandaloneSearchBox />
     },
-    {
-      path: "/chat-main-screen",
-      element:
-        <ProtectedRoute
-          isAllowed={data.logged_in}
-          children={<ChatMainScreen />}
-        />,
-      children: [{ path: "", element: "" }],
-    },
+    // {
+    //   path: "/chat-main-screen",
+    //   element:
+    //     <ProtectedRoute
+    //       isAllowed={data.logged_in}
+    //       children={<ChatMainScreen />}
+    //     />,
+    //   children: [{ path: "", element: "" }],
+    // },
     {
       path: "/confirm-email-register",
       element: <RegisterConfirm />,
