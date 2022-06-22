@@ -15,7 +15,7 @@ export default function Error404() {
           Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve
           mistyped the URL? Be sure to check your spelling.
         </p>
-        <img src={image} alt="image"></img>
+        <input type="image" src={image} alt="image" />
         <div id="copyright">
           <br></br>
           <a
