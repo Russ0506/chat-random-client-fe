@@ -12,7 +12,6 @@ import ResetPwdEmailSendSuccess from "./views/pages/auth/ResetPwdEmailSendSucces
 import { PlacesWithStandaloneSearchBox } from "./components/googleMapAPI/GoogleMapAPI";
 import ResetPasswordConfirm from "./views/pages/auth/ResetPasswordConfirm";
 import RegisterEmailSendSuccess from "./views/pages/auth/RegisterEmailSendSuccess";
-import { useCookies } from "react-cookie";
 import Error404 from "./views/pages/error/Error404";
 import UserHomepage from "./views/user/UserHomepage";
 import { user_verify } from "./features/auth";

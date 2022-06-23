@@ -18,7 +18,6 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import "../../../styles/login.scss"
 import Loading from "../../common/base/loading/Loading";
-// import { useCookies } from "react-cookie";
 
 export default function SignIn(props) {
   const navigate = useNavigate();
@@ -61,7 +60,7 @@ export default function SignIn(props) {
       .then((data) => {
         if(data.success) {
           navigate("/chat-main-screen");
-        } 
+        }
       })
       .catch(() => {
         setIsSubmit(false)
@@ -181,7 +180,7 @@ export default function SignIn(props) {
               label="Remember me"
             />
             {
-              message ? 
+              message ?
               <Box
                 component="div"
                 variant="h5"

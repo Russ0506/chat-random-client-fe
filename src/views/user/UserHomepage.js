@@ -36,6 +36,6 @@ export default function UserHomepage() {
   );
 }
 
-HomePage.propTypes = {
+UserHomepage.propTypes = {
   window: PropTypes.func,
 };
