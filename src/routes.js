@@ -5,7 +5,6 @@ import HomePage from "./views/admin/homePage/HomePage";
 import ResetPassword from "./views/pages/auth/ResetPassword";
 import SignUp from "./views/pages/auth/Register";
 import Welcome from "./views/pages/welcome/Welcome";
-// import ChatMainScreen from "./views/pages/chat/MainScreen";
 import RegisterConfirm from "./views/pages/auth/RegisterConfirm";
 import ForgotPassword from "./views/pages/auth/ForgotPassword";
 import ResetPwdEmailSendSuccess from "./views/pages/auth/ResetPwdEmailSendSuccess";
