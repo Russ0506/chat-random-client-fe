@@ -1,8 +1,8 @@
-function AppearanceSocket() {
+function PairingSocket() {
   console.log(process.env.REACT_APP_API_URL);
   const ActionCable = require('actioncable');
-  AppearanceSocket.cable = ActionCable.createConsumer(`${process.env.REACT_APP_SOCKET_URL}?jwt_token=${localStorage.getItem('jwt_token')}`);
-  AppearanceSocket.cable.subscriptions.create({ channel: "AppearanceChannel"}, {
+  PairingSocket.cable = ActionCable.createConsumer(`${process.env.REACT_APP_SOCKET_URL}?jwt_token=${localStorage.getItem('jwt_token')}`);
+  PairingSocket.cable.subscriptions.create({ channel: "PairingChannel"}, {
     connected() {
       console.log("Connected to the channel:", this);
     },
@@ -14,8 +14,8 @@ function AppearanceSocket() {
     }
   });
   return (
-    <div className='LYS'></div>
+    <div></div>
   )
 }
 
-export default AppearanceSocket;
+export default PairingSocket;

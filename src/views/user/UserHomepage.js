@@ -11,10 +11,14 @@ import TopBar from "../pages/chat/components/topBar/TopBar";
 import { ThemeProvider } from "styled-components";
 import { createTheme, Grid } from "@mui/material";
 import RightBar from "../pages/chat/components/rightBar/RightBar";
+import AppearanceSocket from '../sockets/AppearanceSocket'
+import PairingSocket from '../sockets/PairingSocket'
 
 export default function UserHomepage() {
   return (
     <Box sx={{ display: "flex", height: "100vh" }} >
+      <AppearanceSocket/>
+      <PairingSocket/>
       <CssBaseline />
       <TopBar />
       <Box
