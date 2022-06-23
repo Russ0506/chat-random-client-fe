@@ -17,6 +17,6 @@ export default function ChatLayer() {
 
   const date = new Date()
   return (
-    <>Chat layer: date</>
+    <>Chat layer: {{date}}</>
   )
 }
