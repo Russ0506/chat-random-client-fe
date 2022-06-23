@@ -61,7 +61,7 @@ export default function SignIn(props) {
       .then((data) => {
         if(data.success) {
           navigate("/chat-main-screen");
-        } 
+        }
       })
       .catch(() => {
         setIsSubmit(false)
@@ -181,7 +181,7 @@ export default function SignIn(props) {
               label="Remember me"
             />
             {
-              message ? 
+              message ?
               <Box
                 component="div"
                 variant="h5"

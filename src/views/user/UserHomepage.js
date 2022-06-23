@@ -1,7 +1,9 @@
+import * as React from "react";
+import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import PropTypes from "prop-types";
+import Typography from "@mui/material/Typography";
 import { DRAWER_WITH } from "../../constant/css_constant";
 import LeftSideBar from "../pages/chat/components/leftBar/LeftSideBar";
 import MessageLayout from "../pages/chat/components/message/MessageLayout";
