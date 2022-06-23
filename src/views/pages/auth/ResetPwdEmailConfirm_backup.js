@@ -41,35 +41,9 @@ export default function ResetPwdEmailConfirm(props) {
       })
       .catch(() => {
         // setLoading(false);
-        alert("false");
+        alert("There is an expected error. Please try again!");
       });
   };
-  // const dispatch = useDispatch();
-  // const [loading, setLoading] = useState(false);
-  // const { isLoggedIn } = useSelector((state) => state.auth);
-  // const { message } = useSelector((state) => state.message);
-  // useEffect(() => {
-  //   dispatch(clearMessage());
-  // }, [dispatch]);
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log(data);
-  //   dispatch(
-  //     resetPwdEmailConfirm({
-  //       user: { email: data.get("email") },
-  //     })
-  //   )
-  //     .unwrap()
-  //     .then(() => {
-  //       props.history.push("/profile");
-  //       window.location.reload();
-  //     })
-  //     .catch(() => {
-  //       setLoading(false);
-  //     });
-  // };
 
   return (
     <Box

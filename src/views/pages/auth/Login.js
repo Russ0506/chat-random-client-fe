@@ -26,6 +26,7 @@ export default function SignIn(props) {
   const [isSubmit, setIsSubmit] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
+  // const [cookies, setCookie, removeCookie] = useCookies(['_random_chat']);
 
   const initialValues = {
     username: '',
@@ -59,7 +60,7 @@ export default function SignIn(props) {
       .then((data) => {
         if(data.success) {
           navigate("/chat-main-screen");
-        } 
+        }
       })
       .catch(() => {
         setIsSubmit(false)
@@ -179,7 +180,7 @@ export default function SignIn(props) {
               label="Remember me"
             />
             {
-              message ? 
+              message ?
               <Box
                 component="div"
                 variant="h5"

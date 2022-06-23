@@ -89,7 +89,7 @@ export default function GoogleMapPlaceSearchBox() {
 
   return (
     <Autocomplete
-      id="google-map-demo"
+      id="google-map-addr"
       sx={{ ml: 2, width: 300 }}
       getOptionLabel={(option) =>
         typeof option === "string" ? option : option.description
@@ -106,6 +106,7 @@ export default function GoogleMapPlaceSearchBox() {
       }}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
+        document.getElementById("__curr_address").value = newInputValue;
         Geocode.fromAddress(newInputValue).then(
           (response) => {
             const { lat, lng } = response.results[0].geometry.location;
