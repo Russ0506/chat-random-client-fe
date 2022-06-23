@@ -1,9 +1,9 @@
 import { Box, Button, Typography } from "@mui/material";
-import React, {useEffect} from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { BORDER_RADIUS, BOX_SHADOW, GRP_COLOR } from "../../../constant/css_constant";
 import { registerConfirm } from "../../../features/auth";
-import { GRP_COLOR, BORDER_RADIUS, BOX_SHADOW } from "../../../constant/css_constant"
 
 
 

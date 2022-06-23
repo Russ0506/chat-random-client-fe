@@ -4,14 +4,17 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { DRAWER_WITH } from "../../constant/css_constant";
+import { DRAWER_WITH, GRP_COLOR } from "../../constant/css_constant";
+import MessageLayout from "../pages/chat/components/areaChat/MessageLayout";
 import LeftSideBar from "../pages/chat/components/leftBar/LeftSideBar";
-import MessageLayout from "../pages/chat/components/message/MessageLayout";
 import TopBar from "../pages/chat/components/topBar/TopBar";
+import { ThemeProvider } from "styled-components";
+import { createTheme, Grid } from "@mui/material";
+import RightBar from "../pages/chat/components/rightBar/RightBar";
 
 export default function UserHomepage() {
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", height: "100vh" }} >
       <CssBaseline />
       <TopBar />
       <Box
@@ -22,15 +25,24 @@ export default function UserHomepage() {
         <LeftSideBar />
       </Box>
       <Box
-        component="main"
+        component="chat"
         sx={{
           flexGrow: 1,
           p: 3,
           width: { sm: `calc(100% - ${DRAWER_WITH}px)` },
+          bgcolor: "white"
         }}
       >
         <Toolbar />
-        <MessageLayout />
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid item xs={8} sx={{ borderRight: "1px solid #e0e0e0", height: "100rem"}}>
+            <MessageLayout />
+          </Grid>
+          <Grid item xs={4}>
+            <RightBar />
+          </Grid>
+        </Grid>
+
       </Box>
     </Box>
   );

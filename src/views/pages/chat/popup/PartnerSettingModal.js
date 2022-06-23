@@ -1,16 +1,15 @@
-import * as React from 'react';
+import { Dialog, DialogContentText } from '@mui/material';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import Stepper from '@mui/material/Stepper';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Dialog, DialogContentText } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
 import PartnerSetting from './PartnerSetting';
-import Loading from '../../../common/base/loading/Loading';
 import PartnerSettingView from './PartnerSettingView';
 
 const steps = ['Fill data search', 'Ready to find your partner'];

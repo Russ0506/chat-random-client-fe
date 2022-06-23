@@ -137,7 +137,7 @@ export default function AppBarComponent() {
             <MailIcon />
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        <Typography >Messages</Typography >
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -149,7 +149,7 @@ export default function AppBarComponent() {
             <NotificationsIcon color="primary" />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <Typography >Notifications</Typography >
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -161,7 +161,7 @@ export default function AppBarComponent() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <Typography >Profile</Typography >
       </MenuItem>
     </Menu>
   );

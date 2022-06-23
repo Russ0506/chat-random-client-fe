@@ -14,7 +14,7 @@ export default class Error500 extends Component {
           <img src={image} alt="image"></img>
           <div id="copyright">
             <br></br>
-            <a class="back" title="Igniel" href="/home">
+            <a className="back" title="Igniel" href="/home">
               Go home
             </a>
           </div>

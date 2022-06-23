@@ -11,7 +11,7 @@ import {
 import React, { useLayoutEffect } from "react";
 import { RandomChatSideBarItem } from "../../../constant/RandomChatSideBarItem";
 import Box from "@mui/material/Box"
-import PartnerSettingModal from "../../pages/chat/popup/PartnerSettignModal";
+import PartnerSettingModal from "../../pages/chat/popup/PartnerSettingModal";
 // import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getDataSearch } from "../../../features/user-setting";
