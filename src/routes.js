@@ -111,7 +111,7 @@ export default function Routes() {
       element: <PlacesWithStandaloneSearchBox />,
     },
     {
-      path: "/chat-main-screen",
+      path: "/app",
       element: <ProtectedRoute children={<UserHomepage />} />,
       children: [{ path: "", element: "" }],
     },

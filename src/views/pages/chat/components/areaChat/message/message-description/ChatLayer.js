@@ -14,7 +14,9 @@ export default function ChatLayer() {
   const [emoji, setEmoji] =  React.useState({});
   // verify who sending (true: i send, false: another people send)
   const [myChat, setMyChat] = React.useState(true);  
+
+  const date = new Date()
   return (
-    <>Chat layer</>
+    <>Chat layer: date</>
   )
 }
