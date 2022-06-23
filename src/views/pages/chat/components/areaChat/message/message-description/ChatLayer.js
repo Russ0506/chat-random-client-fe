@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import React from 'react'
 
 export default function ChatLayer() {
@@ -15,8 +16,8 @@ export default function ChatLayer() {
   // verify who sending (true: i send, false: another people send)
   const [myChat, setMyChat] = React.useState(true);  
 
-  const date = new Date()
+  // const date = new Date()
   return (
-    <>Chat layer: {{date}}</>
+    <Box>Chat layer:</Box>
   )
 }

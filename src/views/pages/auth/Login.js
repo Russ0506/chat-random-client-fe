@@ -60,7 +60,7 @@ export default function SignIn(props) {
       .unwrap()
       .then((data) => {
         if(data.success) {
-          navigate("/chat-main-screen");
+          navigate("/app");
         }
       })
       .catch(() => {

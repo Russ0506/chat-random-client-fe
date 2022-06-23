@@ -51,7 +51,7 @@ function MessageChat(props) {
             const TypographyProps = getTypographyProps(msg, i, props);
             return (
               // eslint-disable-next-line react/no-array-index-key
-              <div key={msg.id || i} className={classes[`${side}Row`]}>
+              <Box key={msg.id || i} className={classes[`${side}Row`]}>
                 <Typography
                   align={'left'}
                   {...TypographyProps}
@@ -64,7 +64,7 @@ function MessageChat(props) {
                 >
                   {msg}
                 </Typography>
-              </div>
+              </Box>
             );
           })}
         </Grid>
