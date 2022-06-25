@@ -36,10 +36,5 @@ export const RandomChatSideBarItem = [
       { index: 0, name: "Thuy An", icon: null, link: "#" },
       { index: 0, name: "Hoai Nhu", icon: null, link: "#" },
     ],
-  },
-
-  {
-    name: "Pairing setting",
-    items: [],
-  },
+  }
 ];

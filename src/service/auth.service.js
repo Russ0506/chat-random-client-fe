@@ -45,6 +45,8 @@ const login = async (params, thunkAPI) => {
   try {
     const res = await axiosClient.post(`${URL}/sign_in`, params)
     localStorage.setItem('jwt_token', res.user.jwt_token)
+    localStorage.setItem('user_display_name', res.user.first_name + ' ' + res.user.last_name)
+    localStorage.setItem('role', res.user.role)
     return res
   } catch (error) {
     const message =

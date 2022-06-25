@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { GRP_COLOR, BORDER_RADIUS, BOX_SHADOW } from "../../../constant/css_constant"
+import { GRP_COLOR, BORDER_RADIUS, BOX_SHADOW } from "../../constant/css_constant"
 
 export default function ResetPasswordConfirm() {
 

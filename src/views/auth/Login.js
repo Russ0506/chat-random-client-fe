@@ -10,14 +10,14 @@ import Link from "@mui/material/Link"
 import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import { useDispatch, useSelector } from "react-redux"
-import { login } from '../../../features/auth'
-import { clearMessage, setMessage } from "../../../features/message"
-import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../../constant/css_constant"
+import { login } from '../../features/auth'
+import { clearMessage, setMessage } from "../../features/message"
+import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../constant/css_constant"
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import "../../../styles/login.scss"
-import Loading from "../../common/base/loading/Loading";
+import "../../styles/login.scss"
+import Loading from "../common/base/loading/Loading";
 // import { useCookies } from "react-cookie";
 
 export default function SignIn(props) {

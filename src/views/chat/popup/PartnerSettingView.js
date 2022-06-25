@@ -11,10 +11,10 @@ import Switch from '@mui/material/Switch';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FONT_SIZE, GRP_COLOR } from "../../../../constant/css_constant";
-import { enqueuingChat } from '../../../../features/chat';
-import { clearMessage } from '../../../../features/message';
-import { saveDataSearch } from '../../../../features/user-setting';
+import { FONT_SIZE, GRP_COLOR } from "../../../constant/css_constant";
+import { enqueuingChat } from '../../../features/chat';
+import { clearMessage } from '../../../features/message';
+import { saveDataSearch } from '../../../features/user-setting';
 
 
 // const ITEM_HEIGHT = 48;

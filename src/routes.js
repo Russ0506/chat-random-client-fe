@@ -1,18 +1,18 @@
-import Login from "./views/pages/auth/Login";
+import Login from "./views/auth/Login";
 import React, { useEffect } from "react";
 import { Navigate, Outlet, Route, useRoutes } from "react-router-dom";
 import HomePage from "./views/admin/homePage/HomePage";
-import ResetPassword from "./views/pages/auth/ResetPassword";
-import SignUp from "./views/pages/auth/Register";
-import Welcome from "./views/pages/welcome/Welcome";
-import RegisterConfirm from "./views/pages/auth/RegisterConfirm";
-import ForgotPassword from "./views/pages/auth/ForgotPassword";
-import ResetPwdEmailSendSuccess from "./views/pages/auth/ResetPwdEmailSendSuccess";
+import ResetPassword from "./views/auth/ResetPassword";
+import SignUp from "./views/auth/Register";
+import Welcome from "./views/welcome/Welcome";
+import RegisterConfirm from "./views/auth/RegisterConfirm";
+import ForgotPassword from "./views/auth/ForgotPassword";
+import ResetPwdEmailSendSuccess from "./views/auth/ResetPwdEmailSendSuccess";
 import { PlacesWithStandaloneSearchBox } from "./components/googleMapAPI/GoogleMapAPI";
-import ResetPasswordConfirm from "./views/pages/auth/ResetPasswordConfirm";
-import RegisterEmailSendSuccess from "./views/pages/auth/RegisterEmailSendSuccess";
-import Error404 from "./views/pages/error/Error404";
-import UserHomepage from "./views/user/UserHomepage";
+import ResetPasswordConfirm from "./views/auth/ResetPasswordConfirm";
+import RegisterEmailSendSuccess from "./views/auth/RegisterEmailSendSuccess";
+import Error404 from "./views/error/Error404";
+import Homepage from "./views/Homepage";
 import { user_verify } from "./features/auth";
 import { useDispatch } from "react-redux";
 import Loading from "./views/common/base/loading/Loading";
@@ -72,7 +72,7 @@ export default function Routes() {
       children: [
         {
           path: "user-homepage",
-          element: <ProtectedRoute children={<UserHomepage />} />,
+          element: <ProtectedRoute children={<Homepage />} />,
         },
         { path: "login", element: <Login /> },
         { path: "logout", element: <Welcome /> },
@@ -111,7 +111,7 @@ export default function Routes() {
     },
     {
       path: "/app",
-      element: <ProtectedRoute children={<UserHomepage />} />,
+      element: <ProtectedRoute children={<Homepage />} />,
       children: [{ path: "", element: "" }],
     },
     {

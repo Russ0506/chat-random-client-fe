@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Link from "@mui/material/Link"
 import { useDispatch, useSelector } from "react-redux";
-import { resetPwd } from "../../../features/auth";
-import { clearMessage } from "../../../features/message";
-import { FONT_SIZE } from "../../../constant/css_constant";
+import { resetPwd } from "../../features/auth";
+import { clearMessage } from "../../features/message";
+import { FONT_SIZE } from "../../constant/css_constant";
 
 export default function ResetPassword(props) {
   const dispatch = useDispatch();

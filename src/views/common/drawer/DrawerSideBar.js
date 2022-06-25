@@ -11,63 +11,40 @@ import {
 import React, { useLayoutEffect } from "react";
 import { RandomChatSideBarItem } from "../../../constant/RandomChatSideBarItem";
 import Box from "@mui/material/Box"
-import PartnerSettingModal from "../../pages/chat/popup/PartnerSettingModal";
+import PartnerSettingModal from "../../chat/popup/PartnerSettingModal";
+import {makeStyles} from "@mui/styles"
 // import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getDataSearch } from "../../../features/user-setting";
 
 export default function DrawerSideBar(props) {
-  const dispatch = useDispatch()
-  const [userSetting, setUserSetting] = React.useState(null);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [openPartnerDialog, setOpenPartnerDialog] = React.useState(false);
-  const [openPartnerViewDialog, setOpenPartnerViewDialog] = React.useState(false);
 
-  useLayoutEffect(() => {
-    dispatch(getDataSearch()).unwrap()
-    .then((data) => {
-      setUserSetting(data);
-    })
-    .catch(() => {
-    });
-  },[])
-
-  const handleClickOpen = () => {
-    setOpenPartnerDialog(true);
-  };
-
-  const handleOpenViewSettingModal = () => {
-    setOpenPartnerViewDialog(true);
-  };
-
-  const handlePartnerSettingClose = () => {
-    setOpenPartnerDialog(false);
-  };
-
-  const handleParnerSettingViewClose = () => {
-    setOpenPartnerViewDialog(false);
-  };
-
-  const drawerWidth = 240;
+  const drawerWidth = 350;
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const useStyles = makeStyles({
+    drawerPaper: {
+      marginTop: "64px",
+      paddingTop: "0px",
+    }
+  });
+
+  const classes = useStyles();
+
   const container =
     window !== undefined ? () => window().document.body : undefined;
   const drawer = (
     <Box>
-      <Toolbar />
+      {/* <Toolbar /> */}
       {/* <MediaControlCard /> */}
       {RandomChatSideBarItem.map((component, i) => (
         <Box key={i}>
           <ListItem>
               {
-                (i===2) ?
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }} onClick={handleClickOpen}>
-                  {component.name}
-                </Typography>
-                :
                   <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
                   {component.name}
                   </Typography>
@@ -87,14 +64,12 @@ export default function DrawerSideBar(props) {
           </List>
         </Box>
       ))}
-
-      <PartnerSettingModal open={openPartnerDialog} onClose={handlePartnerSettingClose} handleOpenViewSettingModal={handleOpenViewSettingModal} userSetting={userSetting}></PartnerSettingModal>
     </Box>
   );
   return (
     <>
       {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-      <Drawer
+      {/* <Drawer
         container={container}
         variant="temporary"
         open={mobileOpen}
@@ -111,8 +86,11 @@ export default function DrawerSideBar(props) {
         }}
       >
         {drawer}
-      </Drawer>
+      </Drawer> */}
       <Drawer
+      classes={{
+        paper: classes.drawerPaper
+      }}
         variant="permanent"
         sx={{
           display: { xs: "none", sm: "block" },

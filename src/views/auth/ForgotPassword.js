@@ -7,12 +7,12 @@ import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
-import { clearMessage } from "../../../features/message"
+import { clearMessage } from "../../features/message"
 import { useDispatch, useSelector } from "react-redux";
-import { BORDER_RADIUS, BOX_SHADOW, FONT_SIZE, FONT_WEIGHT, GRP_COLOR, LINE_HEIGHT } from "../../../constant/css_constant";
-import { sendMailResetPass } from "../../../features/auth";
+import { BORDER_RADIUS, BOX_SHADOW, FONT_SIZE, FONT_WEIGHT, GRP_COLOR, LINE_HEIGHT } from "../../constant/css_constant";
+import { sendMailResetPass } from "../../features/auth";
 import { useNavigate } from "react-router-dom";
-import Loading from "../../common/base/loading/Loading";
+import Loading from "../common/base/loading/Loading";
 
 
 export default function ForgotPassword() {

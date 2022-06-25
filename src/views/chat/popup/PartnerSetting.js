@@ -13,10 +13,10 @@ import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
 import * as React from 'react';
 import { useDispatch } from "react-redux";
-import GgmCurrentPlaceText2 from "../../../../components/googleMapAPI/GgmCurrentPlaceText2";
-import GoogleMapPlaceSearchBox from "../../../../components/googleMapAPI/GoogleMapPlaceSearchBox";
-import { GRP_COLOR } from "../../../../constant/css_constant";
-import { saveDataSearch } from '../../../../features/user-setting';
+import GgmCurrentPlaceText2 from "../../../components/googleMapAPI/GgmCurrentPlaceText2";
+import GoogleMapPlaceSearchBox from "../../../components/googleMapAPI/GoogleMapPlaceSearchBox";
+import { GRP_COLOR } from "../../../constant/css_constant";
+import { saveDataSearch } from '../../../features/user-setting';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

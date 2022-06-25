@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "../../../styles/Welcome/styles.css";
-import image from "../../../assets/img/welcome_img.svg";
+import styles from "../../styles/Welcome/styles.css";
+import image from "../../assets/img/welcome_img.svg";
 
 export default function Welcome() {
   return (
