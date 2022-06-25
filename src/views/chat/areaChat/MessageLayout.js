@@ -2,9 +2,11 @@ import { Box, Grid } from '@mui/material';
 import React from 'react';
 import MessageChat from './message/MessageChat';
 import TextChatLayer from './sendMessageBox/TextChatLayer'
+import { NewMessageSocket } from '../../sockets/Socket'
 
 const MessageLayout = () => (
   <Box sx={{ width: "100%", height : "100%" }}>
+    <NewMessageSocket/>
     <Box sx={{height: "50%"}}>
       <MessageChat
         avatar={''}
