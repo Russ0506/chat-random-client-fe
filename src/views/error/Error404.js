@@ -1,5 +1,5 @@
-import image from "../../../assets/img/illustration_404.svg";
-import "../../../styles/Error.css";
+import image from "../../assets/img/illustration_404.svg";
+import styles from "../../styles/Error.css";
 
 // lỗi Not Found
 // Các file được yêu cầu không có trên máy chủ.

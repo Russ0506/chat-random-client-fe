@@ -17,6 +17,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { iconStyles } from "../../../theme/colors/Colors";
 import { makeStyles } from "@mui/styles";
+import ConversationControlBox from "../../../chat/topBar/startConversation/ConversationControlBox";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -91,6 +92,8 @@ export default function AppBarComponent() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const profile_name = localStorage.getItem('user_display_name')
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -189,6 +192,11 @@ export default function AppBarComponent() {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
+          <Box width={350} p={3}>
+           <ConversationControlBox />
+
+          </Box>
+         
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {/* <IconButton
               size="medium"
@@ -220,6 +228,9 @@ export default function AppBarComponent() {
               <AccountCircle fontSize="medium" sx={{ color: "gray" }} />
             </IconButton>
           </Box>
+          <Box width="fix-content" p={3} sx={{color: "text.primary"}}>
+          <Typography>{profile_name}</Typography>
+            </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="medium"

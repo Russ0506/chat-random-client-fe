@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from '../../../features/auth'
-import { clearMessage } from "../../../features/message";
+import { register } from '../../features/auth'
+import { clearMessage } from "../../features/message";
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -15,14 +15,14 @@ import moment from 'moment'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { GRP_COLOR, BORDER_RADIUS, BOX_SHADOW, FONT_SIZE } from "../../../constant/css_constant"
+import { GRP_COLOR, BORDER_RADIUS, BOX_SHADOW, FONT_SIZE } from "../../constant/css_constant"
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { useNavigate } from "react-router-dom";
-import Loading from "../../common/base/loading/Loading";
+import Loading from "../common/base/loading/Loading";
 
 export default function SignUp(props) {
   const dispatch = useDispatch()
