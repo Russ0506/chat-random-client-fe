@@ -26,9 +26,7 @@ function AppearanceSocket(){
     channel: "AppearanceChannel",
     connected: ()=>{},
     disconnected: ()=>{},
-    received: (data)=>{
-      console.log("Received some data:", data.message.text);
-    }
+    received: ()=>{}
   })
 }
 
