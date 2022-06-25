@@ -6,8 +6,7 @@ import LeftSideBar from "./chat/leftBar/LeftSideBar";
 import RightBar from "./chat/rightBar/RightBar";
 import TopBar from "./chat/topBar/TopBar";
 import MessageLayout from "./chat/areaChat/MessageLayout"
-import AppearanceSocket from '../sockets/AppearanceSocket'
-import PairingSocket from '../sockets/PairingSocket'
+import {AppearanceSocket, PairingSocket} from './sockets/Socket'
 
 export default function Homepage() {
   return (

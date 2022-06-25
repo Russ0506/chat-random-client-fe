@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from '../../features/auth'
 import { clearMessage } from "../../features/message";
@@ -23,6 +23,8 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { useNavigate } from "react-router-dom";
 import Loading from "../common/base/loading/Loading";
+import Select from "react-select";
+import { axiosClient } from '../../setup/axiosClient'
 
 export default function SignUp(props) {
   const dispatch = useDispatch()
@@ -43,7 +45,9 @@ export default function SignUp(props) {
     const birthday = moment(date).format("DD/MM/YYYY");
     dispatch(register(
       {
-        user: { first_name: data.get("firstName"), last_name: data.get("lastName"), birthday: birthday, email: data.get("email"), password: data.get("password"), gender: data.get("gender") }
+        user: { first_name: data.get("firstName"), last_name: data.get("lastName"),
+        birthday: birthday, email: data.get("email"), password: data.get("password"),
+        gender: data.get("gender"), time_zone: data.get("time_zone")}
       }
     ))
       .unwrap()
@@ -67,6 +71,14 @@ export default function SignUp(props) {
     height: "45px",
   }
 
+  const [options, setOptions] = React.useState([]);
+  useLayoutEffect(()=>{
+    axiosClient.get(`time_zones.json`).then((data)=>{
+      setOptions(data.time_zones.map(it => ({value: it, label:it})));
+    });
+  }, []);
+  // console.log(JSON.parse(res).time_zones[1]);.map(it => ({value: it, label:it}))
+  // options = res.then((data)=>{ return data.time_zones})
   return (
     <Box sx={{ bgcolor: GRP_COLOR.WHITECODE, height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
       <Loading show={isSubmit}></Loading>
@@ -170,6 +182,13 @@ export default function SignUp(props) {
                     <FormControlLabel value="male" control={<Radio />} label="Male" />
                     <FormControlLabel value="other" control={<Radio />} label="Other" />
                   </RadioGroup>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} >
+                <FormControl>
+                  <FormLabel>Time zome</FormLabel>
+                  <Select options={options} name="time_zone"/>
                 </FormControl>
               </Grid>
 
