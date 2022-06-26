@@ -1,28 +1,35 @@
 import React, { useState, useEffect } from "react";
-import Button from "@mui/material/Button"
-import CssBaseline from "@mui/material/CssBaseline"
-import TextField from "@mui/material/TextField"
-import FormControlLabel from "@mui/material/FormControlLabel"
-import Checkbox from "@mui/material/Checkbox"
-import Grid from "@mui/material/Grid"
-import Box from "@mui/material/Box"
-import Link from "@mui/material/Link"
-import Typography from "@mui/material/Typography"
-import Container from "@mui/material/Container"
-import { useDispatch, useSelector } from "react-redux"
-import { login } from '../../features/auth'
-import { clearMessage, setMessage } from "../../features/message"
-import { GRP_COLOR, FONT_SIZE, LINE_HEIGHT, FONT_WEIGHT, BORDER_RADIUS, BOX_SHADOW } from "../../constant/css_constant"
-import { useNavigate } from 'react-router-dom';
-import { Formik, Form, Field, ErrorMessage } from 'formik'
-import * as Yup from 'yup'
-import "../../styles/login.scss"
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../features/auth";
+import { clearMessage, setMessage } from "../../features/message";
+import {
+  GRP_COLOR,
+  FONT_SIZE,
+  LINE_HEIGHT,
+  FONT_WEIGHT,
+  BORDER_RADIUS,
+  BOX_SHADOW,
+} from "../../constant/css_constant";
+import { useNavigate } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import "../../styles/login.scss";
 import Loading from "../common/base/loading/Loading";
 // import { useCookies } from "react-cookie";
 
 export default function SignIn(props) {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -30,18 +37,22 @@ export default function SignIn(props) {
   // const [cookies, setCookie, removeCookie] = useCookies(['_random_chat']);
 
   const initialValues = {
-    username: '',
-    password: '',
-    remember: false
-  }
+    username: "",
+    password: "",
+    remember: false,
+  };
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string().email('please enter valid email').required("Required"),
-    password: Yup.string().required("Required").matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      "Your password must contain at least 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-    ),
-  })
+    username: Yup.string()
+      .email("please enter valid email")
+      .required("Required"),
+    password: Yup.string()
+      .required("Required")
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+        "Your password must contain at least 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+      ),
+  });
 
   useEffect(() => {
     dispatch(clearMessage());
@@ -49,25 +60,28 @@ export default function SignIn(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setIsSubmit(true)
+    setIsSubmit(true);
     const data = new FormData(event.currentTarget);
 
-    dispatch(login(
-      {
-        user: { email: data.get("email"), password: data.get("password") }
-      }
-    ))
+    dispatch(
+      login({
+        user: { email: data.get("email"), password: data.get("password") },
+      })
+    )
       .unwrap()
       .then((data) => {
-        if(data.success) {
+        if (data.success) {
           navigate("/app");
         }
       })
       .catch(() => {
-        setIsSubmit(false)
-        setLoading(false);
+        if (message === "user have already loged in") {
+          navigate("/app");
+        } else {
+          setIsSubmit(false);
+          setLoading(false);
+        }
       });
-
   };
 
   const typeButton = {
@@ -75,18 +89,30 @@ export default function SignIn(props) {
     mb: 2,
     bgcolor: GRP_COLOR.BACKGROUND01,
     color: GRP_COLOR.CODE016,
-    '&:hover': {
+    "&:hover": {
       color: GRP_COLOR.WHITECODE,
     },
     borderRadius: BORDER_RADIUS.br10,
     boxShadow: BOX_SHADOW.CODE001,
     height: "45px",
-  }
+  };
 
   return (
-    <Box sx={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
+    <Box
+      sx={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
       <Loading show={isSubmit}></Loading>
-      <Container component="main" maxWidth="xs" sx={{ fontWeight: FONT_WEIGHT.normal, lineHeight: LINE_HEIGHT.normal }} className={isSubmit? "opacity-background" : ""}>
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{ fontWeight: FONT_WEIGHT.normal, lineHeight: LINE_HEIGHT.normal }}
+        className={isSubmit ? "opacity-background" : ""}
+      >
         <CssBaseline />
         <Box
           sx={{
@@ -173,15 +199,10 @@ export default function SignIn(props) {
                 lineHeight: LINE_HEIGHT.lh17,
                 fontWeight: FONT_WEIGHT.middle,
               }}
-              control={
-                <Checkbox
-                  value="remember"
-                />
-              }
+              control={<Checkbox value="remember" />}
               label="Remember me"
             />
-            {
-              message ?
+            {message ? (
               <Box
                 component="div"
                 variant="h5"
@@ -189,13 +210,16 @@ export default function SignIn(props) {
                 fontSize={FONT_SIZE.smallText}
               >
                 {message}
-              </Box> : ''}
+              </Box>
+            ) : (
+              ""
+            )}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={typeButton}
-              disabled = {isSubmit}
+              disabled={isSubmit}
             >
               Sign In
             </Button>
@@ -229,7 +253,6 @@ export default function SignIn(props) {
             </Grid>
           </Box>
         </Box>
-
       </Container>
       <Box className="login-main"></Box>
     </Box>
