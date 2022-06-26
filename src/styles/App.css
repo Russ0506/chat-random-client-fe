@@ -16,3 +16,7 @@
 .css-1s2u09g-control, .css-b62m3t-container {
   width: 300px;
 }
+
+.css-10mzr36-MuiGrid-root>.MuiGrid-item  {
+  padding: 0px !important
+}
