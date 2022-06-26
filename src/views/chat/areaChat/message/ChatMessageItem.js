@@ -60,6 +60,7 @@ export default function ChatMessageItem({ message, conversation, onOpenLightbox 
           display: 'flex',
           ...(isMe && {
             ml: 'auto',
+            marginRight: 2
           }),
         }}
       >

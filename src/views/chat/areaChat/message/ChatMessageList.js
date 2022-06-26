@@ -40,20 +40,23 @@ export default function ChatMessageList({ conversation }) {
 
   return (
     <>
-      <Scrollbar scrollableNodeProps={{ ref: scrollRef }} sx={{ p: 3, height: 1 }}>
-        <Box sx={{height: "650px"}}>
-        {conversation.messages.map((message) => (
-          <ChatMessageItem
-            key={message.id}
-            message={message}
-            conversation={conversation}
-            onOpenLightbox={handleOpenLightbox}
-          />
-        ))}
-        </Box>
-      
-      </Scrollbar>
-
+      <Box className="assdadas" sx={{ height: "calc(100% - 92px)" }}>
+        <Scrollbar
+          scrollableNodeProps={{ ref: scrollRef }}
+          sx={{ height: "auto" }}
+        >
+          {conversation.messages.map((message) => (
+            <>
+              <ChatMessageItem
+                key={message.id}
+                message={message}
+                conversation={conversation}
+                onOpenLightbox={handleOpenLightbox}
+              />
+            </>
+          ))}
+        </Scrollbar>
+      </Box>
       <LightboxModal
         images={imagesLightbox}
         mainSrc={imagesLightbox[selectedImage]}
