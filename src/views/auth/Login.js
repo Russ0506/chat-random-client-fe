@@ -10,7 +10,7 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../features/auth";
+import { login, user_verify } from "../../features/auth";
 import { clearMessage, setMessage } from "../../features/message";
 import {
   GRP_COLOR,
@@ -75,12 +75,8 @@ export default function SignIn(props) {
         }
       })
       .catch(() => {
-        if (message === "user have already loged in") {
-          navigate("/app");
-        } else {
-          setIsSubmit(false);
-          setLoading(false);
-        }
+        setIsSubmit(false);
+        setLoading(false);
       });
   };
 
@@ -226,7 +222,7 @@ export default function SignIn(props) {
             <Grid container>
               <Grid item xs>
                 <Link
-                  href="/users/forgotPassword"
+                  href="/users/forgot-password"
                   variant="body2"
                   sx={{
                     lineHeight: LINE_HEIGHT.lh17,
