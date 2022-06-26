@@ -54,7 +54,6 @@ export default function ResetPassword(props) {
       <Box
         component="form"
         onSubmit={handleSubmit}
-        // noValidate
         sx={{
           width: "50%",
           minWidth: "365px",

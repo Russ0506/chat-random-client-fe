@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../common/base/loading/Loading";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { FormHelperText } from "@mui/material";
 
 export default function ForgotPassword() {
   const dispatch = useDispatch();
@@ -87,7 +88,6 @@ export default function ForgotPassword() {
       }}
     >
       <Loading show={isSubmit}></Loading>
-      {/* this component to enter email and link to reset pass */}
       <Container
         component="main"
         maxWidth="xs"
@@ -133,10 +133,10 @@ export default function ForgotPassword() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  autoFocus
-                  helperText={<ErrorMessage name="email" />}
+                  helperText={<ErrorMessage  name="email" />}
                 />
-                {message ? (
+
+                {/* {message ? (
                   <Box
                     component="div"
                     variant="h5"
@@ -147,7 +147,7 @@ export default function ForgotPassword() {
                   </Box>
                 ) : (
                   ""
-                )}
+                )} */}
                 <Button
                   type="submit"
                   fullWidth

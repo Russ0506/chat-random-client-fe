@@ -16,42 +16,10 @@ import Homepage from "./views/Homepage";
 import { user_verify } from "./features/auth";
 import { useDispatch } from "react-redux";
 import Loading from "./views/common/base/loading/Loading";
+import AuthenLoading from "./views/common/base/loading/AuthenLoading";
 
-export const ProtectedRoute = ({ redirectPath = "/users/login", children }) => {
-  const dispatch = useDispatch();
-  const [data, setData] = React.useState();
-
-  useEffect(() => {
-    dispatch(user_verify())
-      .unwrap()
-      .then((res) => {
-        setData({
-          role: res.role,
-          logged_in: res.logged_in,
-        });
-      })
-      .catch(() => {
-        setData({
-          role: "",
-          logged_in: false,
-        });
-      });
-  }, []);
-
-  return (
-    <>
-      {data && !data.logged_in ? (
-        <>
-          <Navigate to={redirectPath} replace />
-        </>
-      ) : (
-        <>
-          <Loading show={false}></Loading>
-          {children}
-        </>
-      )}
-    </>
-  );
+export const ProtectedRoute = ({ link = "/", children }) => {
+  return <AuthenLoading link={link} children={children} />;
 };
 
 export default function Routes() {
@@ -72,9 +40,17 @@ export default function Routes() {
       children: [
         {
           path: "user-homepage",
-          element: <ProtectedRoute children={<Homepage />} />,
+          element: (
+            <ProtectedRoute
+              link="/users/user-homepage"
+              children={<Homepage />}
+            />
+          ),
         },
-        { path: "login", element: <Login /> },
+        {
+          path: "login",
+          element: <ProtectedRoute link="/users/login" children={<Login />} />,
+        },
         { path: "logout", element: <Welcome /> },
         {
           path: "reset-password",
@@ -82,37 +58,37 @@ export default function Routes() {
           children: [{ path: ":token", element: <ResetPassword /> }],
         },
         {
-          path: "forgotPassword",
-          element: <ForgotPassword />,
+          path: "forgot-password",
+          element: (
+            <ProtectedRoute
+              link="/users/forgot-password"
+              children={<ForgotPassword />}
+            />
+          ),
         },
       ],
     },
     {
-      path: "/reset-password",
-      element: <ResetPassword />,
-      children: [{ path: "", element: "" }],
-    },
-    {
       path: "/reset-password-email-confirm",
-
       children: [{ path: "success", element: <ResetPwdEmailSendSuccess /> }],
     },
     {
       path: "/register",
-
       children: [
-        { path: "", element: <SignUp /> },
-        { path: "email-success", element: <RegisterEmailSendSuccess /> },
+        {
+          path: "",
+          element: <ProtectedRoute link="/register" children={<SignUp />} />,
+        },
+        {
+          path: "email-success",
+          element: (
+            <ProtectedRoute
+              link="/users/email-success"
+              children={<RegisterEmailSendSuccess />}
+            />
+          ),
+        },
       ],
-    },
-    {
-      path: "/ggmap-api-testing",
-      element: <PlacesWithStandaloneSearchBox />,
-    },
-    {
-      path: "/app",
-      element: <ProtectedRoute children={<Homepage />} />,
-      children: [{ path: "", element: "" }],
     },
     {
       path: "/confirm-email-register",
