@@ -82,7 +82,23 @@
   color: #f7f7f7;
 }
 
+.navbar__menu #button_Signup {
+  padding: 12px 24px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  background: #7347c1;
+  margin-left: 16px;
+  color: #f7f7f7;
+}
+
 .navbar__menu #button:hover {
+  background: #fb4b4e;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.navbar__menu #button_Signup:hover {
   background: #fb4b4e;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
@@ -166,7 +182,7 @@
 }
 
 .hero__container--left p {
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: #222121;
   margin-top: 1rem;
   font-weight: 700;
@@ -224,5 +240,10 @@
 .hero__container--img {
   height: 100%;
   width: 100%;
+}
+
+.col {
+  background-color: #00cc66;
+  margin-bottom: 1rem;
 }
 /*# sourceMappingURL=styles.css.map */
