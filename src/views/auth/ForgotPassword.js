@@ -7,159 +7,177 @@ import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
-import { clearMessage } from "../../features/message"
+import { clearMessage } from "../../features/message";
 import { useDispatch, useSelector } from "react-redux";
-import { BORDER_RADIUS, BOX_SHADOW, FONT_SIZE, FONT_WEIGHT, GRP_COLOR, LINE_HEIGHT } from "../../constant/css_constant";
+import {
+  BORDER_RADIUS,
+  BOX_SHADOW,
+  FONT_SIZE,
+  FONT_WEIGHT,
+  GRP_COLOR,
+  LINE_HEIGHT,
+} from "../../constant/css_constant";
 import { sendMailResetPass } from "../../features/auth";
 import { useNavigate } from "react-router-dom";
 import Loading from "../common/base/loading/Loading";
-
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 export default function ForgotPassword() {
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const [isSubmit, setIsSubmit] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isSubmit, setIsSubmit] = useState(false);
 
-    const { message } = useSelector((state) => state.message);
-    useEffect(() => {
-        dispatch(clearMessage());
-    }, [dispatch]);
+  const { message } = useSelector((state) => state.message);
+  useEffect(() => {
+    dispatch(clearMessage());
+  }, [dispatch]);
 
-    const typeButton = {
-        mt: 5,
-        mb: 2,
-        bgcolor: GRP_COLOR.BACKGROUND01,
-        color: GRP_COLOR.CODE016,
-        '&:hover': {
-            color: GRP_COLOR.WHITECODE,
-        },
-        borderRadius: BORDER_RADIUS.br10,
-        boxShadow: BOX_SHADOW.CODE001,
-        height: "45px",
-    }
+  const initialValues = {
+    email: "",
+  };
 
-    const sxAlignItem = {
+  const onSubmit = (values, props) => {
+    console.log(values);
+    setIsSubmit(true);
+    dispatch(
+      sendMailResetPass({
+        user: { email: values.email },
+      })
+    )
+      .unwrap()
+      .then(() => {
+        navigate("/reset-password-email-confirm/success");
+      })
+      .catch(() => {
+        setIsSubmit(false);
+      });
+  };
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email("Enter valid Email").required("Required"),
+  });
+
+  const typeButton = {
+    mt: 5,
+    mb: 2,
+    bgcolor: GRP_COLOR.BACKGROUND01,
+    color: GRP_COLOR.WHITECODE,
+    "&:hover": {
+      color: GRP_COLOR.WHITECODE,
+    },
+    borderRadius: BORDER_RADIUS.br10,
+    boxShadow: BOX_SHADOW.CODE001,
+    height: "45px",
+  };
+
+  const sxAlignItem = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  };
+
+  return (
+    <Box
+      sx={{
+        height: "100vh",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-    }
-
-    const redirectToResetForm = (event) => {
-        event.preventDefault();
-        setIsSubmit(true)
-        const data = new FormData(event.currentTarget);
-        dispatch(sendMailResetPass(
-            {
-                user: { email: data.get("email") }
-            }
-        ))
-            .unwrap()
-            .then(() => {
-                navigate("/reset-password-email-confirm/success");
-            })
-            .catch(() => {
-                setIsSubmit(false)
-            });
-    }
-
-    return (
-        <Box sx={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-            <Loading show={isSubmit}></Loading>
-            {/* this component to enter email and link to reset pass */}
-            <Container component="main" maxWidth="xs" sx={{ fontWeight: FONT_WEIGHT.normal, lineHeight: LINE_HEIGHT.normal }} className={isSubmit? "opacity-background" : ""}>
-                <CssBaseline />
-                <Box
-                    sx={{
-                        mt: 7,
-                        paddingTop: "100px",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                    }}
+        justifyContent: "space-between",
+      }}
+    >
+      <Loading show={isSubmit}></Loading>
+      {/* this component to enter email and link to reset pass */}
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{
+          fontWeight: FONT_WEIGHT.normal,
+          lineHeight: LINE_HEIGHT.normal,
+        }}
+        className={isSubmit ? "opacity-background" : ""}
+      >
+        <CssBaseline />
+        <Box
+          sx={{
+            mt: 7,
+            paddingTop: "100px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography fontSize={FONT_SIZE.formHeaderSmall}>
+            Forgot Password?
+          </Typography>
+          <Typography
+            component="h1"
+            variant="h5"
+            fontSize={FONT_SIZE.formNormalText}
+          >
+            No worries, we'll send you reset instructions
+          </Typography>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+          >
+            {(props) => (
+              <Form>
+                <Field
+                  as={TextField}
+                  margin="normal"
+                  variant="outlined"
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  helperText={<ErrorMessage name="email" />}
+                />
+                {message ? (
+                  <Box
+                    component="div"
+                    variant="h5"
+                    color="red"
+                    fontSize={FONT_SIZE.smallText}
+                  >
+                    {message}
+                  </Box>
+                ) : (
+                  ""
+                )}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={typeButton}
+                  disabled={props.isSubmitting}
                 >
-                    <Typography
-                        fontSize={FONT_SIZE.formHeaderSmall}
+                  Reset password
+                </Button>
+                <Grid container sx={sxAlignItem}>
+                  <Grid item>
+                    <Link
+                      href="/users/login"
+                      variant="body2"
+                      sx={{
+                        lineHeight: LINE_HEIGHT.lh17,
+                        fontWeight: FONT_WEIGHT.middle,
+                        textDecoration: "none",
+                      }}
                     >
-                        Forgot Password?
-                    </Typography>
-                    <Typography
-                        component="h1"
-                        variant="h5"
-                        fontSize={FONT_SIZE.formNormalText}
-                    >
-                        No worries, we'll send you reset instructions
-                    </Typography>
-                    <Box
-                        component="form"
-                        onSubmit={redirectToResetForm}
-                        noValidate
-                        sx={{ mt: 7, fontSize: FONT_SIZE.smallText, width: "500px" }}
-                    >
-                        <TextField
-                            sx={{
-                                bgcolor: GRP_COLOR.CODE016,
-                                borderRadius: BORDER_RADIUS.normal,
-                                color: GRP_COLOR.WHITECODE,
-                            }}
-                            margin="normal"
-                            variant="filled"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                            InputLabelProps={{
-                                style: {
-                                    color: GRP_COLOR.WHITECODE,
-                                },
-                            }}
-                            InputProps={{
-                                style: {
-                                    color: GRP_COLOR.WHITECODE,
-                                },
-                            }}
-                        />
-                        {
-                            message ?
-                                <Box
-                                    component="div"
-                                    variant="h5"
-                                    color="red"
-                                    fontSize={FONT_SIZE.smallText}
-                                >
-                                    {message}
-                                </Box> : ''}
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={typeButton}
-                            disabled={isSubmit}
-                        >
-                            Reset password
-                        </Button>
-                        <Grid container sx={sxAlignItem}>
-                            <Grid item >
-                                <Link
-                                    href="/users/login"
-                                    variant="body2"
-                                    sx={{
-                                        lineHeight: LINE_HEIGHT.lh17,
-                                        fontWeight: FONT_WEIGHT.middle,
-                                        textDecoration: "none",
-                                    }}
-                                >
-                                    Back to login
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                </Box>
-
-            </Container>
-            <Box className="login-main"></Box>
+                      Back to login
+                    </Link>
+                  </Grid>
+                </Grid>
+              </Form>
+            )}
+          </Formik>
         </Box>
-    )
+      </Container>
+      <Box className="login-main"></Box>
+    </Box>
+  );
 }
