@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { user_verify } from "../../../../features/auth";
 import {
   authenRouteOneTime,
@@ -19,7 +19,7 @@ export default function AuthenLoading(props) {
       .then((res) => {
         if (res.logged_in && authenRouteOneTime.includes(props.link)) {
           setIsAccess(true);
-          navigate("/users/user-homepage");
+          navigate("/app");
         } else if (res.logged_in && authenRoute.includes(props.link)) {
           setIsAccess(true);
         } else {

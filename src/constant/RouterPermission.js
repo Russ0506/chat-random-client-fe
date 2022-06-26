@@ -5,4 +5,4 @@ export const authenRouteOneTime = [
   "/register",
   "/register/email-success",
 ];
-export const authenRoute = ["/users/user-homepage"];
+export const authenRoute = ["/app"];
