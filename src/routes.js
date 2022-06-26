@@ -36,17 +36,14 @@ export default function Routes() {
       children: [],
     },
     {
+      path: "/app",
+      element: (
+        <ProtectedRoute link="/app" children={<Homepage />} />
+      ),
+    },
+    {
       path: "/users",
       children: [
-        {
-          path: "user-homepage",
-          element: (
-            <ProtectedRoute
-              link="/users/user-homepage"
-              children={<Homepage />}
-            />
-          ),
-        },
         {
           path: "login",
           element: <ProtectedRoute link="/users/login" children={<Login />} />,
