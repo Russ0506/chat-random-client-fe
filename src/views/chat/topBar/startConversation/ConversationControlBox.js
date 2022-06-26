@@ -38,9 +38,9 @@ export default function ConversationControlBox() {
 
   return (
     <>
-     <Stack direction="row" spacing={3} sx={{ alignItems: "center"}}>
+     <Stack direction="row" spacing={2} sx={{ alignItems: "center", justifyContent: "end"}} >
       <Button variant="contained" onClick={handleClickOpen}>New Conversation</Button>
-      <Typography color="black">Time here</Typography>
+      {/* <Typography color="black">Time here</Typography> */}
     </Stack>
       <PartnerSettingModal open={openPartnerDialog} onClose={handlePartnerSettingClose} handleOpenViewSettingModal={handleOpenViewSettingModal} userSetting={userSetting}></PartnerSettingModal>
     </>

@@ -142,12 +142,12 @@ function MessageLayout() {
   return (
     <Box sx={{ width: "100%", height: "100%", padding: "0px" }}>
       <NewMessageSocket />
-      <Box sx={{ height: "50%" }}>
+      <Box className='adss' sx={{ height: "calc(100% - 60px)", width: "100%" }}>
         <ChatHeaderDetail participants={displayParticipants} />
         <ChatMessageList conversation={conversation} />
       </Box>
-      <Divider />
-      <Box sx={{ height: "50%", padding: "0px" }}>
+      {/* <Divider /> */}
+      <Box sx={{ height: "60px", padding: "0px" }}>
         <ChatMessageInput
           conversationId={activeConversationId}
           onSend={handleSendMessage}

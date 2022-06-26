@@ -11,11 +11,11 @@ import {AppearanceSocket, PairingSocket} from './sockets/Socket'
 export default function Homepage() {
   return (
     <Box>
-      <AppearanceSocket/>
-      <PairingSocket/>
+      <AppearanceSocket />
+      <PairingSocket />
       <TopBar />
-      <Box w={100} sx={{borderBottom: "1px solid #e0e0e0"}} ></Box>
-      <Box  sx={{ display: "flex", height: "100vh" }} >
+      <Box w={100} sx={{ borderBottom: "1px solid #e0e0e0" }}></Box>
+      <Box sx={{ display: "flex", height: "100vh" }} className="v11">
         {/* <AppearanceSocket/> */}
         {/* <PairingSocket/> */}
         <CssBaseline />
@@ -37,14 +37,23 @@ export default function Homepage() {
         <Box
           sx={{
             flexGrow: 1,
-            p: 3,
+            p: 2,
             width: { sm: `calc(100% - ${DRAWER_WITH}px)` },
-            bgcolor: "white"
+            bgcolor: "white",
           }}
         >
           <Toolbar />
-          <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-            <Grid item xs={8} sx={{ borderRight: "1px solid #e0e0e0", height: "100rem" }}>
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            sx={{height: '100%'}}
+          >
+            <Grid
+              item
+              xs={8}
+              sx={{ borderRight: "1px solid #e0e0e0", height: "100%", paddingBottom: "25px" }}
+            >
               <MessageLayout />
             </Grid>
             <Grid item xs={4}>
@@ -54,7 +63,6 @@ export default function Homepage() {
         </Box>
       </Box>
     </Box>
-
   );
 }
 
