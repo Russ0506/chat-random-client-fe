@@ -6,6 +6,7 @@ import { user_verify } from "../../../../features/auth";
 import {
   authenRouteOneTime,
   authenRoute,
+  authenFailButStillCanAccess,
 } from "../../../../constant/RouterPermission";
 import Homepage from "../../../Homepage";
 export default function AuthenLoading(props) {
@@ -22,17 +23,22 @@ export default function AuthenLoading(props) {
           navigate("/app");
         } else if (res.logged_in && authenRoute.includes(props.link)) {
           setIsAccess(true);
-        } else {
-          navigate("/users/login");
+        } else if (
+          !res.logged_in &&
+          authenFailButStillCanAccess.includes(props.link)
+        ) {
           setIsAccess(true);
+        } else {
+          setIsAccess(true);
+          navigate("/users/login");
         }
       })
       .catch(() => {});
-  }, [isAccess, dispatch, navigate, props.link ]);
+  }, [isAccess, dispatch, navigate, props.link]);
 
   let disPlayModal = "";
   return isAccess == true ? (
-   props.children
+    props.children
   ) : (
     <Box
       sx={{
