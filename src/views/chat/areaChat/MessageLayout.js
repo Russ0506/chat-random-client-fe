@@ -6,6 +6,7 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { NewMessageSocket } from '../../sockets/Socket'
 import { useDispatch, useSelector } from 'react-redux';
 import ChatMessageList from './message/ChatMessageList';
+import ChatHeaderDetail from './title-chat/ChatHeaderDetail';
 
 
 // const conversationSelector = (state) => {
@@ -34,133 +35,133 @@ function MessageLayout() {
 
   const activeConversationId = "123"
   const conversation = {
-    id: "123",
-    participants: [
+    "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
+    "participants": [
       {
-        id: "8864c717-587d-472a-929a-8e5f298024da-0",
-        avatar: "https://minimal-assets-api-dev.vercel.app/assets/images/avatars/avatar_15.jpg",
-        name: "Jaydon Frankie",
-        username: "jaydon.frankie"
+        "id": "8864c717-587d-472a-929a-8e5f298024da-0",
+        "avatar": "https://minimal-assets-api-dev.vercel.app/assets/images/avatars/avatar_15.jpg",
+        "name": "Jaydon Frankie",
+        "username": "jaydon.frankie"
       },
       {
-        id: "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2",
-        name: "Lucian Obrien",
-        username: "lucian.obrien",
-        avatar: "https://minimal-assets-api-dev.vercel.app/assets/images/avatars/avatar_2.jpg",
-        address: "1147 Rohan Drive Suite 819 - Burlington, VT / 82021",
-        phone: "904-966-2836",
-        email: "ashlynn_ohara62@gmail.com",
-        lastActivity: "2022-06-25T03:22:38.918Z",
-        status: "busy",
-        position: "Full Stack Designer"
+        "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
+        "name": "Harrison Stein",
+        "username": "harrison.stein",
+        "avatar": "https://minimal-assets-api-dev.vercel.app/assets/images/avatars/avatar_4.jpg",
+        "address": "110 Lamar Station Apt. 730 - Hagerstown, OK / 49808",
+        "phone": "692-767-2903",
+        "email": "violet.ratke86@yahoo.com",
+        "lastActivity": "2022-06-23T04:44:07.656Z",
+        "status": "busy",
+        "position": "UX Designer"
       }
     ],
-    type: "ONE_TO_ONE",
-    unreadCount: 0,
-    messages: [
+    "type": "ONE_TO_ONE",
+    "unreadCount": 0,
+    "messages": [
       {
-        id: "45454151-801d-4517-b20c-3c2fb475bb2a",
-        body: "Quis veniam aut saepe aliquid nulla.",
-        contentType: "text",
-        attachments: [
-          "https://minimal-assets-api-dev.vercel.app/assets/images/feeds/feed_2.jpg"
-        ],
-        createdAt: "2022-06-25T18:22:38.920Z",
-        senderId: "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2"
+        "id": "569fde49-3a36-4859-a5ca-7d5dc597de70",
+        "body": "At ut voluptate accusantium.",
+        "contentType": "text",
+        "attachments": [],
+        "createdAt": "2022-06-25T23:44:07.657Z",
+        "senderId": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4"
       },
       {
-        id: "33496ad2-7063-4ed6-aa9a-4586d156f7ae",
-        body: "Reprehenderit ut voluptas sapiente ratione nostrum est.",
-        contentType: "text",
-        attachments: [
-          "https://minimal-assets-api-dev.vercel.app/assets/images/feeds/feed_3.jpg"
-        ],
-        createdAt: "2022-06-26T02:22:38.920Z",
-        senderId: "8864c717-587d-472a-929a-8e5f298024da-0"
+        "id": "44829a6b-8457-4f16-9ab3-c2a5f025e612",
+        "body": "Repudiandae ut qui veritatis sint.",
+        "contentType": "text",
+        "attachments": [],
+        "createdAt": "2022-06-26T01:44:07.657Z",
+        "senderId": "8864c717-587d-472a-929a-8e5f298024da-0"
       },
       {
-        id: "a09bf72d-0cc2-4ad0-8493-047d2964b12e",
-        body: "Error ut sit vel molestias velit.",
-        contentType: "text",
-        attachments: [
-          "https://minimal-assets-api-dev.vercel.app/assets/images/avatars/avatar_12.mp4"
-        ],
-        createdAt: "2022-06-26T04:14:38.920Z",
-        senderId: "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2"
+        "id": "c61f19b3-4f54-414c-8855-00990d3e474d",
+        "body": "Laboriosam blanditiis quo sed et qui esse ipsam necessitatibus sed.",
+        "contentType": "text",
+        "attachments": [],
+        "createdAt": "2022-06-26T03:14:07.657Z",
+        "senderId": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4"
       },
       {
-        id: "3eb45384-01ac-425e-8d31-0c93715beddb",
-        body: "Quo quia sit nihil nemo doloremque et.",
-        contentType: "text",
-        attachments: [
-          "https://mail.google.com/mail/u/file1.docx",
-          "https://mail.google.com/mail/u/file2.xlsx",
-          "https://mail.google.com/mail/u/file3.pptx"
-        ],
-        createdAt: "2022-06-26T04:16:38.920Z",
-        senderId: "8864c717-587d-472a-929a-8e5f298024da-0"
+        "id": "877d61d8-c7dc-40db-9add-9127ce120d7c",
+        "body": "Et molestiae et excepturi maxime omnis.",
+        "contentType": "text",
+        "attachments": [],
+        "createdAt": "2022-06-26T05:29:07.657Z",
+        "senderId": "8864c717-587d-472a-929a-8e5f298024da-0"
       },
       {
-        id: "24995b87-018f-4555-953b-8fae56216325",
-        body: "Autem doloribus harum vero laborum.",
-        contentType: "text",
-        attachments: [
-          "https://mail.google.com/mail/u/file4.pdf",
-          "https://mail.google.com/mail/u/file5.psd",
-          "https://mail.google.com/mail/u/file6.esp",
-          "https://mail.google.com/mail/u/file7.sketch"
-        ],
-        createdAt: "2022-06-26T04:18:38.920Z",
-        senderId: "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2"
+        "id": "39ebb204-71f2-423c-b06a-5ace19799202",
+        "body": "Sint dolorem quam eum magnam.",
+        "contentType": "text",
+        "attachments": [],
+        "createdAt": "2022-06-26T06:29:07.657Z",
+        "senderId": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4"
       },
       {
-        id: "de791b81-ff35-4690-9894-7b03596ae1e9",
-        attachments: [],
-        contentType: "image",
-        body: "https://minimal-assets-api-dev.vercel.app/assets/images/feeds/feed_5.jpg",
-        createdAt: "2022-06-26T04:20:38.920Z",
-        senderId: "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2"
+        "id": "e2bacaf5-3305-4fc1-b6fa-8f03d9b6e64a",
+        "body": "https://minimal-assets-api-dev.vercel.app/assets/images/feeds/feed_6.jpg",
+        "contentType": "image",
+        "attachments": [],
+        "createdAt": "2022-06-26T06:44:07.657Z",
+        "senderId": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4"
       },
       {
-        id: "b6ccd872-8da4-4d42-a551-61f69c0496df",
-        contentType: "text",
-        body: "Tempora officiis consequuntur architecto nostrum autem nam adipisci.",
-        attachments: [],
-        createdAt: "2022-06-26T04:20:38.920Z",
-        senderId: "8864c717-587d-472a-929a-8e5f298024da-0"
-      },
+        "id": "9a3fbb8d-2608-4967-a26b-806b9aac4b39",
+        "body": "https://minimal-assets-api-dev.vercel.app/assets/images/feeds/feed_7.jpg",
+        "contentType": "image",
+        "attachments": [],
+        "createdAt": "2022-06-26T06:44:07.657Z",
+        "senderId": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4"
+      }
     ]
   };
 
-  console.log(conversation);
+  const participants = [
+    {
+      "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
+      "avatar": "https://minimal-assets-api-dev.vercel.app/assets/images/avatars/avatar_4.jpg",
+      "name": "Harrison Stein",
+      "username": "harrison.stein",
+      "address": "110 Lamar Station Apt. 730 - Hagerstown, OK / 49808",
+      "phone": "692-767-2903",
+      "email": "violet.ratke86@yahoo.com",
+      "position": "UX Designer",
+      "status": "false",
+      "last_online": "2022-06-23T04:44:07.656Z"
+    }
+  ]
+
+  const displayParticipants = participants.filter((item) => item.id !== 'e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2');
 
   const handleSendMessage = async (value) => {
     console.log(value);
   };
+
   return (
-    <Box sx={{ width: "100%", height: "100%" }}>
+    <Box sx={{ width: "100%", height: "100%", padding: "0px" }}>
       <NewMessageSocket />
       <Box sx={{ height: "50%" }}>
-      
+        <ChatHeaderDetail participants={displayParticipants} />
         <ChatMessageList conversation={conversation} />
       </Box>
-
-      <Box sx={{ height: "50%" }}>
+      <Divider />
+      <Box sx={{ height: "50%", padding: "0px" }}>
         <ChatMessageInput
           conversationId={activeConversationId}
           onSend={handleSendMessage}
           disabled={false}
         />
       </Box>
-
     </Box>
-    )
+  )
 };
 
 export default MessageLayout;
 
 
-  {/* <MessageChat
+{/* <MessageChat
         avatar={''}
         messages={[
           'Hi Jenny, How r u today?',

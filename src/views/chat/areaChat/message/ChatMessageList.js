@@ -1,9 +1,9 @@
+import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
 import { useEffect, useState, useRef } from 'react';
-import LightboxModal from '../../../common/base/light-box/LightboxModal';
-import Scrollbar from '../../../common/base/scroll-bar/Scrollbar';
 //
-
+import LightboxModal from "../../../common/base/light-box/LightboxModal"
+import Scrollbar from "../../../common/base/scroll-bar/Scrollbar"
 import ChatMessageItem from './ChatMessageItem';
 
 // ----------------------------------------------------------------------
@@ -41,6 +41,7 @@ export default function ChatMessageList({ conversation }) {
   return (
     <>
       <Scrollbar scrollableNodeProps={{ ref: scrollRef }} sx={{ p: 3, height: 1 }}>
+        <Box sx={{height: "650px"}}>
         {conversation.messages.map((message) => (
           <ChatMessageItem
             key={message.id}
@@ -49,6 +50,8 @@ export default function ChatMessageList({ conversation }) {
             onOpenLightbox={handleOpenLightbox}
           />
         ))}
+        </Box>
+      
       </Scrollbar>
 
       <LightboxModal
@@ -57,7 +60,7 @@ export default function ChatMessageList({ conversation }) {
         photoIndex={selectedImage}
         setPhotoIndex={setSelectedImage}
         isOpen={openLightbox}
-        onCloseRequest={() => setOpenLightbox(false)}
+        onCloseRequest={() => setOpenLightbox(true)}
       />
     </>
   );

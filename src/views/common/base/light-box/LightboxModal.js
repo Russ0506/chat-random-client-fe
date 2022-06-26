@@ -100,8 +100,6 @@ function LightboxModalStyles() {
   );
 }
 
-// ----------------------------------------------------------------------
-
 LightboxModal.propTypes = {
   images: PropTypes.array.isRequired,
   photoIndex: PropTypes.number,
@@ -127,7 +125,7 @@ export default function LightboxModal({ images, photoIndex, setPhotoIndex, isOpe
       zIndex: 9999,
     },
   };
-  
+
   return (
     <>
       <LightboxModalStyles />
