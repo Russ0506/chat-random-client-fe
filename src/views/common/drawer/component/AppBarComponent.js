@@ -18,7 +18,7 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import { iconStyles } from "../../../theme/colors/Colors";
 import { makeStyles } from "@mui/styles";
 import ConversationControlBox from "../../../chat/topBar/startConversation/ConversationControlBox";
-
+import {DRAWER_WITH} from "../../../../constant/css_constant"
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -192,11 +192,10 @@ export default function AppBarComponent() {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box width={350} p={3}>
-           <ConversationControlBox />
-
+          <Box width={DRAWER_WITH} p={3}>
+            <ConversationControlBox />
           </Box>
-         
+
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {/* <IconButton
               size="medium"
@@ -228,9 +227,9 @@ export default function AppBarComponent() {
               <AccountCircle fontSize="medium" sx={{ color: "gray" }} />
             </IconButton>
           </Box>
-          <Box width="fix-content" p={3} sx={{color: "text.primary"}}>
-          <Typography>{profile_name}</Typography>
-            </Box>
+          <Box width="fix-content" p={3} sx={{ color: "text.primary" }}>
+            <Typography>{profile_name}</Typography>
+          </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="medium"

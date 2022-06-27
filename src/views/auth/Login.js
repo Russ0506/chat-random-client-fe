@@ -139,13 +139,13 @@ export default function SignIn(props) {
             sx={{ mt: 1, fontSize: FONT_SIZE.smallText }}
           >
             <TextField
-              sx={{
-                bgcolor: GRP_COLOR.CODE016,
-                borderRadius: BORDER_RADIUS.normal,
-                color: GRP_COLOR.WHITECODE,
-              }}
+              // sx={{
+              //   bgcolor: GRP_COLOR.CODE016,
+              //   borderRadius: BORDER_RADIUS.normal,
+              //   color: GRP_COLOR.WHITECODE,
+              // }}
               margin="normal"
-              variant="filled"
+              variant="outlined"
               required
               fullWidth
               id="email"
@@ -153,25 +153,25 @@ export default function SignIn(props) {
               name="email"
               autoComplete="email"
               autoFocus
-              InputLabelProps={{
-                style: {
-                  color: GRP_COLOR.WHITECODE,
-                },
-              }}
-              InputProps={{
-                style: {
-                  color: GRP_COLOR.WHITECODE,
-                },
-              }}
+              // InputLabelProps={{
+              //   style: {
+              //     color: GRP_COLOR.WHITECODE,
+              //   },
+              // }}
+              // InputProps={{
+              //   style: {
+              //     color: GRP_COLOR.WHITECODE,
+              //   },
+              // }}
             />
             <TextField
-              sx={{
-                bgcolor: GRP_COLOR.CODE016,
-                borderRadius: BORDER_RADIUS.normal,
-                color: GRP_COLOR.WHITECODE,
-              }}
+              // sx={{
+              //   bgcolor: GRP_COLOR.CODE016,
+              //   borderRadius: BORDER_RADIUS.normal,
+              //   color: GRP_COLOR.WHITECODE,
+              // }}
               margin="normal"
-              variant="filled"
+              variant="outlined"
               required
               fullWidth
               name="password"
@@ -179,16 +179,16 @@ export default function SignIn(props) {
               type="password"
               id="password"
               autoComplete="current-password"
-              InputLabelProps={{
-                style: {
-                  color: GRP_COLOR.WHITECODE,
-                },
-              }}
-              InputProps={{
-                style: {
-                  color: GRP_COLOR.WHITECODE,
-                },
-              }}
+              // InputLabelProps={{
+              //   style: {
+              //     color: GRP_COLOR.WHITECODE,
+              //   },
+              // }}
+              // InputProps={{
+              //   style: {
+              //     color: GRP_COLOR.WHITECODE,
+              //   },
+              // }}
             />
             <FormControlLabel
               sx={{
