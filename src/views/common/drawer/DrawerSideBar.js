@@ -16,12 +16,13 @@ import {makeStyles} from "@mui/styles"
 // import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getDataSearch } from "../../../features/user-setting";
+import { DRAWER_WITH} from "../../../constant/css_constant";
 
 export default function DrawerSideBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const drawerWidth = 350;
+  const drawerWidth = DRAWER_WITH;
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };

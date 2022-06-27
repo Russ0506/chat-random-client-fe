@@ -20,13 +20,6 @@ export default function Homepage() {
         {/* <PairingSocket/> */}
         <CssBaseline />
         {/* <TopBar /> */}
-        {/* <Box
-        component="nav"
-        sx={{ width: { sm: DRAWER_WITH }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
-      >
-        <LeftSideBar />
-      </Box> */}
         <Box
           component="nav"
           sx={{ width: { sm: DRAWER_WITH }, flexShrink: { sm: 0 } }}
