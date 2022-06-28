@@ -47,6 +47,7 @@ const login = async (params, thunkAPI) => {
     localStorage.setItem('jwt_token', res.user.jwt_token)
     localStorage.setItem('user_display_name', res.user.first_name + ' ' + res.user.last_name)
     localStorage.setItem('role', res.user.role)
+    localStorage.setItem('user_id', res.user.id)
     return res
   } catch (error) {
     const message =
