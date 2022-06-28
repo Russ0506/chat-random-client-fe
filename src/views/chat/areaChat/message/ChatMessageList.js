@@ -12,9 +12,8 @@ ChatMessageList.propTypes = {
   conversation: PropTypes.object.isRequired,
 };
 
-export default function ChatMessageList({ conversation }) {
+export default function ChatMessageList({ conversation, mockDataConversation }) {
   const scrollRef = useRef(null);
-
   const [openLightbox, setOpenLightbox] = useState(false);
 
   const [selectedImage, setSelectedImage] = useState(0);
@@ -45,16 +44,26 @@ export default function ChatMessageList({ conversation }) {
           scrollableNodeProps={{ ref: scrollRef }}
           sx={{ height: "auto" }}
         >
-          {conversation.messages.map((message) => (
-            <>
+          {/* {conversation.messages.map((message) => (
+           
               <ChatMessageItem
                 key={message.id}
                 message={message}
                 conversation={conversation}
                 onOpenLightbox={handleOpenLightbox}
               />
-            </>
-          ))}
+         
+          ))} */}
+           {mockDataConversation.map((message) => (
+           
+           <ChatMessageItem
+             key={message.id}
+             message={message}
+             conversation={mockDataConversation}
+             onOpenLightbox={handleOpenLightbox}
+           />
+      
+       ))}
         </Scrollbar>
       </Box>
       <LightboxModal

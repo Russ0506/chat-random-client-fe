@@ -133,6 +133,121 @@ function MessageLayout() {
     }
   ]
 
+  const mockDataConversation = [
+    {
+      "id": 8,
+      "conversation_id": 2,
+      "sender_id": 35,
+      "recipient_id": 35,
+      "text": "test",
+      "status": "sent",
+      "created_at": "23:00 25/06/2022",
+      "seen_at": null,
+      "is_system_message": false
+    },
+    {
+      "id": 9,
+      "conversation_id": 2,
+      "sender_id": 41,
+      "recipient_id": 35,
+      "text": "test",
+      "status": "sent",
+      "created_at": "23:01 25/06/2022",
+      "seen_at": null,
+      "is_system_message": false
+    },
+    {
+      "id": 10,
+      "conversation_id": 2,
+      "sender_id": 35,
+      "recipient_id": 35,
+      "text": "test",
+      "status": "sent",
+      "created_at": "23:06 25/06/2022",
+      "seen_at": null,
+      "is_system_message": false
+    },
+    {
+      "id": 11,
+      "conversation_id": 2,
+      "sender_id": 41,
+      "recipient_id": 35,
+      "text": "test",
+      "status": "sent",
+      "created_at": "23:07 25/06/2022",
+      "seen_at": null,
+      "is_system_message": false
+    },
+    {
+      "id": 12,
+      "conversation_id": 2,
+      "sender_id": 35,
+      "recipient_id": 41,
+      "text": "test",
+      "status": "sent",
+      "created_at": "23:08 25/06/2022",
+      "seen_at": null,
+      "is_system_message": false
+    },
+    {
+      "id": 13,
+      "conversation_id": 2,
+      "sender_id": null,
+      "recipient_id": 41,
+      "text": "Message System",
+      "status": "sent",
+      "created_at": "23:08 25/06/2022",
+      "seen_at": null,
+      "is_system_message": true
+    },
+    {
+      "id": 14,
+      "conversation_id": 2,
+      "sender_id": 41,
+      "recipient_id": 35,
+      "text": "test",
+      "status": "sent",
+      "created_at": "23:07 25/06/2022",
+      "seen_at": null,
+      "is_system_message": false
+    },
+    {
+      "id": 15,
+      "conversation_id": 2,
+      "sender_id": 35,
+      "recipient_id": 41,
+      "text": "test",
+      "status": "sent",
+      "created_at": "23:08 25/06/2022",
+      "seen_at": null,
+      "is_system_message": false
+    }, {
+      "id": 16,
+      "conversation_id": 2,
+      "sender_id": 41,
+      "recipient_id": 35,
+      "text": "test",
+      "status": "sent",
+      "created_at": "23:07 25/06/2022",
+      "seen_at": null,
+      "is_system_message": false
+    },
+    {
+      "id": 17,
+      "conversation_id": 2,
+      "sender_id": 35,
+      "recipient_id": 41,
+      "text": "test",
+      "status": "sent",
+      "created_at": "23:08 25/06/2022",
+      "seen_at": null,
+      "is_system_message": false
+    },
+    
+  ]
+
+  console.log(participants);
+
   const displayParticipants = participants.filter((item) => item.id !== 'e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2');
 
   const handleSendMessage = async (value) => {
@@ -144,10 +259,10 @@ function MessageLayout() {
       <NewMessageSocket />
       <Box className='adss' sx={{ height: "calc(100% - 60px)", width: "100%" }}>
         <ChatHeaderDetail participants={displayParticipants} />
-        <ChatMessageList conversation={conversation} />
+        <ChatMessageList conversation={conversation} mockDataConversation={mockDataConversation}/>
       </Box>
       {/* <Divider /> */}
-      <Box sx={{ height: "60px", padding: "0px" }}>
+      <Box sx={{ height: "60px", padding: "0px" , paddingBottom:"10px"}}>
         <ChatMessageInput
           conversationId={activeConversationId}
           onSend={handleSendMessage}
