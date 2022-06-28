@@ -7,10 +7,25 @@ export const enqueuingChat = createAsyncThunk(
   async (params, thunkAPI) => {
     try {
         const response = await ChatService.enqueuingChat();
-        thunkAPI.dispatch(setMessage(response.data.message));
+        // thunkAPI.dispatch(setMessage(response.data.message));
         return response.data;
       } catch (error) {
-        thunkAPI.dispatch(setMessage(error.toString()));
+        // thunkAPI.dispatch(setMessage(error.toString()));
+        return thunkAPI.rejectWithValue();
+      }
+  }
+);
+
+export const loadConversation = createAsyncThunk(
+  "chat/loading-conversation",
+  async (params, thunkAPI) => {
+    try {
+        const response = await ChatService.loadConversation(params);
+        console.log(response);
+        // thunkAPI.dispatch(setMessage(response.data.message));
+        return response.data;
+      } catch (error) {
+        // thunkAPI.dispatch(setMessage(error.toString()));
         return thunkAPI.rejectWithValue();
       }
   }

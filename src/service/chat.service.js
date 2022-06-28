@@ -17,7 +17,22 @@ const enqueuingChat = async (params, thunkAPI) => {
   }
 };
 
+const loadConversation = async (params, thunkAPI) => {
+  try {
+    const res = await axiosClient.get(`${URL}/conversations/${params.conversation_id}/messages`)
+    return res
+  } catch (error) {
+    const message =
+      (error.response.data.errors[0]) ||
+      error.message ||
+      error.toString();
+    thunkAPI.dispatch(setMessage(message));
+    return thunkAPI.rejectWithValue();
+  }
+};
+
 const chatService = {
   enqueuingChat,
+  loadConversation,
 };
 export default chatService;
