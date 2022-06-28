@@ -1,5 +1,5 @@
 import { Box, Divider, Grid, Stack } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useLayoutEffect   } from 'react';
 import MessageChat from './message/MessageChat';
 import ChatMessageInput from './sendMessageBox/ChatMessageInput';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { NewMessageSocket } from '../../sockets/Socket'
 import { useDispatch, useSelector } from 'react-redux';
 import ChatMessageList from './message/ChatMessageList';
 import ChatHeaderDetail from './title-chat/ChatHeaderDetail';
+import { loadConversation } from '../../../features/chat';
 
 
 // const conversationSelector = (state) => {
@@ -26,9 +27,10 @@ import ChatHeaderDetail from './title-chat/ChatHeaderDetail';
 // };
 
 function MessageLayout() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [conversationCurrentId, setConversationCurrentId] = React.useState();
   // const { conversationKey } = useParams();
   // const { contacts, recipients, participants, activeConversationId } = useSelector((state) => state.chat);
   // const conversation = useSelector((state) => conversationSelector(state));
@@ -253,6 +255,10 @@ function MessageLayout() {
   const handleSendMessage = async (value) => {
     console.log(value);
   };
+
+  useLayoutEffect(()=> {
+    dispatch(loadConversation({conversation_id : 2}))
+  }, [conversationCurrentId])
 
   return (
     <Box sx={{ width: "100%", height: "100%", padding: "0px" }}>
