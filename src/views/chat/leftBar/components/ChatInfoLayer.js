@@ -98,8 +98,8 @@ export default function ChatInfoLayer(props) {
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
-      backgroundColor: data.status == "online" ? "#44b700" : "red",
-      color: data.status == "online" ? "#44b700" : "red",
+      backgroundColor: data.status == "online" ? "#44b700" : "#ffc107",
+      color: data.status == "online" ? "#44b700" : "#ffc107",
       boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
       "&::after": {
         position: "absolute",

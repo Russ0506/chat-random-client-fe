@@ -17,6 +17,7 @@ import { user_verify } from "./features/auth";
 import { useDispatch } from "react-redux";
 import Loading from "./views/common/base/loading/Loading";
 import AuthenLoading from "./views/common/base/loading/AuthenLoading";
+import UserProfile from "./views/profile/UserProfile";
 
 export const ProtectedRoute = ({ link = "/", children }) => {
   return <AuthenLoading link={link} children={children} />;
@@ -37,9 +38,7 @@ export default function Routes() {
     },
     {
       path: "/app",
-      element: (
-        <ProtectedRoute link="/app" children={<Homepage />} />
-      ),
+      element: <ProtectedRoute link="/app" children={<Homepage />} />,
     },
     {
       path: "/users",
@@ -60,6 +59,15 @@ export default function Routes() {
             <ProtectedRoute
               link="/users/forgot-password"
               children={<ForgotPassword />}
+            />
+          ),
+        },
+        {
+          path: "profile",
+          element: (
+            <ProtectedRoute
+              link="/users/profile"
+              children={<UserProfile />}
             />
           ),
         },
