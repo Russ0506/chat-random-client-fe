@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import PartnerInfo from "./components/PartnerInfo";

@@ -14,6 +14,7 @@ import {
   ListSubheader,
   Paper,
   Stack,
+  Typography,
 } from "@mui/material";
 import React from "react";
 
@@ -49,14 +50,14 @@ export default function PartnerPoster() {
         <ListItemIcon>
           <InfoIcon />
         </ListItemIcon>
-        <ListItemText primary="Inbox" />
+        <ListItemText primary={<Typography variant="h5" sx={{fontWeight: 700, ml: -2.5}}>Poster</Typography>} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse
         in={open}
         timeout="auto"
         unmountOnExit
-        sx={{ maxHeight: 400, overflow: "auto" }}
+        sx={{ maxHeight: window.innerHeight/2.2, overflow: "auto", minHeight: 300 }}
       >
         <List component="div" disablePadding>
           <ListItem sx={{ pl: 4 }}>
