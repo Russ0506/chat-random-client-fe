@@ -29,14 +29,14 @@ export default function PartnerPoster() {
     // padding: theme.spacing(1),
     textAlign: "center",
     color: theme.palette.text.secondary,
-    height: "200px",
+    height: "180px",
     boxShadow: "none",
     backgroundColor: "gray",
-    cursor: "pointer"
+    cursor: "pointer",
   }));
   return (
     <List
-      sx={{ width: "100%", bgcolor: "background.paper", height:"100%" }}
+      sx={{ width: "100%", bgcolor: "background.paper", height: "100%" }}
       component="nav"
       aria-labelledby="nested-list-subheader"
       //   subheader={
@@ -52,14 +52,19 @@ export default function PartnerPoster() {
         <ListItemText primary="Inbox" />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
+      <Collapse
+        in={open}
+        timeout="auto"
+        unmountOnExit
+        sx={{ maxHeight: 400, overflow: "auto" }}
+      >
         <List component="div" disablePadding>
           <ListItem sx={{ pl: 4 }}>
             <Grid
-              sx={{ width: "100%", overflow: "auto"}}
+              sx={{ width: "100%", overflow: "auto" }}
               container
               rowSpacing={1}
-              columnSpacing={{ xs: 0.5, sm: 0.5, md: .5 }}
+              columnSpacing={{ xs: 0.5, sm: 0.5, md: 0.5 }}
             >
               <Grid item xs={4}>
                 <Item>2</Item>
