@@ -21,11 +21,21 @@ export const loadConversation = createAsyncThunk(
   async (params, thunkAPI) => {
     try {
         const response = await ChatService.loadConversation(params);
-        console.log(response);
-        // thunkAPI.dispatch(setMessage(response.data.message));
-        return response.data;
+        return response;
       } catch (error) {
-        // thunkAPI.dispatch(setMessage(error.toString()));
+        return thunkAPI.rejectWithValue();
+      }
+  }
+);
+
+export const sendMesage = createAsyncThunk(
+  "chat/send-message",
+  async (params, thunkAPI) => {
+    console.log(params.conversationId);
+    try {
+        const response = await ChatService.sendMesage(params);
+        return response;
+      } catch (error) {
         return thunkAPI.rejectWithValue();
       }
   }
