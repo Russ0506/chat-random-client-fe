@@ -17,6 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import ModalPoster from "./ModalPoster";
 
 export default function PartnerPoster() {
   const [open, setOpen] = React.useState(true);
@@ -24,17 +25,6 @@ export default function PartnerPoster() {
   const handleClick = () => {
     setOpen(!open);
   };
-  const Item = styled(Paper)(({ theme }) => ({
-    //   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    // padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-    height: "180px",
-    boxShadow: "none",
-    backgroundColor: "gray",
-    cursor: "pointer",
-  }));
   return (
     <List
       sx={{ width: "100%", bgcolor: "background.paper", height: "100%" }}
@@ -50,14 +40,24 @@ export default function PartnerPoster() {
         <ListItemIcon>
           <InfoIcon />
         </ListItemIcon>
-        <ListItemText primary={<Typography variant="h5" sx={{fontWeight: 700, ml: -2.5}}>Poster</Typography>} />
+        <ListItemText
+          primary={
+            <Typography variant="h5" sx={{ fontWeight: 700, ml: -2.5 }}>
+              Poster
+            </Typography>
+          }
+        />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse
         in={open}
         timeout="auto"
         unmountOnExit
-        sx={{ maxHeight: window.innerHeight/2.2, overflow: "auto", minHeight: 300 }}
+        sx={{
+          maxHeight: window.innerHeight / 2.2,
+          overflow: "auto",
+          minHeight: 300,
+        }}
       >
         <List component="div" disablePadding>
           <ListItem sx={{ pl: 4 }}>
@@ -68,37 +68,37 @@ export default function PartnerPoster() {
               columnSpacing={{ xs: 0.5, sm: 0.5, md: 0.5 }}
             >
               <Grid item xs={4}>
-                <Item>2</Item>
+                <ModalPoster />
               </Grid>
               <Grid item xs={4}>
-                <Item>3</Item>
+                <ModalPoster />
               </Grid>
               <Grid item xs={4}>
-                <Item>4</Item>
+                <ModalPoster />
               </Grid>
               <Grid item xs={4}>
-                <Item>5</Item>
+                <ModalPoster />
               </Grid>
               <Grid item xs={4}>
-                <Item>6</Item>
+                <ModalPoster />
               </Grid>
               <Grid item xs={4}>
-                <Item>7</Item>
+                <ModalPoster />
               </Grid>
               <Grid item xs={4}>
-                <Item>8</Item>
+                <ModalPoster />
               </Grid>
               <Grid item xs={4}>
-                <Item>9</Item>
+                <ModalPoster />
               </Grid>
               <Grid item xs={4}>
-                <Item>10</Item>
+                <ModalPoster />
               </Grid>
               <Grid item xs={4}>
-                <Item>11</Item>
+                <ModalPoster />
               </Grid>
               <Grid item xs={4}>
-                <Item>12</Item>
+                <ModalPoster />
               </Grid>
             </Grid>
           </ListItem>
