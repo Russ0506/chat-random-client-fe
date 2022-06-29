@@ -11,7 +11,7 @@ export default function RightBar() {
         flexDirection="column"
         justifyContent="center"
         alignItems="center"
-        sx={{ height: "35%" }}
+        sx={{ height: "30%", minHeight: "320px" }}
       >
         <PartnerInfo />
       </Stack>
