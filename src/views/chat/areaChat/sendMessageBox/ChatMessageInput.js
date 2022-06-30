@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Stack, Input, Divider, IconButton, InputAdornment } from '@mui/material';
 import Iconify from '../../../common/base/icon/Iconify';
 import EmojiPicker from '../../../common/base/emoji/EmojiPicker'
+import { sendMesage } from '../../../../features/chat';
 // utils
-// import uuidv4 from '../../../utils/uuidv4';
 // components
 
 
@@ -24,11 +25,12 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 ChatMessageInput.propTypes = {
   disabled: PropTypes.bool,
-  conversationId: PropTypes.string,
+  // conversation: PropTypes.object,
   onSend: PropTypes.func,
 };
 
-export default function ChatMessageInput({ disabled, conversationId, onSend }) {
+export default function ChatMessageInput({ disabled, conversation, onSend, recipientId }) {
+  const dispatch = useDispatch()
   const fileInputRef = useRef(null);
 
   const [message, setMessage] = useState('');
@@ -47,17 +49,16 @@ export default function ChatMessageInput({ disabled, conversationId, onSend }) {
     if (!message) {
       return '';
     }
-    if (onSend && conversationId) {
-      onSend({
-        conversationId,
-        // messageId: uuidv4(),
-        messageId: "123",
-        message,
-        contentType: 'text',
-        attachments: [],
-        createdAt: new Date(),
-        senderId: '8864c717-587d-472a-929a-8e5f298024da-0',
-      });
+    if (onSend && conversation.id) {
+      let params = {
+        conversationId :conversation.id,
+        text: message,
+        recipient_id: recipientId,
+      }
+      onSend(params);
+
+      dispatch(sendMesage(params))
+
     }
     return setMessage('');
   };

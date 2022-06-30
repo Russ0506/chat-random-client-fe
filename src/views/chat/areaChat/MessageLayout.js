@@ -1,43 +1,32 @@
-import { Box, Divider, Grid, Stack } from "@mui/material";
-import React, { useEffect, useLayoutEffect } from "react";
-import MessageChat from "./message/MessageChat";
-import ChatMessageInput from "./sendMessageBox/ChatMessageInput";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { NewMessageSocket } from "../../sockets/Socket";
-import { useDispatch, useSelector } from "react-redux";
-import ChatMessageList from "./message/ChatMessageList";
-import ChatHeaderDetail from "./title-chat/ChatHeaderDetail";
-import { loadConversation } from "../../../features/chat";
-
-// const conversationSelector = (state) => {
-//   const { conversations, activeConversationId } = state.chat;
-//   const conversation = activeConversationId ? conversations.byId[activeConversationId] : null;
-//   if (conversation) {
-//     return conversation;
-//   }
-//   const initState = {
-//     id: '',
-//     messages: [],
-//     participants: [],
-//     unreadCount: 0,
-//     type: '',
-//   };
-//   return initState;
-// };
+import { Box, Divider, Grid, Stack } from '@mui/material';
+import React, { useEffect, useLayoutEffect } from 'react';
+import MessageChat from './message/MessageChat';
+import ChatMessageInput from './sendMessageBox/ChatMessageInput';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { NewMessageSocket } from '../../sockets/Socket'
+import { useDispatch, useSelector } from 'react-redux';
+import ChatMessageList from './message/ChatMessageList';
+import ChatHeaderDetail from './title-chat/ChatHeaderDetail';
+import { loadConversation } from '../../../features/chat';
 
 function MessageLayout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [conversationCurrentId, setConversationCurrentId] = React.useState();
+  const recipientId = 42
+  const conversation = {
+    id: 5,
+    partner_id: 42
+  }
   // const { conversationKey } = useParams();
   // const { contacts, recipients, participants, activeConversationId } = useSelector((state) => state.chat);
   // const conversation = useSelector((state) => conversationSelector(state));
 
-  const activeConversationId = "123";
-  const conversation = {
-    id: "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
-    participants: [
+  const activeConversationId = "123"
+  const conversation1 = {
+    "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
+    "participants": [
       {
         id: "8864c717-587d-472a-929a-8e5f298024da-0",
         avatar:
@@ -137,155 +126,48 @@ function MessageLayout() {
     },
   ];
 
-  const mockDataConversation = [
-    {
-      id: 8,
-      conversation_id: 2,
-      sender_id: 35,
-      recipient_id: 35,
-      text: "test",
-      status: "sent",
-      created_at: "23:00 25/06/2022",
-      seen_at: null,
-      is_system_message: false,
-    },
-    {
-      id: 9,
-      conversation_id: 2,
-      sender_id: 41,
-      recipient_id: 35,
-      text: "test",
-      status: "sent",
-      created_at: "23:01 25/06/2022",
-      seen_at: null,
-      is_system_message: false,
-    },
-    {
-      id: 10,
-      conversation_id: 2,
-      sender_id: 35,
-      recipient_id: 35,
-      text: "test",
-      status: "sent",
-      created_at: "23:06 25/06/2022",
-      seen_at: null,
-      is_system_message: false,
-    },
-    {
-      id: 11,
-      conversation_id: 2,
-      sender_id: 41,
-      recipient_id: 35,
-      text: "test",
-      status: "sent",
-      created_at: "23:07 25/06/2022",
-      seen_at: null,
-      is_system_message: false,
-    },
-    {
-      id: 12,
-      conversation_id: 2,
-      sender_id: 35,
-      recipient_id: 41,
-      text: "test",
-      status: "sent",
-      created_at: "23:08 25/06/2022",
-      seen_at: null,
-      is_system_message: false,
-    },
-    {
-      id: 13,
-      conversation_id: 2,
-      sender_id: null,
-      recipient_id: 41,
-      text: "Message System",
-      status: "sent",
-      created_at: "23:08 25/06/2022",
-      seen_at: null,
-      is_system_message: true,
-    },
-    {
-      id: 14,
-      conversation_id: 2,
-      sender_id: 41,
-      recipient_id: 35,
-      text: "test",
-      status: "sent",
-      created_at: "23:07 25/06/2022",
-      seen_at: null,
-      is_system_message: false,
-    },
-    {
-      id: 15,
-      conversation_id: 2,
-      sender_id: 35,
-      recipient_id: 41,
-      text: "test",
-      status: "sent",
-      created_at: "23:08 25/06/2022",
-      seen_at: null,
-      is_system_message: false,
-    },
-    {
-      id: 16,
-      conversation_id: 2,
-      sender_id: 41,
-      recipient_id: 35,
-      text: "test",
-      status: "sent",
-      created_at: "23:07 25/06/2022",
-      seen_at: null,
-      is_system_message: false,
-    },
-    {
-      id: 17,
-      conversation_id: 2,
-      sender_id: 35,
-      recipient_id: 41,
-      text: "test",
-      status: "sent",
-      created_at: "23:08 25/06/2022",
-      seen_at: null,
-      is_system_message: false,
-    },
-  ];
+  const displayParticipants = participants.filter((item) => item.id !== 'e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2');
 
-  console.log(participants);
-
-  const displayParticipants = participants.filter(
-    (item) => item.id !== "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2"
-  );
-
+  const [newMessages, setNewMessages] = React.useState([]);
   const handleSendMessage = async (value) => {
-    console.log(value);
+    setNewMessages([...newMessages,
+      {
+        id: 0,
+        conversation_id: value.conversationId,
+        sender_id: null,
+        recipient_id: value.recipient_id,
+        text: value.text,
+        status: null,
+        is_system_message: false
+      }
+    ])
+    console.log('called handleSendMessage')
   };
 
-  useLayoutEffect(() => {
-    dispatch(loadConversation({ conversation_id: 2 }));
-  }, [conversationCurrentId]);
+  // useEffect(()=> {
+  //   dispatch(loadConversation({conversation_id : 5})) .then((data) => {
+  //     // console.log(data);
+  //     setMockDataConversation(data);
+  //   })
+  //   .catch(() => {
+  //   });
+  // }, [])
+
 
   return (
     <Box sx={{ width: "100%", height: "100%", padding: "0px" }}>
       <NewMessageSocket />
       <Box className="adss" sx={{ height: "calc(100% - 90px)", width: "100%", pl: 2, pt: 2 }}>
         <ChatHeaderDetail participants={displayParticipants} />
-        <ChatMessageList
-          conversation={conversation}
-          mockDataConversation={mockDataConversation}
-        />
+        <ChatMessageList conversation1={conversation1} newMessages={newMessages} conversation={conversation} />
       </Box>
       {/* <Divider /> */}
-      <Box
-        sx={{
-          height: "60px",
-          padding: "0px",
-          boxShadow: "-5px -5px 20px #cdcecd66" /* paddingBottom:"20px" */,
-        }}
-      >
+      <Box sx={{ height: "60px", padding: "0px", paddingBottom: "10px" }}>
         <ChatMessageInput
-          conversationId={activeConversationId}
-          onSend={handleSendMessage}
           disabled={false}
+          conversation={conversation}
+          onSend={handleSendMessage}
+          recipientId={recipientId}
         />
       </Box>
     </Box>
@@ -293,37 +175,3 @@ function MessageLayout() {
 }
 
 export default MessageLayout;
-
-{
-  /* <MessageChat
-        avatar={''}
-        messages={[
-          'Hi Jenny, How r u today?',
-          'Did you train yesterday',
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat lacus laoreet non curabitur gravida.',
-        ]}
-      />
-      <MessageChat
-        side={'right'}
-        messages={[
-          "Great! What's about you?",
-          'Of course I did. Speaking of which check this out',
-        ]}
-      />
-      <MessageChat avatar={''} messages={['Im good.', 'See u later.']} /> */
-}
-
-// <Box sx={{ flexGrow: 1, display: 'flex', overflow: 'hidden' }}>
-//   <Stack sx={{ flexGrow: 1 }}>
-//     <ChatMessageList conversation={conversation} />
-
-//     <Divider />
-
-//     <ChatMessageInput
-//       conversationId={activeConversationId}
-//       onSend={handleSendMessage}
-//       disabled={false}
-//     />
-//   </Stack>
-
-//   {/* {mode === 'DETAIL' && <ChatRoom conversation={conversation} participants={displayParticipants} />} */}
