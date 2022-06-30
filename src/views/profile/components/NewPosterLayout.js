@@ -1,8 +1,28 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
-import { Paper, Stack } from "@mui/material";
+import { Box, Divider, Modal, Paper, Stack, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "30vw",
+  height: "80vh",
+  bgcolor: "background.paper",
+  borderRadius: "10px",
+  boxShadow: 24,
+  p: 4,
+};
+
 export default function NewPosterLayout() {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [uploadImg, setUploadImg] = React.useState(false);
+
   const Item = styled(Paper)(({ theme }) => ({
     //   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -13,6 +33,22 @@ export default function NewPosterLayout() {
     boxShadow: "none",
     backgroundColor: "#262525",
     minWidth: "250px",
+  }));
+
+  const UploadFileIcon = styled(CloudUploadIcon)(({ theme }) => ({
+    // position: "absolute",
+    // top: "50%",
+    // left: "50%",
+    // transform: "translate(-50%, -50%)",
+    color: "#000",
+    fontSize: "100px",
+    // transition: "all 0.3s ease 0s",
+    // "&:hover": {
+    //   backgroundColor: "#2EE59D",
+    //   boxShadow: "0px 15px 20px rgba(46, 229, 157, 0.4)",
+    //   color: "#fff",
+    //   transform: "translate(-50%, -7px)",
+    // },
   }));
 
   const StyledAddIcon = styled(AddIcon)(({ theme }) => ({
@@ -27,14 +63,56 @@ export default function NewPosterLayout() {
   }));
 
   return (
-    <Item>
-      <Stack
-        justifyContent="center"
-        alignItems="center"
-        sx={{ width: "100%", height: "100%" }}
+    <>
+      <Item onClick={handleOpen}>
+        <Stack
+          justifyContent="center"
+          alignItems="center"
+          sx={{ width: "100%", height: "100%" }}
+        >
+          <StyledAddIcon style={{ color: "white" }} />
+        </Stack>
+      </Item>
+      <Modal
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
       >
-        <StyledAddIcon style={{ color: "white" }} />
-      </Stack>
-    </Item>
+        <Box sx={style}>
+          <Box sx={{width : uploadImg == true ? "calc(100% - 300px)" : "100%"}}>
+            <Typography
+              variant="h5"
+              textAlign="center"
+              sx={{ marginTop: "-20px" }}
+            >
+              New Poster
+            </Typography>
+            <Divider
+              variant="middle"
+              sx={{ width: "100%", mt: 1, mb: 2, ml: 1, mr: 1 }}
+            />
+            <Box
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+                width: "100%",
+                cursor: "pointer",
+              }}
+            >
+              <UploadFileIcon />
+              <Typography>Choose your image and drag into here</Typography>
+            </Box>
+          </Box>
+        </Box>
+      </Modal>
+    </>
   );
 }
