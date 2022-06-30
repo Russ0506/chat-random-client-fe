@@ -43,6 +43,8 @@ export default function ChatMessageList({ conversation, mockDataConversation }) 
         <Scrollbar
           scrollableNodeProps={{ ref: scrollRef }}
           sx={{ height: "auto" }}
+          scrollBottom={true}
+          indentify="chat-scroll-ult"
         >
           {/* {conversation.messages.map((message) => (
            
@@ -54,16 +56,14 @@ export default function ChatMessageList({ conversation, mockDataConversation }) 
               />
          
           ))} */}
-           {mockDataConversation.map((message) => (
-           
-           <ChatMessageItem
-             key={message.id}
-             message={message}
-             conversation={mockDataConversation}
-             onOpenLightbox={handleOpenLightbox}
-           />
-      
-       ))}
+          {mockDataConversation.map((message) => (
+            <ChatMessageItem
+              key={message.id}
+              message={message}
+              conversation={mockDataConversation}
+              onOpenLightbox={handleOpenLightbox}
+            />
+          ))}
         </Scrollbar>
       </Box>
       <LightboxModal

@@ -1,35 +1,36 @@
-import PropTypes from 'prop-types';
-import SimpleBarReact from 'simplebar-react';
+import PropTypes from "prop-types";
+import SimpleBarReact from "simplebar-react";
 // @mui
-import { alpha, styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { alpha, styled } from "@mui/material/styles";
+import { Box } from "@mui/material";
+import { useEffect } from "react";
 
 // ----------------------------------------------------------------------
 
-const RootStyle = styled('div')(() => ({
+const RootStyle = styled("div")(() => ({
   flexGrow: 1,
-  height: '100%',
-  overflow: 'auto',
+  height: "100%",
+  overflow: "auto",
 }));
 
 const SimpleBarStyle = styled(SimpleBarReact)(({ theme }) => ({
-  maxHeight: '100%',
-  '& .simplebar-scrollbar': {
-    '&:before': {
+  maxHeight: "100%",
+  "& .simplebar-scrollbar": {
+    "&:before": {
       backgroundColor: alpha(theme.palette.grey[600], 0.48),
     },
-    '&.simplebar-visible:before': {
+    "&.simplebar-visible:before": {
       opacity: 1,
     },
   },
-  '& .simplebar-track.simplebar-vertical': {
+  "& .simplebar-track.simplebar-vertical": {
     width: 10,
   },
-  '& .simplebar-track.simplebar-horizontal .simplebar-scrollbar': {
+  "& .simplebar-track.simplebar-horizontal .simplebar-scrollbar": {
     height: 6,
   },
-  '& .simplebar-mask': {
-    zIndex: 'inherit',
+  "& .simplebar-mask": {
+    zIndex: "inherit",
   },
 }));
 
@@ -40,10 +41,20 @@ Scrollbar.propTypes = {
   sx: PropTypes.object,
 };
 
-export default function Scrollbar({ children, sx, ...other }) {
-  const userAgent = typeof navigator === 'undefined' ? 'SSR' : navigator.userAgent;
+export default function Scrollbar({
+  indentify = "",
+  scrollBottom = false,
+  children,
+  sx,
+  ...other
+}) {
+  const userAgent =
+    typeof navigator === "undefined" ? "SSR" : navigator.userAgent;
 
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      userAgent
+    );
 
   // if (isMobile) {
   //   return (
@@ -53,14 +64,26 @@ export default function Scrollbar({ children, sx, ...other }) {
   //   );
   // }
 
-  return isMobile == true ? (
-    <Box sx={{ overflowX: "auto", ...sx }} {...other}>
+  useEffect(() => {
+    if (scrollBottom === true && indentify !== "") {
+      var element = document.getElementById(indentify);
+      element.scrollTop = element.scrollHeight;
+    }
+  }, [])
+  
+
+  return isMobile === true ? (
+    <Box
+      id={indentify !== "" ? indentify : ""}
+      sx={{ overflowX: "auto", ...sx }}
+      {...other}
+    >
       {children}
     </Box>
   ) : (
-    <RootStyle>
+    <RootStyle id={indentify !== "" ? indentify : ""}>
       {/* <SimpleBarStyle timeout={500} clickOnTrack={false} sx={sx} {...other}> */}
-        {children}
+      {children}
       {/* </SimpleBarStyle> */}
     </RootStyle>
   );

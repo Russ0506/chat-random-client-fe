@@ -90,7 +90,7 @@ export default function ChatMessageItem({ message, conversation, onOpenLightbox 
             >
               {senderDetails.type !== 'me' && (
                 // <Avatar alt={senderDetails.name} src={senderDetails.avatar} sx={{ width: 32, height: 32 }} />
-                <Avatar sx={{ width: 32, height: 32 }} />
+                <Avatar sx={{ width: 40, height: 40 }} />
 
               )}
 

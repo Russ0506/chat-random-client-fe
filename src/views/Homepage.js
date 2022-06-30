@@ -30,7 +30,7 @@ export default function Homepage() {
         <Box
           sx={{
             flexGrow: 1,
-            p: 2,
+            // p: 2,
             width: { sm: `calc(100% - ${DRAWER_WITH}px)` },
             bgcolor: "white",
           }}
@@ -39,17 +39,25 @@ export default function Homepage() {
           <Grid
             container
             rowSpacing={1}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            sx={{height: '100%'}}
+            // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            sx={{ height: "100%" }}
           >
             <Grid
               item
-              xs={8}
-              sx={{ borderRight: "1px solid #e0e0e0", height: "100%", paddingBottom: "25px" }}
+              xs={8.5}
+              sx={{
+                borderRight: "1px solid #e0e0e0",
+                height: "100%",
+                paddingBottom: "25px",
+              }}
             >
               <MessageLayout />
             </Grid>
-            <Grid item xs={4}>
+            <Grid
+              item
+              xs={3.5}
+              sx={{ boxShadow: "-5px 0px 10px 0px rgb(99 99 99 / 40%)" }}
+            >
               <RightBar />
             </Grid>
           </Grid>

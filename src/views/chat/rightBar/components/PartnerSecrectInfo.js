@@ -74,7 +74,7 @@ export default function PartnerSecrectInfo() {
       justifyContent="center"
       alignItems="center"
       sx={{
-        mt: 4,
+        mt: "12%",
         width: "100%",
         position: "absolute",
         top: 0,
