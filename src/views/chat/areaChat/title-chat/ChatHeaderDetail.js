@@ -14,7 +14,7 @@ const RootStyle = styled('div')(({ theme }) => ({
   minHeight: 92,
   display: 'flex',
   alignItems: 'center',
-  padding: theme.spacing(0, 3),
+  padding: theme.spacing(0, 0),
 }));
 
 // ----------------------------------------------------------------------
@@ -61,7 +61,7 @@ function OneAvatar({ participants }) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Box sx={{ position: 'relative' }}>
-        <Avatar src={participant.avatar} alt={participant.name} />
+        <Avatar src={participant.avatar} alt={participant.name} style={{width: 52, height: 52}}/>
         <BadgeStatus status={participant.status} sx={{ position: 'absolute', right: 2, bottom: 2 }} />
       </Box>
       <Box sx={{ ml: 2 }}>
