@@ -54,7 +54,13 @@ export default function PartnerSecrectInfo() {
       flexDirection="row"
       sx={{ width: "100%", mt: 2 }}
     >
-      <Typography variant="h4" fontWeight={500} textAlign="center" color="#fff" fontSize="2em">
+      <Typography
+        variant="h4"
+        fontWeight={500}
+        textAlign="center"
+        color="#fff"
+        fontSize="2em"
+      >
         Tuong Vy{" "}
       </Typography>
       <Typography variant="h4" fontWeight={600} textAlign="center">
@@ -62,14 +68,14 @@ export default function PartnerSecrectInfo() {
       </Typography>
     </Stack>
   );
-    return (
+  return (
     <Stack
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
       sx={{
+        mt: 4,
         width: "100%",
-        height: "400px",
         position: "absolute",
         top: 0,
         left: 0,
@@ -77,6 +83,12 @@ export default function PartnerSecrectInfo() {
     >
       <AvatarFrame />
       {NamePartner}
+      <Box sx={{ padding: "2% 10%", color: "#fff", textAlign: "center" }}>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, accusamus
+        qui. Alias facilis perferendis temporibus! Sint dolorem id, minima vero
+        consectetur, modi debitis similique mollitia recusandae corrupti nam
+        exercitationem culpa?
+      </Box>
     </Stack>
   );
 }
