@@ -74,14 +74,15 @@ export default function PartnerSecrectInfo() {
       justifyContent="center"
       alignItems="center"
       sx={{
-        mt: "12%",
+        // mt: "12%",
+        mt: "20%",
         width: "100%",
         position: "absolute",
         top: 0,
         left: 0,
       }}
     >
-      <AvatarFrame />
+      {/* <AvatarFrame /> */}
       {NamePartner}
       <Box sx={{ padding: "2% 10%", color: "#fff", textAlign: "center" }}>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, accusamus
