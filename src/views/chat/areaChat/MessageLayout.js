@@ -9,23 +9,6 @@ import ChatMessageList from './message/ChatMessageList';
 import ChatHeaderDetail from './title-chat/ChatHeaderDetail';
 import { loadConversation } from '../../../features/chat';
 
-
-// const conversationSelector = (state) => {
-//   const { conversations, activeConversationId } = state.chat;
-//   const conversation = activeConversationId ? conversations.byId[activeConversationId] : null;
-//   if (conversation) {
-//     return conversation;
-//   }
-//   const initState = {
-//     id: '',
-//     messages: [],
-//     participants: [],
-//     unreadCount: 0,
-//     type: '',
-//   };
-//   return initState;
-// };
-
 function MessageLayout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,7 +16,8 @@ function MessageLayout() {
   const [conversationCurrentId, setConversationCurrentId] = React.useState();
   const recipientId = 42
   const conversation = {
-    conversationId: 5
+    id: 5,
+    partner_id: 42
   }
   // const { conversationKey } = useParams();
   // const { contacts, recipients, participants, activeConversationId } = useSelector((state) => state.chat);
@@ -191,37 +175,3 @@ function MessageLayout() {
 }
 
 export default MessageLayout;
-
-{
-  /* <MessageChat
-        avatar={''}
-        messages={[
-          'Hi Jenny, How r u today?',
-          'Did you train yesterday',
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Volutpat lacus laoreet non curabitur gravida.',
-        ]}
-      />
-      <MessageChat
-        side={'right'}
-        messages={[
-          "Great! What's about you?",
-          'Of course I did. Speaking of which check this out',
-        ]}
-      />
-      <MessageChat avatar={''} messages={['Im good.', 'See u later.']} /> */
-}
-
-// <Box sx={{ flexGrow: 1, display: 'flex', overflow: 'hidden' }}>
-//   <Stack sx={{ flexGrow: 1 }}>
-//     <ChatMessageList conversation={conversation} />
-
-//     <Divider />
-
-//     <ChatMessageInput
-//       conversationId={activeConversationId}
-//       onSend={handleSendMessage}
-//       disabled={false}
-//     />
-//   </Stack>
-
-//   {/* {mode === 'DETAIL' && <ChatRoom conversation={conversation} participants={displayParticipants} />} */}

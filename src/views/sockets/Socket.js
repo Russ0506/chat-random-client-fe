@@ -1,5 +1,4 @@
 function Socket(props) {
-  console.log(process.env.REACT_APP_API_URL);
   const ActionCable = require('actioncable');
   Socket.cable = ActionCable.createConsumer(`${process.env.REACT_APP_SOCKET_URL}?jwt_token=${localStorage.getItem('jwt_token')}`);
   Socket.cable.subscriptions.create(props , {

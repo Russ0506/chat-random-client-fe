@@ -8,7 +8,6 @@ import Iconify from '../../../common/base/icon/Iconify';
 import EmojiPicker from '../../../common/base/emoji/EmojiPicker'
 import { sendMesage } from '../../../../features/chat';
 // utils
-// import uuidv4 from '../../../utils/uuidv4';
 // components
 
 
@@ -50,15 +49,10 @@ export default function ChatMessageInput({ disabled, conversation, onSend, recip
     if (!message) {
       return '';
     }
-    if (onSend && conversation.conversationId) {
+    if (onSend && conversation.id) {
       let params = {
-        conversationId :conversation.conversationId,
-        // messageId: uuidv4(),
-        // messageId: "123",
+        conversationId :conversation.id,
         text: message,
-        // contentType: 'text',
-        // attachments: [],
-        // createdAt: new Date(),
         recipient_id: recipientId,
       }
       onSend(params);
