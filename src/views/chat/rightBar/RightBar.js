@@ -3,9 +3,13 @@ import { Box } from "@mui/system";
 import React from "react";
 import PartnerInfo from "./components/PartnerInfo";
 import PartnerPoster from "./components/PartnerPoster";
+import SecrectPartnerPoster from "./components/SecrectPartnerPoster";
 
 export default function RightBar() {
-  return (
+  const [showInfo, setShowInfo] = React.useState(false);
+  return showInfo == false ? (
+    <SecrectPartnerPoster />
+  ) : (
     <>
       <Stack
         flexDirection="column"
