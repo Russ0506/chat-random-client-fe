@@ -4,24 +4,25 @@ import { Box, Divider, Modal, Paper, Stack, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "30vw",
-  height: "80vh",
-  bgcolor: "background.paper",
-  borderRadius: "10px",
-  boxShadow: 24,
-  p: 4,
-};
+
 
 export default function NewPosterLayout() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [uploadImg, setUploadImg] = React.useState(false);
+  const [uploadImg, setUploadImg] = React.useState(true);
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: uploadImg == true ? "calc(30vw + 300px)" : "30vw",
+    height: "80vh",
+    bgcolor: "background.paper",
+    borderRadius: "10px",
+    boxShadow: 24,
+    p: 4,
+  };
 
   const Item = styled(Paper)(({ theme }) => ({
     //   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -81,7 +82,7 @@ export default function NewPosterLayout() {
         aria-describedby="keep-mounted-modal-description"
       >
         <Box sx={style}>
-          <Box sx={{width : uploadImg == true ? "calc(100% - 300px)" : "100%"}}>
+          <Box sx={{width : uploadImg == true ? "calc(100% - 300px)" : "100%", height: "100%",position: "relative"}}>
             <Typography
               variant="h5"
               textAlign="center"
