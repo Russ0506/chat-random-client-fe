@@ -182,7 +182,7 @@ export default function AppBarComponent() {
           >
             <MenuIcon sx={{ color: "gray" }} />
           </IconButton>
-          <Search>
+          {/* <Search>
             <SearchIconWrapper>
               <SearchIcon sx={{ color: "gray" }} />
             </SearchIconWrapper>
@@ -190,7 +190,7 @@ export default function AppBarComponent() {
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
-          </Search>
+          </Search> */}
           <Box sx={{ flexGrow: 1 }} />
           <Box width={DRAWER_WITH} p={3}>
             <ConversationControlBox />
