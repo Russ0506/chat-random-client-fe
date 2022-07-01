@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import { Box, Link, Avatar, Typography, AvatarGroup, IconButton } from '@mui/material';
 import BadgeStatus from '../../../common/base/status/BadgeStatus';
 import Iconify from '../../../common/base/icon/Iconify';
+
 // utils
 import { fToNow } from '../../../../utils/formatTime';
 // ----------------------------------------------------------------------
@@ -14,7 +15,7 @@ const RootStyle = styled('div')(({ theme }) => ({
   minHeight: 92,
   display: 'flex',
   alignItems: 'center',
-  padding: theme.spacing(0, 0),
+  padding: theme.spacing(0, 1, 0, 0),
 }));
 
 // ----------------------------------------------------------------------
@@ -33,13 +34,13 @@ export default function ChatHeaderDetail({ participants }) {
 
       <Box sx={{ flexGrow: 1 }} />
       <IconButton>
-        <Iconify icon="eva:phone-fill" width={20} height={20} />
+        <Iconify icon="eva:phone-fill" width={22} height={22} />
       </IconButton>
       <IconButton>
-        <Iconify icon="eva:video-fill" width={20} height={20} />
+        <Iconify icon="eva:video-fill" width={22} height={22} />
       </IconButton>
       <IconButton>
-        <Iconify icon="eva:more-vertical-fill" width={20} height={20} />
+        <Iconify icon="mdi:information" width={22} height={22} />
       </IconButton>
     </RootStyle>
   );

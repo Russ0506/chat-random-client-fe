@@ -13,7 +13,7 @@ export default function Homepage() {
     <Box>
       <AppearanceSocket />
       <PairingSocket />
-      <TopBar />
+      {/* <TopBar /> */}
       <Box w={100} sx={{ borderBottom: "1px solid #e0e0e0" }}></Box>
       <Box sx={{ display: "flex", height: "100vh" }} className="v11">
         {/* <AppearanceSocket/> */}
@@ -22,8 +22,7 @@ export default function Homepage() {
         {/* <TopBar /> */}
         <Box
           component="nav"
-          sx={{ width: { sm: DRAWER_WITH }, flexShrink: { sm: 0 } }}
-          aria-label="mailbox folders"
+          sx={{ width: { sm: DRAWER_WITH }, flexShrink: { sm: 0 }, height: "100%" }}
         >
           <LeftSideBar />
         </Box>
@@ -35,10 +34,9 @@ export default function Homepage() {
             bgcolor: "white",
           }}
         >
-          <Toolbar />
+          {/* <Toolbar /> */}
           <Grid
             container
-            rowSpacing={1}
             // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             sx={{ height: "100%" }}
           >
@@ -48,7 +46,7 @@ export default function Homepage() {
               sx={{
                 borderRight: "1px solid #e0e0e0",
                 height: "100%",
-                paddingBottom: "25px",
+                // paddingBottom: "25px",
               }}
             >
               <MessageLayout />
