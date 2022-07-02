@@ -13,7 +13,7 @@ export default function Homepage() {
     <Box>
       <AppearanceSocket />
       <PairingSocket />
-      {/* <TopBar /> */}
+      <TopBar />
       <Box w={100} sx={{ borderBottom: "1px solid #e0e0e0" }}></Box>
       <Box sx={{ display: "flex", height: "100vh" }} className="v11">
         {/* <AppearanceSocket/> */}
