@@ -15,7 +15,7 @@ function App() {
         second: GRP_COLOR.CODE016,
       },
       background: {
-        default: "#f1f1f1",
+        // default: "#f1f1f1",
       },
       primary: {
         main: GRP_COLOR.CODE016,

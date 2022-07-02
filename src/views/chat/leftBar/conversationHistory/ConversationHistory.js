@@ -63,26 +63,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function ConversationHistory() {
-  const useStyles = makeStyles({
-    drawerPaper: {
-      paddingTop: "10px",
-    },
-  });
-
-  const classes = useStyles();
-
-  const drawer = (
-    <Box>
-      {/* <Toolbar /> */}
-
-      {/* {RandomChatSideBarItem.map((component, i) => ( */}
-      {/* <ListItem>
-            {
-              <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                {component.name}
-              </Typography>
-            }
-          </ListItem> */}
+  return (
+    <Box
+      sx={{
+        background: "white",
+        height: "100%",
+        borderRight: ".5px solid #f6f6f6",
+      }}
+    >
       <Search>
         <SearchIconWrapper>
           <SearchIcon sx={{ color: "gray" }} />
@@ -103,27 +91,5 @@ export default function ConversationHistory() {
       </List>
       {/* ))} */}
     </Box>
-  );
-
-  return (
-    <Drawer
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-      variant="permanent"
-      sx={{
-        display: { xs: "none", sm: "block" },
-        "& .MuiDrawer-paper": {
-          boxSizing: "border-box",
-          width: DRAWER_WITH,
-        },
-      }}
-      open
-    >
-      {drawer}
-    </Drawer>
-    /* <h1>group chat layer</h1>
-      <ChatInfoLayer />
-      <FilterChatBoxLayer /> */
   );
 }

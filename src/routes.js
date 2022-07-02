@@ -13,9 +13,6 @@ import ResetPasswordConfirm from "./views/auth/ResetPasswordConfirm";
 import RegisterEmailSendSuccess from "./views/auth/RegisterEmailSendSuccess";
 import Error404 from "./views/error/Error404";
 import Homepage from "./views/Homepage";
-import { user_verify } from "./features/auth";
-import { useDispatch } from "react-redux";
-import Loading from "./views/common/base/loading/Loading";
 import AuthenLoading from "./views/common/base/loading/AuthenLoading";
 import UserProfile from "./views/profile/UserProfile";
 
@@ -65,10 +62,7 @@ export default function Routes() {
         {
           path: "profile",
           element: (
-            <ProtectedRoute
-              link="/users/profile"
-              children={<UserProfile />}
-            />
+            <ProtectedRoute link="/users/profile" children={<UserProfile />} />
           ),
         },
       ],
