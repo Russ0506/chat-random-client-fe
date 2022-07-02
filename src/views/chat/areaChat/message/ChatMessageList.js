@@ -13,6 +13,7 @@ import ChatMessageItem from './ChatMessageItem';
 
 ChatMessageList.propTypes = {
   conversation: PropTypes.object.isRequired,
+  newMessages: PropTypes.array,
 };
 
 export default function ChatMessageList({newMessages, conversation}) {
@@ -39,10 +40,7 @@ export default function ChatMessageList({newMessages, conversation}) {
     })
     .catch(() => {
     });
-  }, [])
-
-
-  console.log(newMessages);
+  }, []);
 
   // const imagesLightbox = conversation1.messages
   //   .filter((messages) => messages.contentType === 'image')
@@ -55,14 +53,14 @@ export default function ChatMessageList({newMessages, conversation}) {
   };
   return (
     <>
-      <Box className="assdadas" sx={{ height: "calc(100% - 92px)" }}>
+      <Box className="" sx={{ height: "calc(100% - 92px)" }}>
         <Scrollbar
           scrollableNodeProps={{ ref: scrollRef }}
           sx={{ height: "auto" }}
           scrollBottom={true}
           indentify="chat-scroll-ult"
         >
-          {dataConversation.map((message,i) => (
+          {dataConversation.reverse().map((message,i) => (
             <ChatMessageItem
               key={i}
               message={message}
