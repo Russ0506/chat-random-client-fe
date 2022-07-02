@@ -3,7 +3,7 @@ import SimpleBarReact from "simplebar-react";
 // @mui
 import { alpha, styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 // ----------------------------------------------------------------------
 
@@ -63,14 +63,14 @@ export default function Scrollbar({
   //     </Box>
   //   );
   // }
+  const [scrollHeight, setScrollHeight] = React.useState(0);
 
   useEffect(() => {
     if (scrollBottom === true && indentify !== "") {
-      var element = document.getElementById(indentify);
+      let element = document.getElementById(indentify);
       element.scrollTop = element.scrollHeight;
     }
-  }, [])
-  
+  });
 
   return isMobile === true ? (
     <Box

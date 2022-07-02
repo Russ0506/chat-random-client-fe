@@ -38,7 +38,7 @@ export default function ConversationControlBox() {
 
   return (
     <>
-     <Stack direction="row" spacing={2} sx={{ alignItems: "center", justifyContent: "end"}} >
+     <Stack direction="row" spacing={2} sx={{ alignItems: "center", justifyContent: "center"}} >
       <Button variant="contained" onClick={handleClickOpen}>New Conversation</Button>
       {/* <Typography color="black">Time here</Typography> */}
     </Stack>

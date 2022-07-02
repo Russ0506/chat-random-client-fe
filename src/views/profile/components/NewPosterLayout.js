@@ -201,7 +201,7 @@ export default function NewPosterLayout() {
                   placeholder="Write what you are feeling..."
                 />
                 <SharedInfoButton variant="contained">
-                  Share Infomation
+                  Post
                 </SharedInfoButton>
               </Box>
             ) : (

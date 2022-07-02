@@ -7,7 +7,7 @@ import SecrectPartnerPoster from "./components/SecrectPartnerPoster";
 
 export default function RightBar() {
   const [showInfo, setShowInfo] = React.useState(false);
-  return showInfo == false ? (
+  return showInfo === false ? (
     <SecrectPartnerPoster />
   ) : (
     <>
