@@ -1,32 +1,32 @@
-import { Box, Divider, Grid, Stack } from '@mui/material';
-import React, { useEffect, useLayoutEffect } from 'react';
-import MessageChat from './message/MessageChat';
-import ChatMessageInput from './sendMessageBox/ChatMessageInput';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import { NewMessageSocket } from '../../sockets/Socket'
-import { useDispatch, useSelector } from 'react-redux';
-import ChatMessageList from './message/ChatMessageList';
-import ChatHeaderDetail from './title-chat/ChatHeaderDetail';
-import { loadConversation } from '../../../features/chat';
+import { Box, Divider, Grid, Stack } from "@mui/material";
+import React, { useEffect, useLayoutEffect } from "react";
+import MessageChat from "./message/MessageChat";
+import ChatMessageInput from "./sendMessageBox/ChatMessageInput";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { NewMessageSocket } from "../../sockets/Socket";
+import { useDispatch, useSelector } from "react-redux";
+import ChatMessageList from "./message/ChatMessageList";
+import ChatHeaderDetail from "./title-chat/ChatHeaderDetail";
+import { loadConversation } from "../../../features/chat";
 
-function MessageLayout() {
+function MessageLayout({ openBar, ...res }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [conversationCurrentId, setConversationCurrentId] = React.useState();
-  const recipientId = 42
+  const recipientId = 42;
   const conversation = {
     id: 5,
-    partner_id: 42
-  }
+    partner_id: 42,
+  };
   // const { conversationKey } = useParams();
   // const { contacts, recipients, participants, activeConversationId } = useSelector((state) => state.chat);
   // const conversation = useSelector((state) => conversationSelector(state));
 
-  const activeConversationId = "123"
+  const activeConversationId = "123";
   const conversation1 = {
-    "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
-    "participants": [
+    id: "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b4",
+    participants: [
       {
         id: "8864c717-587d-472a-929a-8e5f298024da-0",
         avatar:
@@ -126,11 +126,14 @@ function MessageLayout() {
     },
   ];
 
-  const displayParticipants = participants.filter((item) => item.id !== 'e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2');
+  const displayParticipants = participants.filter(
+    (item) => item.id !== "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b2"
+  );
 
   const [newMessages, setNewMessages] = React.useState([]);
   const handleSendMessage = async (value) => {
-    setNewMessages([...newMessages,
+    setNewMessages([
+      ...newMessages,
       {
         id: 0,
         conversation_id: value.conversationId,
@@ -138,12 +141,13 @@ function MessageLayout() {
         recipient_id: value.recipient_id,
         text: value.text,
         status: null,
-        is_system_message: false
-      }
-    ])
-    console.log('called handleSendMessage')
+        is_system_message: false,
+      },
+    ]);
+    console.log("called handleSendMessage");
+    var element = document.getElementById("chat-scroll-ult");
+    element.scrollTop = element.scrollHeight;
   };
-
   // useEffect(()=> {
   //   dispatch(loadConversation({conversation_id : 5})) .then((data) => {
   //     // console.log(data);
@@ -153,13 +157,22 @@ function MessageLayout() {
   //   });
   // }, [])
 
-
   return (
     <Box sx={{ width: "100%", height: "100%", padding: "0px" }}>
       <NewMessageSocket />
-      <Box className="adss" sx={{ height: "calc(100% - 70px)", width: "100%", pl: 2, pt: 0 }}>
-        <ChatHeaderDetail participants={displayParticipants} />
-        <ChatMessageList conversation1={conversation1} newMessages={newMessages} conversation={conversation} />
+      <Box
+        className="adss"
+        sx={{ height: "calc(100% - 70px)", width: "100%", pl: 2, pt: 0 }}
+      >
+        <ChatHeaderDetail
+          participants={displayParticipants}
+          openBar={openBar}
+        />
+        <ChatMessageList
+          conversation1={conversation1}
+          newMessages={newMessages}
+          conversation={conversation}
+        />
       </Box>
       {/* <Divider /> */}
       <Box sx={{ height: "60px", padding: "0px", paddingBottom: "10px" }}>
