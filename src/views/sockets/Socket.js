@@ -14,13 +14,10 @@ function Socket(props) {
       console.log("Received some data:", data);
       props.received(data);
     }
-  });
-  return (
-    <div></div>
-  )
+  })
 }
 
-function AppearanceSocket(){
+function appearanceSocket(){
   Socket({
     channel: "AppearanceChannel",
     connected: ()=>{},
@@ -29,7 +26,7 @@ function AppearanceSocket(){
   })
 }
 
-function PairingSocket(){
+function pairingSocket(){
   Socket({
     channel: "PairingChannel",
     connected: ()=>{},
@@ -38,13 +35,15 @@ function PairingSocket(){
   })
 }
 
-function NewMessageSocket(props){
+function newMessageSocket(props){
   Socket({
     channel: "NewMessageChannel",
     connected: ()=>{},
     disconnected: ()=>{},
-    received: ()=>{}
+    received: (data)=>{
+      props.received(data);
+    }
   })
 }
 
-export {PairingSocket, AppearanceSocket, NewMessageSocket};
+export {pairingSocket, appearanceSocket, newMessageSocket};

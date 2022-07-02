@@ -38,32 +38,13 @@ const MessageImgStyle = styled('img')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 ChatMessageItem.propTypes = {
-  // message: PropTypes.object.isRequired,
-  // conversation: PropTypes.array.isRequired,
   onOpenLightbox: PropTypes.func,
 };
 
 export default function ChatMessageItem({ message, onOpenLightbox }) {
-  const myId = 35
-  //   conversation_id: 2
-  // created_at: "23:01 25/06/2022"
-  // id: 9
-  // is_system_message: false
-  // recipient_id: 35
-  // seen_at: null
-  // sender_id: 41
-  // status: "sent"
-  // text: "test"
-  // const sender = conversation.participants.find((participant) => participant.id === message.senderId);
-  // const senderDetails =
-  //   message.senderId === '8864c717-587d-472a-929a-8e5f298024da-0'
-  //     ? { type: 'me' }
-  //     : { avatar: sender?.avatar, name: sender?.name };
+  const myId = localStorage.getItem('user_id')
   const senderDetails =
-    // message.sender_id === myId
-    //     ? { type: 'me' }
-    //     : { avatar: sender?.avatar, name: sender?.name };
-    message.recipient_id !== myId
+    message.recipient_id != myId
       ? { type: 'me' }
       : { avatar: 'abc', name: 'name' };
 
@@ -73,17 +54,9 @@ export default function ChatMessageItem({ message, onOpenLightbox }) {
   const isMe = senderDetails.type === 'me';
   const isImage = message.contentType === 'image';
   const isSenderSysMess = localStorage.getItem('user_id') == message.recipient_id
-  // const firstName = senderDetails.name && senderDetails.name.split(' ')[0];
-// console.log(new Date(message.created_at));
   return (
     <RootStyle>
-      {isMessageSystem ? (
-        isSenderSysMess ? (
-          <Box className="custom-message-system">{message.text}</Box>
-        ) : (
-          <></>
-        )
-      ) : (
+      {isMessageSystem ? (isSenderSysMess ? (<Box className="custom-message-system">{message.text}</Box>) : <></>) : (
         <>
           <Box
             sx={{
