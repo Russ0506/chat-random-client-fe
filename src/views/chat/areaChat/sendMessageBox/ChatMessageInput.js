@@ -85,7 +85,7 @@ export default function ChatMessageInput({
         sx={{
           borderRadius: "10px",
           border: "0.2px solid #f6f6f6",
-          paddingLeft: "10px",
+          paddingLeft: "15px",
           paddingTop: "5px",
           paddingBottom: "5px",
           background: "#f6f6f6",
