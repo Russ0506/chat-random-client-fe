@@ -1,4 +1,4 @@
-import { axiosClient } from '../setup/axiosClient'
+import { axiosClient, axiosMultipartForm } from '../setup/axiosClient'
 import { setMessage } from "../features/message";
 
 const URL = "users";
@@ -6,7 +6,11 @@ const URL_IDENTITY = "";
 
 const register = async (params, thunkAPI) => {
   try {
-    const res = await axiosClient.post(`${URL}`, params)
+    const formData = new FormData();
+    for(let param in params['user']) {
+      formData.append(`user[${param}]`, params['user'][param])
+    }
+    const res = await axiosMultipartForm.post(`${URL}`, formData)
     return res
   } catch (error) {
     const message =

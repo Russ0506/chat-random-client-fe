@@ -25,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../common/base/loading/Loading";
 import Select from "react-select";
 import { axiosClient } from '../../setup/axiosClient'
+import UploadFileModal from '../common/UploadFileModal';
 
 export default function SignUp(props) {
   const dispatch = useDispatch()
@@ -43,11 +44,12 @@ export default function SignUp(props) {
     const data = new FormData(event.currentTarget);
 
     const birthday = moment(date).format("DD/MM/YYYY");
+    console.log(data.get("avatar"));
     dispatch(register(
       {
         user: { first_name: data.get("firstName"), last_name: data.get("lastName"),
         birthday: birthday, email: data.get("email"), password: data.get("password"),
-        gender: data.get("gender"), time_zone: data.get("time_zone")}
+        gender: data.get("gender"), time_zone: data.get("time_zone"), avatar: data.get("avatar")}
       }
     ))
       .unwrap()
@@ -191,7 +193,13 @@ export default function SignUp(props) {
                   <Select options={options} name="time_zone"/>
                 </FormControl>
               </Grid>
-
+              <Grid item xs={12} >
+              <input
+                accept="image/*"
+                name="avatar"
+                type="file"
+              />
+              </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}

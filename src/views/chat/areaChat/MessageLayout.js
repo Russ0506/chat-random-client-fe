@@ -157,7 +157,7 @@ function MessageLayout() {
   return (
     <Box sx={{ width: "100%", height: "100%", padding: "0px" }}>
       <NewMessageSocket />
-      <Box className="adss" sx={{ height: "calc(100% - 90px)", width: "100%", pl: 2, pt: 2 }}>
+      {/* <Box className="adss" sx={{ height: "calc(100% - 90px)", width: "100%", pl: 2, pt: 2 }}>
         <ChatHeaderDetail participants={displayParticipants} />
         <ChatMessageList conversation1={conversation1} newMessages={newMessages} conversation={conversation} />
       </Box>
@@ -169,7 +169,7 @@ function MessageLayout() {
           onSend={handleSendMessage}
           recipientId={recipientId}
         />
-      </Box>
+      </Box> */}
     </Box>
   );
 }

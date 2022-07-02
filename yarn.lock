@@ -1680,6 +1680,20 @@
     prop-types "^15.8.1"
     react-is "^17.0.2"
 
+"@mui/base@5.0.0-alpha.87":
+  version "5.0.0-alpha.87"
+  resolved "https://registry.npmjs.org/@mui/base/-/base-5.0.0-alpha.87.tgz#3cf8c2990cda8b48f26b3f19b1d0c94095ec6dfe"
+  integrity sha512-PuxRYrvG63Yj/UTwf4hSwZ5ClMv88iXHK+5hUV1CrG3kNPo6FFQiIFNRaNpRt/3nsXj6+xygJByNFA8m4Leetg==
+  dependencies:
+    "@babel/runtime" "^7.17.2"
+    "@emotion/is-prop-valid" "^1.1.2"
+    "@mui/types" "^7.1.4"
+    "@mui/utils" "^5.8.6"
+    "@popperjs/core" "^2.11.5"
+    clsx "^1.1.1"
+    prop-types "^15.8.1"
+    react-is "^17.0.2"
+
 "@mui/icons-material@^5.6.2":
   version "5.8.4"
   resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.8.4.tgz#3f2907c9f8f5ce4d754cb8fb4b68b5a1abf4d095"
@@ -1702,6 +1716,23 @@
     react-is "^17.0.2"
     react-transition-group "^4.4.2"
     rifm "^0.12.1"
+
+"@mui/material@^5.6.4":
+  version "5.8.6"
+  resolved "https://registry.npmjs.org/@mui/material/-/material-5.8.6.tgz#4019fbf1b95d8ea9f397efaed835ac92a6d8f22d"
+  integrity sha512-9fo5AiNHs+HY5ArMzsDMFrAmJSRw90y/qu81oDIszgK7Bfrm8GuI7Eb0mO6WADWPEyKOzOov/WZsm4G6jPEM4g==
+  dependencies:
+    "@babel/runtime" "^7.17.2"
+    "@mui/base" "5.0.0-alpha.87"
+    "@mui/system" "^5.8.6"
+    "@mui/types" "^7.1.4"
+    "@mui/utils" "^5.8.6"
+    "@types/react-transition-group" "^4.4.4"
+    clsx "^1.1.1"
+    csstype "^3.1.0"
+    prop-types "^15.8.1"
+    react-is "^17.0.2"
+    react-transition-group "^4.4.2"
 
 "@mui/material@^5.7.0":
   version "5.8.5"
@@ -1729,6 +1760,15 @@
     "@mui/utils" "^5.8.4"
     prop-types "^15.8.1"
 
+"@mui/private-theming@^5.8.6":
+  version "5.8.6"
+  resolved "https://registry.npmjs.org/@mui/private-theming/-/private-theming-5.8.6.tgz#db2bafeda1699e43e67b3ff4f770d6b7a234501f"
+  integrity sha512-yHsJk1qU9r/q0DlnxGRJPHyM0Y/nUv8FTNgDTiI9I58GWuVuZqeTUr7JRvPh6ybeP/FLtW5eXEavRK9wxVk4uQ==
+  dependencies:
+    "@babel/runtime" "^7.17.2"
+    "@mui/utils" "^5.8.6"
+    prop-types "^15.8.1"
+
 "@mui/styled-engine-sc@^5.7.0":
   version "5.8.0"
   resolved "https://registry.yarnpkg.com/@mui/styled-engine-sc/-/styled-engine-sc-5.8.0.tgz#20bc536dce25739e38fcd2586f100e70fbf02065"
@@ -1743,6 +1783,29 @@
   dependencies:
     "@babel/runtime" "^7.17.2"
     "@emotion/cache" "^11.7.1"
+    prop-types "^15.8.1"
+
+"@mui/styles@^5.6.2":
+  version "5.8.6"
+  resolved "https://registry.npmjs.org/@mui/styles/-/styles-5.8.6.tgz#26a0b9055e7c5eec18f04c7d3372cac7ecc2cae9"
+  integrity sha512-0IvwctufjczoS5qERihquoeVwsz3/buHRpVIt6hNb9Jab2dKH38fhxvIHJTTmmJMQazchaAeVh7T3duOV2Vl2g==
+  dependencies:
+    "@babel/runtime" "^7.17.2"
+    "@emotion/hash" "^0.8.0"
+    "@mui/private-theming" "^5.8.6"
+    "@mui/types" "^7.1.4"
+    "@mui/utils" "^5.8.6"
+    clsx "^1.1.1"
+    csstype "^3.1.0"
+    hoist-non-react-statics "^3.3.2"
+    jss "^10.8.2"
+    jss-plugin-camel-case "^10.8.2"
+    jss-plugin-default-unit "^10.8.2"
+    jss-plugin-global "^10.8.2"
+    jss-plugin-nested "^10.8.2"
+    jss-plugin-props-sort "^10.8.2"
+    jss-plugin-rule-value-function "^10.8.2"
+    jss-plugin-vendor-prefixer "^10.8.2"
     prop-types "^15.8.1"
 
 "@mui/styles@^5.8.0":
@@ -1782,6 +1845,20 @@
     csstype "^3.1.0"
     prop-types "^15.8.1"
 
+"@mui/system@^5.8.6":
+  version "5.8.6"
+  resolved "https://registry.npmjs.org/@mui/system/-/system-5.8.6.tgz#aed7e501c513429dab9cfbbe86da5dcd056c2a0a"
+  integrity sha512-+a+rD58XltKQHDrrjcuCta2cUBqdnLDUDwnphSLCMFigRl8/uk+R+fdQRlMNRXAOgnMb8ioWIgfjxri5pmTH4A==
+  dependencies:
+    "@babel/runtime" "^7.17.2"
+    "@mui/private-theming" "^5.8.6"
+    "@mui/styled-engine" "^5.8.0"
+    "@mui/types" "^7.1.4"
+    "@mui/utils" "^5.8.6"
+    clsx "^1.1.1"
+    csstype "^3.1.0"
+    prop-types "^15.8.1"
+
 "@mui/types@^7.1.4":
   version "7.1.4"
   resolved "https://registry.yarnpkg.com/@mui/types/-/types-7.1.4.tgz#4185c05d6df63ec673cda15feab80440abadc764"
@@ -1791,6 +1868,17 @@
   version "5.8.4"
   resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.8.4.tgz#5c46b5900bd2452b3ce54a7a1c94a3e2a8a75c34"
   integrity sha512-BHYErfrjqqh76KaDAm8wZlhEip1Uj7Cmco65NcsF3BWrAl3FWngACpaPZeEbTgmaEwyWAQEE6LZhsmy43hfyqQ==
+  dependencies:
+    "@babel/runtime" "^7.17.2"
+    "@types/prop-types" "^15.7.5"
+    "@types/react-is" "^16.7.1 || ^17.0.0"
+    prop-types "^15.8.1"
+    react-is "^17.0.2"
+
+"@mui/utils@^5.8.6":
+  version "5.8.6"
+  resolved "https://registry.npmjs.org/@mui/utils/-/utils-5.8.6.tgz#543de64a64bb9135316ecfd91d75a8740544d79f"
+  integrity sha512-QM2Sd1xZo2jOt2Vz5Rmro+pi2FLJyiv4+OjxkUwXR3oUM65KSMAMLl/KNYU55s3W3DLRFP5MVwE4FhAbHseHAg==
   dependencies:
     "@babel/runtime" "^7.17.2"
     "@types/prop-types" "^15.7.5"
@@ -8130,6 +8218,13 @@ react-helmet@^6.1.0:
     react-fast-compare "^3.1.1"
     react-side-effect "^2.1.0"
 
+react-image-crop@^10.0.4:
+  version "10.0.4"
+  resolved "https://registry.npmjs.org/react-image-crop/-/react-image-crop-10.0.4.tgz#f51588117a35c59e4e674f542a10b6c49cdab4e0"
+  integrity sha512-ArJK1cIBRotWmsxEATLm3aYMQLo8aInjbBuz8tAM3WHCKmeUfEuZsRvDEsKsdpsZ58BbtGUvvsfsrfS21+JYug==
+  dependencies:
+    clsx "^1.1.1"
+
 react-image-lightbox@^5.1.4:
   version "5.1.4"
   resolved "https://registry.yarnpkg.com/react-image-lightbox/-/react-image-lightbox-5.1.4.tgz#5b847dcb79e9efdf9d7cd5621a92e0f156d2cf30"
@@ -8158,7 +8253,7 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.2:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-modal@^3.11.1:
+react-modal@^3.11.1, react-modal@^3.15.1:
   version "3.15.1"
   resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-3.15.1.tgz#950ce67bfef80971182dd0ed38f2d9b1a681288b"
   integrity sha512-duB9bxOaYg7Zt6TMFldIFxQRtSP+Dg3F1ZX3FXxSUn+3tZZ/9JCgeAQKDg7rhZSAqopq8TFRw3yIbnx77gyFTw==
@@ -8167,6 +8262,18 @@ react-modal@^3.11.1:
     prop-types "^15.7.2"
     react-lifecycles-compat "^3.0.0"
     warning "^4.0.3"
+
+react-mui-fileuploader@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npmjs.org/react-mui-fileuploader/-/react-mui-fileuploader-0.2.0.tgz#484eaf9340bb1bdf3259b5175b8456108ae2fa1a"
+  integrity sha512-EKBdOgZfgfKm4DDJBwRBbN7hoD0PngbFnv0DkUYWbcTEZKHMxtb4JTCc4l3y/paJIsvujiwUmwT4UkW+pjRPOg==
+  dependencies:
+    "@emotion/react" "^11.9.0"
+    "@emotion/styled" "^11.8.1"
+    "@mui/icons-material" "^5.6.2"
+    "@mui/material" "^5.6.4"
+    "@mui/styles" "^5.6.2"
+    prop-types "^15.8.1"
 
 react-redux@^8.0.1:
   version "8.0.2"

@@ -40,7 +40,7 @@ export const registerConfirm = createAsyncThunk(
 export const register = createAsyncThunk(
   "auth/register",
   async (params, thunkAPI) => {
-      return await AuthService.register(params, thunkAPI);
+    return await AuthService.register(params, thunkAPI);
   }
 );
 
