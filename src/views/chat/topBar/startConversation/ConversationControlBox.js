@@ -38,11 +38,26 @@ export default function ConversationControlBox() {
 
   return (
     <>
-     <Stack direction="row" spacing={2} sx={{ alignItems: "center", justifyContent: "center"}} >
-      <Button variant="contained" onClick={handleClickOpen}>New Conversation</Button>
-      {/* <Typography color="black">Time here</Typography> */}
-    </Stack>
-      <PartnerSettingModal open={openPartnerDialog} onClose={handlePartnerSettingClose} handleOpenViewSettingModal={handleOpenViewSettingModal} userSetting={userSetting}></PartnerSettingModal>
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{ alignItems: "center", justifyContent: "center" }}
+      >
+        <Button
+          variant="contained"
+          onClick={handleClickOpen}
+          sx={{ background: "#6ed42a", boxShadow: "0px 8px 15px rgb(203 252 210)" }}
+        >
+          New Conversation
+        </Button>
+        {/* <Typography color="black">Time here</Typography> */}
+      </Stack>
+      <PartnerSettingModal
+        open={openPartnerDialog}
+        onClose={handlePartnerSettingClose}
+        handleOpenViewSettingModal={handleOpenViewSettingModal}
+        userSetting={userSetting}
+      ></PartnerSettingModal>
     </>
   );
 }

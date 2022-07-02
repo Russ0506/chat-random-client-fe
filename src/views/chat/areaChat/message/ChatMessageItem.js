@@ -77,56 +77,67 @@ export default function ChatMessageItem({ message, onOpenLightbox }) {
 // console.log(new Date(message.created_at));
   return (
     <RootStyle>
-      {
-        isMessageSystem ? (isSenderSysMess ? (<Box className="custom-message-system">{message.text}</Box>) : <></>)  : (
-          <>
-            <Box
-              sx={{
-                display: 'flex',
-                ...(isMe && {
-                  ml: 'auto',
-                  marginRight: 2
-                }),
-              }}
-            >
-              {senderDetails.type !== 'me' && (
-                // <Avatar alt={senderDetails.name} src={senderDetails.avatar} sx={{ width: 32, height: 32 }} />
-                <Avatar sx={{ width: 40, height: 40 }} />
+      {isMessageSystem ? (
+        isSenderSysMess ? (
+          <Box className="custom-message-system">{message.text}</Box>
+        ) : (
+          <></>
+        )
+      ) : (
+        <>
+          <Box
+            sx={{
+              display: "flex",
+              ...(isMe && {
+                ml: "auto",
+                marginRight: 2,
+              }),
+            }}
+          >
+            {senderDetails.type !== "me" && (
+              // <Avatar alt={senderDetails.name} src={senderDetails.avatar} sx={{ width: 32, height: 32 }} />
+              <Avatar sx={{ width: 40, height: 40 }} />
+            )}
 
-              )}
-
-              <Box sx={{ ml: 2 }}>
-
-                <ContentStyle
-                  sx={{
-                    ...(isMe && {
-                      color: 'text.primary',
-                      bgcolor: '#c8facd',
-                    }),
-                    ...(!isMe && {
-                      color: 'text.primary',
-                      bgcolor: '#f4f6f8',
-                    })
-                  }}
-                >
-                  {isImage ? (
-                    <MessageImgStyle alt="attachment" src={message.text} onClick={() => onOpenLightbox(message.text)} />
-                  ) : (
-                    <Typography variant="body2">{message.text}</Typography>
-                  )}
-                </ContentStyle>
-                <InfoStyle noWrap variant="caption" sx={{ ...(isMe && { justifyContent: 'flex-end' }) }}>
-                  {/* {formatDistanceToNowStrict(new Date(message.created_at), {
+            <Box sx={{ ml: 2 }}>
+              <ContentStyle
+                sx={{
+                  ...(isMe && {
+                    color: "white",
+                    // bgcolor: "#c8facd",
+                    bgcolor: "#817cce",
+                  }),
+                  ...(!isMe && {
+                    color: "text.primary",
+                    // bgcolor: "#f4f6f8",
+                    bgcolor: "#e9ecf1",
+                  }),
+                }}
+              >
+                {isImage ? (
+                  <MessageImgStyle
+                    alt="attachment"
+                    src={message.text}
+                    onClick={() => onOpenLightbox(message.text)}
+                  />
+                ) : (
+                  <Typography variant="body2">{message.text}</Typography>
+                )}
+              </ContentStyle>
+              <InfoStyle
+                noWrap
+                variant="caption"
+                sx={{ ...(isMe && { justifyContent: "flex-end" }) }}
+              >
+                {/* {formatDistanceToNowStrict(new Date(message.created_at), {
               addSuffix: true,
             })} */}
-                  {message.created_at}
-                </InfoStyle>
-              </Box>
+                {message.created_at}
+              </InfoStyle>
             </Box>
-          </>
-        )
-      }
-
-    </RootStyle >
+          </Box>
+        </>
+      )}
+    </RootStyle>
   );
 }

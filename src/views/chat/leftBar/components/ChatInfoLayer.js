@@ -128,7 +128,12 @@ export default function ChatInfoLayer(props) {
 
   return (
     <>
-      <Box sx={{ width: "100%", padding: "10px 0" }}>
+      <Box
+        sx={{
+          width: "100%",
+          padding: "10px 0",
+        }}
+      >
         <Stack
           direction="row"
           spacing={2}
@@ -147,9 +152,7 @@ export default function ChatInfoLayer(props) {
             />
           </StyledBadge>
           <Box sx={{ width: "calc(100% - 40px - 100px)" }}>
-            <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
-              {data.partnerNm}
-            </Typography>
+            <Typography variant="subtitle2">{data.partnerNm}</Typography>
             <Typography
               variant="subtitle2"
               sx={{
@@ -157,11 +160,11 @@ export default function ChatInfoLayer(props) {
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 color:
-                  (data.lastMsg.sender == false && data.lastMsg.read == false)
-                    ? "black"
-                    : "gray",
+                  data.lastMsg.sender == false && data.lastMsg.read == false
+                    ? "#817cce"
+                    : "#c4c6ca",
                 fontWeight:
-                  (data.lastMsg.sender == false && data.lastMsg.read == false)
+                  data.lastMsg.sender == false && data.lastMsg.read == false
                     ? "bold"
                     : "normal",
               }}

@@ -25,9 +25,9 @@ export default function LeftSideBar(props) {
   return (
     <>
       <ConversationHistory />
-      <Box width={DRAWER_WITH} sx={{position: "absolute", bottom : 20, left: '50%', transform: "translateX(-50%)", zIndex:9999}}>
+      {/* <Box width={DRAWER_WITH} sx={{position: "absolute", bottom : 20, left: '50%', transform: "translateX(-50%)", zIndex:9999}}>
         <ConversationControlBox />
-      </Box>
+      </Box> */}
     </>
   );
 }

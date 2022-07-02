@@ -15,6 +15,7 @@ import Error404 from "./views/error/Error404";
 import Homepage from "./views/Homepage";
 import AuthenLoading from "./views/common/base/loading/AuthenLoading";
 import UserProfile from "./views/profile/UserProfile";
+import CherishSideBar from "./views/common/header/CherishSideBar";
 
 export const ProtectedRoute = ({ link = "/", children }) => {
   return <AuthenLoading link={link} children={children} />;
@@ -70,6 +71,10 @@ export default function Routes() {
     {
       path: "/reset-password-email-confirm",
       children: [{ path: "success", element: <ResetPwdEmailSendSuccess /> }],
+    },
+    {
+      path: "/test",
+      element: <CherishSideBar />,
     },
     {
       path: "/register",
