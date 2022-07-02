@@ -1,20 +1,27 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 // import { capitalCase } from 'change-case';
 // @mui
-import { styled } from '@mui/material/styles';
-import { Box, Link, Avatar, Typography, AvatarGroup, IconButton } from '@mui/material';
-import BadgeStatus from '../../../common/base/status/BadgeStatus';
-import Iconify from '../../../common/base/icon/Iconify';
+import { styled } from "@mui/material/styles";
+import {
+  Box,
+  Link,
+  Avatar,
+  Typography,
+  AvatarGroup,
+  IconButton,
+} from "@mui/material";
+import BadgeStatus from "../../../common/base/status/BadgeStatus";
+import Iconify from "../../../common/base/icon/Iconify";
 
 // utils
-import { fToNow } from '../../../../utils/formatTime';
+import { fToNow } from "../../../../utils/formatTime";
 // ----------------------------------------------------------------------
 
-const RootStyle = styled('div')(({ theme }) => ({
+const RootStyle = styled("div")(({ theme }) => ({
   flexShrink: 0,
   minHeight: 92,
-  display: 'flex',
-  alignItems: 'center',
+  display: "flex",
+  alignItems: "center",
   padding: theme.spacing(0, 1, 0, 0),
 }));
 
@@ -24,9 +31,11 @@ ChatHeaderDetail.propTypes = {
   participants: PropTypes.array.isRequired,
 };
 
-export default function ChatHeaderDetail({ participants }) {
+export default function ChatHeaderDetail({ openBar, participants }) {
   // const isGroup = participants.length > 1;
-
+  // const handleOpenShareInfoLayout = async () => {
+  //   openBar(false);
+  // };
   return (
     <RootStyle>
       {/* {isGroup ? <GroupAvatar participants={participants} /> : <OneAvatar participants={participants} />} */}
@@ -39,7 +48,7 @@ export default function ChatHeaderDetail({ participants }) {
       <IconButton>
         <Iconify icon="eva:video-fill" width={22} height={22} />
       </IconButton>
-      <IconButton>
+      <IconButton onClick={openBar}>
         <Iconify icon="mdi:information" width={22} height={22} />
       </IconButton>
     </RootStyle>
@@ -60,18 +69,26 @@ function OneAvatar({ participants }) {
   }
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-      <Box sx={{ position: 'relative' }}>
-        <Avatar src={participant.avatar} alt={participant.name} style={{width: 52, height: 52}}/>
-        <BadgeStatus status={participant.status} sx={{ position: 'absolute', right: 2, bottom: 2 }} />
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ position: "relative" }}>
+        <Avatar
+          src={participant.avatar}
+          alt={participant.name}
+          style={{ width: 52, height: 52 }}
+        />
+        <BadgeStatus
+          status={participant.status}
+          sx={{ position: "absolute", right: 2, bottom: 2 }}
+        />
       </Box>
       <Box sx={{ ml: 2 }}>
         <Typography variant="subtitle2">{participant.name}</Typography>
 
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
           {/* {participant.status !== 'offline' ? capitalCase(participant.status) : fToNow(participant.lastActivity || '')} */}
-          {participant.status !== 'false' ? "Online" : fToNow(participant.last_online || '')}
-
+          {participant.status !== "false"
+            ? "Online"
+            : fToNow(participant.last_online || "")}
         </Typography>
       </Box>
     </Box>
@@ -91,15 +108,25 @@ function GroupAvatar({ participants }) {
         max={3}
         sx={{
           mb: 0.5,
-          '& .MuiAvatar-root': { width: 32, height: 32 },
+          "& .MuiAvatar-root": { width: 32, height: 32 },
         }}
       >
         {participants.map((participant) => (
-          <Avatar key={participant.id} alt={participant.name} src={participant.avatar} />
+          <Avatar
+            key={participant.id}
+            alt={participant.name}
+            src={participant.avatar}
+          />
         ))}
       </AvatarGroup>
-      <Link variant="body2" underline="none" component="button" color="text.secondary" onClick={() => {}}>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Link
+        variant="body2"
+        underline="none"
+        component="button"
+        color="text.secondary"
+        onClick={() => {}}
+      >
+        <Box sx={{ display: "flex", alignItems: "center" }}>
           {participants.length} persons
           <Iconify icon="eva:arrow-ios-forward-fill" />
         </Box>

@@ -5,15 +5,19 @@ import { DRAWER_WITH } from "../constant/css_constant";
 import LeftSideBar from "./chat/leftBar/LeftSideBar";
 import RightBar from "./chat/rightBar/RightBar";
 import TopBar from "./chat/topBar/TopBar";
-import MessageLayout from "./chat/areaChat/MessageLayout"
-import {AppearanceSocket, PairingSocket} from './sockets/Socket'
+import MessageLayout from "./chat/areaChat/MessageLayout";
+import { AppearanceSocket, PairingSocket } from "./sockets/Socket";
+import React from "react";
 
 export default function Homepage() {
+  const [openRightBar, setOpenRightBar] = React.useState(true);
+  const handleOpenRightBar = () => {
+    setOpenRightBar(openRightBar ? false : true);
+  };
   return (
     <Box>
       <AppearanceSocket />
       <PairingSocket />
-      <TopBar />
       <Box w={100} sx={{ borderBottom: "1px solid #e0e0e0" }}></Box>
       <Box sx={{ display: "flex", height: "100vh" }} className="v11">
         {/* <AppearanceSocket/> */}
@@ -22,7 +26,12 @@ export default function Homepage() {
         {/* <TopBar /> */}
         <Box
           component="nav"
-          sx={{ width: { sm: DRAWER_WITH }, flexShrink: { sm: 0 }, height: "100%" }}
+          sx={{
+            width: { sm: DRAWER_WITH },
+            flexShrink: { sm: 0 },
+            height: "100%",
+            position: "relative"
+          }}
         >
           <LeftSideBar />
         </Box>
@@ -42,19 +51,24 @@ export default function Homepage() {
           >
             <Grid
               item
-              xs={8.5}
+              xs={openRightBar === true ? 8.5 : 12}
               sx={{
                 borderRight: "1px solid #e0e0e0",
                 height: "100%",
                 // paddingBottom: "25px",
               }}
             >
-              <MessageLayout />
+              <MessageLayout openBar={handleOpenRightBar} />
             </Grid>
             <Grid
+              id="msg-right-bar-lt"
               item
-              xs={3.5}
-              sx={{ boxShadow: "-5px 0px 10px 0px rgb(99 99 99 / 40%)" }}
+              xs={openRightBar === true ? 3.5 : 0}
+              sx={{
+                transition: "all 0.2s ease",
+                boxShadow: "-5px 0px 10px 0px rgb(99 99 99 / 40%)",
+                display: openRightBar === true ? "" : "none",
+              }}
             >
               <RightBar />
             </Grid>
