@@ -20,8 +20,8 @@ const MansoryImageBG = styled(Box)(({ theme }) => ({
   "&::before": {
     content: '""',
     display: "block",
-    // backgroundColor: "rgb(123,117,194,0.7)",
-    backgroundColor: "rgb(46,43,49,0.7)",
+    backgroundColor: "rgb(123,117,194,0.7)",
+    // backgroundColor: "rgb(46,43,49,0.7)",
     height: "100%",
     width: "100%",
   },
@@ -37,7 +37,7 @@ const SharedInfoButton = styled(Button)(({ theme }) => ({
   borderRadius: "20px",
   fontSize: "14px",
   color: "#000",
-  boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.1)",
+  boxShadow: "0px 8px 15px rgb(200 200 200 / 40%)",
   transition: "all 0.3s ease 0s",
   "&:hover": {
     backgroundColor: "#2EE59D",

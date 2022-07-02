@@ -20,7 +20,7 @@ export default function Homepage() {
       <CherishAppBar />
       <AppearanceSocket />
       <PairingSocket />
-      <Box w={100} sx={{ borderBottom: "1px solid #e0e0e0" }}></Box>
+      <Box w={100} sx={{ borderBottom: ".3px solid #e0e0e0" }}></Box>
       <Box sx={{ display: "flex", height: "calc(100vh - 69px)" }} className="v11">
         {/* <AppearanceSocket/> */}
         {/* <PairingSocket/> */}
@@ -68,7 +68,7 @@ export default function Homepage() {
               xs={openRightBar === true ? 3.5 : 0}
               sx={{
                 transition: "all 0.2s ease",
-                boxShadow: "-5px 0px 10px 0px rgb(99 99 99 / 40%)",
+                // boxShadow: "-5px 0px 10px 0px rgb(99 99 99 / 40%)",
                 display: openRightBar === true ? "" : "none",
               }}
             >

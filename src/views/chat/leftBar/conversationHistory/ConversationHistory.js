@@ -82,7 +82,7 @@ export default function ConversationHistory() {
       </Search>
       <List>
         {allConversationHistory.map((item, k) => (
-          <ListItem key={k} disablePadding>
+          <ListItem key={k} disablePadding >
             <ListItemButton>
               <ChatInfoLayer data={item} />
             </ListItemButton>
