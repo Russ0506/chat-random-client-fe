@@ -8,6 +8,7 @@ import TopBar from "./chat/topBar/TopBar";
 import MessageLayout from "./chat/areaChat/MessageLayout";
 import { AppearanceSocket, PairingSocket } from "./sockets/Socket";
 import React from "react";
+import CherishAppBar from "./common/header/CherishAppBar";
 
 export default function Homepage() {
   const [openRightBar, setOpenRightBar] = React.useState(true);
@@ -15,22 +16,23 @@ export default function Homepage() {
     setOpenRightBar(openRightBar ? false : true);
   };
   return (
-    <Box>
+    <>
+      <CherishAppBar />
       <AppearanceSocket />
       <PairingSocket />
       <Box w={100} sx={{ borderBottom: "1px solid #e0e0e0" }}></Box>
-      <Box sx={{ display: "flex", height: "100vh" }} className="v11">
+      <Box sx={{ display: "flex", height: "calc(100vh - 69px)" }} className="v11">
         {/* <AppearanceSocket/> */}
         {/* <PairingSocket/> */}
         <CssBaseline />
         {/* <TopBar /> */}
         <Box
-          component="nav"
+          // component="nav"
           sx={{
             width: { sm: DRAWER_WITH },
             flexShrink: { sm: 0 },
             height: "100%",
-            position: "relative"
+            position: "relative",
           }}
         >
           <LeftSideBar />
@@ -75,7 +77,7 @@ export default function Homepage() {
           </Grid>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 }
 
