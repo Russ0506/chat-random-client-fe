@@ -33,7 +33,7 @@ const SharedInfoButton = styled(Button)(({ theme }) => ({
   transform: "translate(-50%, 0)",
   left: "50%",
   backgroundColor: "#fff",
-  padding: "12px 30px",
+  padding: "10px 20px",
   borderRadius: "20px",
   fontSize: "14px",
   color: "#000",
