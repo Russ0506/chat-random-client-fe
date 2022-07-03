@@ -36,7 +36,12 @@ export default function Routes() {
     },
     {
       path: "/app",
-      element: <ProtectedRoute link="/app" children={<Homepage />} />,
+      element: (
+        <ProtectedRoute
+          link="/app"
+          children={<CherishApp body={<Homepage />} index={2} />}
+        />
+      ),
     },
     {
       path: "/users",
@@ -72,10 +77,7 @@ export default function Routes() {
       path: "/reset-password-email-confirm",
       children: [{ path: "success", element: <ResetPwdEmailSendSuccess /> }],
     },
-    {
-      path: "/test",
-      element: <CherishApp body={<Homepage />} index={2} />,
-    },
+
     {
       path: "/register",
       children: [
