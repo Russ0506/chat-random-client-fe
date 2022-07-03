@@ -8,6 +8,7 @@ import TopBar from "./chat/topBar/TopBar";
 import MessageLayout from "./chat/areaChat/MessageLayout";
 import { pairingSocket, appearanceSocket, newMessageSocket } from "./sockets/Socket";
 import React from "react";
+import CherishAppBar from "./common/header/CherishAppBar";
 
 const newMessagesRoot = document.getElementById('new_messages');
 
@@ -53,55 +54,60 @@ export default class Homepage extends React.Component {
   render() {
     return (
       <>
+        <CherishAppBar />
         <Box w={100} sx={{ borderBottom: ".3px solid #e0e0e0" }}></Box>
-        <Box sx={{ display: "flex", height: "calc(100vh - 69px)" }} className="v11">
-        <CssBaseline />
         <Box
-          sx={{
-            width: { sm: DRAWER_WITH },
-            flexShrink: { sm: 0 },
-            height: "100%",
-            position: "relative",
-          }}
+          sx={{ display: "flex", height: "calc(100vh - 69px)" }}
+          className="v11"
         >
-          <LeftSideBar />
-        </Box>
-        <Box
-          sx={{
-            flexGrow: 1,
-            width: { sm: `calc(100% - ${DRAWER_WITH}px)` },
-            bgcolor: "white",
-          }}
-        >
-          {/* <Toolbar /> */}
-          <Grid
-            container
-            sx={{ height: "100%" }}
+          <CssBaseline />
+          <Box
+            sx={{
+              width: { sm: DRAWER_WITH },
+              flexShrink: { sm: 0 },
+              height: "100%",
+              position: "relative",
+            }}
           >
-            <Grid
-              item
-              xs={this.state.openRightBar === true ? 8.5 : 12}
-              sx={{
-                borderRight: "1px solid #e0e0e0",
-                height: "100%",
-              }}
-            >
-              <MessageLayout openBar={this.handleOpenRightBar} conversation={this.state.conversation} newMessage={this.state.newMessage}/>
+            <LeftSideBar />
+          </Box>
+          <Box
+            sx={{
+              flexGrow: 1,
+              width: { sm: `calc(100% - ${DRAWER_WITH}px)` },
+              bgcolor: "white",
+            }}
+          >
+            {/* <Toolbar /> */}
+            <Grid container sx={{ height: "100%" }}>
+              <Grid
+                item
+                xs={this.state.openRightBar === true ? 8.5 : 12}
+                sx={{
+                  borderRight: "1px solid #e0e0e0",
+                  height: "100%",
+                }}
+              >
+                <MessageLayout
+                  openBar={this.handleOpenRightBar}
+                  conversation={this.state.conversation}
+                  newMessage={this.state.newMessage}
+                />
+              </Grid>
+              <Grid
+                id="msg-right-bar-lt"
+                item
+                xs={this.state.openRightBar === true ? 3.5 : 0}
+                sx={{
+                  transition: "all 0.2s ease",
+                  display: this.state.openRightBar === true ? "" : "none",
+                }}
+              >
+                <RightBar />
+              </Grid>
             </Grid>
-            <Grid
-              id="msg-right-bar-lt"
-              item
-              xs={this.state.openRightBar === true ? 3.5 : 0}
-              sx={{
-                transition: "all 0.2s ease",
-                display: this.state.openRightBar === true ? "" : "none",
-              }}
-            >
-              <RightBar />
-            </Grid>
-          </Grid>
+          </Box>
         </Box>
-      </Box>
       </>
     );
   }
