@@ -61,7 +61,7 @@ export default function ChatMessageList({newMessages, conversation}) {
           scrollBottom={true}
           indentify="chat-scroll-ult"
         >
-          {dataConversation.reverse().map((message, i) => (
+          {dataConversation.slice().reverse().map((message,i) => (
             <ChatMessageItem
               key={i}
               message={message}
