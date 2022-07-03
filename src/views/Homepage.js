@@ -67,6 +67,7 @@ export default class Homepage extends React.Component {
               flexShrink: { sm: 0 },
               height: "100%",
               position: "relative",
+              borderRight: "1px solid #e5e0e0",
             }}
           >
             <LeftSideBar />

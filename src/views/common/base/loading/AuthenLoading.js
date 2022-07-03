@@ -42,8 +42,6 @@ export default function AuthenLoading(props) {
   ) : (
     <Box
       sx={{
-        width: "300px",
-        height: "100px",
         overflow: "unset",
         display: disPlayModal,
       }}

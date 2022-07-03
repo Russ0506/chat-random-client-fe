@@ -37,9 +37,9 @@ export default function Routes() {
     {
       path: "/app",
       element: (
-        <ProtectedRoute
-          link="/app"
-          children={<CherishApp body={<Homepage />} index={2} />}
+        <CherishApp
+          body={<ProtectedRoute link="/app" children={<Homepage />} />}
+          index={2}
         />
       ),
     },
@@ -68,7 +68,15 @@ export default function Routes() {
         {
           path: "profile",
           element: (
-            <ProtectedRoute link="/users/profile" children={<UserProfile />} />
+            <CherishApp
+              body={
+                <ProtectedRoute
+                  link="/users/profile"
+                  children={<UserProfile />}
+                />
+              }
+              index={3}
+            />
           ),
         },
       ],

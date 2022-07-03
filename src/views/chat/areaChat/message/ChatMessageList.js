@@ -2,6 +2,7 @@ import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState, useRef,useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { CHAT_HEADER_HEIGHT } from '../../../../constant/css_constant';
 
 import { loadConversation } from '../../../../features/chat';
 //
@@ -53,7 +54,7 @@ export default function ChatMessageList({newMessages, conversation}) {
   };
   return (
     <>
-      <Box className="" sx={{ height: "calc(100% - 92px)" }}>
+      <Box className="" sx={{ height: `calc(100% - ${CHAT_HEADER_HEIGHT})` }}>
         <Scrollbar
           scrollableNodeProps={{ ref: scrollRef }}
           sx={{ height: "auto" }}
@@ -67,7 +68,7 @@ export default function ChatMessageList({newMessages, conversation}) {
               onOpenLightbox={handleOpenLightbox}
             />
           ))}
-          {newMessages.map((message,i) => (
+          {newMessages.map((message, i) => (
             <ChatMessageItem
               key={i}
               message={message}

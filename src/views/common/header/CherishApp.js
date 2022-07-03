@@ -17,6 +17,11 @@ const icoList = {
     chosen: "bi:chat-heart-fill",
     link: "/app",
   },
+  profile: {
+    notChosen : "healthicons:ui-user-profile-outline",
+    chosen: "healthicons:ui-user-profile",
+    link: "/users/profile"
+  },
   newPost: {
     notChosen: "ant-design:plus-square-outlined",
     chosen: "ant-design:plus-square-filled",
@@ -66,6 +71,21 @@ export default function CherishApp({ index = 1, body }) {
           </ButtonNav>
         )}
         {index == 3 ? (
+          <ChosenButtonNav component={Link} to={icoList.profile.link}>
+            <Iconify
+              icon={icoList.profile.chosen}
+              style={{ width: "32px", height: "32px" }}
+            />
+          </ChosenButtonNav>
+        ) : (
+          <ButtonNav component={Link} to={icoList.profile.link}>
+            <Iconify
+              icon={icoList.profile.notChosen}
+              style={{ width: "32px", height: "32px" }}
+            />
+          </ButtonNav>
+        )}
+        {index == 4 ? (
           <ChosenButtonNav>
             <Iconify
               icon={icoList.newPost.notChosen}

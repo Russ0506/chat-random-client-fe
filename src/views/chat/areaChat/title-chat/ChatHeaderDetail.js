@@ -15,14 +15,15 @@ import Iconify from "../../../common/base/icon/Iconify";
 
 // utils
 import { fToNow } from "../../../../utils/formatTime";
+import { CHAT_HEADER_HEIGHT } from "../../../../constant/css_constant";
 // ----------------------------------------------------------------------
 
 const RootStyle = styled("div")(({ theme }) => ({
   flexShrink: 0,
-  minHeight: 92,
+  minHeight: CHAT_HEADER_HEIGHT,
   display: "flex",
   alignItems: "center",
-  padding: theme.spacing(0, 1, 0, 0),
+  // padding: theme.spacing(0, 1, 0, 0),
 }));
 
 // ----------------------------------------------------------------------

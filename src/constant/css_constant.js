@@ -55,3 +55,4 @@ export const BOX_SHADOW = {
 }
 
 export const DRAWER_WITH = 320;
+export const CHAT_HEADER_HEIGHT = "80px";
