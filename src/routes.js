@@ -15,7 +15,7 @@ import Error404 from "./views/error/Error404";
 import Homepage from "./views/Homepage";
 import AuthenLoading from "./views/common/base/loading/AuthenLoading";
 import UserProfile from "./views/profile/UserProfile";
-import CherishSideBar from "./views/common/header/CherishSideBar";
+import CherishApp from "./views/common/header/CherishApp";
 
 export const ProtectedRoute = ({ link = "/", children }) => {
   return <AuthenLoading link={link} children={children} />;
@@ -74,7 +74,7 @@ export default function Routes() {
     },
     {
       path: "/test",
-      element: <CherishSideBar />,
+      element: <CherishApp body={<Homepage />} index={2} />,
     },
     {
       path: "/register",
