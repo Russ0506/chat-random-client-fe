@@ -6,28 +6,57 @@ import LeftSideBar from "./chat/leftBar/LeftSideBar";
 import RightBar from "./chat/rightBar/RightBar";
 import TopBar from "./chat/topBar/TopBar";
 import MessageLayout from "./chat/areaChat/MessageLayout";
-import { AppearanceSocket, PairingSocket } from "./sockets/Socket";
+import { pairingSocket, appearanceSocket, newMessageSocket } from "./sockets/Socket";
 import React from "react";
-import CherishAppBar from "./common/header/CherishAppBar";
 
-export default function Homepage() {
-  const [openRightBar, setOpenRightBar] = React.useState(true);
-  const handleOpenRightBar = () => {
-    setOpenRightBar(openRightBar ? false : true);
+const newMessagesRoot = document.getElementById('new_messages');
+
+export default class Homepage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      openRightBar: true,
+      conversation: {id: 5, partner_id: 42},
+      newMessageIds: [],
+      newMessage: undefined,
+    };
+    this.newMessageDiv = document.createElement('div');
+  }
+
+  received (data) {
+    this.setState({newMessage: data})
+  }
+
+  componentDidMount(){
+    if (localStorage.getItem('user_id') == 42) {
+      this.setState({conversation: {id: 5, partner_id: 21}})
+    }
+    newMessageSocket({
+      received: this.received.bind(this)
+    });
+    pairingSocket();
+    appearanceSocket();
+  }
+
+  handleOpenRightBar = () => {
+    this.setState({
+      openRightBar:  !this.state.openRightBar
+    });
   };
-  return (
-    <>
-      <CherishAppBar />
-      <AppearanceSocket />
-      <PairingSocket />
-      <Box w={100} sx={{ borderBottom: ".3px solid #e0e0e0" }}></Box>
-      <Box sx={{ display: "flex", height: "calc(100vh - 69px)" }} className="v11">
-        {/* <AppearanceSocket/> */}
-        {/* <PairingSocket/> */}
+
+  rerenderMessageLayout = (data) => {
+    this.setState({
+      newMessage : data
+    })
+  }
+
+  render() {
+    return (
+      <>
+        <Box w={100} sx={{ borderBottom: ".3px solid #e0e0e0" }}></Box>
+        <Box sx={{ display: "flex", height: "calc(100vh - 69px)" }} className="v11">
         <CssBaseline />
-        {/* <TopBar /> */}
         <Box
-          // component="nav"
           sx={{
             width: { sm: DRAWER_WITH },
             flexShrink: { sm: 0 },
@@ -40,7 +69,6 @@ export default function Homepage() {
         <Box
           sx={{
             flexGrow: 1,
-            // p: 2,
             width: { sm: `calc(100% - ${DRAWER_WITH}px)` },
             bgcolor: "white",
           }}
@@ -48,28 +76,25 @@ export default function Homepage() {
           {/* <Toolbar /> */}
           <Grid
             container
-            // columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             sx={{ height: "100%" }}
           >
             <Grid
               item
-              xs={openRightBar === true ? 8.5 : 12}
+              xs={this.state.openRightBar === true ? 8.5 : 12}
               sx={{
                 borderRight: "1px solid #e0e0e0",
                 height: "100%",
-                // paddingBottom: "25px",
               }}
             >
-              <MessageLayout openBar={handleOpenRightBar} />
+              <MessageLayout openBar={this.handleOpenRightBar} conversation={this.state.conversation} newMessage={this.state.newMessage}/>
             </Grid>
             <Grid
               id="msg-right-bar-lt"
               item
-              xs={openRightBar === true ? 3.5 : 0}
+              xs={this.state.openRightBar === true ? 3.5 : 0}
               sx={{
                 transition: "all 0.2s ease",
-                // boxShadow: "-5px 0px 10px 0px rgb(99 99 99 / 40%)",
-                display: openRightBar === true ? "" : "none",
+                display: this.state.openRightBar === true ? "" : "none",
               }}
             >
               <RightBar />
@@ -77,10 +102,7 @@ export default function Homepage() {
           </Grid>
         </Box>
       </Box>
-    </>
-  );
+      </>
+    );
+  }
 }
-
-Homepage.propTypes = {
-  window: PropTypes.func,
-};
