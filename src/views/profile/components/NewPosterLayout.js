@@ -53,7 +53,7 @@ const SharedInfoButton = styled(Button)(({ theme }) => ({
   },
 }));
 export default function NewPosterLayout() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [uploadImg, setUploadImg] = React.useState(true);

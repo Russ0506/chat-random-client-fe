@@ -14,6 +14,10 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ConversationControlBox from "../../chat/topBar/startConversation/ConversationControlBox";
+import { Badge } from "@mui/material";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const CherishAppBar = () => {
@@ -34,6 +38,16 @@ const CherishAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  function notificationsLabel(count) {
+    if (count === 0) {
+      return "no notifications";
+    }
+    if (count > 99) {
+      return "more than 99 notifications";
+    }
+    return `${count} notifications`;
+  }
 
   return (
     <AppBar
@@ -85,7 +99,7 @@ const CherishAppBar = () => {
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
 
-          {/* <Typography
+          <Typography
             variant="h5"
             noWrap
             component="a"
@@ -102,7 +116,7 @@ const CherishAppBar = () => {
             }}
           >
             LOGO
-          </Typography> */}
+          </Typography>
           <Box
             sx={{
               flexGrow: 1,
@@ -148,6 +162,11 @@ const CherishAppBar = () => {
               ))}
             </Menu>
           </Box>
+          <IconButton aria-label={notificationsLabel(100)}>
+            <Badge badgeContent={100} color="secondary">
+              <NotificationsNoneIcon />
+            </Badge>
+          </IconButton>
         </Toolbar>
       </Container>
     </AppBar>

@@ -1,23 +1,27 @@
 .lds-ring {
   opacity: 1 !important;
   display: inline-block;
-  position: absolute;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 96px;
+  height: 96px;
 }
 .lds-ring div {
   opacity: 1;
   box-sizing: border-box;
   display: block;
   position: absolute;
-  left: 47vw;
-  top: 45vh;
   width: 80px;
   height: 80px;
   margin: 8px;
-  border: 8px solid #224957;
+  border: 8px solid rgb(123, 117, 194, 1);
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #224957 transparent transparent transparent;
+  border-color: rgb(123, 117, 194, 1) transparent transparent transparent;
 }
+
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;
 }

@@ -152,7 +152,7 @@ export default function UserProfile() {
       <Stack alignItems="center" sx={{ width: "100%"}}>
         <Box
           sx={{
-            width: "55%",
+            // width: "55%",
             maxWidth: "1000px",
             minWidth: "320px",
             backgroundColor: "#fff",
