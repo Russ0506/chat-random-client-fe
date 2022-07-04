@@ -15,7 +15,7 @@ import Error404 from "./views/error/Error404";
 import Homepage from "./views/Homepage";
 import AuthenLoading from "./views/common/base/loading/AuthenLoading";
 import UserProfile from "./views/profile/UserProfile";
-import CherishSideBar from "./views/common/header/CherishSideBar";
+import CherishApp from "./views/common/header/CherishApp";
 
 export const ProtectedRoute = ({ link = "/", children }) => {
   return <AuthenLoading link={link} children={children} />;
@@ -36,7 +36,12 @@ export default function Routes() {
     },
     {
       path: "/app",
-      element: <ProtectedRoute link="/app" children={<Homepage />} />,
+      element: (
+        <CherishApp
+          body={<ProtectedRoute link="/app" children={<Homepage />} />}
+          index={2}
+        />
+      ),
     },
     {
       path: "/users",
@@ -63,7 +68,15 @@ export default function Routes() {
         {
           path: "profile",
           element: (
-            <ProtectedRoute link="/users/profile" children={<UserProfile />} />
+            <CherishApp
+              body={
+                <ProtectedRoute
+                  link="/users/profile"
+                  children={<UserProfile />}
+                />
+              }
+              index={3}
+            />
           ),
         },
       ],
@@ -72,10 +85,7 @@ export default function Routes() {
       path: "/reset-password-email-confirm",
       children: [{ path: "success", element: <ResetPwdEmailSendSuccess /> }],
     },
-    {
-      path: "/test",
-      element: <CherishSideBar />,
-    },
+
     {
       path: "/register",
       children: [

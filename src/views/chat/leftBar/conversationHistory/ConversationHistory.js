@@ -68,7 +68,6 @@ export default function ConversationHistory() {
       sx={{
         background: "white",
         height: "100%",
-        borderRight: ".5px solid #f6f6f6",
       }}
     >
       <Search>
