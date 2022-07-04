@@ -1,7 +1,7 @@
 import { CssBaseline, Grid, Toolbar } from "@mui/material";
 import Box from "@mui/material/Box";
 import PropTypes from "prop-types";
-import { DRAWER_WITH } from "../constant/css_constant";
+import { APP_BAR_HEIGHT, DRAWER_WITH } from "../constant/css_constant";
 import LeftSideBar from "./chat/leftBar/LeftSideBar";
 import RightBar from "./chat/rightBar/RightBar";
 import TopBar from "./chat/topBar/TopBar";
@@ -54,10 +54,9 @@ export default class Homepage extends React.Component {
   render() {
     return (
       <>
-        <CherishAppBar />
         <Box w={100} sx={{ borderBottom: ".3px solid #e0e0e0" }}></Box>
         <Box
-          sx={{ display: "flex", height: "calc(100vh - 69px)" }}
+          sx={{ display: "flex", height: '100%' }}
           className="v11"
         >
           <CssBaseline />

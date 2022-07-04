@@ -18,8 +18,10 @@ function App() {
         // default: "#f1f1f1",
       },
       primary: {
-        main: GRP_COLOR.CODE016,
+        main: "#817cce",
       },
+      borderColor: "#e5e0e0",
+
       // mode: GRP_COLOR.CODE016,
     },
   });

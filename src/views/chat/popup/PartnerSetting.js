@@ -1,60 +1,27 @@
-import { Chip } from '@mui/material';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import DialogContent from '@mui/material/DialogContent';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import Grid from '@mui/material/Grid';
-import MenuItem from '@mui/material/MenuItem';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Select from '@mui/material/Select';
-import { useTheme } from '@mui/material/styles';
-import Switch from '@mui/material/Switch';
-import TextField from '@mui/material/TextField';
-import * as React from 'react';
+import { Chip, InputBase, InputLabel, Stack } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import DialogContent from "@mui/material/DialogContent";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import Grid from "@mui/material/Grid";
+import MenuItem from "@mui/material/MenuItem";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import Select from "@mui/material/Select";
+import { alpha, styled, useTheme } from "@mui/material/styles";
+import Switch from "@mui/material/Switch";
+import TextField from "@mui/material/TextField";
+import * as React from "react";
 import { useDispatch } from "react-redux";
 import GgmCurrentPlaceText2 from "../../../components/googleMapAPI/GgmCurrentPlaceText2";
 import GoogleMapPlaceSearchBox from "../../../components/googleMapAPI/GoogleMapPlaceSearchBox";
 import { GRP_COLOR } from "../../../constant/css_constant";
-import { saveDataSearch } from '../../../features/user-setting';
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-
-const sxJustifyContent = {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-};
-
-
-
-const names = [
-  "Camping",
-  "Read Book",
-  "Climb",
-  "Sport",
-  "Music",
-  "Foodt",
-  "Forest",
-  "Ocean",
-  "Animal",
-  "Romantic",
-];
+import { saveDataSearch } from "../../../features/user-setting";
 
 export default function PartnerSetting(props) {
   const theme = useTheme();
-  const useEffect = React.useEffect
-  const dispatch = useDispatch()
+  const useEffect = React.useEffect;
+  const dispatch = useDispatch();
 
   // var initData
   const [initData, setInitData] = React.useState({
@@ -66,12 +33,12 @@ export default function PartnerSetting(props) {
       address: props.userSetting.address,
       radius: props.userSetting.radius,
       gender: props.userSetting.gender,
-      hobbies: ['Camping'],
+      hobbies: ["Camping"],
       enable_age_filter: props.userSetting.enable_age_filter,
       enable_gender_filter: props.userSetting.enable_gender_filter,
       enable_location_filter: props.userSetting.enable_location_filter,
-    }
-  })
+    },
+  });
 
   const [currentLocationPermision, setcurrentLocationPermision] =
     React.useState(false);
@@ -83,14 +50,15 @@ export default function PartnerSetting(props) {
     lo: initData.user_setting.lo,
     la: initData.user_setting.lat,
   });
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
+  const label = { inputProps: { "aria-label": "Switch demo" } };
   const min = 0;
   const max = 100;
 
   const setCurrentLocationPermision = (event, child) => {
-    setcurrentLocationPermision(currentLocationPermision === false ? true : false);
+    setcurrentLocationPermision(
+      currentLocationPermision === false ? true : false
+    );
   };
-
 
   useEffect(() => {
     if (props.events) {
@@ -129,10 +97,8 @@ export default function PartnerSetting(props) {
       },
     };
 
-    props.takeDataSubmit(dataSearch)
-    dispatch(saveDataSearch(
-      dataSearch
-    ))
+    props.takeDataSubmit(dataSearch);
+    dispatch(saveDataSearch(dataSearch))
       .unwrap()
       .then(() => {
         // props.onClose()
@@ -146,7 +112,7 @@ export default function PartnerSetting(props) {
         setLoading(false);
       });
     // open popup view here
-  }
+  };
 
   function getStyles(name, selectName, theme) {
     return {
@@ -171,135 +137,109 @@ export default function PartnerSetting(props) {
             type="submit"
             style={{ display: "none" }}
           />
-          <Grid container spacing={5}>
-            {/* card */}
-            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
-              <Grid container item xs={3} alignItems="center">
-                <FormLabel>Location</FormLabel>
-              </Grid>
-              <Grid container item xs={9} ml={-2}>
-                <FormControl style={{ width: 300 }}>
-                  {currentLocationPermision === false ? (
-                    <GoogleMapPlaceSearchBox />
-                  ) : (
-                    <GgmCurrentPlaceText2 />
-                  )}
-                  <TextField
-                    id="__curr_lo"
-                    type="hidden"
-                    inputProps={{
-                      readOnly: true,
-                    }}
-                    // value={location.lo}
-                    sx={{ display: "none" }}
-                  />
-                  <TextField
-                    id="__curr_address"
-                    type="hidden"
-                    inputProps={{
-                      readOnly: true,
-                    }}
-                    // value={location.address}
-                    sx={{ display: "none" }}
-                  />
-                  <TextField
-                    id="__curr_la"
-                    type="hidden"
-                    inputProps={{
-                      readOnly: true,
-                    }}
-                    // value={location.la}
-                    sx={{ display: "none" }}
-                  />
-                </FormControl>
-              </Grid>
-
-              {/* cục search của Hiếu nằm đây */}
+          <Stack sx={{ width: "100%" }}>
+            <CmmnFormControl variant="standard">
+              <CmmnInputLabel shrink htmlFor="location-inpt">
+                Location
+              </CmmnInputLabel>
+              <CmmnInput placeholder="Fill your location" id="location-inpt" />
+              <TextField
+                id="__curr_lo"
+                type="hidden"
+                inputProps={{
+                  readOnly: true,
+                }}
+                // value={location.lo}
+                sx={{ display: "none" }}
+              />
+              <TextField
+                id="__curr_address"
+                type="hidden"
+                inputProps={{
+                  readOnly: true,
+                }}
+                // value={location.address}
+                sx={{ display: "none" }}
+              />
+              <TextField
+                id="__curr_la"
+                type="hidden"
+                inputProps={{
+                  readOnly: true,
+                }}
+                // value={location.la}
+                sx={{ display: "none" }}
+              />
+            </CmmnFormControl>
+            <Grid item xs={6} sm={9}>
+              <Box component="div" sx={{ display: "inline" }}>
+                <Switch
+                  {...label}
+                  id="curLocaAcesPermis"
+                  onChange={setCurrentLocationPermision}
+                />
+              </Box>
+              <Box component="div" sx={{ display: "inline" }}>
+                Use current location ?
+              </Box>
             </Grid>
-
-            {/* card */}
-            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
-              <Grid container item xs={4} alignItems="center">
-                <FormLabel>Expected Distance</FormLabel>
-              </Grid>
-              <Grid container item xs={8}>
-                <FormControl>
-                  <TextField
-                    sx={{ width: "140px" }}
-                    id="outlined-number"
-                    type="number"
-                    name="radius"
-                    defaultValue={initData.user_setting.radius}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </FormControl>
-              </Grid>
-            </Grid>
-            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
-              <Grid item xs={6} sm={3}></Grid>
-              <Grid item xs={6} sm={9}>
-                <Box component="div" sx={{ display: "inline" }}>
-                  <Switch
-                    {...label}
-                    id="curLocaAcesPermis"
-                    onChange={setCurrentLocationPermision}
-                  />
-                </Box>
-                <Box component="div" sx={{ display: "inline" }}>
-                  Use current location ?
-                </Box>
-              </Grid>
-            </Grid>
-
-            {/* card */}
-            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
-              <Grid container item xs={3} alignItems="center">
-                <FormLabel>Gender</FormLabel>
-              </Grid>
-              <Grid container item xs={9}>
-                <FormControl sx={{ minWidth: 140 }}>
-                  <Select
-                    name="gender"
-                    defaultValue={initData.user_setting.gender}
-                    displayEmpty
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem key="1" value="male">
-                      Male
-                    </MenuItem>
-                    <MenuItem key="2" value="female">
-                      Female
-                    </MenuItem>
-                    <MenuItem key="3" value="others">
-                      <em>Others</em>
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-            </Grid>
-            {/* card */}
-            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
-              <Grid container item xs={3} alignItems="center">
-                <FormLabel>Age</FormLabel>
-              </Grid>
-              <Grid container item xs={9} ml={5}>
+            <CmmnFormControl variant="standard">
+              <CmmnInputLabel shrink htmlFor="expected-dis-inpt">
+                Expected Distance
+              </CmmnInputLabel>
+              <CmmnInput
+                id="expected-dis-inpt"
+                type="number"
+                name="radius"
+                defaultValue={initData.user_setting.radius}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </CmmnFormControl>
+            <Stack sx={{ mt: "15px" }}>
+              <CmmnInputLabel shrink htmlFor="gender-inpt">
+                Gender
+              </CmmnInputLabel>
+              <FormControl variant="standard" sx={{width: "30%"}}>
+                <CmmnSelect
+                  id="gender-inpt"
+                  name="gender"
+                  defaultValue={initData.user_setting.gender}
+                  sx={{ border: "1px solid #e5e0e0", boxShadow: "none" }}
+                  // displayEmpty
+                  // inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem key="1" value="male">
+                    Male
+                  </MenuItem>
+                  <MenuItem key="2" value="female">
+                    Female
+                  </MenuItem>
+                  <MenuItem key="3" value="others">
+                    <em>Others</em>
+                  </MenuItem>
+                </CmmnSelect>
+              </FormControl>
+            </Stack>
+            <Stack sx={{ mt: "15px" }}>
+              <CmmnInputLabel shrink>Age</CmmnInputLabel>
+              <Stack flexDirection="row">
                 <FormControl
                   sx={{
-                    ml: 2,
-                    width: "15ch",
+                    width: "150px",
+                    ml: 1,
                     display: "flex",
                     flexDirection: "row",
                   }}
                 >
                   <FormLabel sx={sxJustifyContent}>From</FormLabel>
-                  <TextField
-                    sx={{ ml: 1 }}
-                    id="outlined-number"
+                  <CmmnInput
                     name="from_age"
+                    type="number"
                     defaultValue={initData.user_setting.from_age}
-                    InputProps={{
+                    InputLabelProps={{
+                      shrink: true,
                       inputProps: {
                         type: "number",
                         min: 0,
@@ -307,6 +247,7 @@ export default function PartnerSetting(props) {
                         maxLength: 10,
                       },
                     }}
+                    sx={{ ml: 1, marginTop: "0 !important" }}
                     onChange={(e) => {
                       var value = parseInt(e.target.value, 10);
 
@@ -320,16 +261,15 @@ export default function PartnerSetting(props) {
                 <FormControl
                   sx={{
                     ml: 1,
-                    width: "15ch",
+                    width: "150px",
                     display: "flex",
                     flexDirection: "row",
                   }}
                 >
                   <FormLabel sx={sxJustifyContent}>To</FormLabel>
-                  <TextField
-                    sx={{ ml: 1 }}
-                    id="outlined-number"
+                  <CmmnInput
                     name="to_age"
+                    type="number"
                     defaultValue={initData.user_setting.to_age}
                     InputProps={{
                       inputProps: {
@@ -339,6 +279,7 @@ export default function PartnerSetting(props) {
                         maxLength: 10,
                       },
                     }}
+                    sx={{ ml: 1, marginTop: "0 !important" }}
                     onChange={(e) => {
                       var value = parseInt(e.target.value, 10);
 
@@ -349,47 +290,184 @@ export default function PartnerSetting(props) {
                     }}
                   />
                 </FormControl>
-              </Grid>
-            </Grid>
-            {/* card */}
-            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
-              <Grid container item xs={3} alignItems="center">
-                <FormLabel>Hobbies</FormLabel>
-              </Grid>
-              <Grid container item xs={9}>
-                <FormControl style={{ width: 300 }}>
-                  <Select
-                    labelId="demo-multiple-chip-label"
-                    id="demo-multiple-chip"
-                    multiple
-                    value={hobbies}
-                    onChange={handleChangeHobby}
-                    input={<OutlinedInput id="select-multiple-chip" />}
-                    renderValue={(selected) => (
-                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                        {selected.map((value) => (
-                          <Chip key={value} label={value} />
-                        ))}
-                      </Box>
-                    )}
-                    MenuProps={MenuProps}
-                  >
-                    {names.map((name) => (
-                      <MenuItem
-                        key={name}
-                        value={name}
-                        style={getStyles(name, hobbies, theme)}
-                      >
-                        {name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-            </Grid>
-          </Grid>
+              </Stack>
+            </Stack>
+            <Stack sx={{ mt: "15px" }}>
+              <CmmnInputLabel shrink htmlFor="demo-multiple-chip">
+                Hobbies
+              </CmmnInputLabel>
+              <CmmnFormControl
+                variant="outlined"
+                sx={{ boxShadow: "none", outline: "none" }}
+              >
+                <CmmnGroupSelect
+                  size="small"
+                  labelId="demo-multiple-chip-label"
+                  id="demo-multiple-chip"
+                  multiple
+                  value={hobbies}
+                  onChange={handleChangeHobby}
+                  input={<OutlinedInput id="select-multiple-chip" />}
+                  renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} />
+                      ))}
+                    </Box>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {names.map((name) => (
+                    <MenuItem
+                      key={name}
+                      value={name}
+                      style={getStyles(name, hobbies, theme)}
+                    >
+                      {name}
+                    </MenuItem>
+                  ))}
+                </CmmnGroupSelect>
+              </CmmnFormControl>
+            </Stack>
+          </Stack>
         </Box>
       </DialogContent>
     </Box>
   );
 }
+const CmmnSelect = styled(Select)(({ theme }) => ({
+  outline: "none",
+  borderRadius: 5,
+  position: "relative",
+  // backgroundColor: theme.palette.mode === "light" ? "#fcfcfb" : "#2b2b2b",
+  backgroundColor: "transparent",
+  border: "1px solid #e5e0e0",
+  fontSize: 16,
+  padding: "10px 12px",
+  transition: theme.transitions.create([
+    "border-color",
+    "background-color",
+    "box-shadow",
+  ]),
+  // Use the system font instead of the default Roboto font.
+  fontFamily: [
+    "-apple-system",
+    "BlinkMacSystemFont",
+    '"Segoe UI"',
+    "Roboto",
+    '"Helvetica Neue"',
+    "Arial",
+    "sans-serif",
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"',
+  ].join(","),
+  "&:before": {
+    border: "none",
+  },
+  "&:hover:not(.Mui-disabled):before": {
+    border: "none",
+  },
+  "&:hover": {
+    outline: "none",
+  },
+  "&:focus": {
+    // boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+    borderColor: theme.palette.primary.main,
+  },
+}));
+
+const CmmnFormControl = styled(FormControl)(({ theme }) => ({
+  marginTop: "10px",
+  "& .MuiOutlinedInput-root:hover": {
+    outline: "none !important",
+  },
+  "& :hover": {
+    outline: "none !important",
+  },
+  "& .MuiOutlinedInput-notchedOutline": {
+    border: "1px solid #e5e0e0",
+  },
+  "& :hover .MuiOutlinedInput-notchedOutline": {
+    border: "1px solid #e5e0e0",
+  },
+}));
+
+const CmmnInputLabel = styled(InputLabel)(({ theme }) => ({
+  fontSize: "18px",
+}));
+
+const CmmnGroupSelect = styled(Select)(({ theme }) => ({
+  "& .MuiOutlinedInput-notchedOutline": {
+    border: "1px solid #e5e0e0",
+  },
+  "&:hover": {
+    outline: "none",
+  },
+}));
+
+const CmmnInput = styled(InputBase)(({ theme }) => ({
+  "label + &": {
+    marginTop: theme.spacing(3),
+  },
+  "& .MuiInputBase-input": {
+    borderRadius: 5,
+    position: "relative",
+    // backgroundColor: theme.palette.mode === "light" ? "#fcfcfb" : "#2b2b2b",
+    backgroundColor: "transparent",
+    border: "1px solid #e5e0e0",
+    fontSize: 16,
+    padding: "10px 12px",
+    transition: theme.transitions.create([
+      "border-color",
+      "background-color",
+      "box-shadow",
+    ]),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
+    "&:focus": {
+      // boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+      borderColor: theme.palette.primary.main,
+    },
+  },
+}));
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const sxJustifyContent = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+};
+
+const names = [
+  "Camping",
+  "Read Book",
+  "Climb",
+  "Sport",
+  "Music",
+  "Foodt",
+  "Forest",
+  "Ocean",
+  "Animal",
+  "Romantic",
+];

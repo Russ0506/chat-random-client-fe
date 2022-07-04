@@ -3,8 +3,10 @@ import { styled } from "@mui/styles";
 import { Box } from "@mui/system";
 import React from "react";
 import { Link } from "react-router-dom";
+import { APP_BAR_HEIGHT } from "../../../constant/css_constant";
 import Homepage from "../../Homepage";
 import Iconify from "../base/icon/Iconify";
+import CherishAppBar from "./CherishAppBar";
 
 const icoList = {
   home: {
@@ -101,7 +103,13 @@ export default function CherishApp({ index = 1, body }) {
           </ButtonNav>
         )}
       </Stack>
-      <Box sx={{ width: "calc(100vw - 60px)", height: "100vh" }}>{body}</Box>
+
+      <Box sx={{ width: "calc(100vw - 60px)", height: "100vh" }}>
+        <CherishAppBar />
+        <Box sx={{ width: "100%", height: `calc(100vh - ${APP_BAR_HEIGHT})` }}>
+          {body}
+        </Box>
+      </Box>
     </Stack>
   );
 }

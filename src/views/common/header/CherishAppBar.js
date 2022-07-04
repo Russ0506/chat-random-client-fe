@@ -17,10 +17,14 @@ import ConversationControlBox from "../../chat/topBar/startConversation/Conversa
 import { Badge } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import { APP_BAR_HEIGHT } from "../../../constant/css_constant";
+import { useLocation } from "react-router-dom";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const CherishAppBar = () => {
+  const location = useLocation();
+  
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -52,7 +56,7 @@ const CherishAppBar = () => {
   return (
     <AppBar
       position="static"
-      sx={{ height: "69px", background: "white", boxShadow: "none" }}
+      sx={{ height: APP_BAR_HEIGHT, background: "white", boxShadow: "none" }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -124,7 +128,7 @@ const CherishAppBar = () => {
               justifyContent: "flex-end",
             }}
           ></Box>
-          <ConversationControlBox />
+          {location.pathname == "/app" ? <ConversationControlBox /> : ""}
           <Box sx={{ flexGrow: 0, ml: 2 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu}>
@@ -164,7 +168,7 @@ const CherishAppBar = () => {
           </Box>
           <IconButton aria-label={notificationsLabel(100)}>
             <Badge badgeContent={100} color="secondary">
-              <NotificationsNoneIcon />
+              <NotificationsNoneIcon sx={{width:"30px", height:"30px"}}/>
             </Badge>
           </IconButton>
         </Toolbar>
