@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import moment from 'moment'
 // @mui
 import { styled } from "@mui/material/styles";
 import {
@@ -64,6 +65,7 @@ export default function ChatMessageInput({
         conversationId: conversation.id,
         text: message,
         recipient_id: recipientId,
+        create_at:moment().format(),
       };
       onSend(params);
 
