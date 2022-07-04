@@ -18,6 +18,7 @@ export default function AuthenLoading(props) {
     dispatch(user_verify())
       .unwrap()
       .then((res) => {
+        debugger
         if (res.logged_in && authenRouteOneTime.includes(props.link)) {
           setIsAccess(true);
           navigate("/app");

@@ -71,11 +71,11 @@ export default function PartnerSettingModal(props) {
     <Dialog open={props.open} onClose={props.onClose} fullWidth
       maxWidth="lg">
       <ThemeProvider theme={theme}>
-        <Container component="main" sx={{ minWidth: "800px" }}>
+        <Container component="main" sx={{ minWidth: "300px" }}>
           {/* <Loading show={isSubmit}></Loading> */}
 
-          <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 },  minHeight:"700px" }}>
-            <Typography component="h1" variant="h4" align="center">
+          <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 },  minHeight:"400px" }}>
+            {/* <Typography component="h1" variant="h4" align="center">
               IDEAL PARTNER
             </Typography>
             <DialogContentText sx={{ textAlign: "center", pt: 3 }}>
@@ -121,7 +121,7 @@ export default function PartnerSettingModal(props) {
                   </Box>
                 </React.Fragment>
               )}
-            </React.Fragment>
+            </React.Fragment> */}
           </Paper>
         </Container>
       </ThemeProvider>

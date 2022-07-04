@@ -168,7 +168,7 @@ const CherishAppBar = () => {
           </Box>
           <IconButton aria-label={notificationsLabel(100)}>
             <Badge badgeContent={100} color="secondary">
-              <NotificationsNoneIcon />
+              <NotificationsNoneIcon sx={{width:"30px", height:"30px"}}/>
             </Badge>
           </IconButton>
         </Toolbar>
