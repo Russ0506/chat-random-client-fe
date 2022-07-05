@@ -5,6 +5,8 @@ import Badge from "@mui/material/Badge";
 import Divider from "@mui/material/Divider";
 import NewPosterLayout from "./components/NewPosterLayout";
 import $ from "jquery";
+import { Link } from "react-router-dom";
+
 
 const shapeStyles = {
   bgcolor: "primary.main",
@@ -148,8 +150,10 @@ export default function UserProfile() {
   
   return (
     <>
-      <canvas style={{position: "absolute", top: 0, left: 0, zIndex: -1}}></canvas>
-      <Stack alignItems="center" sx={{ width: "100%"}}>
+      <canvas
+        style={{ position: "absolute", top: 0, left: 0, zIndex: -1 }}
+      ></canvas>
+      <Stack alignItems="center" sx={{ width: "100%" }}>
         <Box
           sx={{
             // width: "55%",
@@ -157,7 +161,7 @@ export default function UserProfile() {
             minWidth: "320px",
             backgroundColor: "#fff",
             minHeight: "100vh",
-            padding: "40px"
+            padding: "40px",
           }}
         >
           <Stack
@@ -171,7 +175,13 @@ export default function UserProfile() {
             <Box sx={{ ml: 10 }}>
               <Typography variant="h4">
                 Ahihi do ngoc{" "}
-                <Button variant="outlined" size="small" sx={{ ml: 1, mb: 1 }}>
+                <Button
+                  component={Link}
+                  to={"/users/profile/edit"}
+                  variant="outlined"
+                  size="small"
+                  sx={{ ml: 1, mb: 1 }}
+                >
                   Edit profile
                 </Button>
               </Typography>
