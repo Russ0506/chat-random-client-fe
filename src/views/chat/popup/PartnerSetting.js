@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Select from "@mui/material/Select";
-import { alpha, styled, useTheme } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
@@ -17,6 +17,7 @@ import GgmCurrentPlaceText2 from "../../../components/googleMapAPI/GgmCurrentPla
 import GoogleMapPlaceSearchBox from "../../../components/googleMapAPI/GoogleMapPlaceSearchBox";
 import { GRP_COLOR } from "../../../constant/css_constant";
 import { saveDataSearch } from "../../../features/user-setting";
+import { CmmnInput } from "./components/CmmnInput";
 
 export default function PartnerSetting(props) {
   const theme = useTheme();
@@ -142,6 +143,11 @@ export default function PartnerSetting(props) {
               <CmmnInputLabel shrink htmlFor="location-inpt">
                 Location
               </CmmnInputLabel>
+              {/* {currentLocationPermision === false ? (
+                <GoogleMapPlaceSearchBox />
+              ) : (
+                <GgmCurrentPlaceText2 />
+              )} */}
               <CmmnInput placeholder="Fill your location" id="location-inpt" />
               <TextField
                 id="__curr_lo"
@@ -201,7 +207,7 @@ export default function PartnerSetting(props) {
               <CmmnInputLabel shrink htmlFor="gender-inpt">
                 Gender
               </CmmnInputLabel>
-              <FormControl variant="standard" sx={{width: "30%"}}>
+              <FormControl variant="standard" sx={{ width: "30%" }}>
                 <CmmnSelect
                   id="gender-inpt"
                   name="gender"
@@ -406,42 +412,7 @@ const CmmnGroupSelect = styled(Select)(({ theme }) => ({
   },
 }));
 
-const CmmnInput = styled(InputBase)(({ theme }) => ({
-  "label + &": {
-    marginTop: theme.spacing(3),
-  },
-  "& .MuiInputBase-input": {
-    borderRadius: 5,
-    position: "relative",
-    // backgroundColor: theme.palette.mode === "light" ? "#fcfcfb" : "#2b2b2b",
-    backgroundColor: "transparent",
-    border: "1px solid #e5e0e0",
-    fontSize: 16,
-    padding: "10px 12px",
-    transition: theme.transitions.create([
-      "border-color",
-      "background-color",
-      "box-shadow",
-    ]),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(","),
-    "&:focus": {
-      // boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-      borderColor: theme.palette.primary.main,
-    },
-  },
-}));
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {

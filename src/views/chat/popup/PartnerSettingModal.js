@@ -108,8 +108,8 @@ export default function PartnerSettingModal(props) {
             <Typography component="h5" variant="h5" sx={{ fontWeight: "600" }}>
               Ideal Partner
               <Typography variant="subtitle1">
-                These preferences help us improve suggestion by determining who you
-                will be matched.
+                These preferences help us improve suggestion by determining who
+                you will be matched.
               </Typography>
             </Typography>
             {/* <Button variant="contained">ahihi</Button> */}
@@ -141,9 +141,19 @@ export default function PartnerSettingModal(props) {
             ) : (
               <React.Fragment>
                 {getStepContent(activeStep)}
-                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                <Box
+                  sx={{
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    display: "flex",
+                    mt: 2,
+                    ml: 1,
+                    mr: 3,
+                    mb: 3,
+                  }}
+                >
                   {activeStep !== 0 && (
-                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                    <Button onClick={handleBack} sx={{ ml: 1 }}>
                       Back
                     </Button>
                   )}
@@ -152,7 +162,7 @@ export default function PartnerSettingModal(props) {
                     disabled={isSearch && activeStep === 1}
                     variant="contained"
                     onClick={handleNext}
-                    sx={{ mt: 2, ml: 1, mr: 3, mb: 3, pl: "25px", pr: "25px" }}
+                    sx={{ pl: "25px", pr: "25px" }}
                     // endIcon={
                     //   activeStep === steps.length - 1 ? (
                     //     <PersonSearchIcon />

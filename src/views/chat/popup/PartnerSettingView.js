@@ -1,4 +1,4 @@
-import { Chip } from '@mui/material';
+import { Chip, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import DialogContent from '@mui/material/DialogContent';
@@ -85,94 +85,96 @@ export default function PartnerSettingView(props) {
   return (
     <Box>
       <DialogContent>
-        <Box component="form" onSubmit={searchPartner} sx={{ mt: 3, color: GRP_COLOR.CODE016, alignItems: "center" }} className="abc">
-          <Button ref={props.searchRef} type="submit" style={{ display: 'none' }} />
-          <Grid container spacing={5}>
-            {/* card */}
-            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
-              <Grid container item xs={4} alignItems="center">
-                <FormLabel>Location</FormLabel>
-              </Grid>
-              <Grid container item xs={8}>
-                <Switch {...label} name="checkedLocation" checked={state.checkedLocation} value={state.checkedLocation} size="small" onChange={(e) => handleOnChange(e)} />
-                <FormLabel>
-                  {
-                    state.checkedLocation === true ? data.address : ''
-                  }
-                </FormLabel>
-              </Grid>
-            </Grid>
-
-            {/* card */}
-            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
-              <Grid container item xs={4} alignItems="center">
-                <FormLabel>Expected Distance</FormLabel>
-              </Grid>
-              <Grid container item xs={8}>
-                <Switch {...label} name="checkedExpectedDistance" checked={state.checkedExpectedDistance} value={state.checkedExpectedDistance} size="small" onChange={(e) => handleOnChange(e)} />
-                <FormLabel>
-
-                  {
-                    state.checkedExpectedDistance === true ? data.radius : ''
-                  }
-                </FormLabel>
-              </Grid>
-            </Grid>
-            {/* card */}
-            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
-              <Grid container item xs={4} alignItems="center">
-                <FormLabel>Gender</FormLabel>
-              </Grid>
-              <Grid container item xs={8}>
-                <Switch {...label} name="checkedGender" checked={state.checkedGender} value={state.checkedGender} size="small" onChange={(e) => handleOnChange(e)} />
-                <FormLabel>
-
-                  {
-                    state.checkedGender === true ? data.gender : ''
-                  }
-                </FormLabel>
-              </Grid>
-            </Grid>
-            {/* card */}
-            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
-              <Grid container item xs={4} alignItems="center">
-                <FormLabel>Age</FormLabel>
-              </Grid>
-              <Grid container item xs={8} >
-                <Switch {...label} name="checkedAge" checked={state.checkedAge} value={state.checkedAge} size="small" onChange={(e) => handleOnChange(e)} />
-                <FormLabel>
-
-                  {
-                    state.checkedAge === true ? `From ${data.from_age} to ${data.to_age}` : ''
-                  }
-                </FormLabel>
-              </Grid>
-
-            </Grid>
-            {/* card */}
-            <Grid item xs={6} sx={{ display: "flex", pb: 3 }}>
-              <Grid container item xs={4} alignItems="center">
-                <FormLabel>Hobbies</FormLabel>
-              </Grid>
-              <Grid container item xs={8}>
-                <FormControl style={{ minWidth: 300 }}>
-                  <Select
-                    labelId="demo-multiple-chip-label"
-                    id="demo-multiple-chip"
-                    multiple
-                    disabled
-                    value={data.hobbies}
-                    input={<OutlinedInput id="select-multiple-chip" />}
-                    renderValue={(selected) => (
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                        {selected.map((value) => (
-                          <Chip key={value} label={value} />
-                        ))}
-                      </Box>
-                    )}
+        <Box
+          component="form"
+          onSubmit={searchPartner}
+          sx={{ mt: 3, color: GRP_COLOR.CODE016, alignItems: "center" }}
+          className="abc"
+        >
+          <Button
+            ref={props.searchRef}
+            type="submit"
+            style={{ display: "none" }}
+          />
+          <Stack flexDirection="column">
+            <Stack flexDirection="row">
+              <FormLabel>Location</FormLabel>
+              <Switch
+                {...label}
+                name="checkedLocation"
+                checked={state.checkedLocation}
+                value={state.checkedLocation}
+                size="small"
+                onChange={(e) => handleOnChange(e)}
+              />
+              <FormLabel>
+                {state.checkedLocation === true ? data.address : ""}
+              </FormLabel>
+            </Stack>
+            <Stack flexDirection="row">
+              <FormLabel>Expected Distance</FormLabel>
+              <Switch
+                {...label}
+                name="checkedExpectedDistance"
+                checked={state.checkedExpectedDistance}
+                value={state.checkedExpectedDistance}
+                size="small"
+                onChange={(e) => handleOnChange(e)}
+              />
+              <FormLabel>
+                {state.checkedExpectedDistance === true ? data.radius : ""}
+              </FormLabel>
+            </Stack>
+            <Stack flexDirection="row">
+              <FormLabel>Gender</FormLabel>
+              <Switch
+                {...label}
+                name="checkedGender"
+                checked={state.checkedGender}
+                value={state.checkedGender}
+                size="small"
+                onChange={(e) => handleOnChange(e)}
+              />
+              <FormLabel>
+                {state.checkedGender === true ? data.gender : ""}
+              </FormLabel>
+            </Stack>
+            <Stack flexDirection="row">
+              <FormLabel>Age</FormLabel>
+              <Switch
+                {...label}
+                name="checkedAge"
+                checked={state.checkedAge}
+                value={state.checkedAge}
+                size="small"
+                onChange={(e) => handleOnChange(e)}
+              />
+              <FormLabel>
+                {state.checkedAge === true
+                  ? `From ${data.from_age} to ${data.to_age}`
+                  : ""}
+              </FormLabel>
+            </Stack>
+            <Stack flexDirection="row">
+              <FormLabel>Hobbies</FormLabel>
+              <FormControl style={{ minWidth: 300 }}>
+                <Select
+                  labelId="demo-multiple-chip-label"
+                  id="demo-multiple-chip"
+                  multiple
+                  disabled
+                  value={data.hobbies}
+                  input={<OutlinedInput id="select-multiple-chip" />}
+                  renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} />
+                      ))}
+                    </Box>
+                  )}
                   // MenuProps={MenuProps}
-                  >
-                    {/* {names.map((name) => (
+                >
+                  {/* {names.map((name) => (
                       <MenuItem
                         key={name}
                         value={name}
@@ -181,24 +183,24 @@ export default function PartnerSettingView(props) {
                         {name}
                       </MenuItem>
                     ))} */}
-                  </Select>
-                  {
-                    message ?
-                      <Box
-                        component="div"
-                        variant="h5"
-                        color="red"
-                        fontSize={FONT_SIZE.smallText}
-                      >
-                        {message}
-                      </Box> : ''}
-                </FormControl>
-              </Grid>
-            </Grid>
-          </Grid>
+                </Select>
+                {message ? (
+                  <Box
+                    component="div"
+                    variant="h5"
+                    color="red"
+                    fontSize={FONT_SIZE.smallText}
+                  >
+                    {message}
+                  </Box>
+                ) : (
+                  ""
+                )}
+              </FormControl>
+            </Stack>
+          </Stack>
         </Box>
-
       </DialogContent>
     </Box>
-  )
+  );
 }
