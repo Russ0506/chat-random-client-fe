@@ -18,6 +18,8 @@ import GoogleMapPlaceSearchBox from "../../../components/googleMapAPI/GoogleMapP
 import { GRP_COLOR } from "../../../constant/css_constant";
 import { saveDataSearch } from "../../../features/user-setting";
 import { CmmnInput } from "./components/CmmnInput";
+import GmapApiChatAutoInput from "../popup/components/GmapApiChatAutoInput";
+import GmapApiChatManualInput from "./components/GmapApiChatManualInput";
 
 export default function PartnerSetting(props) {
   const theme = useTheme();
@@ -143,12 +145,12 @@ export default function PartnerSetting(props) {
               <CmmnInputLabel shrink htmlFor="location-inpt">
                 Location
               </CmmnInputLabel>
-              {/* {currentLocationPermision === false ? (
-                <GoogleMapPlaceSearchBox />
+              {currentLocationPermision === false ? (
+                <GmapApiChatManualInput />
               ) : (
-                <GgmCurrentPlaceText2 />
-              )} */}
-              <CmmnInput placeholder="Fill your location" id="location-inpt" />
+                <GmapApiChatAutoInput />
+              )}
+              {/* <CmmnInput placeholder="Fill your location" id="location-inpt" /> */}
               <TextField
                 id="__curr_lo"
                 type="hidden"
@@ -411,7 +413,6 @@ const CmmnGroupSelect = styled(Select)(({ theme }) => ({
     outline: "none",
   },
 }));
-
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

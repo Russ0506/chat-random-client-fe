@@ -29,3 +29,6 @@
 .w-0 {
   width: 0;
 }
+.MuiAutocomplete-inputRoot, .MuiInputBase-root{
+  height: 45px;
+}
