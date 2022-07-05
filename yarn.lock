@@ -3468,6 +3468,11 @@ cliui@^7.0.2:
     strip-ansi "^6.0.0"
     wrap-ansi "^7.0.0"
 
+clsx@^1.0.4:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.0.tgz#b0e415ea7537dbac01b169c5cec1caeb11d86566"
+  integrity sha512-EPRP7XJsM1y0iCU3Z7C7jFKdQboXSeHgEfzQUTlz7m5NP3hDrlz48aUsmNGp4pC+JOW9WA3vIRqlYuo/bl4Drw==
+
 clsx@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
@@ -3660,7 +3665,7 @@ core-js@^2.4.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
 
-core-js@^3.0.1, core-js@^3.19.2:
+core-js@^3.0.1, core-js@^3.19.2, core-js@^3.4.2:
   version "3.23.3"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.23.3.tgz#3b977612b15da6da0c9cc4aec487e8d24f371112"
   integrity sha512-oAKwkj9xcWNBAvGbT//WiCdOMpb9XQG92/Fe3ABFM/R16BsHgePG00mFOgKf7IsCtfj8tA1kHtf/VwErhriz5Q==
@@ -8129,6 +8134,15 @@ react-helmet@^6.1.0:
     prop-types "^15.7.2"
     react-fast-compare "^3.1.1"
     react-side-effect "^2.1.0"
+
+react-image-crop@8.6.4:
+  version "8.6.4"
+  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-8.6.4.tgz#51289c22baf7d116575102e885f879af71376388"
+  integrity sha512-5buyhUg9slzW+QGvN2dbpGSI1VqPxxmfEwe19TZXUB7LjW5+ljZOnrTSsteIzeBqmz6ngVucc8l+OrwgcDOSNg==
+  dependencies:
+    clsx "^1.0.4"
+    core-js "^3.4.2"
+    prop-types "^15.7.2"
 
 react-image-lightbox@^5.1.4:
   version "5.1.4"
