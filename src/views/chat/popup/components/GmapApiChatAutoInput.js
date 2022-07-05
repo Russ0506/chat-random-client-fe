@@ -10,11 +10,6 @@ Geocode.setApiKey("AIzaSyDgu1_PPhBne4sp9PlPQ0eG3bfzSKGut_g");
 // Enable or disable logs. Its optional.
 // Geocode.enableDebug();
 
-const options = {
-  // enableHighAccuracy: true,
-  timeout: 10000,
-  // maximumAge: 0,
-};
 function success(pos) {
   var crd = pos.coords;
   // Get address from latitude & longitude.
