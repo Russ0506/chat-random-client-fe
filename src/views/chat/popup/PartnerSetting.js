@@ -20,6 +20,9 @@ import { saveDataSearch } from "../../../features/user-setting";
 import { CmmnInput } from "./components/CmmnInput";
 import GmapApiChatAutoInput from "../popup/components/GmapApiChatAutoInput";
 import GmapApiChatManualInput from "./components/GmapApiChatManualInput";
+import { CmmnFormControl } from "./components/CmmnFormControl";
+import { CmmnInputLabel } from "./components/CmmnInputLabel";
+import { CmmnSelect } from "./components/CmmnSelect";
 
 export default function PartnerSetting(props) {
   const theme = useTheme();
@@ -133,7 +136,6 @@ export default function PartnerSetting(props) {
           component="form"
           onSubmit={saveDataSearchPartnerSetting}
           sx={{ mt: 3, color: GRP_COLOR.CODE016, alignItems: "center" }}
-          className="abc"
         >
           <Button
             ref={props.submitRef}
@@ -343,67 +345,7 @@ export default function PartnerSetting(props) {
     </Box>
   );
 }
-const CmmnSelect = styled(Select)(({ theme }) => ({
-  outline: "none",
-  borderRadius: 5,
-  position: "relative",
-  // backgroundColor: theme.palette.mode === "light" ? "#fcfcfb" : "#2b2b2b",
-  backgroundColor: "transparent",
-  border: "1px solid #e5e0e0",
-  fontSize: 16,
-  padding: "10px 12px",
-  transition: theme.transitions.create([
-    "border-color",
-    "background-color",
-    "box-shadow",
-  ]),
-  // Use the system font instead of the default Roboto font.
-  fontFamily: [
-    "-apple-system",
-    "BlinkMacSystemFont",
-    '"Segoe UI"',
-    "Roboto",
-    '"Helvetica Neue"',
-    "Arial",
-    "sans-serif",
-    '"Apple Color Emoji"',
-    '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"',
-  ].join(","),
-  "&:before": {
-    border: "none",
-  },
-  "&:hover:not(.Mui-disabled):before": {
-    border: "none",
-  },
-  "&:hover": {
-    outline: "none",
-  },
-  "&:focus": {
-    // boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-    borderColor: theme.palette.primary.main,
-  },
-}));
 
-const CmmnFormControl = styled(FormControl)(({ theme }) => ({
-  marginTop: "10px",
-  "& .MuiOutlinedInput-root:hover": {
-    outline: "none !important",
-  },
-  "& :hover": {
-    outline: "none !important",
-  },
-  "& .MuiOutlinedInput-notchedOutline": {
-    border: "1px solid #e5e0e0",
-  },
-  "& :hover .MuiOutlinedInput-notchedOutline": {
-    border: "1px solid #e5e0e0",
-  },
-}));
-
-const CmmnInputLabel = styled(InputLabel)(({ theme }) => ({
-  fontSize: "18px",
-}));
 
 const CmmnGroupSelect = styled(Select)(({ theme }) => ({
   "& .MuiOutlinedInput-notchedOutline": {

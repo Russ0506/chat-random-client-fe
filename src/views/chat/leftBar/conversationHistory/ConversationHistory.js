@@ -17,6 +17,7 @@ import TopSideBar from "../components/TopSideBar";
 import { DRAWER_WITH } from "../../../../constant/css_constant";
 import { allConversationHistory } from "../../../../constant/conversasionHistory";
 import SearchIcon from "@mui/icons-material/Search";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -88,7 +89,6 @@ export default function ConversationHistory() {
           </ListItem>
         ))}
       </List>
-      {/* ))} */}
     </Box>
   );
 }
