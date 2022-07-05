@@ -8,7 +8,6 @@ import TopBar from "./chat/topBar/TopBar";
 import MessageLayout from "./chat/areaChat/MessageLayout";
 import { pairingSocket, appearanceSocket, newMessageSocket } from "./sockets/Socket";
 import React from "react";
-import CherishAppBar from "./common/header/CherishAppBar";
 
 const newMessagesRoot = document.getElementById('new_messages');
 

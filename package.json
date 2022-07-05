@@ -38,6 +38,7 @@
     "react-geolocated": "^4.0.3",
     "react-google-maps": "^9.4.5",
     "react-helmet": "^6.1.0",
+    "react-image-crop": "8.6.4",
     "react-image-lightbox": "^5.1.4",
     "react-redux": "^8.0.1",
     "react-router-dom": "^6.3.0",

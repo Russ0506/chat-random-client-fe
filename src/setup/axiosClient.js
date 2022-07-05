@@ -9,9 +9,14 @@ export const axiosClient = axios.create({
       },
 })
 
+export const axiosMultipartForm = axios.create({
+  baseURL,
+  headers: { "Content-Type": "multipart/form-data" }
+})
+
 export function setupAxios(store) {
 
-    // Add a request interceptor
+    // Add a request interceptor/////////
     axiosClient.interceptors.request.use(
       function(config) {
         // Do something before request is sent

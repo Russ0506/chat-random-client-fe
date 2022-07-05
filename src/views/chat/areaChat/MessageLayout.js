@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ChatMessageList from "./message/ChatMessageList";
 import ChatHeaderDetail from "./title-chat/ChatHeaderDetail";
 import { loadConversation } from "../../../features/chat";
+import moment from "moment";
 
 function MessageLayout({ openBar, conversation, newMessage, ...res }) {
   const dispatch = useDispatch();
@@ -52,6 +53,7 @@ function MessageLayout({ openBar, conversation, newMessage, ...res }) {
         sender_id: null,
         recipient_id: value.recipient_id,
         text: value.text,
+        create_at: moment().format(),
         status: null,
         is_system_message: false,
       },
