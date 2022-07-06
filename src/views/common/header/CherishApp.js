@@ -106,7 +106,7 @@ export default function CherishApp({ index = 1, body }) {
 
       <Box sx={{ width: "calc(100vw - 60px)", height: "100vh" }}>
         <CherishAppBar />
-        <Box sx={{ width: "100%", height: `calc(100vh - ${APP_BAR_HEIGHT})` }}>
+        <Box sx={{ width: "100%", height: `calc(100vh - ${APP_BAR_HEIGHT})`, overflow: "auto" }}>
           {body}
         </Box>
       </Box>

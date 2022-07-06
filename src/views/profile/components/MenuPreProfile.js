@@ -8,21 +8,31 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { Component } from "react";
-import { DRAWER_WITH } from "../../../constant/css_constant";
+import { DRAWER_WITH_EDIT_PRF } from "../../../constant/css_constant";
 import { styled } from "@mui/styles";
 import { Link } from "react-router-dom";
+import EditProfile from "../EditProfile";
+import ChangePwd from "../ChangePwd";
 export default class MenuPreProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      body: this.props.body == null ? "No data in layout" : this.props.body,
       index: this.props.index == null ? 0 : this.props.index,
     };
   }
+
+  handleClick = (indexProp) => {
+    this.setState({
+      ...this.state,
+      index: indexProp,
+    });
+  };
+
   render() {
     return (
       <Stack
         flexDirection="row"
+        justifyContent="center"
         sx={{ background: "rgb(236, 236, 250)", height: "100%", width: "100%" }}
         // sx={{height: "100%", width: "100%" }}
       >
@@ -35,6 +45,7 @@ export default class MenuPreProfile extends Component {
             width: "100%",
             borderRadius: "10px",
             overflow: "hidden",
+            maxWidth: "1200px",
           }}
         >
           <Stack
@@ -42,7 +53,7 @@ export default class MenuPreProfile extends Component {
             alignItems="flex-start"
             justifyContent="flex-start"
             sx={{
-              width: DRAWER_WITH,
+              width: DRAWER_WITH_EDIT_PRF,
               borderRight: "1px solid #e5e0e0",
               padding: "15px 0",
             }}
@@ -52,8 +63,7 @@ export default class MenuPreProfile extends Component {
                 {menuList.map((item, k) => (
                   <ListItem key={k} disablePadding fullWidth>
                     <ListItemButton
-                      component={Link}
-                      to={item.link}
+                      onClick={() => this.handleClick(k)}
                       fullWidth
                       sx={{
                         borderLeft:
@@ -69,9 +79,15 @@ export default class MenuPreProfile extends Component {
               </List>
             </Stack>
           </Stack>
-          <Box sx={{ width: `calc(100% - ${DRAWER_WITH}px)` }}>
-            {/* <Box sx={{ width: `calc(100% - ${DRAWER_WITH}px)`, pl: 20, pr: 20, pt: 10, pb:10, background: "rgb(236, 236, 250)" }}> */}
-            {this.state.body}
+          <Box
+            sx={{
+              width: `calc(100% - ${DRAWER_WITH_EDIT_PRF}px)`,
+              height: "100%",
+              overflow: "auto",
+            }}
+          >
+            {/* <Box sx={{ width: `calc(100% - ${DRAWER_WITH_EDIT_PRF}px)`, pl: 20, pr: 20, pt: 10, pb:10, background: "rgb(236, 236, 250)" }}> */}
+            {menuList[this.state.index].component}
           </Box>
         </Grid>
       </Stack>
@@ -83,10 +99,12 @@ const menuList = [
   {
     name: "Profile",
     link: "/users/profile/edit",
+    component: <EditProfile />,
   },
   {
     name: "Change password",
     link: "/users/profile/change-password",
+    component: <ChangePwd />,
   },
 ];
 
