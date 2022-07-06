@@ -53,7 +53,7 @@ function MessageLayout({ openBar, conversation, newMessage, ...res }) {
         sender_id: null,
         recipient_id: value.recipient_id,
         text: value.text,
-        create_at: moment().format(),
+        created_at: moment().format(),
         status: null,
         is_system_message: false,
       },

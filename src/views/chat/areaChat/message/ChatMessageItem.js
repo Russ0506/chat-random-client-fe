@@ -134,7 +134,7 @@ export default function ChatMessageItem({ message, onOpenLightbox }) {
                     onClick={() => onOpenLightbox(message.text)}
                   />
                 ) : (
-                  <Typography variant="body2">{message.text + message.create_at}</Typography>
+                  <Typography variant="body2">{message.text}</Typography>
                 )}
               </ContentStyle>
               <InfoStyle
@@ -145,9 +145,6 @@ export default function ChatMessageItem({ message, onOpenLightbox }) {
                 {(message.created_at) ? (
                   (DateDiff.inDays(new Date(message.created_at), new Date()) < 3) ? formatDistanceToNowStrict(new Date(message.created_at), {addSuffix: true}) : format(new Date(message.created_at), 'MM/dd/yyyy')
                   ) : ''}
-                 {/* <GetDiffTime past_time={message.created_at} /> */}
-                
-                  {/* {formatDistanceToNowStrict(new Date("2022-07-03T14:51:34+07:00"), {addSuffix: true})} */}
               </InfoStyle>
             </Box>
           </Box>
