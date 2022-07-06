@@ -74,7 +74,7 @@ var DateDiff = {
 }
 
 export default function ChatMessageItem({ message, onOpenLightbox }) {
-  console.log("Test Ly", message.create_at);
+  const [showHistoryTimeFlg, setShowHistoryTimeFlg] = React.useState(false)
   const myId = localStorage.getItem('user_id')
   const senderDetails =
     message.recipient_id != myId
@@ -94,6 +94,18 @@ export default function ChatMessageItem({ message, onOpenLightbox }) {
   //   }
   //   return result
   // }
+
+  function showHistoryTime(id) {
+    setShowHistoryTimeFlg(true);
+    console.log(id);
+    const element = document.getElementById(id);
+    if (element.className == "block custom-message-system") {
+      element.className = "non-block";
+    } else {
+      element.className = "block custom-message-system";
+    }
+  };
+
   return (
     <RootStyle>
       {isMessageSystem ? (isSenderSysMess ? (<Box className="custom-message-system">{message.text}</Box>) : <></>) : (
@@ -112,7 +124,7 @@ export default function ChatMessageItem({ message, onOpenLightbox }) {
               <Avatar sx={{ width: 40, height: 40 }} />
             )}
 
-            <Box sx={{ ml: 2 }}>
+            <Box sx={{ ml: 2 }} onClick={()=> showHistoryTime(message.id)}>
               <ContentStyle
                 sx={{
                   ...(isMe && {
@@ -125,6 +137,7 @@ export default function ChatMessageItem({ message, onOpenLightbox }) {
                     // bgcolor: "#f4f6f8",
                     bgcolor: "#e9ecf1",
                   }),
+                  width: "max-content"
                 }}
               >
                 {isImage ? (
@@ -140,10 +153,12 @@ export default function ChatMessageItem({ message, onOpenLightbox }) {
               <InfoStyle
                 noWrap
                 variant="caption"
-                sx={{ ...(isMe && { justifyContent: "flex-end" }) }}
+                sx={{ ...(isMe && { justifyContent: "flex-end", width: "max-content" }) }}
+                id={message.id}    
+                className = "init-history-date non-block"            
               >
-                {(message.created_at) ? (
-                  (DateDiff.inDays(new Date(message.created_at), new Date()) < 3) ? formatDistanceToNowStrict(new Date(message.created_at), {addSuffix: true}) : format(new Date(message.created_at), 'MM/dd/yyyy')
+                {(message.created_at && showHistoryTimeFlg) ? (
+                  (DateDiff.inDays(new Date(message.created_at), new Date()) < 3) ? formatDistanceToNowStrict(new Date(message.created_at), {addSuffix: true}) : format(new Date(message.created_at), 'MM-dd-yyyy')
                   ) : ''}
               </InfoStyle>
             </Box>
