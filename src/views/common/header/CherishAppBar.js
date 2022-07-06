@@ -56,7 +56,7 @@ const CherishAppBar = () => {
   return (
     <AppBar
       position="static"
-      sx={{ height: APP_BAR_HEIGHT, background: "white", boxShadow: "none" }}
+      sx={{ height: APP_BAR_HEIGHT, background: "white", boxShadow: "none", border: "1px solid #e5e0e0" }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
