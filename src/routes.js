@@ -93,23 +93,7 @@ export default function Routes() {
                   body={
                     <ProtectedRoute
                       link="/users/profile/edit"
-                      children={<MenuPreProfile body={<EditProfile />} />}
-                    />
-                  }
-                  index={3}
-                />
-              ),
-            },
-            {
-              path: "change-password",
-              element: (
-                <CherishApp
-                  body={
-                    <ProtectedRoute
-                      link="/users/profile/change-password"
-                      children={
-                        <MenuPreProfile index={1} body={<ChangePwd />} />
-                      }
+                      children={<MenuPreProfile />}
                     />
                   }
                   index={3}

@@ -3,6 +3,8 @@ import {
   Chip,
   FormControl,
   Grid,
+  IconButton,
+  Input,
   List,
   ListItem,
   ListItemButton,
@@ -14,7 +16,6 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { Component } from "react";
-import { DRAWER_WITH } from "../../constant/css_constant";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { styled } from "@mui/styles";
 import MenuPreProfile from "../profile/components/MenuPreProfile";
@@ -24,6 +25,7 @@ import { CmmnInputLabel } from "../chat/popup/components/CmmnInputLabel";
 import { CmmnSelect } from "../chat/popup/components/CmmnSelect";
 import { CmmnGroupSelect } from "../chat/popup/components/CmmnGroupSelect";
 import { useTheme } from "@mui/material/styles";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
 class EditProfileCls extends Component {
   constructor(props) {
     super(props);
@@ -56,7 +58,14 @@ class EditProfileCls extends Component {
       };
     }
     return (
-      <Box sx={{ width: "100%", height: "100%", p: 2, background: "#fff" }}>
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          pt: 2,
+          background: "#fff",
+        }}
+      >
         <Grid
           container
           columns={{ xs: 1, sm: 1, md: 1, lg: 2 }}
@@ -65,33 +74,59 @@ class EditProfileCls extends Component {
           <Stack
             flexDirection="column"
             alignItems="center"
-            // justifyContent="center"
             sx={{ width: "200px", height: "100%" }}
           >
             <Box
               sx={{
                 width: "125px",
                 height: "125px",
-                background: "black",
+                background: "gray",
                 borderRadius: "50%",
+                position: "relative",
               }}
-            ></Box>
-            <Button
-              variant="contained"
-              sx={{ pl: "25px", pr: "25px", margin: "20px 0" }}
             >
-              Change Picture
-            </Button>
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="span"
+                disableRipple
+                sx={{
+                  position: "absolute",
+                  right: "0",
+                  bottom: "0",
+                  borderRadius: "50%",
+                  background: "rgb(236, 236, 250)",
+                  border: "2px solid white",
+                  fontSize: "10px",
+                  width: "35px",
+                  height: "35px",
+                }}
+              >
+                <PhotoCamera />
+              </IconButton>
+            </Box>
+            <Typography
+              variant="body1"
+              sx={{ mt: 1, color: "#4f4f4f", justifySelf: "flex-end" }}
+            >
+              Tuong Vy Bui Anh
+            </Typography>
           </Stack>
 
           <Stack
             flexDirection="column"
             sx={{
               width: "calc(100% - 200px)",
-              padding: "0 5%",
+              overflow: "auto",
+              pl: 2,
+              pr: 2,
             }}
           >
-            <CmmnFormControl variant="standard" fullwidth>
+            <CmmnFormControl
+              variant="standard"
+              fullWidth
+              sx={{ maxWidth: "500px" }}
+            >
               <CmmnInputLabel shrink htmlFor="last-nm-inpt">
                 Last Name
               </CmmnInputLabel>
@@ -105,7 +140,11 @@ class EditProfileCls extends Component {
                 }}
               />
             </CmmnFormControl>
-            <CmmnFormControl variant="standard" fullwidth>
+            <CmmnFormControl
+              variant="standard"
+              fullwidth
+              sx={{ maxWidth: "500px" }}
+            >
               <CmmnInputLabel shrink htmlFor="first-nm-inpt">
                 First Name
               </CmmnInputLabel>
@@ -119,7 +158,11 @@ class EditProfileCls extends Component {
                 }}
               />
             </CmmnFormControl>
-            <CmmnFormControl variant="standard" fullwidth>
+            <CmmnFormControl
+              variant="standard"
+              fullwidth
+              sx={{ maxWidth: "500px" }}
+            >
               <CmmnInputLabel shrink htmlFor="email-inpt">
                 Email
               </CmmnInputLabel>
@@ -134,7 +177,7 @@ class EditProfileCls extends Component {
                 }}
               />
             </CmmnFormControl>
-            <Stack sx={{ mt: "15px" }}>
+            <Stack sx={{ mt: "15px", maxWidth: "500px" }}>
               <CmmnInputLabel shrink htmlFor="gender-inpt">
                 Gender
               </CmmnInputLabel>
@@ -161,7 +204,11 @@ class EditProfileCls extends Component {
                 </CmmnSelect>
               </FormControl>
             </Stack>
-            <CmmnFormControl variant="standard" fullwidth>
+            <CmmnFormControl
+              variant="standard"
+              fullwidth
+              sx={{ maxWidth: "500px" }}
+            >
               <CmmnInputLabel shrink htmlFor="age-inpt">
                 Age
               </CmmnInputLabel>
@@ -176,26 +223,7 @@ class EditProfileCls extends Component {
                 sx={{ width: "150px" }}
               />
             </CmmnFormControl>
-            {/* <Stack flexDirection="column" sx={{ width: "100%" }}>
-              <CmmnInputLabel shrink htmlFor="hobies-inpt">
-                Hobies
-              </CmmnInputLabel>
-              <CmmnFormControl variant="standard" fullWidth>
-                <TextareaAutosize
-                  aria-label="minimum height"
-                  minRows={6}
-                  placeholder="Fill your hobies into here"
-                  style={{
-                    fontSize:"1.05rem",
-                    padding: "12px",
-                    width: "100%",
-                    border: "1px solid #e5e0e0",
-                    borderRadius: "10px",
-                  }}
-                />
-              </CmmnFormControl>
-            </Stack> */}
-            <Stack sx={{ mt: "15px" }}>
+            <Stack sx={{ mt: "15px", maxWidth: "500px" }}>
               <CmmnInputLabel shrink htmlFor="demo-multiple-chip">
                 Hobbies
               </CmmnInputLabel>
@@ -231,6 +259,20 @@ class EditProfileCls extends Component {
                   ))}
                 </CmmnGroupSelect>
               </CmmnFormControl>
+              <Button
+                variant="contained"
+                sx={{
+                  pl: "25px",
+                  pr: "25px",
+                  margin: "25px 0 40px 0",
+                  width: "150px",
+                  justifySelf: "flex-end",
+                  alignSelf: "flex-end",
+                  borderRadius: "20px",
+                }}
+              >
+                Submit
+              </Button>
             </Stack>
           </Stack>
         </Grid>
