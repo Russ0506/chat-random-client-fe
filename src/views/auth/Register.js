@@ -110,9 +110,8 @@ class SignUp extends React.PureComponent {
       crop.height * scaleY
     );
 
-    console.log(ctx);
-
     return new Promise((resolve, reject) => {
+      const reader = new FileReader()
       canvas.toBlob(
         (blob) => {
           if (!blob) {
@@ -123,11 +122,29 @@ class SignUp extends React.PureComponent {
           window.URL.revokeObjectURL(this.fileUrl);
           this.fileUrl = window.URL.createObjectURL(blob);
           resolve(this.fileUrl);
+          reader.readAsDataURL(blob)
+          reader.onloadend = () => {
+            this.dataURLtoFile(reader.result, 'cropped.jpg')
+          }
         },
         'image/jpeg',
         1
       );
     });
+  }
+
+  dataURLtoFile(dataurl, filename) {
+    let arr = dataurl.split(','),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), 
+        n = bstr.length, 
+        u8arr = new Uint8Array(n);
+            
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    let croppedImage = new File([u8arr], filename, {type:mime});
+    this.setState({croppedImage: croppedImage }) 
   }
 
   handleSubmit = (event) => {
@@ -136,11 +153,13 @@ class SignUp extends React.PureComponent {
       isSubmit: "true"
     })
     const data = new FormData(event.currentTarget);
+
+    data.append("image", this.state.croppedImage, "imagename");
     const params = {
       user: {
         first_name: data.get("firstName"), last_name: data.get("lastName"),
         birthday: this.state.selectedDate, email: data.get("email"), password: data.get("password"),
-        gender: data.get("gender"), time_zone: data.get("time_zone"), avatar: this.state.croppedImageUrl
+        gender: data.get("gender"), time_zone: data.get("time_zone"), avatar: data.get("image")
       }
     };
 
@@ -193,16 +212,10 @@ class SignUp extends React.PureComponent {
         { options: data.time_zones.map(it => ({ value: it, label: it })) }
       );
     });
-
-    axiosClient.get(`time_zones.json`).then((data) => {
-      this.setState({
-        options: data.time_zones.map(it => ({ value: it, label: it }))
-      })
-    });
   }
 
   render() {
-    const { crop, croppedImageUrl, src } = this.state;
+    const { crop, croppedImageUrl, src, croppedImage } = this.state;
 
     return (
       <Box sx={{ overflow: "scroll", bgcolor: GRP_COLOR.WHITECODE, height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
@@ -224,7 +237,7 @@ class SignUp extends React.PureComponent {
                 onChange={this.onCropChange}
               />
             )}
-            <Button onClick={this.handleClose}>CLose</Button>
+            <Button sx={{float: "right", pt: 4}} onClick={this.handleClose}>OK</Button>
           </Box>
         </Modal>
         <Container component="main" maxWidth="xs" className={this.state.isSubmit ? "opacity-background" : ""}>
