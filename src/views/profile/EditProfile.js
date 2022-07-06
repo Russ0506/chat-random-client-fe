@@ -36,7 +36,7 @@ export default class EditProfile extends Component {
           <Stack
             flexDirection="column"
             alignItems="center"
-            justifyContent="center"
+            // justifyContent="center"
             sx={{ width: "200px" }}
           >
             <Box
