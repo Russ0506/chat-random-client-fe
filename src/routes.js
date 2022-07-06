@@ -18,6 +18,7 @@ import UserProfile from "./views/profile/UserProfile";
 import CherishApp from "./views/common/header/CherishApp";
 import EditProfile from "./views/profile/EditProfile";
 import MenuPreProfile from "./views/profile/components/MenuPreProfile";
+import ChangePwd from "../src/views/profile/ChangePwd";
 
 export const ProtectedRoute = ({ link = "/", children }) => {
   return <AuthenLoading link={link} children={children} />;
@@ -88,9 +89,30 @@ export default function Routes() {
             {
               path: "edit",
               element: (
-                <ProtectedRoute
-                  link="/users/profile/edit"
-                  children={<MenuPreProfile body={<EditProfile />} />}
+                <CherishApp
+                  body={
+                    <ProtectedRoute
+                      link="/users/profile/edit"
+                      children={<MenuPreProfile body={<EditProfile />} />}
+                    />
+                  }
+                  index={3}
+                />
+              ),
+            },
+            {
+              path: "change-password",
+              element: (
+                <CherishApp
+                  body={
+                    <ProtectedRoute
+                      link="/users/profile/change-password"
+                      children={
+                        <MenuPreProfile index={1} body={<ChangePwd />} />
+                      }
+                    />
+                  }
+                  index={3}
                 />
               ),
             },

@@ -23,6 +23,7 @@ import GmapApiChatManualInput from "./components/GmapApiChatManualInput";
 import { CmmnFormControl } from "./components/CmmnFormControl";
 import { CmmnInputLabel } from "./components/CmmnInputLabel";
 import { CmmnSelect } from "./components/CmmnSelect";
+import { CmmnGroupSelect } from "./components/CmmnGroupSelect";
 
 export default function PartnerSetting(props) {
   const theme = useTheme();
@@ -211,7 +212,11 @@ export default function PartnerSetting(props) {
               <CmmnInputLabel shrink htmlFor="gender-inpt">
                 Gender
               </CmmnInputLabel>
-              <FormControl variant="standard" sx={{ width: "30%" }}>
+              <FormControl
+                className="__fc__gender"
+                variant="standard"
+                sx={{ width: "30%" }}
+              >
                 <CmmnSelect
                   id="gender-inpt"
                   name="gender"
@@ -345,16 +350,6 @@ export default function PartnerSetting(props) {
     </Box>
   );
 }
-
-
-const CmmnGroupSelect = styled(Select)(({ theme }) => ({
-  "& .MuiOutlinedInput-notchedOutline": {
-    border: "1px solid #e5e0e0",
-  },
-  "&:hover": {
-    outline: "none",
-  },
-}));
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

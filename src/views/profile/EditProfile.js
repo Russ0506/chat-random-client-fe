@@ -1,11 +1,13 @@
 import {
   Button,
+  Chip,
   FormControl,
   Grid,
   List,
   ListItem,
   ListItemButton,
   MenuItem,
+  OutlinedInput,
   Stack,
   TextareaAutosize,
   Typography,
@@ -20,24 +22,51 @@ import { CmmnInput } from "../chat/popup/components/CmmnInput";
 import { CmmnFormControl } from "../chat/popup/components/CmmnFormControl";
 import { CmmnInputLabel } from "../chat/popup/components/CmmnInputLabel";
 import { CmmnSelect } from "../chat/popup/components/CmmnSelect";
-export default class EditProfile extends Component {
+import { CmmnGroupSelect } from "../chat/popup/components/CmmnGroupSelect";
+import { useTheme } from "@mui/material/styles";
+class EditProfileCls extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      hobbies: this.props.hobbies == null ? [] : this.props.hobbies,
+    };
+  }
+
+  handleChangeHobby = (event) => {
+    let {
+      target: { value },
+    } = event;
+    this.setState({
+      // On autofill we get a stringified value.
+      ...this.state,
+      hobbies: typeof value === "string" ? value.split(",") : value,
+    });
+  };
   render() {
+    // Get it from props
+    const { theme } = this.props;
+
+    function getStyles(name, selectName, theme) {
+      return {
+        fontWeight:
+          selectName.indexOf(name) === -1
+            ? theme.typography.fontWeightRegular
+            : theme.typography.fontWeightMedium,
+      };
+    }
     return (
-      <Box sx={{ width: "100%", height: "100%", p: 2 }}>
-        {/* <Box className="profile-edt-title">
-          <Typography variant="h6" sx={{ fontWeight: 700 }}>
-            My Profile
-          </Typography>
-        </Box> */}
+      <Box sx={{ width: "100%", height: "100%", p: 2, background: "#fff" }}>
         <Grid
           container
-          columns={{ xs: 1, sm: 2, md: 2 }}
+          columns={{ xs: 1, sm: 1, md: 1, lg: 2 }}
+          sx={{ width: "100%", height: "100%", p: 2 }}
         >
           <Stack
             flexDirection="column"
             alignItems="center"
             // justifyContent="center"
-            sx={{ width: "200px" }}
+            sx={{ width: "200px", height: "100%" }}
           >
             <Box
               sx={{
@@ -59,10 +88,10 @@ export default class EditProfile extends Component {
             flexDirection="column"
             sx={{
               width: "calc(100% - 200px)",
-              padding: "0 5%"
+              padding: "0 5%",
             }}
           >
-            <CmmnFormControl variant="standard" fullWidth>
+            <CmmnFormControl variant="standard" fullwidth>
               <CmmnInputLabel shrink htmlFor="last-nm-inpt">
                 Last Name
               </CmmnInputLabel>
@@ -76,7 +105,7 @@ export default class EditProfile extends Component {
                 }}
               />
             </CmmnFormControl>
-            <CmmnFormControl variant="standard" fullWidth>
+            <CmmnFormControl variant="standard" fullwidth>
               <CmmnInputLabel shrink htmlFor="first-nm-inpt">
                 First Name
               </CmmnInputLabel>
@@ -90,7 +119,7 @@ export default class EditProfile extends Component {
                 }}
               />
             </CmmnFormControl>
-            <CmmnFormControl variant="standard" fullWidth>
+            <CmmnFormControl variant="standard" fullwidth>
               <CmmnInputLabel shrink htmlFor="email-inpt">
                 Email
               </CmmnInputLabel>
@@ -109,7 +138,11 @@ export default class EditProfile extends Component {
               <CmmnInputLabel shrink htmlFor="gender-inpt">
                 Gender
               </CmmnInputLabel>
-              <FormControl variant="standard" sx={{ width: "30%" }}>
+              <FormControl
+                className="__fc__gender"
+                variant="standard"
+                sx={{ width: "150px" }}
+              >
                 <CmmnSelect
                   id="gender-inpt"
                   name="gender"
@@ -128,9 +161,9 @@ export default class EditProfile extends Component {
                 </CmmnSelect>
               </FormControl>
             </Stack>
-            <CmmnFormControl variant="standard" fullWidth>
+            <CmmnFormControl variant="standard" fullwidth>
               <CmmnInputLabel shrink htmlFor="age-inpt">
-                Email
+                Age
               </CmmnInputLabel>
               <CmmnInput
                 id="age-inpt"
@@ -143,7 +176,7 @@ export default class EditProfile extends Component {
                 sx={{ width: "150px" }}
               />
             </CmmnFormControl>
-            <Stack flexDirection="column" sx={{ width: "100%" }}>
+            {/* <Stack flexDirection="column" sx={{ width: "100%" }}>
               <CmmnInputLabel shrink htmlFor="hobies-inpt">
                 Hobies
               </CmmnInputLabel>
@@ -153,12 +186,50 @@ export default class EditProfile extends Component {
                   minRows={6}
                   placeholder="Fill your hobies into here"
                   style={{
-                    padding: "10px",
+                    fontSize:"1.05rem",
+                    padding: "12px",
                     width: "100%",
                     border: "1px solid #e5e0e0",
                     borderRadius: "10px",
                   }}
                 />
+              </CmmnFormControl>
+            </Stack> */}
+            <Stack sx={{ mt: "15px" }}>
+              <CmmnInputLabel shrink htmlFor="demo-multiple-chip">
+                Hobbies
+              </CmmnInputLabel>
+              <CmmnFormControl
+                variant="outlined"
+                sx={{ boxShadow: "none", outline: "none", mt: "0 !important" }}
+              >
+                <CmmnGroupSelect
+                  size="small"
+                  labelId="demo-multiple-chip-label"
+                  id="demo-multiple-chip"
+                  multiple
+                  value={this.state.hobbies}
+                  onChange={this.handleChangeHobby}
+                  input={<OutlinedInput id="select-multiple-chip" />}
+                  renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} />
+                      ))}
+                    </Box>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {names.map((name) => (
+                    <MenuItem
+                      key={name}
+                      value={name}
+                      style={getStyles(name, this.state.hobbies, theme)}
+                    >
+                      {name}
+                    </MenuItem>
+                  ))}
+                </CmmnGroupSelect>
               </CmmnFormControl>
             </Stack>
           </Stack>
@@ -166,4 +237,32 @@ export default class EditProfile extends Component {
       </Box>
     );
   }
+}
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const names = [
+  "Camping",
+  "Read Book",
+  "Climb",
+  "Sport",
+  "Music",
+  "Foodt",
+  "Forest",
+  "Ocean",
+  "Animal",
+  "Romantic",
+];
+
+export default function EditProfile() {
+  const theme = useTheme();
+  return <EditProfileCls theme={theme} />;
 }

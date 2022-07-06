@@ -29,6 +29,6 @@
 .w-0 {
   width: 0;
 }
-.MuiAutocomplete-inputRoot, .MuiInputBase-root{
+.MuiAutocomplete-inputRoot, .__fc__gender .MuiInputBase-root{
   height: 45px;
 }
