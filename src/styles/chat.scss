@@ -10,3 +10,11 @@
     margin: 0 auto;
     color: rgba(0, 0, 0, 0.6);
 }
+
+.block {
+   display: flex;
+}
+
+.non-block {
+    display: none;
+}
