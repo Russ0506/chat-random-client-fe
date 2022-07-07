@@ -8,7 +8,6 @@ import { withStyles } from '@mui/styles';
 import TextChatLayer from './message-description/ChatLayer'
 
 function MessageChat(props) {
-  // props => {
   const {
     classes,
     avatar,
@@ -73,30 +72,6 @@ function MessageChat(props) {
 
     </Box>
   )
-      // <>
-      //   <div>this is place where all the chat component is rendered! ==))</div>
-      //   <div>include</div>
-      //   <ol>
-      //     type of chat balloon:
-      //     <li>
-      //       <AdminMsg />
-      //     </li>
-      //     <li>
-      //       <PairingPersonMsg />
-      //     </li>
-      //     <li>
-      //       <MyMsg />
-      //     </li>
-      //   </ol>
-      //   <ol> Layout box chat
-      //     <TextChatLayer />
-      //   </ol>
-      // </>
-
-
-  // }
-
-
 }
 
 MessageChat.propTypes = {

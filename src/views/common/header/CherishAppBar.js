@@ -132,8 +132,8 @@ const CherishAppBar = () => {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu}>
                 <Avatar
-                  alt="Remy Sharp"
-                  src="/static/images/avatar/2.jpg"
+                  alt="Memy Sharp"
+                  src="#"
                   sx={{
                     p: 0,
                     background: "#817cce",

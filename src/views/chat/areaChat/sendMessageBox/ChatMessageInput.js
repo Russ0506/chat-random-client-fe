@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from 'moment'
-// @mui
 import { styled } from "@mui/material/styles";
 import {
   Stack,
@@ -13,11 +12,7 @@ import {
 } from "@mui/material";
 import Iconify from "../../../common/base/icon/Iconify";
 import EmojiPicker from "../../../common/base/emoji/EmojiPicker";
-import { sendMesage } from "../../../../features/chat";
-// utils
-// components
-
-// ----------------------------------------------------------------------
+import { sendNewMessage } from "../../../../features/chat/messagesSlice";
 
 const RootStyle = styled("div")(({ theme }) => ({
   minHeight: 56,
@@ -27,25 +22,13 @@ const RootStyle = styled("div")(({ theme }) => ({
   paddingLeft: theme.spacing(2),
 }));
 
-// ----------------------------------------------------------------------
-
-ChatMessageInput.propTypes = {
-  disabled: PropTypes.bool,
-  // conversation: PropTypes.object,
-  onSend: PropTypes.func,
-};
-
 export default function ChatMessageInput({
   disabled,
-  conversation,
-  onSend,
-  recipientId,
+  conversation
 }) {
   const dispatch = useDispatch();
   const fileInputRef = useRef(null);
-
   const [message, setMessage] = useState("");
-
   const handleAttach = () => {
     fileInputRef.current?.click();
   };
@@ -60,16 +43,16 @@ export default function ChatMessageInput({
     if (!message) {
       return "";
     }
-    if (onSend && conversation.id) {
+    if (conversation?.id) {
       let params = {
         conversationId: conversation.id,
         text: message,
-        recipient_id: recipientId,
-        create_at:moment().format(),
+        recipient_id: conversation.partner.id,
+        create_at:moment().format()
       };
-      onSend(params);
-
-      dispatch(sendMesage(params));
+      dispatch(sendNewMessage(params));
+      var element = document.getElementById("chat-scroll-ult");
+      element.scrollTop = element.scrollHeight;
     }
     return setMessage("");
   };
@@ -92,11 +75,6 @@ export default function ChatMessageInput({
           paddingBottom: "5px",
           background: "#f6f6f6",
         }}
-        // startAdornment={
-        //   <InputAdornment position="start">
-        //     <EmojiPicker disabled={disabled} value={message} setValue={setMessage} />
-        //   </InputAdornment>
-        // }
         endAdornment={
           <Stack direction="row" spacing={1} sx={{ flexShrink: 0, mr: 1.5 }}>
             <IconButton disabled={disabled} size="small" onClick={handleAttach}>
@@ -117,9 +95,6 @@ export default function ChatMessageInput({
           </Stack>
         }
       />
-
-      {/* <Divider orientation="vertical" flexItem /> */}
-
       <IconButton
         color="primary"
         disabled={!message}

@@ -6,9 +6,6 @@ import { Avatar, Stack, Typography } from "@mui/material";
 import { format } from "date-fns";
 import moment from "moment";
 
-// partner information include
-// + parnerId, partnerNm, parnerAvatar(avatar),
-// + partnerStatus (online/offline), lastOnlineTm(yyyyMMddHHmmss/null)
 // + lastMsg :
 //   -> {sender (true: you send msg/ false: partner send msg),
 //   -> msg: content message,
@@ -98,8 +95,8 @@ export default function ChatInfoLayer(props) {
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
-      backgroundColor: data.status == "online" ? "#44b700" : "#ffc107",
-      color: data.status == "online" ? "#44b700" : "#ffc107",
+      backgroundColor: data.partner?.is_online ? "#44b700" : "#ffc107",
+      color: data.partner?.is_online ? "#44b700" : "#ffc107",
       boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
       "&::after": {
         position: "absolute",
@@ -109,7 +106,7 @@ export default function ChatInfoLayer(props) {
         height: "100%",
         borderRadius: "50%",
         animation:
-          data.status == "online" ? "ripple 1.5s infinite ease-in-out" : null,
+          data.partner?.is_online ? "ripple 1.5s infinite ease-in-out" : null,
         border: "1px solid currentColor",
         content: '""',
       },
@@ -147,12 +144,12 @@ export default function ChatInfoLayer(props) {
           >
             <Avatar
               sx={{ width: 50, height: 50 }}
-              alt="Remy Sharp"
+              alt=""
               src="https://3.bp.blogspot.com/-eLFZ4fINjFk/Uq9hlFzEApI/AAAAAAAAG-4/3981yyTvKGM/s1600/28237d4dfe9baf20de1028f64f85ac68.jpg"
             />
           </StyledBadge>
           <Box sx={{ width: "calc(100% - 40px - 100px)" }}>
-            <Typography variant="subtitle2">{data.partnerNm}</Typography>
+            <Typography variant="subtitle2">{data.partner.name}</Typography>
             <Typography
               variant="subtitle2"
               sx={{
@@ -160,18 +157,18 @@ export default function ChatInfoLayer(props) {
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 color:
-                  data.lastMsg.sender == false && data.lastMsg.read == false
+                  data.last_message?.recipient_id == localStorage.getItem('user_id') && !data.last_message.seen_at
                     ? "#817cce"
                     : "#c4c6ca",
                 fontWeight:
-                  data.lastMsg.sender == false && data.lastMsg.read == false
+                  data.last_message?.recipient_id == localStorage.getItem('user_id') && !data.last_message.seen_at
                     ? "bold"
                     : "normal",
               }}
             >
-              {data.lastMsg.sender == false
-                ? data.lastMsg.msg
-                : "you: " + data.lastMsg.msg}
+              {data.last_message?.recipient_id == localStorage.getItem('user_id')
+                ? data.last_message?.text
+                : "you: " + data.last_message?.text}
             </Typography>
           </Box>
           <Stack
@@ -179,17 +176,6 @@ export default function ChatInfoLayer(props) {
             alignItems="flex-end"
             justifyContent="flex-start"
           >
-            <Typography variant="caption">
-              {data.status == "online" ? "" : offTime}
-            </Typography>
-            {/* <Badge
-            // color="secondary"
-            // overlap="circular"
-            // badgeContent=" "
-            // variant="dot "
-            >
-              {circle}
-            </Badge> */}
           </Stack>
         </Stack>
       </Box>

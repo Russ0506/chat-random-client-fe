@@ -23,24 +23,16 @@ const RootStyle = styled("div")(({ theme }) => ({
   minHeight: CHAT_HEADER_HEIGHT,
   display: "flex",
   alignItems: "center",
-  // padding: theme.spacing(0, 1, 0, 0),
 }));
 
-// ----------------------------------------------------------------------
-
-ChatHeaderDetail.propTypes = {
-  participants: PropTypes.array.isRequired,
-};
-
-export default function ChatHeaderDetail({ openBar, participants }) {
-  // const isGroup = participants.length > 1;
+export default function ChatHeaderDetail({ openBar, partner }) {
+  // const isGroup = partners.length > 1;
   // const handleOpenShareInfoLayout = async () => {
   //   openBar(false);
   // };
   return (
     <RootStyle>
-      {/* {isGroup ? <GroupAvatar participants={participants} /> : <OneAvatar participants={participants} />} */}
-      <OneAvatar participants={participants} />
+      <OneAvatar partner={partner} />
 
       <Box sx={{ flexGrow: 1 }} />
       <IconButton>
@@ -58,14 +50,13 @@ export default function ChatHeaderDetail({ openBar, participants }) {
 
 // ----------------------------------------------------------------------
 
-OneAvatar.propTypes = {
-  participants: PropTypes.array.isRequired,
-};
+// OneAvatar.propTypes = {
+//   partner: PropTypes.object.isRequired,
+// };
 
-function OneAvatar({ participants }) {
-  const participant = [...participants][0];
+function OneAvatar({ partner }) {
 
-  if (participant === undefined || !participant.status) {
+  if (partner === undefined || !partner.status) {
     return null;
   }
 
@@ -73,65 +64,25 @@ function OneAvatar({ participants }) {
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Box sx={{ position: "relative" }}>
         <Avatar
-          src={participant.avatar}
-          alt={participant.name}
+          src={partner.avatar}
+          alt={partner.name}
           style={{ width: 52, height: 52 }}
         />
         <BadgeStatus
-          status={participant.status}
+          status={partner.status}
           sx={{ position: "absolute", right: 2, bottom: 2 }}
         />
       </Box>
       <Box sx={{ ml: 2 }}>
-        <Typography variant="subtitle2">{participant.name}</Typography>
+        <Typography variant="subtitle2">{partner.name}</Typography>
 
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {/* {participant.status !== 'offline' ? capitalCase(participant.status) : fToNow(participant.lastActivity || '')} */}
-          {participant.status !== "false"
+          {/* {partner.status !== 'offline' ? capitalCase(partner.status) : fToNow(partner.lastActivity || '')} */}
+          {partner.status !== "false"
             ? "Online"
-            : fToNow(participant.last_online || "")}
+            : fToNow(partner.last_online || "")}
         </Typography>
       </Box>
     </Box>
-  );
-}
-
-// ----------------------------------------------------------------------
-
-GroupAvatar.propTypes = {
-  participants: PropTypes.array.isRequired,
-};
-
-function GroupAvatar({ participants }) {
-  return (
-    <div>
-      <AvatarGroup
-        max={3}
-        sx={{
-          mb: 0.5,
-          "& .MuiAvatar-root": { width: 32, height: 32 },
-        }}
-      >
-        {participants.map((participant) => (
-          <Avatar
-            key={participant.id}
-            alt={participant.name}
-            src={participant.avatar}
-          />
-        ))}
-      </AvatarGroup>
-      <Link
-        variant="body2"
-        underline="none"
-        component="button"
-        color="text.secondary"
-        onClick={() => {}}
-      >
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          {participants.length} persons
-          <Iconify icon="eva:arrow-ios-forward-fill" />
-        </Box>
-      </Link>
-    </div>
   );
 }

@@ -31,26 +31,26 @@ const loadConversation = async (params, thunkAPI) => {
   }
 };
 
-const sendMesage = async (params, thunkAPI) => {
-  try {
-    const res = await axiosClient.post(`${URL}/conversations/${params.conversationId}/messages`, {
-      text: params.text,
-      recipient_id: params.recipient_id,
-    })
-    return res
-  } catch (error) {
-    const message =
-      (error.response.data.errors[0]) ||
-      error.message ||
-      error.toString();
-    thunkAPI.dispatch(setMessage(message));
-    return thunkAPI.rejectWithValue();
-  }
-};
+// const sendMesage = async (params, thunkAPI) => {
+//   try {
+//     const res = await axiosClient.post(`${URL}/conversations/${params.conversationId}/messages`, {
+//       text: params.text,
+//       recipient_id: params.recipient_id,
+//     })
+//     return res
+//   } catch (error) {
+//     const message =
+//       (error.response.data.errors[0]) ||
+//       error.message ||
+//       error.toString();
+//     thunkAPI.dispatch(setMessage(message));
+//     return thunkAPI.rejectWithValue();
+//   }
+// };
 
 const chatService = {
   enqueuingChat,
   loadConversation,
-  sendMesage,
+  // sendMesage,
 };
 export default chatService;
