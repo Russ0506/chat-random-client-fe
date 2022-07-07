@@ -6,7 +6,7 @@ import { CHAT_HEADER_HEIGHT } from '../../../../constant/css_constant';
 
 import { loadConversation } from '../../../../features/chat';
 //
-import LightboxModal from "../../../common/base/light-box/LightboxModal"
+// import LightboxModal from "../../../common/base/light-box/LightboxModal"
 import Scrollbar from "../../../common/base/scroll-bar/Scrollbar"
 import ChatMessageItem from './ChatMessageItem';
 import { selectNewMessages } from "../../../../features/chat/messagesSlice"
