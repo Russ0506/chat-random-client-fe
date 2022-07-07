@@ -58,7 +58,7 @@ const CherishAppBar = () => {
       position="static"
       sx={{ height: APP_BAR_HEIGHT, background: "white", boxShadow: "none", border: "1px solid #e5e0e0" }}
     >
-      <Container maxWidth="xl">
+      <Container sx={{width: "100%", maxWidth:"100% !important"}}>
         <Toolbar disableGutters>
           <AdbIcon
             sx={{

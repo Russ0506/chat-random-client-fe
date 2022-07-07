@@ -66,9 +66,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function ConversationHistory() {
   return (
     <Box
+    className="conversation-his-ctalog"
       sx={{
         background: "white",
         height: "calc(100% - 70px)",
+        overflow: "auto",
       }}
     >
       <Search>

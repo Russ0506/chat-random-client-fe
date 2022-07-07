@@ -8,6 +8,31 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+html {
+  scroll-behavior: smooth;
+}
+*::-webkit-scrollbar {
+  opacity: 0;
+  width: 8px;
+  cursor: pointer;
+}
+::-webkit-scrollbar:hover {
+  opacity: 1;
+}
+*::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  cursor: pointer;
+}
+*::-webkit-scrollbar-thumb {
+  /* background: #96dfce; */
+  background: #dcdcdc;
+  cursor: pointer;
+  border-radius: 10px;
+}
+*::-webkit-scrollbar-thumb:hover {
+   background: #96dfce;
 }
 .App {
   text-align: center;
@@ -29,6 +54,15 @@
 .w-0 {
   width: 0;
 }
-.MuiAutocomplete-inputRoot, .__fc__gender .MuiInputBase-root{
+.MuiAutocomplete-inputRoot,
+.__fc__gender .MuiInputBase-root {
   height: 45px;
 }
+/* .conversation-his-ctalog, .chat-msg-list {
+  transition: all 0.2s ease !important;
+  overflow: hidden !important;
+}
+.conversation-his-ctalog:hover, .chat-msg-list:hover {
+  transition: all 0.2s ease !important;
+  overflow: auto !important;
+} */

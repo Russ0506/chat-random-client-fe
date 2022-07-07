@@ -116,7 +116,7 @@ export default function PartnerSettingView(props) {
               </FormLabel>
               <FormControlLabel
                 name="checkedLocation"
-                control={<Checkbox defaultChecked={state.checkedLocation} />}
+                control={<Checkbox name="checkedLocation" defaultChecked={state.checkedLocation} />}
                 label="Use"
                 onChange={(e) => handleOnChange(e)}
               />

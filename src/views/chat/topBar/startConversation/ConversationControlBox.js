@@ -2,6 +2,7 @@ import { Box, Button, Stack, Typography } from '@mui/material';
 import React, { useLayoutEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { getDataSearch } from '../../../../features/user-setting';
+import Iconify from '../../../common/base/icon/Iconify';
 import PartnerSettingModal from '../../popup/PartnerSettingModal';
 
 export default function ConversationControlBox() {
@@ -46,7 +47,8 @@ export default function ConversationControlBox() {
         <Button
           variant="contained"
           onClick={handleClickOpen}
-          sx={{ background: "#6ed42a", boxShadow: "0px 8px 15px rgb(203 252 210)" }}
+          sx={{ boxShadow: "0px 8px 10px rgb(237 221 255)" }}
+          endIcon={<Iconify icon={"mdi:chat-plus-outline"} />}
         >
           New Conversation
         </Button>
