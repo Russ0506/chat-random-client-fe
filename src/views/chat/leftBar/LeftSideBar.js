@@ -1,17 +1,18 @@
+import { Stack } from "@mui/material";
 import React from "react";
+import { DRAWER_WITH } from "../../../constant/css_constant";
 import ConversationsList from "./components/ConversationsList";
-// pairingSocket();
+import ConversationControlBox from "../topBar/startConversation/ConversationControlBox";
 
 export default class LeftSideBar extends React.Component {
   constructor(props) {
     super(props);
-    this.onChangedConversation = props.onChangedConversation;
   }
 
   render() {
     return (
       <>
-        <ConversationsList onChangedConversation={this.onChangedConversation} />
+        <ConversationsList />
         <Stack
           width={DRAWER_WITH}
           height="70px"

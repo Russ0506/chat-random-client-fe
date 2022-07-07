@@ -9,8 +9,7 @@ import { loadConversation } from '../../../../features/chat';
 import LightboxModal from "../../../common/base/light-box/LightboxModal"
 import Scrollbar from "../../../common/base/scroll-bar/Scrollbar"
 import ChatMessageItem from './ChatMessageItem';
-import { selectConversation } from "../../../../features/conversations/conversationSlice"
-
+import { selectNewMessages } from "../../../../features/chat/messagesSlice"
 
 // ----------------------------------------------------------------------
 
@@ -18,11 +17,9 @@ ChatMessageList.propTypes = {
   newMessages: PropTypes.array,
 };
 
-export default function ChatMessageList({newMessages}) {
-  const conversation = useSelector(selectConversation);
-  console.log(conversation)
-
+export default function ChatMessageList({conversation}) {
   const [dataConversation, setDataConversation] = React.useState([]);
+  const newMessages = useSelector(selectNewMessages)
   const dispatch = useDispatch()
   const scrollRef = useRef(null);
   const [openLightbox, setOpenLightbox] = useState(false);
@@ -51,12 +48,7 @@ export default function ChatMessageList({newMessages}) {
     }
   }, [conversation]);
 
-  // const imagesLightbox = conversation1.messages
-  //   .filter((messages) => messages.contentType === 'image')
-  //   .map((messages) => messages.body);
-
   const handleOpenLightbox = (url) => {
-    // const selectedImage = imagesLightbox.findIndex((index) => index === url);
     setOpenLightbox(true);
     setSelectedImage(selectedImage);
   };
@@ -76,7 +68,7 @@ export default function ChatMessageList({newMessages}) {
               onOpenLightbox={handleOpenLightbox}
             />
           ))}
-          {[].map((message, i) => (
+          {newMessages.map((message, i) => (
             <ChatMessageItem
               key={i}
               message={message}

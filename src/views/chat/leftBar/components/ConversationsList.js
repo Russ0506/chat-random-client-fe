@@ -10,9 +10,8 @@ import { styled } from "@mui/styles";
 import { alpha } from "@mui/material/styles";
 import ChatInfoLayer from "./ChatInfoLayer";
 import SearchIcon from "@mui/icons-material/Search";
-import { pairingSocket } from "../../../sockets/Socket";
 import { axiosClient } from "../../../../setup/axiosClient";
-import { changeConversation } from "../../../../features/conversations/conversationSlice"
+import { changeConversation } from "../../../../features/chat/conversationSlice"
 import { useSelector, useDispatch } from 'react-redux';
 
 const Search = styled("div")(({ theme }) => ({
@@ -22,7 +21,6 @@ const Search = styled("div")(({ theme }) => ({
   color: alpha(theme.palette.common.black, 0.5),
   "& .Mui-focused": {
     color: alpha(theme.palette.common.black, 1),
-    // backgroundColor: alpha(theme.palette.common.black, 0.2),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -50,7 +48,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",

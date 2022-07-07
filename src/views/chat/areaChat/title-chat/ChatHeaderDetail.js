@@ -23,14 +23,7 @@ const RootStyle = styled("div")(({ theme }) => ({
   minHeight: CHAT_HEADER_HEIGHT,
   display: "flex",
   alignItems: "center",
-  // padding: theme.spacing(0, 1, 0, 0),
 }));
-
-// ----------------------------------------------------------------------
-
-ChatHeaderDetail.propTypes = {
-  partner: PropTypes.object.isRequired,
-};
 
 export default function ChatHeaderDetail({ openBar, partner }) {
   // const isGroup = partners.length > 1;
@@ -57,9 +50,9 @@ export default function ChatHeaderDetail({ openBar, partner }) {
 
 // ----------------------------------------------------------------------
 
-OneAvatar.propTypes = {
-  partner: PropTypes.object.isRequired,
-};
+// OneAvatar.propTypes = {
+//   partner: PropTypes.object.isRequired,
+// };
 
 function OneAvatar({ partner }) {
 
