@@ -192,9 +192,7 @@ export default function AppBarComponent() {
             />
           </Search> */}
           <Box sx={{ flexGrow: 1 }} />
-          <Box width={DRAWER_WITH} p={3}>
-            <ConversationControlBox />
-          </Box>
+          
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {/* <IconButton
