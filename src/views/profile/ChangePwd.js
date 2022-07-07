@@ -153,17 +153,16 @@ class ChangePwdCls extends Component {
             </CmmnFormControl>
             <Button
               variant="contained"
+              size="small"
               sx={{
-                pl: "25px",
-                pr: "25px",
+                p: "10px 25px",
                 margin: "25px 0 40px 0",
-                width: "150px",
                 justifySelf: "flex-end",
                 alignSelf: "flex-start",
-                borderRadius: "20px",
+                borderRadius: "5px",
               }}
             >
-              Submit
+              Change Password
             </Button>
           </Stack>
         </Grid>

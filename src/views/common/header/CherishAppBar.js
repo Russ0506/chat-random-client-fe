@@ -128,7 +128,6 @@ const CherishAppBar = () => {
               justifyContent: "flex-end",
             }}
           ></Box>
-          {location.pathname == "/app" ? <ConversationControlBox /> : ""}
           <Box sx={{ flexGrow: 0, ml: 2 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu}>
