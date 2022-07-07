@@ -12,7 +12,7 @@ import ChatInfoLayer from "./ChatInfoLayer";
 import SearchIcon from "@mui/icons-material/Search";
 import { axiosClient } from "../../../../setup/axiosClient";
 import { changeConversation } from "../../../../features/chat/conversationSlice"
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
