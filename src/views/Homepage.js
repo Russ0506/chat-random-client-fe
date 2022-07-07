@@ -7,9 +7,11 @@ import MessageLayout from "./chat/areaChat/MessageLayout";
 import { appearanceSocket, newMessageSocket } from "./sockets/Socket";
 import React, { useEffect } from "react";
 import { receiveNewMessage } from "../features/chat/messagesSlice";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { selectConversation } from "../features/chat/conversationSlice"
 
 export default function Homepage() {
+  const conversation = useSelector(selectConversation);
   const dispatch = useDispatch();
   const [openRightBar, setOpenRightBar] = React.useState(true);
 

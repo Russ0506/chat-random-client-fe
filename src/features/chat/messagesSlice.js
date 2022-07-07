@@ -36,7 +36,6 @@ export const messagesSlice = createSlice({
       })
       .addCase(sendNewMessage.fulfilled, (state, { payload }) => {
         state.status = 'idle';
-        console.log(payload)
         state.newMessages.push(payload);
       });
   }

@@ -1,3 +1,5 @@
+import store from '../../store/store'
+
 function Socket(props) {
   const ActionCable = require('actioncable');
   Socket.cable = ActionCable.createConsumer(`${process.env.REACT_APP_SOCKET_URL}?jwt_token=${localStorage.getItem('jwt_token')}`);
@@ -40,8 +42,10 @@ function newMessageSocket(props){
     channel: "NewMessageChannel",
     connected: ()=>{},
     disconnected: ()=>{},
-    received: (data)=>{
-      props.received(data);
+    received: (message)=>{
+      if (store.getState().conversation?.id == message.conversation_id){
+        props.received(message);
+      }
     }
   })
 }
