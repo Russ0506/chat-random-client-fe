@@ -18,3 +18,22 @@
 .non-block {
     display: none;
 }
+
+.avatar-circle {
+    border-radius: 50%;
+    border: 2px solid #817cce;
+}
+
+.config-position-icon {
+    position: absolute;
+    bottom: -10px;
+    right: -3px;
+    width: 16px;
+}
+
+.config-position-icon-seen {
+    position: absolute;
+    bottom: 0px;
+    right: -3px;
+    width: 16px;
+}
