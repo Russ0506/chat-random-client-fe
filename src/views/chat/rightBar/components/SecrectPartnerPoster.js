@@ -29,7 +29,7 @@ const MansoryImageBG = styled(Box)(({ theme }) => ({
 
 const SharedInfoButton = styled(Button)(({ theme }) => ({
   position: "absolute",
-  bottom: 20,
+  bottom: theme.spacing(2),
   transform: "translate(-50%, 0)",
   left: "50%",
   backgroundColor: "#fff",
@@ -47,13 +47,13 @@ const SharedInfoButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export default function SecrectPartnerPoster() {
+export default function SecrectPartnerPoster(props) {
   return (
     <>
       <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
         <MansoryImageBG />
         <PartnerSecrectInfo />
-        <SharedInfoButton variant="contained">
+        <SharedInfoButton variant="contained" onClick={props.showInfo}>
           Share Profile
         </SharedInfoButton>
       </Box>

@@ -26,7 +26,8 @@ export default function LeftSideBar(props) {
         width={DRAWER_WITH}
         height="70px"
         alignItems="center"
-        justifyContent="center"
+        justifyContent="flex-end"
+        paddingBottom={2.8}
       >
         <ConversationControlBox />
       </Stack>

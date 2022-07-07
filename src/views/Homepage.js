@@ -53,7 +53,7 @@ export default class Homepage extends React.Component {
   render() {
     return (
       <>
-        <Box w={100} sx={{ borderBottom: ".3px solid #e0e0e0" }}></Box>
+        {/* <Box w={100} sx={{ borderBottom: ".3px solid #e0e0e0" }}></Box> */}
         <Box
           sx={{ display: "flex", height: '100%' }}
           className="v11"

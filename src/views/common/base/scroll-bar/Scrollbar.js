@@ -73,15 +73,11 @@ export default function Scrollbar({
   });
 
   return isMobile === true ? (
-    <Box
-      id={indentify !== "" ? indentify : ""}
-      sx={{ overflowX: "auto", ...sx }}
-      {...other}
-    >
+    <Box id={indentify !== "" ? indentify : ""} sx={{ ...sx }} {...other}>
       {children}
     </Box>
   ) : (
-    <RootStyle id={indentify !== "" ? indentify : ""}>
+    <RootStyle id={indentify !== "" ? indentify : ""} className="chat-msg-list">
       {/* <SimpleBarStyle timeout={500} clickOnTrack={false} sx={sx} {...other}> */}
       {children}
       {/* </SimpleBarStyle> */}
