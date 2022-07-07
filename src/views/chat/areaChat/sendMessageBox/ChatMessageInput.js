@@ -38,8 +38,7 @@ ChatMessageInput.propTypes = {
 export default function ChatMessageInput({
   disabled,
   conversation,
-  onSend,
-  recipientId,
+  onSend
 }) {
   const dispatch = useDispatch();
   const fileInputRef = useRef(null);
@@ -64,8 +63,8 @@ export default function ChatMessageInput({
       let params = {
         conversationId: conversation.id,
         text: message,
-        recipient_id: recipientId,
-        create_at:moment().format(),
+        recipient_id: conversation.partner.id,
+        create_at:moment().format()
       };
       onSend(params);
 

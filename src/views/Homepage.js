@@ -1,12 +1,10 @@
 import { CssBaseline, Grid, Toolbar } from "@mui/material";
 import Box from "@mui/material/Box";
-import PropTypes from "prop-types";
-import { APP_BAR_HEIGHT, DRAWER_WITH } from "../constant/css_constant";
+import { DRAWER_WITH } from "../constant/css_constant";
 import LeftSideBar from "./chat/leftBar/LeftSideBar";
 import RightBar from "./chat/rightBar/RightBar";
-import TopBar from "./chat/topBar/TopBar";
 import MessageLayout from "./chat/areaChat/MessageLayout";
-import { pairingSocket, appearanceSocket, newMessageSocket } from "./sockets/Socket";
+import { appearanceSocket, newMessageSocket } from "./sockets/Socket";
 import React from "react";
 
 const newMessagesRoot = document.getElementById('new_messages');
@@ -16,14 +14,15 @@ export default class Homepage extends React.Component {
     super(props);
     this.state = {
       openRightBar: true,
-      conversation: {id: 5, partner_id: 42},
+      conversation: {id: 5, partner: {id: 42}},
       newMessageIds: [],
       newMessage: undefined,
     };
     this.newMessageDiv = document.createElement('div');
+    this.onChangedConversation = this.onChangedConversationRaw.bind(this)
   }
 
-  received (data) {
+  newMessageReceived (data) {
     this.setState({newMessage: data})
   }
 
@@ -32,9 +31,8 @@ export default class Homepage extends React.Component {
       this.setState({conversation: {id: 5, partner_id: 21}})
     }
     newMessageSocket({
-      received: this.received.bind(this)
+      received: this.newMessageReceived.bind(this)
     });
-    pairingSocket();
     appearanceSocket();
   }
 
@@ -48,6 +46,11 @@ export default class Homepage extends React.Component {
     this.setState({
       newMessage : data
     })
+  }
+
+  onChangedConversationRaw = (conversation) => {
+    console.log(conversation)
+    this.setState({conversation: conversation})
   }
 
   render() {
@@ -68,7 +71,7 @@ export default class Homepage extends React.Component {
               borderRight: "1px solid #e5e0e0",
             }}
           >
-            <LeftSideBar />
+            <LeftSideBar onChangedConversation={this.onChangedConversation}/>
           </Box>
           <Box
             sx={{

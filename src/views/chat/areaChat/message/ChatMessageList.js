@@ -1,7 +1,7 @@
 import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
-import React, { useState, useRef,useLayoutEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { CHAT_HEADER_HEIGHT } from '../../../../constant/css_constant';
 
 import { loadConversation } from '../../../../features/chat';
@@ -9,15 +9,19 @@ import { loadConversation } from '../../../../features/chat';
 import LightboxModal from "../../../common/base/light-box/LightboxModal"
 import Scrollbar from "../../../common/base/scroll-bar/Scrollbar"
 import ChatMessageItem from './ChatMessageItem';
+import { selectConversation } from "../../../../features/conversations/conversationSlice"
+
 
 // ----------------------------------------------------------------------
 
 ChatMessageList.propTypes = {
-  conversation: PropTypes.object.isRequired,
   newMessages: PropTypes.array,
 };
 
-export default function ChatMessageList({newMessages, conversation}) {
+export default function ChatMessageList({newMessages}) {
+  const conversation = useSelector(selectConversation);
+  console.log(conversation)
+
   const [dataConversation, setDataConversation] = React.useState([]);
   const dispatch = useDispatch()
   const scrollRef = useRef(null);
@@ -35,13 +39,17 @@ export default function ChatMessageList({newMessages, conversation}) {
   //   scrollMessagesToBottom();
   // }, [conversation1.messages]);
 
-  useLayoutEffect(()=> {
-    dispatch(loadConversation({conversation_id : conversation.id})) .then((data) => {
-      setDataConversation(data.payload);
-    })
-    .catch(() => {
-    });
-  }, []);
+  useEffect(()=> {
+    if (conversation?.id){
+      dispatch(loadConversation({conversation_id : conversation.id})) .then((data) => {
+        if (data.payload) {
+          setDataConversation(data.payload);
+        }
+      })
+      .catch(() => {
+      });
+    }
+  }, [conversation]);
 
   // const imagesLightbox = conversation1.messages
   //   .filter((messages) => messages.contentType === 'image')
@@ -68,7 +76,7 @@ export default function ChatMessageList({newMessages, conversation}) {
               onOpenLightbox={handleOpenLightbox}
             />
           ))}
-          {newMessages.map((message, i) => (
+          {[].map((message, i) => (
             <ChatMessageItem
               key={i}
               message={message}
