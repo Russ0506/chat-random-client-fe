@@ -26,7 +26,8 @@ import * as Yup from "yup";
 import "../../styles/login.scss";
 import Loading from "../common/base/loading/Loading";
 // import { useCookies } from "react-cookie";
-
+import bgNew from "../auth/img/conv.png";
+import { Stack } from "@mui/material";
 export default function SignIn(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -103,154 +104,170 @@ export default function SignIn(props) {
       }}
     >
       <Loading show={isSubmit}></Loading>
-      <Container
-        component="main"
-        maxWidth="xs"
-        sx={{ fontWeight: FONT_WEIGHT.normal, lineHeight: LINE_HEIGHT.normal }}
-        className={isSubmit ? "opacity-background" : ""}
+      <Grid
+        container
+        spacing={0}
+        sx={{
+          width: "100%",
+          height: "100%",
+          zIndex: 10,
+        }}
+        columns={{ xs: 1, sm: 2, md: 2 }}
       >
-        <CssBaseline />
-        <Box
+        <Container
+          component="main"
+          maxWidth="xs"
           sx={{
-            paddingTop: "100px",
+            fontWeight: FONT_WEIGHT.normal,
+            lineHeight: LINE_HEIGHT.normal,
             display: "flex",
-            flexDirection: "column",
+            justifyContent: "center",
             alignItems: "center",
           }}
+          className={isSubmit ? "opacity-background" : ""}
         >
-          <Typography
-            component="h1"
-            variant="h5"
-            fontSize={FONT_SIZE.formHeader}
-          >
-            Sign in
-          </Typography>
-          <Typography
-            component="h1"
-            variant="h5"
-            fontSize={FONT_SIZE.formNormalText}
-          >
-            Sign in and start finding your friends!
-          </Typography>
           <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1, fontSize: FONT_SIZE.smallText }}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <TextField
-              // sx={{
-              //   bgcolor: GRP_COLOR.CODE016,
-              //   borderRadius: BORDER_RADIUS.normal,
-              //   color: GRP_COLOR.WHITECODE,
-              // }}
-              margin="normal"
-              variant="outlined"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              // InputLabelProps={{
-              //   style: {
-              //     color: GRP_COLOR.WHITECODE,
-              //   },
-              // }}
-              // InputProps={{
-              //   style: {
-              //     color: GRP_COLOR.WHITECODE,
-              //   },
-              // }}
-            />
-            <TextField
-              // sx={{
-              //   bgcolor: GRP_COLOR.CODE016,
-              //   borderRadius: BORDER_RADIUS.normal,
-              //   color: GRP_COLOR.WHITECODE,
-              // }}
-              margin="normal"
-              variant="outlined"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              // InputLabelProps={{
-              //   style: {
-              //     color: GRP_COLOR.WHITECODE,
-              //   },
-              // }}
-              // InputProps={{
-              //   style: {
-              //     color: GRP_COLOR.WHITECODE,
-              //   },
-              // }}
-            />
-            <FormControlLabel
-              sx={{
-                lineHeight: LINE_HEIGHT.lh17,
-                fontWeight: FONT_WEIGHT.middle,
-              }}
-              control={<Checkbox value="remember" />}
-              label="Remember me"
-            />
-            {message ? (
-              <Box
-                component="div"
-                variant="h5"
-                color="red"
-                fontSize={FONT_SIZE.smallText}
-              >
-                {message}
-              </Box>
-            ) : (
-              ""
-            )}
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={typeButton}
-              disabled={isSubmit}
+            <Typography
+              component="h1"
+              variant="h5"
+              fontSize={FONT_SIZE.formHeader}
             >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link
-                  href="/users/forgot-password"
-                  variant="body2"
-                  sx={{
-                    lineHeight: LINE_HEIGHT.lh17,
-                    fontWeight: FONT_WEIGHT.middle,
-                    textDecoration: "none",
-                  }}
+              Sign in
+            </Typography>
+            <Typography
+              component="h1"
+              variant="h5"
+              fontSize={FONT_SIZE.formNormalText}
+            >
+              Sign in and start finding your friends!
+            </Typography>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1, fontSize: FONT_SIZE.smallText }}
+            >
+              <TextField
+                margin="normal"
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <FormControlLabel
+                sx={{
+                  mt: "10px",
+                  lineHeight: LINE_HEIGHT.lh17,
+                  fontWeight: FONT_WEIGHT.middle,
+                }}
+                control={<Checkbox value="remember" />}
+                label="Remember me"
+              />
+              {message ? (
+                <Box
+                  component="div"
+                  variant="h5"
+                  color="red"
+                  fontSize={FONT_SIZE.smallText}
                 >
-                  Forgot password?
-                </Link>
+                  {message}
+                </Box>
+              ) : (
+                ""
+              )}
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled={isSubmit}
+                sx={{ marginTop: "10px", boxShadow: "none" }}
+              >
+                Sign In
+              </Button>
+              <Grid container sx={{ margin: "20px 0" }}>
+                <Grid item xs>
+                  <Link
+                    href="/users/forgot-password"
+                    variant="body2"
+                    sx={{
+                      lineHeight: LINE_HEIGHT.lh17,
+                      fontWeight: FONT_WEIGHT.middle,
+                      textDecoration: "none",
+                    }}
+                  >
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Stack flexDirection="row">
+                    <Typography>Don't have an account?</Typography>
+                    <Typography>
+                      <Link
+                        href="/register"
+                        variant="body2"
+                        sx={{
+                          lineHeight: LINE_HEIGHT.lh17,
+                          fontWeight: FONT_WEIGHT.middle,
+                          textDecoration: "none",
+                        }}
+                      >
+                        Sign Up
+                      </Link>
+                    </Typography>
+                  </Stack>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Link
-                  href="/register"
-                  variant="body2"
-                  sx={{
-                    lineHeight: LINE_HEIGHT.lh17,
-                    fontWeight: FONT_WEIGHT.middle,
-                    textDecoration: "none",
-                  }}
-                >
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
+            </Box>
           </Box>
-        </Box>
-      </Container>
-      <Box className="login-main"></Box>
+        </Container>
+        <Stack
+          sx={{
+            width: "400px",
+            height: "100%",
+            background: "rgb(190,181,242)",
+            background:
+              "linear-gradient(180deg, #b8abff, rgba(129,124,206,1) 55%, rgba(132,115,218,1) 100%)",
+            position: "relative",
+          }}
+          justifyContent="center"
+        >
+          <Box sx={{ width: "100%", padding: 5 }}>
+            <Typography
+              variant="h2"
+              color="#fff"
+              sx={{ fontWeight: 700, lineHeight: 1.1 }}
+            >
+              Adventure Starts Here
+            </Typography>
+            <Typography color="#fff">
+              Create an account to join the community and finding your friends!
+            </Typography>
+          </Box>
+          <img src={`${bgNew}`} alt="registCover" width="100%" />
+        </Stack>
+      </Grid>
+      {/* <Box className="login-main"></Box> */}
     </Box>
   );
 }
