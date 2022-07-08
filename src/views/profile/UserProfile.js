@@ -173,8 +173,8 @@ export default function UserProfile() {
           >
             <Badge>{circle}</Badge>
             <Box sx={{ ml: 10 }}>
-              <Typography variant="h4">
-                Ahihi do ngoc{" "}
+              <Typography variant="h5">
+               Tuong Vy Bui Anh 
                 <Button
                   component={Link}
                   to={"/users/profile/edit"}

@@ -22,6 +22,8 @@ const MansoryImageBG = styled(Box)(({ theme }) => ({
     display: "block",
     backgroundColor: "rgb(123,117,194,0.7)",
     // backgroundColor: "rgb(46,43,49,0.7)",
+    background:
+      "linear-gradient(180deg, #b8abffbf, #817ccebf 55%, #8473dae6 100%)",
     height: "100%",
     width: "100%",
   },
