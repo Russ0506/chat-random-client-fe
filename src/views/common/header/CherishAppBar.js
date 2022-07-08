@@ -18,13 +18,24 @@ import { Badge } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import { APP_BAR_HEIGHT } from "../../../constant/css_constant";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { ThemeConsumer } from "styled-components";
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = [
+  {
+    name: "Profile",
+    linkUrl: "/users/profile",
+  },
+  {
+    name: "Account",
+    linkUrl: "/users/profile/edit",
+  },
+  { name: "Logout", linkUrl: null },
+];
 
 const CherishAppBar = () => {
   const location = useLocation();
-  
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -56,9 +67,14 @@ const CherishAppBar = () => {
   return (
     <AppBar
       position="static"
-      sx={{ height: APP_BAR_HEIGHT, background: "white", boxShadow: "none", border: "1px solid #e5e0e0" }}
+      sx={{
+        height: APP_BAR_HEIGHT,
+        background: "white",
+        boxShadow: "none",
+        border: "1px solid #e5e0e0",
+      }}
     >
-      <Container sx={{width: "100%", maxWidth:"100% !important"}}>
+      <Container sx={{ width: "100%", maxWidth: "100% !important" }}>
         <Toolbar disableGutters>
           <AdbIcon
             sx={{
@@ -160,14 +176,22 @@ const CherishAppBar = () => {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography
+                    component={Link}
+                    variant="body1"
+                    textAlign="center"
+                    sx={{color: "black", textDecoration: "none"}}
+                    to={setting.linkUrl == null ? "" : setting.linkUrl}
+                  >
+                    {setting.name}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
           <IconButton aria-label={notificationsLabel(100)}>
             <Badge badgeContent={100} color="secondary">
-              <NotificationsNoneIcon sx={{width:"30px", height:"30px"}}/>
+              <NotificationsNoneIcon sx={{ width: "30px", height: "30px" }} />
             </Badge>
           </IconButton>
         </Toolbar>

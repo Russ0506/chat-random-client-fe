@@ -5,6 +5,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { APP_BAR_HEIGHT } from "../../../constant/css_constant";
 import Homepage from "../../Homepage";
+import NewPosterLayout from "../../profile/components/NewPosterLayout";
 import Iconify from "../base/icon/Iconify";
 import CherishAppBar from "./CherishAppBar";
 
@@ -20,9 +21,9 @@ const icoList = {
     link: "/app",
   },
   profile: {
-    notChosen : "healthicons:ui-user-profile-outline",
+    notChosen: "healthicons:ui-user-profile-outline",
     chosen: "healthicons:ui-user-profile",
-    link: "/users/profile"
+    link: "/users/profile",
   },
   newPost: {
     notChosen: "ant-design:plus-square-outlined",
@@ -30,6 +31,12 @@ const icoList = {
   },
 };
 export default function CherishApp({ index = 1, body }) {
+  const [useNewPost, setUseNewPost] = React.useState(false);
+  function handleOpenNewPost() {
+    setUseNewPost(false);
+    setUseNewPost(true);
+  }
+
   return (
     <Stack flexDirection="row">
       <Stack
@@ -88,14 +95,14 @@ export default function CherishApp({ index = 1, body }) {
           </ButtonNav>
         )}
         {index == 4 ? (
-          <ChosenButtonNav>
+          <ChosenButtonNav onClick={(e) => handleOpenNewPost()}>
             <Iconify
               icon={icoList.newPost.notChosen}
               style={{ width: "30px", height: "30px" }}
             />
           </ChosenButtonNav>
         ) : (
-          <ButtonNav>
+          <ButtonNav onClick={(e) => handleOpenNewPost()}>
             <Iconify
               icon={icoList.newPost.notChosen}
               style={{ width: "28px", height: "28px" }}
@@ -106,9 +113,16 @@ export default function CherishApp({ index = 1, body }) {
 
       <Box sx={{ width: "calc(100vw - 60px)", height: "100vh" }}>
         <CherishAppBar />
-        <Box sx={{ width: "100%", height: `calc(100vh - ${APP_BAR_HEIGHT})`, overflow: "auto" }}>
+        <Box
+          sx={{
+            width: "100%",
+            height: `calc(100vh - ${APP_BAR_HEIGHT})`,
+            overflow: "auto",
+          }}
+        >
           {body}
         </Box>
+        {useNewPost == true ? <NewPosterLayout openModal={true} /> : ""}
       </Box>
     </Stack>
   );
@@ -123,7 +137,7 @@ const navBtnCmm = {
   alignItems: "center",
   justifyContent: "center",
   cursor: "pointer",
-  transition: "all 0.2s ease"
+  transition: "all 0.2s ease",
 };
 
 const ButtonNav = styled(Stack)(({ theme }) => ({

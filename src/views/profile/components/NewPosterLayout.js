@@ -52,8 +52,8 @@ const SharedInfoButton = styled(Button)(({ theme }) => ({
     // transform: "translate(-50%, -7px)",
   },
 }));
-export default function NewPosterLayout() {
-  const [open, setOpen] = React.useState(false);
+export default function NewPosterLayout({openModal = false}) {
+  const [open, setOpen] = React.useState(openModal);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [uploadImg, setUploadImg] = React.useState(true);
@@ -148,7 +148,7 @@ export default function NewPosterLayout() {
         <Box sx={style} className="modal-container">
           <Box sx={{ mt: 1 }} className="modal-title">
             <Typography variant="h5" textAlign="center">
-              New Poster
+              New Post
             </Typography>
             <Divider variant="middle" sx={{ pt: 1, pb: 0, ml: 1, mr: 1 }} />
           </Box>

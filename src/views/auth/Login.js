@@ -221,15 +221,18 @@ export default function SignIn(props) {
                 </Grid>
                 <Grid item>
                   <Stack flexDirection="row">
-                    <Typography>Don't have an account?</Typography>
-                    <Typography>
+                    <Typography variant="body2">
+                      Don't have an account?
+                    </Typography>
+                    <Typography variant="body2">
                       <Link
                         href="/register"
-                        variant="body2"
+                        variant="body1"
                         sx={{
                           lineHeight: LINE_HEIGHT.lh17,
                           fontWeight: FONT_WEIGHT.middle,
                           textDecoration: "none",
+                          ml: "3px"
                         }}
                       >
                         Sign Up
