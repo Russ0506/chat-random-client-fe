@@ -1,9 +1,5 @@
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
-import vyBatBG from "../img/vyBatBG.jpg";
-import nhuBg from "../img/nhuAva.jpg";
-import anBg from "../img/anAva.jpg";
-import allin from "../img/allin.png";
 import wwwws from "../img/sss.png";
 import React from "react";
 import { Button, Stack } from "@mui/material";

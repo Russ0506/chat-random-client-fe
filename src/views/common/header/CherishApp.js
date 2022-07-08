@@ -13,7 +13,7 @@ const icoList = {
   home: {
     notChosen: "ci:home-heart",
     chosen: "ci:home-heart-1",
-    link: "/",
+    link: "/homepage",
   },
   chat: {
     notChosen: "bi:chat-heart",
@@ -50,7 +50,7 @@ export default function CherishApp({ index = 1, body }) {
         }}
       >
         {index == 1 ? (
-          <ChosenButtonNav component={Link} to={icoList.home.link}>
+          <ChosenButtonNav>
             <Iconify
               icon={icoList.home.chosen}
               style={{ width: "35px", height: "35px" }}
@@ -65,7 +65,7 @@ export default function CherishApp({ index = 1, body }) {
           </ButtonNav>
         )}
         {index == 2 ? (
-          <ChosenButtonNav component={Link} to={icoList.chat.link}>
+          <ChosenButtonNav>
             <Iconify
               icon={icoList.chat.chosen}
               style={{ width: "28px", height: "28px" }}
@@ -80,7 +80,7 @@ export default function CherishApp({ index = 1, body }) {
           </ButtonNav>
         )}
         {index == 3 ? (
-          <ChosenButtonNav component={Link} to={icoList.profile.link}>
+          <ChosenButtonNav>
             <Iconify
               icon={icoList.profile.chosen}
               style={{ width: "32px", height: "32px" }}
