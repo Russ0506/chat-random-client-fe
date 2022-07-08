@@ -31,9 +31,10 @@ export default function PostLayout({ data }) {
   return (
     <Card
       sx={{
-        maxWidth: { sm: 400, md: 800 },
+        maxWidth: { sm: 400, md: 750 },
         mb: "30px",
         boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+        width: "100%"
       }}
     >
       <CardHeader
@@ -63,7 +64,7 @@ export default function PostLayout({ data }) {
           {data.content}
         </Typography>
       </CardContent>
-      <CardMedia component="img" image={data.img} alt="img" />
+      <CardMedia component="img" image={data.img} alt="img" width="100%" />
 
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
