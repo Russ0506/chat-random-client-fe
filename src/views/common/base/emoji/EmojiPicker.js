@@ -100,20 +100,21 @@ export default function EmojiPicker({ disabled, value, setValue, alignRight = fa
   };
 
   return (
-    <ClickAwayListener onClickAway={handleClickAway}>
+        
+    <ClickAwayListener onClickAway={handleClickAway} >
       <RootStyle {...other}>
         <PickerStyle
-          sx={{
+          sx={{boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
             ...(alignRight && {
               right: -2,
-              left: 'auto !important',
+              left: "auto !important",
             }),
           }}
         >
           {emojiPicker}
         </PickerStyle>
         <IconButton disabled={disabled} size="small" onClick={triggerPicker}>
-          <Iconify icon={'eva:smiling-face-fill'} width={20} height={20} />
+          <Iconify icon={"eva:smiling-face-fill"} width={20} height={20} />
         </IconButton>
       </RootStyle>
     </ClickAwayListener>
