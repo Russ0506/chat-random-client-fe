@@ -1,33 +1,39 @@
 import React from "react";
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { GRP_COLOR, BORDER_RADIUS, BOX_SHADOW, FONT_SIZE } from "../../constant/css_constant"
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import {
+  GRP_COLOR,
+  BORDER_RADIUS,
+  BOX_SHADOW,
+  FONT_SIZE,
+} from "../../constant/css_constant";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
 import Loading from "../common/base/loading/Loading";
 import Select from "react-select";
-import { axiosClient, axiosMultipartForm } from '../../setup/axiosClient'
+import { axiosClient, axiosMultipartForm } from "../../setup/axiosClient";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-
+import { Stack } from "@mui/material";
+import bgNew from "../auth/img/conv.png";
+import { styled } from "@mui/material/styles";
 const URL = "users";
 
 class SignUp extends React.PureComponent {
-
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -35,19 +41,17 @@ class SignUp extends React.PureComponent {
       crop: {
         unit: "%",
         width: 30,
-        aspect: 16 / 9
+        aspect: 16 / 9,
       },
       open: false,
       selectedDate: new Date(),
       isSubmit: false,
-      message: '',
+      message: "",
       options: [],
     };
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
   }
-
 
   onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -58,7 +62,7 @@ class SignUp extends React.PureComponent {
       reader.readAsDataURL(e.target.files[0]);
     }
 
-    this.handleOpen()
+    this.handleOpen();
   };
 
   // If you setState the crop in here you should return false.
@@ -111,73 +115,80 @@ class SignUp extends React.PureComponent {
     );
 
     return new Promise((resolve, reject) => {
-      const reader = new FileReader()
+      const reader = new FileReader();
       canvas.toBlob(
         (blob) => {
           if (!blob) {
-            console.error('Canvas is empty');
+            console.error("Canvas is empty");
             return;
           }
           blob.name = fileName;
           window.URL.revokeObjectURL(this.fileUrl);
           this.fileUrl = window.URL.createObjectURL(blob);
           resolve(this.fileUrl);
-          reader.readAsDataURL(blob)
+          reader.readAsDataURL(blob);
           reader.onloadend = () => {
-            this.dataURLtoFile(reader.result, 'cropped.jpg')
-          }
+            this.dataURLtoFile(reader.result, "cropped.jpg");
+          };
         },
-        'image/jpeg',
+        "image/jpeg",
         1
       );
     });
   }
 
   dataURLtoFile(dataurl, filename) {
-    let arr = dataurl.split(','),
-        mime = arr[0].match(/:(.*?);/)[1],
-        bstr = atob(arr[1]), 
-        n = bstr.length, 
-        u8arr = new Uint8Array(n);
-            
-    while(n--){
-        u8arr[n] = bstr.charCodeAt(n);
+    let arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
     }
-    let croppedImage = new File([u8arr], filename, {type:mime});
-    this.setState({croppedImage: croppedImage }) 
+    let croppedImage = new File([u8arr], filename, { type: mime });
+    this.setState({ croppedImage: croppedImage });
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({
-      isSubmit: "true"
-    })
+      isSubmit: "true",
+    });
     const data = new FormData(event.currentTarget);
 
     data.append("image", this.state.croppedImage, "imagename");
     const params = {
       user: {
-        first_name: data.get("firstName"), last_name: data.get("lastName"),
-        birthday: this.state.selectedDate, email: data.get("email"), password: data.get("password"),
-        gender: data.get("gender"), time_zone: data.get("time_zone"), avatar: data.get("image")
-      }
+        first_name: data.get("firstName"),
+        last_name: data.get("lastName"),
+        birthday: this.state.selectedDate,
+        email: data.get("email"),
+        password: data.get("password"),
+        gender: data.get("gender"),
+        time_zone: data.get("time_zone"),
+        avatar: data.get("image"),
+      },
     };
 
     const formData = new FormData();
-    for (let param in params['user']) {
-      formData.append(`user[${param}]`, params['user'][param])
+    for (let param in params["user"]) {
+      formData.append(`user[${param}]`, params["user"][param]);
     }
 
-    axiosMultipartForm.post(`${URL}`, formData).then((data) => {
-      if (data.success) {
-        // this function still not convert to class
-        // this.props.navigation.navigate("email-success");
-      }
-    })
+    axiosMultipartForm
+      .post(`${URL}`, formData)
+      .then((data) => {
+        if (data.success) {
+          // this function still not convert to class
+          // this.props.navigation.navigate("email-success");
+        }
+      })
       .catch(() => {
-        this.setState({ isSubmit: false })
+        this.setState({ isSubmit: false });
       });
-  }
+  };
 
   handleOpen = () => this.setState({ open: true });
   handleClose = () => this.setState({ open: false });
@@ -186,31 +197,23 @@ class SignUp extends React.PureComponent {
     this.setState({ selectedDate: date });
   }
 
-  signup_button_style = {
-    mt: 3, mb: 2,
-    bgcolor: GRP_COLOR.BACKGROUND01,
-    borderRadius: BORDER_RADIUS.br10,
-    boxShadow: BOX_SHADOW.CODE001,
-    height: "45px",
-  }
-
   style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 900,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
+    bgcolor: "background.paper",
+    border: "2px solid #000",
     boxShadow: 24,
     p: 4,
   };
 
   componentDidMount() {
     axiosClient.get(`time_zones.json`).then((data) => {
-      this.setState(
-        { options: data.time_zones.map(it => ({ value: it, label: it })) }
-      );
+      this.setState({
+        options: data.time_zones.map((it) => ({ value: it, label: it })),
+      });
     });
   }
 
@@ -218,7 +221,15 @@ class SignUp extends React.PureComponent {
     const { crop, croppedImageUrl, src, croppedImage } = this.state;
 
     return (
-      <Box sx={{ overflow: "scroll", bgcolor: GRP_COLOR.WHITECODE, height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+      <Box
+        sx={{
+          bgcolor: GRP_COLOR.WHITECODE,
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
         <Loading show={this.state.isSubmit}></Loading>
         <Modal
           open={this.state.open}
@@ -237,166 +248,257 @@ class SignUp extends React.PureComponent {
                 onChange={this.onCropChange}
               />
             )}
-            <Button sx={{float: "right", pt: 4}} onClick={this.handleClose}>OK</Button>
+            <Button sx={{ float: "right", pt: 4 }} onClick={this.handleClose}>
+              OK
+            </Button>
           </Box>
         </Modal>
-        <Container component="main" maxWidth="xs" className={this.state.isSubmit ? "opacity-background" : ""}>
-          <CssBaseline />
-          <Box
+
+        <Grid
+          container
+          spacing={0}
+          sx={{
+            width: "100%",
+            height: "100%",
+            zIndex: 10,
+          }}
+          columns={{ xs: 1, sm: 2, md: 2 }}
+        >
+          <Stack
             sx={{
-              marginTop: 8,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              width: "400px",
+              height: "100%",
+              background: "rgb(190,181,242)",
+              background:
+                "linear-gradient(180deg, #b8abff, rgba(129,124,206,1) 55%, rgba(132,115,218,1) 100%)",
+              position: "relative",
             }}
+            justifyContent="center"
           >
-            <Typography component="h1" variant="h5">
-              Sign up
-            </Typography>
-            <Box component="form" noValidate onSubmit={this.handleSubmit} sx={{ mt: 3 }}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    autoComplete="given-name"
-                    name="firstName"
-                    required
-                    fullWidth
-                    id="firstName"
-                    label="First Name"
-                    autoFocus
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="family-name"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    name="password"
-                    label="Enter Password"
-                    type="password"
-                    id="password"
-                    autoComplete="new-password"
-                  />
-                </Grid>
-                <Grid item xs={12} >
-                  <TextField
-                    required
-                    fullWidth
-                    name='re-password'
-                    label="Confirm Password"
-                    type="password"
-                    id="re-password"
-                    autoComplete="new-password"
-                  />
-                </Grid>
-                <Grid item xs={12} >
-
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DesktopDatePicker
-                      label="Birthday"
-                      value={this.state.selectedDate}
-                      minDate={new Date('1920-01-01')}
-                      maxDate={new Date()}
-                      onChange={this.handleDateChange}
-                      renderInput={(params) => <TextField {...params} />}
-                      id="birthday"
-                      name="birthday"
-                    />
-
-                  </LocalizationProvider>
-                </Grid>
-
-                <Grid item xs={12} >
-                  <FormControl>
-                    <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel>
-                    <RadioGroup
-                      row
-                      aria-labelledby="demo-row-radio-buttons-group-label"
-                      name="gender"
-                      id="gender"
-                    >
-                      <FormControlLabel value="female" control={<Radio />} label="Female" />
-                      <FormControlLabel value="male" control={<Radio />} label="Male" />
-                      <FormControlLabel value="other" control={<Radio />} label="Other" />
-                    </RadioGroup>
-                  </FormControl>
-                </Grid>
-
-                <Grid item xs={12} >
-                  <FormControl>
-                    <FormLabel>Time zome</FormLabel>
-                    <Select options={this.state.options} name="time_zone" />
-                  </FormControl>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Box pb={3}>
-                    <TextField type="file" accept="image/*" onChange={this.onSelectFile} multiple />
-                  </Box>
-                  {croppedImageUrl && (
-                    <img value="croppedImageUrl" alt="Crop" style={{ maxWidth: "100%" }} src={croppedImageUrl} />
-                  )}
-                  <input type="image" name="avatar" hidden value={croppedImageUrl}></input>
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                    label="I want to receive inspiration, marketing promotions and updates via email."
-                  />
-                </Grid>
-              </Grid>
-              {
-                this.state.message ?
-                  <Box
-                    component="div"
-                    variant="h5"
-                    color="red"
-                    fontSize={FONT_SIZE.smallText}
-                  >
-                    {this.state.message}
-                  </Box> : ''}
-              <Button
-
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={this.signup_button_style}
+            <Box sx={{ width: "100%", padding: 5 }}>
+              <Typography
+                variant="h2"
+                color="#fff"
+                sx={{ fontWeight: 700, lineHeight: 1.1 }}
               >
-                Sign Up
-              </Button>
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <Link href="/users/login" variant="body2">
-                    Already have an account? Sign in
-                  </Link>
-                </Grid>
-              </Grid>
+                Adventure Starts Here
+              </Typography>
+              <Typography color="#fff">
+                Create an account to join the community and finding your
+                friends!
+              </Typography>
             </Box>
-          </Box>
-        </Container>
+            <img src={`${bgNew}`} alt="registCover" width="100%" />
+          </Stack>
+          <Stack
+            sx={{
+              width: "calc(100% - 400px)",
+              height: "100%",
+              background: "#fff",
+            }}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Container
+              component="main"
+              maxWidth="sm"
+              className={this.state.isSubmit ? "opacity-background" : ""}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Typography component="h1" variant="h4" fontWeight={600}>
+                  SIGN UP
+                </Typography>
+                <Box
+                  component="form"
+                  noValidate
+                  onSubmit={this.handleSubmit}
+                  sx={{ mt: 3 }}
+                >
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        autoComplete="given-name"
+                        name="firstName"
+                        required
+                        fullWidth
+                        id="firstName"
+                        label="First Name"
+                        autoFocus
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="lastName"
+                        label="Last Name"
+                        name="lastName"
+                        autoComplete="family-name"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        name="password"
+                        label="Enter Password"
+                        type="password"
+                        id="password"
+                        autoComplete="new-password"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        fullWidth
+                        name="re-password"
+                        label="Confirm Password"
+                        type="password"
+                        id="re-password"
+                        autoComplete="new-password"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DesktopDatePicker
+                          label="Birthday"
+                          value={this.state.selectedDate}
+                          minDate={new Date("1920-01-01")}
+                          maxDate={new Date()}
+                          onChange={this.handleDateChange}
+                          renderInput={(params) => <TextField {...params} />}
+                          id="birthday"
+                          name="birthday"
+                        />
+                      </LocalizationProvider>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <FormControl>
+                        <FormLabel id="demo-row-radio-buttons-group-label">
+                          Gender
+                        </FormLabel>
+                        <RadioGroup
+                          row
+                          aria-labelledby="demo-row-radio-buttons-group-label"
+                          name="gender"
+                          id="gender"
+                          defaultValue="female"
+                        >
+                          <FormControlLabel
+                            value="female"
+                            control={<Radio />}
+                            label="Female"
+                          />
+                          <FormControlLabel
+                            value="male"
+                            control={<Radio />}
+                            label="Male"
+                          />
+                          <FormControlLabel
+                            value="other"
+                            control={<Radio />}
+                            label="Other"
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <FormControl>
+                        <FormLabel>Time zome</FormLabel>
+                        <Select options={this.state.options} name="time_zone" />
+                      </FormControl>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <Box pb={3}>
+                        <TextField
+                          type="file"
+                          accept="image/*"
+                          onChange={this.onSelectFile}
+                          multiple
+                        />
+                      </Box>
+                      {croppedImageUrl && (
+                        <img
+                          value="croppedImageUrl"
+                          alt="Crop"
+                          style={{ maxWidth: "100%" }}
+                          src={croppedImageUrl}
+                        />
+                      )}
+                      <input
+                        type="image"
+                        name="avatar"
+                        hidden
+                        value={croppedImageUrl}
+                      ></input>
+                    </Grid>
+                  </Grid>
+                  {this.state.message ? (
+                    <Box
+                      component="div"
+                      variant="h5"
+                      color="red"
+                      fontSize={FONT_SIZE.smallText}
+                    >
+                      {this.state.message}
+                    </Box>
+                  ) : (
+                    ""
+                  )}
+                  <Stack alignItems="flex-start" sx={{mt: 1}}>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      sx={{
+                        background: "#ff6392e6",
+                        boxShadow: "none",
+                        width: "200px",
+                      }}
+                    >
+                      Sign Up
+                    </Button>
+                    <Stack flexDirection="row" marginTop={2}>
+                      <Typography variant="body1">
+                        Already have an account?
+                      </Typography>
+                      <Link
+                        href="/users/login"
+                        variant="body2"
+                        marginLeft="5px"
+                      >
+                        <Typography variant="body1">Sign in</Typography>
+                      </Link>
+                    </Stack>
+                  </Stack>
+                </Box>
+              </Box>
+            </Container>
+          </Stack>
+        </Grid>
       </Box>
-    )
-  };
+    );
+  }
 }
 
 export default SignUp;
