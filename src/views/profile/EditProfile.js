@@ -26,6 +26,7 @@ import { CmmnSelect } from "../chat/popup/components/CmmnSelect";
 import { CmmnGroupSelect } from "../chat/popup/components/CmmnGroupSelect";
 import { useTheme } from "@mui/material/styles";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import AvatarFramEdit from "./components/AvatarFramEdit";
 class EditProfileCls extends Component {
   constructor(props) {
     super(props);
@@ -76,35 +77,11 @@ class EditProfileCls extends Component {
             alignItems="center"
             sx={{ width: "200px", height: "100%" }}
           >
-            <Box
-              sx={{
-                width: "125px",
-                height: "125px",
-                background: "gray",
-                borderRadius: "50%",
-                position: "relative",
-              }}
-            >
-              <IconButton
-                color="primary"
-                aria-label="upload picture"
-                component="span"
-                disableRipple
-                sx={{
-                  position: "absolute",
-                  right: "0",
-                  bottom: "0",
-                  borderRadius: "50%",
-                  background: "rgb(236, 236, 250)",
-                  border: "2px solid white",
-                  fontSize: "10px",
-                  width: "35px",
-                  height: "35px",
-                }}
-              >
-                <PhotoCamera />
-              </IconButton>
-            </Box>
+            <AvatarFramEdit
+              img={null}
+              sx={{ width: "100px", height: "100px", position: "relative" }}
+            />
+
             <Typography
               variant="body1"
               sx={{ mt: 1, color: "#4f4f4f", justifySelf: "flex-end" }}
