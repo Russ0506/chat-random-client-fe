@@ -5,6 +5,7 @@ export const authenRouteOneTime = [
 ];
 export const authenRoute = [
   "/app",
+  "/homepage",
   "/users/profile",
   "/users/profile/edit",
   "/users/profile/change-password",

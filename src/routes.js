@@ -1,6 +1,6 @@
 import Login from "./views/auth/Login";
-import React, { useEffect } from "react";
-import { Navigate, Outlet, Route, useRoutes } from "react-router-dom";
+import React from "react";
+import { useRoutes } from "react-router-dom";
 import HomePage from "./views/admin/homePage/HomePage";
 import ResetPassword from "./views/auth/ResetPassword";
 import SignUp from "./views/auth/Register";
@@ -8,7 +8,6 @@ import Welcome from "./views/welcome/Welcome";
 import RegisterConfirm from "./views/auth/RegisterConfirm";
 import ForgotPassword from "./views/auth/ForgotPassword";
 import ResetPwdEmailSendSuccess from "./views/auth/ResetPwdEmailSendSuccess";
-import { PlacesWithStandaloneSearchBox } from "./components/googleMapAPI/GoogleMapAPI";
 import ResetPasswordConfirm from "./views/auth/ResetPasswordConfirm";
 import RegisterEmailSendSuccess from "./views/auth/RegisterEmailSendSuccess";
 import Error404 from "./views/error/Error404";
@@ -16,9 +15,8 @@ import Homepage from "./views/Homepage";
 import AuthenLoading from "./views/common/base/loading/AuthenLoading";
 import UserProfile from "./views/profile/UserProfile";
 import CherishApp from "./views/common/header/CherishApp";
-import EditProfile from "./views/profile/EditProfile";
 import MenuPreProfile from "./views/profile/components/MenuPreProfile";
-import ChangePwd from "../src/views/profile/ChangePwd";
+import HomeScreen from "./views/homeScreen/HomeScreen";
 
 export const ProtectedRoute = ({ link = "/", children }) => {
   return <AuthenLoading link={link} children={children} />;
@@ -47,6 +45,15 @@ export default function Routes() {
       ),
     },
     {
+      path: "/homepage",
+      element: (
+        <CherishApp
+          body={<ProtectedRoute link="/homepage" children={<HomeScreen />} />}
+          index={1}
+        />
+      ),
+    },
+    {
       path: "/users",
       children: [
         {
@@ -70,7 +77,6 @@ export default function Routes() {
         },
         {
           path: "profile",
-
           children: [
             {
               path: "",

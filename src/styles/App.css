@@ -70,3 +70,6 @@
   transition: all 0.2s ease !important;
   overflow: auto !important;
 } */
+.emoji-mart-bar:last-child {
+  height: 10px;
+}
