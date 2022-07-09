@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/auth";
 import messageReducer from "../features/message";
 import conversationReducer from "../features/chat/conversationSlice";
@@ -13,5 +13,5 @@ const reducer = {
 const store = configureStore({
   reducer: reducer,
   devTools: true,
-})
+});
 export default store;
