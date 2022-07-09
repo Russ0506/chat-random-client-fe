@@ -8,7 +8,7 @@ const reducer = {
   auth: authReducer,
   message: messageReducer,
   conversation: conversationReducer,
-  messages: messagesReducer
+  messages: messagesReducer,
 }
 const store = configureStore({
   reducer: reducer,

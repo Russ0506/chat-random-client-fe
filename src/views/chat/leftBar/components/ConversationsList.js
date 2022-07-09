@@ -13,6 +13,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { axiosClient } from "../../../../setup/axiosClient";
 import { changeConversation } from "../../../../features/chat/conversationSlice"
 import { useDispatch } from 'react-redux';
+import { setConversationsList } from "../../../../features/chat/conversationSlice"
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -64,6 +65,7 @@ export default function ConversationsList(){
   useEffect(() => {
     axiosClient.get(`conversations`).then((data)=>{
       setConversations(data);
+      dispatch(setConversationsList(data));
     });
   }, [])
 
