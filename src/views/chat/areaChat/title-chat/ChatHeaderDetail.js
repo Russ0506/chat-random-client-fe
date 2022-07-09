@@ -57,7 +57,7 @@ export default function ChatHeaderDetail({ openBar, partner }) {
 
 function OneAvatar({ partner }) {
 
-  if (partner === undefined || !partner.status) {
+  if (partner === undefined || !partner.is_online) {
     return null;
   }
 
@@ -70,7 +70,7 @@ function OneAvatar({ partner }) {
           style={{ width: 52, height: 52 }}
         />
         <BadgeStatus
-          status={partner.status}
+          status={partner.is_online}
           sx={{ position: "absolute", right: 2, bottom: 2 }}
         />
       </Box>
@@ -79,7 +79,7 @@ function OneAvatar({ partner }) {
 
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
           {/* {partner.status !== 'offline' ? capitalCase(partner.status) : fToNow(partner.lastActivity || '')} */}
-          {partner.status !== "false"
+          {partner.is_online !== "false"
             ? "Online"
             : fToNow(partner.last_online || "")}
         </Typography>
