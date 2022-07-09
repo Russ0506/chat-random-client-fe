@@ -52,16 +52,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function ConversationsList(){
+export default function ConversationsList() {
   const dispatch = useDispatch();
   const [conversations, setConversations] = React.useState([]);
 
   useEffect(() => {
-    axiosClient.get(`conversations`).then((data)=>{
+    axiosClient.get(`conversations`).then((data) => {
       setConversations(data);
       dispatch(setConversationsList(data));
     });
-  }, [])
+  }, []);
 
   const onChangeConversation = (item) => {
     dispatch(changeConversation(item))
@@ -73,7 +73,7 @@ export default function ConversationsList(){
       sx={{
         background: "white",
         height: "calc(100% - 70px)",
-        overflow: "auto"
+        overflowY: "auto",
       }}
     >
       <Search>
@@ -88,12 +88,17 @@ export default function ConversationsList(){
       <List>
         {conversations.map((item, k) => (
           <ListItem key={k} disablePadding>
-            <ListItemButton onClick={()=> {onChangeConversation(item)}}>
+            <ListItemButton
+              sx={{ padding: { xs: 0 }, paddingLeft: { xs: 2 } }}
+              onClick={() => {
+                onChangeConversation(item);
+              }}
+            >
               <ChatInfoLayer data={item} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
     </Box>
-  )
+  );
 }
