@@ -6,13 +6,9 @@ import { format } from 'date-fns'
 // @mui
 import { styled } from '@mui/material/styles';
 import { Avatar, Box, Typography } from '@mui/material';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
-
-import Iconify from '../../../common/base/icon/Iconify';
-import image from "../../../../assets/img/find-partner.jpg"
-
+import MessageStatus from './MessageStatus';
+import { selectMsgLatestStatus } from '../../../../features/chat/messagesSlice'
+import { useSelector } from 'react-redux';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -79,18 +75,9 @@ var DateDiff = {
   }
 }
 
-const Switch = props => {
-  const { test, children } = props
-  // filter out only children with a matching prop
-  return children.find(child => {
-    return child.props.value === test
-  })
-}
-
 export default function ChatMessageItem({ message, onOpenLightbox }) {
-  const listStatus = ['sending', 'sent', 'received', 'seen']
   const [showHistoryTimeFlg, setShowHistoryTimeFlg] = React.useState(false)
-  const [statusMess, setStatusMess] = React.useState("sending")
+  const lastestMsgStatus = useSelector((state) => {return selectMsgLatestStatus(state, message)});
   const myId = localStorage.getItem('user_id')
   const senderDetails =
     message.recipient_id != myId
@@ -103,46 +90,16 @@ export default function ChatMessageItem({ message, onOpenLightbox }) {
   const isMe = senderDetails.type === 'me';
   const isImage = message.contentType === 'image';
   const isSenderSysMess = localStorage.getItem('user_id') == message.recipient_id
-  // function GetDiffTime(props) {
-  //   const [result, setResult] = React.useState("");
-  //   if(props.past_time){
-  //     setResult(formatDistanceToNowStrict(new Date(props.past_time), {addSuffix: true}))
-  //   }
-  //   return result
-  // }
 
   function showHistoryTime(id) {
     setShowHistoryTimeFlg(true);
-    var element
-    if (id == '0') {
-      element = document.getElementsByClassName("" + id);
-      console.log(document.getElementsByTagName(id));
-      if (element[0].className.contains("non-block")) {
-        console.log("1");
-        for (const box of element) {
-          console.log(box.classList);
-          box.classList.remove = "non-block";
-          box.classList.add = "block custom-message-system 0";
-        }
-      } else {
-        for (const box of element) {
-          box.classList.remove = "block";
-          box.classList.add = "non-block custom-message-system 0";
-        }
-      }
-    }
-    else {
-      element = document.getElementById(id);
-      console.log(element);
-      console.log(element.className);
-      if (element.classList.contains("non-block")) {
-        console.log("1");
-        element.classList.remove = "non-block";
-        element.className = "block custom-message-system";
-      } else {
-        element.classList.remove = "block";
-        element.className = "non-block custom-message-system";
-      }
+    var element = document.getElementById(id);
+    if (element.classList.contains("non-block")) {
+      element.classList.remove = "non-block";
+      element.className = "block custom-message-system";
+    } else {
+      element.classList.remove = "block";
+      element.className = "non-block custom-message-system";
     }
   };
   return (
@@ -164,7 +121,7 @@ export default function ChatMessageItem({ message, onOpenLightbox }) {
               <Avatar sx={{ width: 40, height: 40 }} />
             )}
 
-            <Box sx={{ ml: 2, position: "relative", ...({ marginRight: "17px" }) }} onClick={() => showHistoryTime(message.id)}>
+            <Box sx={{ ml: 2, position: "relative", ...({ marginRight: "17px" }) }} onClick={() => showHistoryTime(message.id || message.uuid)}>
               <ContentStyle
                 sx={{
                   ...(isMe && {
@@ -197,9 +154,8 @@ export default function ChatMessageItem({ message, onOpenLightbox }) {
                   noWrap
                   variant="caption"
                   sx={{ ...(isMe && { justifyContent: "flex-end", width: "max-content" }) }}
-                  id={message.id}
-                  className={`init-history-date non-block ${message.id}`}
-                  name={message.id}
+                  id={message.id || message.uuid}
+                  className={`init-history-date non-block`}
                 >
                   {(message.created_at && showHistoryTimeFlg) ? (
                     (DateDiff.inDays(new Date(message.created_at), new Date()) < 3) ? formatDistanceToNowStrict(new Date(message.created_at), { addSuffix: true }) : format(new Date(message.created_at), 'MM-dd-yyyy')
@@ -209,17 +165,7 @@ export default function ChatMessageItem({ message, onOpenLightbox }) {
             </Box>
             {
               isMe ? (
-                <Switch test={statusMess}>
-                  <div className="config-position-icon" value={listStatus[0]}><CheckCircleOutlineIcon sx={{width: "16px"}} /> </div>
-                  <div className="config-position-icon" value={listStatus[1]}><CheckCircleIcon sx={{width: "16px"}}/></div>
-                  <div className="config-position-icon" value={listStatus[2]}><CircleOutlinedIcon sx={{width: "16px"}}/></div>
-                  <div className="config-position-icon" value={listStatus[3]}>
-                  <Box className="config-position-icon-seen">
-                   <img src={image} className="avatar-circle" width="16px" height="16px"></img>
-                  </Box>
-                  </div>
-                </Switch>
-
+                <MessageStatus status={ lastestMsgStatus || message.status }/>
               ) : ''
             }
           </Box>

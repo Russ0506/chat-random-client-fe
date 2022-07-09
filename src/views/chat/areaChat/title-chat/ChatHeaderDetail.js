@@ -23,7 +23,6 @@ const RootStyle = styled("div")(({ theme }) => ({
   minHeight: CHAT_HEADER_HEIGHT,
   display: "flex",
   alignItems: "center",
-  boxShadow: 'rgb(0 0 0 / 5%) 0px 1px 2px 0px'
 }));
 
 export default function ChatHeaderDetail({ openBar, partner }) {

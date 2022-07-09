@@ -1,4 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { axiosClient } from '../../setup/axiosClient'
+
+export const seenConversation = createAsyncThunk(
+  "chat/seen_all_messages_in_conversation",
+  async (params, thunkAPI) => {
+    try {
+      await axiosClient.put(`/conversations/${params.conversationId}/seen`)
+    } catch (error) {
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
 
 const initialState = {
   currentConversation : null,
@@ -11,11 +23,10 @@ export const conversationSlice = createSlice({
   initialState,
   reducers: {
     changeConversation: (state , { payload }) => {
-      console.log(state);
       state.currentConversation = payload
     },
     pushConversations: (state, { payload }) => {
-      state.recentConversationIds= state.recentConversationIds.filter((id) => id !== payload) 
+      state.recentConversationIds= state.recentConversationIds.filter((id) => id !== payload)
       state.recentConversationIds.push(payload);
     },
     setConversationsList: (state , { payload }) => {
