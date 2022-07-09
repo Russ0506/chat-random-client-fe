@@ -62,9 +62,9 @@ const RootStyle = styled('span')(({ theme, ownerState }) => {
       backgroundColor: theme.palette.info.main,
     }),
 
-    ...(status === 'false' && { backgroundColor: 'transparent' }),
+    ...(status === false && { backgroundColor: 'transparent' }),
 
-    ...(status === 'true' && {
+    ...(status === true && {
       backgroundColor: theme.palette.success.main,
     }),
   };
@@ -74,7 +74,7 @@ const RootStyle = styled('span')(({ theme, ownerState }) => {
 
 BadgeStatus.propTypes = {
   size: PropTypes.oneOf(['small', 'medium', 'large']),
-  status: PropTypes.oneOf(['away', 'busy', 'unread', 'online', 'offline', 'invisible','false', 'true']),
+  status: PropTypes.oneOf(['away', 'busy', 'unread', 'online', 'offline', 'invisible',false,true]),
 };
 
 export default function BadgeStatus({ size = 'medium', status = 'offline', ...other }) {
