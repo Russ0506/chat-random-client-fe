@@ -1,21 +1,33 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const initialState = null;
+const initialState = {
+  currentConversation : null,
+  recentConversationIds : [],
+  conversationsList: null,
+};
 
 export const conversationSlice = createSlice({
   name: 'conversation',
   initialState,
   reducers: {
-    changeConversation: (state, { payload }) => {
-      return payload
-    }
+    changeConversation: (state , { payload }) => {
+      console.log(state);
+      state.currentConversation = payload
+    },
+    pushConversations: (state, { payload }) => {
+      state.recentConversationIds= state.recentConversationIds.filter((id) => id !== payload) 
+      state.recentConversationIds.push(payload);
+    },
+    setConversationsList: (state , { payload }) => {
+      state.conversationsList = payload
+    },
   }
 });
 
-export const { changeConversation } = conversationSlice.actions;
+export const { changeConversation, pushConversations, setConversationsList } = conversationSlice.actions;
 
 export const selectConversation = (state) => {
-  return state.conversation;
+  return state.conversation.currentConversation;
 }
 
 export default conversationSlice.reducer;

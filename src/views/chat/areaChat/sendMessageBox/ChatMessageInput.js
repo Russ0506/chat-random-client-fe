@@ -13,6 +13,7 @@ import {
 import Iconify from "../../../common/base/icon/Iconify";
 import EmojiPicker from "../../../common/base/emoji/EmojiPicker";
 import { sendNewMessage } from "../../../../features/chat/messagesSlice";
+import { pushConversations } from "../../../../features/chat/conversationSlice";
 
 const RootStyle = styled("div")(({ theme }) => ({
   minHeight: 56,
@@ -54,6 +55,8 @@ export default function ChatMessageInput({
       var element = document.getElementById("chat-scroll-ult");
       element.scrollTop = element.scrollHeight;
     }
+
+    if(conversation.id) dispatch(pushConversations(conversation.id));
     return setMessage("");
   };
 

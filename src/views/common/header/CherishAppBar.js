@@ -174,8 +174,8 @@ const CherishAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              {settings.map((setting,i) => (
+                <MenuItem key={i} onClick={handleCloseUserMenu}>
                   <Typography
                     component={Link}
                     variant="body1"
