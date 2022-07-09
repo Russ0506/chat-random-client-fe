@@ -122,7 +122,7 @@ export default function LightboxModal({ images, photoIndex, setPhotoIndex, isOpe
 
   const customStyles = {
     overlay: {
-      zIndex: 90,
+      zIndex: 9999,
     },
   };
 
