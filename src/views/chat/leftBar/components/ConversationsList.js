@@ -5,69 +5,9 @@ import { alpha } from "@mui/material/styles";
 import ChatInfoLayer from "./ChatInfoLayer";
 import SearchIcon from "@mui/icons-material/Search";
 import { axiosClient } from "../../../../setup/axiosClient";
-import { changeConversation } from "../../../../features/chat/conversationSlice";
-import { useDispatch } from "react-redux";
-
-
-const UPDATE_CONVERSATION_HIST = "UPDATE_CONVERSATION_HIST";
-function updateConversationHis() {
-  return {
-    type: UPDATE_CONVERSATION_HIST,
-    info: "Update Conversation History",
-  };
-}
-export default function ConversationsList() {
-  const dispatch = useDispatch();
-  const [conversations, setConversations] = React.useState([]);
-
-  useEffect(() => {
-    axiosClient.get(`conversations`).then((data) => {
-      setConversations(data);
-    });
-  }, []);
-
-  const onChangeConversation = (item) => {
-    dispatch(changeConversation(item));
-  };
-  return (
-    <Box
-      className="conversation-his-ctalog"
-      sx={{
-        background: "white",
-        height: "calc(100% - 70px)",
-        overflow: "auto",
-      }}
-    >
-      <Search>
-        <SearchIconWrapper>
-          <SearchIcon sx={{ color: "gray" }} />
-        </SearchIconWrapper>
-        <StyledInputBase
-          placeholder="Search…"
-          inputProps={{ "aria-label": "search" }}
-        />
-      </Search>
-      <List>
-        {conversations.map((item, k) => (
-          <ListItem key={k} disablePadding>
-            <ListItemButton
-              onClick={() => {
-                onChangeConversation(item);
-              }}
-            >
-              <ChatInfoLayer data={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
-}
-
-// console.log("init state", store.getState());
-// const unsubscribe = store.subscribe(() =>
-//   console.log("update state", store.getState())
-// );
+import { changeConversation } from "../../../../features/chat/conversationSlice"
+import { useDispatch } from 'react-redux';
+import { setConversationsList } from "../../../../features/chat/conversationSlice"
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -111,3 +51,48 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+
+export default function ConversationsList(){
+  const dispatch = useDispatch();
+  const [conversations, setConversations] = React.useState([]);
+
+  useEffect(() => {
+    axiosClient.get(`conversations`).then((data)=>{
+      setConversations(data);
+      dispatch(setConversationsList(data));
+    });
+  }, [])
+
+  const onChangeConversation = (item) => {
+    dispatch(changeConversation(item))
+  }
+  return (
+    <Box
+      className="conversation-his-ctalog"
+      sx={{
+        background: "white",
+        height: "calc(100% - 70px)",
+        overflow: "auto"
+      }}
+    >
+      <Search>
+        <SearchIconWrapper>
+          <SearchIcon sx={{ color: "gray" }} />
+        </SearchIconWrapper>
+        <StyledInputBase
+          placeholder="Search…"
+          inputProps={{ "aria-label": "search" }}
+        />
+      </Search>
+      <List>
+        {conversations.map((item, k) => (
+          <ListItem key={k} disablePadding>
+            <ListItemButton onClick={()=> {onChangeConversation(item)}}>
+              <ChatInfoLayer data={item} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  )
+}

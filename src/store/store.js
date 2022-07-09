@@ -5,11 +5,11 @@ import conversationReducer from "../features/chat/conversationSlice";
 import messagesReducer from "../features/chat/messagesSlice";
 
 const reducer = {
-  auth: authReducer, // store for authen
-  message: messageReducer, // store message response from api
-  conversation: conversationReducer, // store infor of current conversation
-  messages: messagesReducer, // store list message for currrent conversation
-};
+  auth: authReducer,
+  message: messageReducer,
+  conversation: conversationReducer,
+  messages: messagesReducer,
+}
 const store = configureStore({
   reducer: reducer,
   devTools: true,
