@@ -245,6 +245,7 @@ export default function SignIn(props) {
           </Box>
         </Container>
         <Stack
+        display={{xs: "none", md: "flex"}}
           sx={{
             width: "400px",
             height: "100%",

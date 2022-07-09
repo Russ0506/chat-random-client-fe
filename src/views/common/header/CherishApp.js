@@ -8,28 +8,7 @@ import Homepage from "../../Homepage";
 import NewPosterLayout from "../../profile/components/NewPosterLayout";
 import Iconify from "../base/icon/Iconify";
 import CherishAppBar from "./CherishAppBar";
-
-const icoList = {
-  home: {
-    notChosen: "ci:home-heart",
-    chosen: "ci:home-heart-1",
-    link: "/homepage",
-  },
-  chat: {
-    notChosen: "bi:chat-heart",
-    chosen: "bi:chat-heart-fill",
-    link: "/app",
-  },
-  profile: {
-    notChosen: "healthicons:ui-user-profile-outline",
-    chosen: "healthicons:ui-user-profile",
-    link: "/users/profile",
-  },
-  newPost: {
-    notChosen: "ant-design:plus-square-outlined",
-    chosen: "ant-design:plus-square-filled",
-  },
-};
+const sideWidth = "60px";
 export default function CherishApp({ index = 1, body }) {
   const [useNewPost, setUseNewPost] = React.useState(false);
   function handleOpenNewPost() {
@@ -40,11 +19,12 @@ export default function CherishApp({ index = 1, body }) {
   return (
     <Stack flexDirection="row">
       <Stack
+        display={{ xs: "none", md: "flex" }}
         justifyContent="center"
         alignItems="center"
         sx={{
           height: "100vh",
-          width: "60px",
+          width: sideWidth,
           p: "38px",
           borderRight: "1px solid #e5e0e0",
         }}
@@ -111,7 +91,10 @@ export default function CherishApp({ index = 1, body }) {
         )}
       </Stack>
 
-      <Box sx={{ width: "calc(100vw - 60px)", height: "100vh" }}>
+      <Box
+        width={{ xs: "100vw", md: `calc(100vw - ${sideWidth})` }}
+        sx={{ height: "100vh" }}
+      >
         <CherishAppBar />
         <Box
           sx={{
@@ -159,3 +142,24 @@ const ChosenButtonNav = styled(Stack)(({ theme }) => ({
     color: "#6748da",
   },
 }));
+const icoList = {
+  home: {
+    notChosen: "ci:home-heart",
+    chosen: "ci:home-heart-1",
+    link: "/homepage",
+  },
+  chat: {
+    notChosen: "bi:chat-heart",
+    chosen: "bi:chat-heart-fill",
+    link: "/app",
+  },
+  profile: {
+    notChosen: "healthicons:ui-user-profile-outline",
+    chosen: "healthicons:ui-user-profile",
+    link: "/users/profile",
+  },
+  newPost: {
+    notChosen: "ant-design:plus-square-outlined",
+    chosen: "ant-design:plus-square-filled",
+  },
+};

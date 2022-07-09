@@ -1,8 +1,6 @@
 import React from "react";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -12,12 +10,7 @@ import Container from "@mui/material/Container";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import {
-  GRP_COLOR,
-  BORDER_RADIUS,
-  BOX_SHADOW,
-  FONT_SIZE,
-} from "../../constant/css_constant";
+import { GRP_COLOR, FONT_SIZE } from "../../constant/css_constant";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -30,7 +23,6 @@ import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { Stack } from "@mui/material";
 import bgNew from "../auth/img/conv.png";
-import { styled } from "@mui/material/styles";
 const URL = "users";
 
 class SignUp extends React.PureComponent {
@@ -261,47 +253,44 @@ class SignUp extends React.PureComponent {
             width: "100%",
             height: "100%",
             zIndex: 10,
+            overflow: "auto",
           }}
-          columns={{ xs: 1, sm: 2, md: 2 }}
+          columns={{ xs: 1, md: 2 }}
         >
-          <Stack
-            sx={{
-              width: "400px",
-              height: "100%",
-              background: "rgb(190,181,242)",
-              background:
-                "linear-gradient(180deg, #b8abff, rgba(129,124,206,1) 55%, rgba(132,115,218,1) 100%)",
-              position: "relative",
-            }}
-            justifyContent="center"
-          >
-            <Box sx={{ width: "100%", padding: 5 }}>
-              <Typography
-                variant="h2"
-                color="#fff"
-                sx={{ fontWeight: 700, lineHeight: 1.1 }}
-              >
-                Adventure Starts Here
-              </Typography>
-              <Typography color="#fff">
-                Create an account to join the community and finding your
-                friends!
-              </Typography>
-            </Box>
-            <img src={`${bgNew}`} alt="registCover" width="100%" />
-          </Stack>
-          <Stack
-            sx={{
-              width: "calc(100% - 400px)",
-              height: "100%",
-              background: "#fff",
-            }}
-            justifyContent="center"
-            alignItems="center"
-          >
+          <Box position="fixed" sx={{ height: "100%", top: 0, left: 0 }}>
+            <Stack
+              display={{ xs: "none", md: "flex" }}
+              sx={{
+                width: "400px",
+                height: "100%",
+                background: "rgb(190,181,242)",
+                background:
+                  "linear-gradient(180deg, #b8abff, rgba(129,124,206,1) 55%, rgba(132,115,218,1) 100%)",
+                position: "relative",
+              }}
+              justifyContent="center"
+            >
+              <Box sx={{ width: "100%", padding: 5 }}>
+                <Typography
+                  variant="h2"
+                  color="#fff"
+                  sx={{ fontWeight: 700, lineHeight: 1.1 }}
+                >
+                  Adventure Starts Here
+                </Typography>
+                <Typography color="#fff">
+                  Create an account to join the community and finding your
+                  friends!
+                </Typography>
+              </Box>
+              <img src={`${bgNew}`} alt="registCover" width="100%" />
+            </Stack>
+          </Box>
+          <Box paddingLeft={{ xs: 0, md: "400px", width: "100%" }}>
             <Container
-              component="main"
-              maxWidth="sm"
+              sx={{ mt: 5, mb: 5 }}
+              component="div"
+              maxWidth="xs"
               className={this.state.isSubmit ? "opacity-background" : ""}
             >
               <Box
@@ -309,16 +298,22 @@ class SignUp extends React.PureComponent {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
+                  overflow: "auto",
+                  height: "100%",
                 }}
               >
-                <Typography component="h1" variant="h4" fontWeight={600}>
-                  SIGN UP
+                <Typography
+                  component="h1"
+                  variant="h5"
+                  fontSize={FONT_SIZE.formHeader}
+                >
+                  Sign Up
                 </Typography>
                 <Box
                   component="form"
                   noValidate
                   onSubmit={this.handleSubmit}
-                  sx={{ mt: 3 }}
+                  sx={{ mt: 3, fontSize: FONT_SIZE.smallText }}
                 >
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
@@ -465,15 +460,15 @@ class SignUp extends React.PureComponent {
                   ) : (
                     ""
                   )}
-                  <Stack alignItems="flex-start" sx={{mt: 1}}>
+                  <Stack alignItems="flex-start" sx={{ mt: 1 }}>
                     <Button
                       type="submit"
                       fullWidth
                       variant="contained"
                       sx={{
-                        background: "#ff6392e6",
+                        // background: "#ff6392e6",
                         boxShadow: "none",
-                        width: "200px",
+                        // width: "200px",
                       }}
                     >
                       Sign Up
@@ -494,7 +489,7 @@ class SignUp extends React.PureComponent {
                 </Box>
               </Box>
             </Container>
-          </Stack>
+          </Box>
         </Grid>
       </Box>
     );

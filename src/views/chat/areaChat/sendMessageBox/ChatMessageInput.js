@@ -1,31 +1,13 @@
-import PropTypes from "prop-types";
 import { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import moment from 'moment'
+import { useDispatch } from "react-redux";
+import moment from "moment";
 import { styled } from "@mui/material/styles";
-import {
-  Stack,
-  Input,
-  Divider,
-  IconButton,
-  InputAdornment,
-} from "@mui/material";
+import { Stack, Input, IconButton } from "@mui/material";
 import Iconify from "../../../common/base/icon/Iconify";
 import EmojiPicker from "../../../common/base/emoji/EmojiPicker";
 import { sendNewMessage } from "../../../../features/chat/messagesSlice";
 
-const RootStyle = styled("div")(({ theme }) => ({
-  minHeight: 56,
-  display: "flex",
-  position: "relative",
-  alignItems: "center",
-  paddingLeft: theme.spacing(2),
-}));
-
-export default function ChatMessageInput({
-  disabled,
-  conversation
-}) {
+export default function ChatMessageInput({ disabled, conversation }) {
   const dispatch = useDispatch();
   const fileInputRef = useRef(null);
   const [message, setMessage] = useState("");
@@ -43,12 +25,13 @@ export default function ChatMessageInput({
     if (!message) {
       return "";
     }
+
     if (conversation?.id) {
       let params = {
         conversationId: conversation.id,
         text: message,
         recipient_id: conversation.partner.id,
-        create_at:moment().format()
+        create_at: moment().format(),
       };
       dispatch(sendNewMessage(params));
       var element = document.getElementById("chat-scroll-ult");
@@ -88,7 +71,7 @@ export default function ChatMessageInput({
               disabled={disabled}
               value={message}
               setValue={setMessage}
-              sx={{zIndex: 100, }}
+              sx={{ zIndex: 100 }}
             />
             <IconButton disabled={disabled} size="small">
               <Iconify icon="eva:mic-fill" width={22} height={22} />
@@ -109,3 +92,11 @@ export default function ChatMessageInput({
     </RootStyle>
   );
 }
+
+const RootStyle = styled("div")(({ theme }) => ({
+  minHeight: 56,
+  display: "flex",
+  position: "relative",
+  alignItems: "center",
+  paddingLeft: theme.spacing(2),
+}));

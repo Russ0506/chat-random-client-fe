@@ -8,6 +8,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* overflow: auto; */
   /* scroll-behavior: smooth; */
 }
 /* html {
@@ -20,7 +21,7 @@
 }
 ::-webkit-scrollbar:hover {
   opacity: 1;
-   cursor: pointer;
+  cursor: pointer;
 }
 *::-webkit-scrollbar-track {
   background: #f5f5f5;
@@ -28,15 +29,16 @@
 }
 *::-webkit-scrollbar-thumb {
   /* background: #96dfce; */
-  /* background: #dcdcdc; */
-  background: #b3d48f;
+  background: #dcdcdc;
+  /* background: #b3d48f; */
   cursor: pointer;
   border-radius: 10px;
-   cursor: pointer;
+  cursor: pointer;
 }
 *::-webkit-scrollbar-thumb:hover {
-   /* background: #96dfce; */
-    cursor: pointer;
+  /* background: #96dfce; */
+  background: #b3d48f;
+  cursor: pointer;
 }
 .App {
   text-align: center;
