@@ -54,7 +54,7 @@ export default function ChatMessageList({conversation}) {
   };
   return (
     <>
-      <Box  sx={{ height: `calc(100% - ${CHAT_HEADER_HEIGHT})` }}>
+      <Box  sx={{ height: `calc(100% - ${CHAT_HEADER_HEIGHT})`, pl: 2}}>
         <Scrollbar
           scrollableNodeProps={{ ref: scrollRef }}
           sx={{ height: "auto" }}
