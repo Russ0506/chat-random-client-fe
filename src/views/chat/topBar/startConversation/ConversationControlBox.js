@@ -48,25 +48,9 @@ export default function ConversationControlBox() {
           variant="contained"
           onClick={handleClickOpen}
           sx={{ boxShadow: "0px 8px 10px rgb(237 221 255)" }}
-          endIcon={
-            <Iconify
-              display={{ xs: "none", md: "inline-block" }}
-              icon={"mdi:chat-plus-outline"}
-            />
-          }
+          endIcon={<Iconify icon={"mdi:chat-plus-outline"} />}
         >
-          <Iconify
-            width="27px"
-            height="27px"
-            display={{ xs: "inline-block", md: "none" }}
-            icon={"mdi:chat-plus-outline"}
-          />
-          <Typography
-            variant="button"
-            sx={{ display: { xs: "none", md: "inline-block" } }}
-          >
-            New Conversation
-          </Typography>
+          New Conversation
         </Button>
         {/* <Typography color="black">Time here</Typography> */}
       </Stack>
