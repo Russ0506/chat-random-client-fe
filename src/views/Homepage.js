@@ -4,7 +4,7 @@ import { DRAWER_WITH } from "../constant/css_constant";
 import LeftSideBar from "./chat/leftBar/LeftSideBar";
 import RightBar from "./chat/rightBar/RightBar";
 import MessageLayout from "./chat/areaChat/MessageLayout";
-import { appearanceSocket, newMessageSocket } from "./sockets/Socket";
+import { appearanceSocket, newMessageSocket, msgLatestStatusSocket } from "./sockets/Socket";
 import React, { useEffect } from "react";
 import { receiveNewMessage } from "../features/chat/messagesSlice";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,12 +16,9 @@ export default function Homepage() {
   const [openRightBar, setOpenRightBar] = React.useState(true);
 
   useEffect(() => {
-    newMessageSocket({
-      received: (message) => {
-        dispatch(receiveNewMessage(message))
-      },
-    });
+    newMessageSocket();
     appearanceSocket();
+    msgLatestStatusSocket();
   }, []);
 
   const handleOpenRightBar = () => {

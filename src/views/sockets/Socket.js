@@ -1,4 +1,6 @@
 import store from '../../store/store'
+import { updateLatestStatuses, receiveNewMessage } from "../../features/chat/messagesSlice";
+import { seenConversation } from "../../features/chat/conversationSlice";
 
 function Socket(props) {
   const ActionCable = require('actioncable');
@@ -43,11 +45,23 @@ function newMessageSocket(props){
     connected: ()=>{},
     disconnected: ()=>{},
     received: (message)=>{
-      if (store.getState().conversation?.id == message.conversation_id){
-        props.received(message);
+      if (store.getState().conversation?.currentConversation?.id == message.conversation_id){
+        store.dispatch(receiveNewMessage(message));
+        store.dispatch(seenConversation({conversation_id: message.conversation_id}));
       }
     }
   })
 }
 
-export {pairingSocket, appearanceSocket, newMessageSocket};
+function msgLatestStatusSocket(props){
+  Socket({
+    channel: "MsgLatestStatusChannel",
+    connected: ()=>{},
+    disconnected: ()=>{},
+    received: (data)=>{
+      store.dispatch(updateLatestStatuses(data.message))
+    }
+  })
+}
+
+export { pairingSocket, appearanceSocket, newMessageSocket, msgLatestStatusSocket };

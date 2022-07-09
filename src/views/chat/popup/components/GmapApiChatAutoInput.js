@@ -15,7 +15,6 @@ function success(pos) {
   // Get address from latitude & longitude.
   Geocode.fromLatLng(crd.latitude, crd.longitude).then(
     (response) => {
-      debugger;
       const address = response.results[0].formatted_address;
       let city, state, country;
       for (let i = 0; i < response.results[0].address_components.length; i++) {
@@ -73,7 +72,6 @@ export default class GmapApiChatAutoInput extends Component {
   }
 
   componentDidMount() {
-    debugger;
     if (navigator.geolocation) {
       navigator.permissions
         .query({ name: "geolocation" })

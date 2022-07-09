@@ -3,10 +3,10 @@ import axios from "axios";
 const baseURL = process.env.REACT_APP_API_URL;
 
 export const axiosClient = axios.create({
-    baseURL,
-    headers: {
-        'Content-Type': 'application/json',
-      },
+  baseURL,
+  headers: {
+      'Content-Type': 'application/json',
+    },
 })
 
 export const axiosMultipartForm = axios.create({
@@ -32,7 +32,7 @@ export function setupAxios(store) {
         return Promise.reject(error)
       },
     )
-  
+
     // Add a response interceptor
     axiosClient.interceptors.response.use(
       function(response) {
