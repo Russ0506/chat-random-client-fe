@@ -54,6 +54,7 @@
     "simplebar-react": "^2.3.6",
     "styled-components": "^5.3.5",
     "sweetalert": "^2.1.2",
+    "uuid": "^8.3.2",
     "validate.js": "^0.13.1",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"

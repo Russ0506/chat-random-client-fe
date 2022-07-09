@@ -32,7 +32,7 @@ export default function ChatMessageInput({ disabled, conversation }) {
         conversationId: conversation.id,
         text: message,
         recipient_id: conversation.partner.id,
-        create_at: moment().format(),
+        created_at: moment().format()
       };
       dispatch(sendNewMessage(params));
       var element = document.getElementById("chat-scroll-ult");

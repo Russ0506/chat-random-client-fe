@@ -5,7 +5,7 @@ import { alpha } from "@mui/material/styles";
 import ChatInfoLayer from "./ChatInfoLayer";
 import SearchIcon from "@mui/icons-material/Search";
 import { axiosClient } from "../../../../setup/axiosClient";
-import { changeConversation } from "../../../../features/chat/conversationSlice"
+import { changeConversation, seenConversation } from "../../../../features/chat/conversationSlice"
 import { useDispatch } from 'react-redux';
 import { setConversationsList } from "../../../../features/chat/conversationSlice"
 
@@ -65,6 +65,7 @@ export default function ConversationsList(){
 
   const onChangeConversation = (item) => {
     dispatch(changeConversation(item))
+    dispatch(seenConversation({conversation_id: item.id}))
   }
   return (
     <Box
