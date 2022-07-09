@@ -1,44 +1,74 @@
 import { CssBaseline, Grid, Toolbar } from "@mui/material";
 import Box from "@mui/material/Box";
-import { DRAWER_WITH } from "../constant/css_constant";
+import { DRAWER_WITH, MB_LEFT_SIDEBAR_WIDTH } from "../constant/css_constant";
 import LeftSideBar from "./chat/leftBar/LeftSideBar";
 import RightBar from "./chat/rightBar/RightBar";
 import MessageLayout from "./chat/areaChat/MessageLayout";
 import { appearanceSocket, newMessageSocket } from "./sockets/Socket";
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { receiveNewMessage } from "../features/chat/messagesSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { selectConversation } from "../features/chat/conversationSlice"
+import { selectConversation } from "../features/chat/conversationSlice";
 
+function useWindowSize() {
+  const [size, setSize] = useState([0, 0]);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener("resize", updateSize);
+    updateSize();
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+  return size;
+}
 export default function Homepage() {
   const conversation = useSelector(selectConversation);
   const dispatch = useDispatch();
   const [openRightBar, setOpenRightBar] = React.useState(true);
-
+  
   useEffect(() => {
+    window.addEventListener(
+      "resize",
+      function (event) {
+        if (window.innerWidth < 700) {
+          setOpenRightBar(false);
+        } else{
+          setOpenRightBar(true);
+        }
+      },
+      false
+    );
     newMessageSocket({
       received: (message) => {
-        dispatch(receiveNewMessage(message))
+        dispatch(receiveNewMessage(message));
       },
     });
     appearanceSocket();
+    
   }, []);
 
   const handleOpenRightBar = () => {
     setOpenRightBar(!openRightBar);
   };
+  
 
   return (
     <>
       {/* <Box w={100} sx={{ borderBottom: ".3px solid #e0e0e0" }}></Box> */}
-      <Box sx={{ display: "flex", height: "100%" }} className="v11">
+      <Box
+        sx={{ display: "flex", height: "100%", position: "relative" }}
+        className="v11"
+      >
         <CssBaseline />
         <Box
           sx={{
-            width: { sm: DRAWER_WITH },
+            width: { xs: MB_LEFT_SIDEBAR_WIDTH, md: DRAWER_WITH },
             flexShrink: { sm: 0 },
             height: "100%",
-            position: "relative",
+            position: { xs: "absolute", md: "relative" },
+            bottom: 0,
+            left: 0,
             borderRight: "1px solid #e5e0e0",
           }}
         >
@@ -68,8 +98,16 @@ export default function Homepage() {
               item
               xs={openRightBar === true ? 3.5 : 0}
               sx={{
+                position: { xs: "absolute", md: "relative" },
+                width: "100vw",
+                height: "100%",
+                maxWidth: "100vw",
+                right: 0,
+                bottom: 0,
                 transition: "all 0.2s ease",
                 display: openRightBar === true ? "" : "none",
+                zIndex: 20,
+                background: "#fff",
               }}
             >
               <RightBar />

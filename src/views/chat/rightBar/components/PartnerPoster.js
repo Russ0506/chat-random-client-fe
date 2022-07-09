@@ -27,7 +27,7 @@ export default function PartnerPoster() {
   };
   return (
     <List
-      sx={{ width: "100%", bgcolor: "background.paper", height: "100%" }}
+      sx={{ width: "100%", backgroundColor: "#fff", height: "100%" }}
       component="nav"
       aria-labelledby="nested-list-subheader"
       //   subheader={
@@ -42,7 +42,10 @@ export default function PartnerPoster() {
         </ListItemIcon>
         <ListItemText
           primary={
-            <Typography variant="h5" sx={{ fontWeight: 700, ml: -2.5 }}>
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: 700 }}
+            >
               Poster
             </Typography>
           }
