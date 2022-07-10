@@ -60,9 +60,25 @@ export default function ConversationControlBox() {
           // onClick={handleClickOpen}
           onClick={pairingCounter}
           sx={{ boxShadow: "0px 8px 10px rgb(237 221 255)" }}
-          endIcon={<Iconify icon={"mdi:chat-plus-outline"} />}
+          endIcon={
+            <Iconify
+              display={{ xs: "none", md: "inline-block" }}
+              icon={"mdi:chat-plus-outline"}
+            />
+          }
         >
-          New Conversation
+          <Iconify
+            width="27px"
+            height="27px"
+            display={{ xs: "inline-block", md: "none" }}
+            icon={"mdi:chat-plus-outline"}
+          />
+          <Typography
+            variant="button"
+            sx={{ display: { xs: "none", md: "inline-block" } }}
+          >
+            New Conversation
+          </Typography>
         </Button>
         {/* <Typography color="black">Time here</Typography> */}
       </Stack>
