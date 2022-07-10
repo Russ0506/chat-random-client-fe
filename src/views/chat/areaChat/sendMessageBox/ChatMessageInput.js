@@ -6,7 +6,7 @@ import { Stack, Input, IconButton } from "@mui/material";
 import Iconify from "../../../common/base/icon/Iconify";
 import EmojiPicker from "../../../common/base/emoji/EmojiPicker";
 import { sendNewMessage } from "../../../../features/chat/messagesSlice";
-import { pushConversations } from "../../../../features/chat/conversationSlice";
+import { touchConversation } from "../../../../features/chat/conversationSlice";
 
 export default function ChatMessageInput({ disabled, conversation }) {
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ export default function ChatMessageInput({ disabled, conversation }) {
       element.scrollTop = element.scrollHeight;
     }
 
-    if(conversation.id) dispatch(pushConversations(conversation.id));
+    if(conversation.id) dispatch(touchConversation({conversationId: conversation.id}));
     return setMessage("");
   };
 
