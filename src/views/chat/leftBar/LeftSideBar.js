@@ -16,8 +16,9 @@ export default class LeftSideBar extends React.Component {
         <Stack
           width={DRAWER_WITH}
           height="70px"
-          alignItems="center"
-          justifyContent="flex-end"
+          padding={{xs: 1}}
+          alignItems={{ xs: "flex-start", md: "center" }}
+          justifyContent="flex-start"
           paddingBottom={2.8}
         >
           <ConversationControlBox />
