@@ -5,9 +5,8 @@ import { alpha } from "@mui/material/styles";
 import ChatInfoLayer from "./ChatInfoLayer";
 import SearchIcon from "@mui/icons-material/Search";
 import { axiosClient } from "../../../../setup/axiosClient";
-import { changeConversation, seenConversation } from "../../../../features/chat/conversationSlice"
-import { useDispatch } from 'react-redux';
-import { setConversationsList } from "../../../../features/chat/conversationSlice"
+import { changeConversation, seenConversation, selectMostRecentConversationId } from "../../../../features/chat/conversationSlice"
+import { useDispatch, useSelector } from 'react-redux';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -54,18 +53,46 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function ConversationsList() {
   const dispatch = useDispatch();
+  const recentConversationId = useSelector(selectMostRecentConversationId)
   const [conversations, setConversations] = React.useState([]);
 
   useEffect(() => {
     axiosClient.get(`conversations`).then((data) => {
       setConversations(data);
-      dispatch(setConversationsList(data));
     });
   }, []);
+
+  useEffect(() => {
+    let orderedConversations = []
+    const recentConvcersation = conversations.find(conversation => conversation.id == recentConversationId);
+    if (recentConvcersation) orderedConversations.push(recentConvcersation);
+    conversations.forEach(conversation => {
+      if (conversation.id != recentConversationId) orderedConversations.push(conversation);
+    })
+    setConversations(orderedConversations);
+  }, [recentConversationId])
 
   const onChangeConversation = (item) => {
     dispatch(changeConversation(item))
     dispatch(seenConversation({conversation_id: item.id}))
+  }
+
+  const RenderConversationsList = () => {
+    if (conversations === []) return(<></>);
+    return(
+      conversations.map((conversation, k) => (
+        <ListItem key={k} disablePadding>
+          <ListItemButton
+            sx={{ padding: { xs: 0 }, paddingLeft: { xs: 2 } }}
+            onClick={() => {
+              onChangeConversation(conversation);
+            }}
+          >
+            <ChatInfoLayer data={conversation} />
+          </ListItemButton>
+        </ListItem>
+      ))
+    )
   }
   return (
     <Box
@@ -86,18 +113,7 @@ export default function ConversationsList() {
         />
       </Search>
       <List>
-        {conversations.map((item, k) => (
-          <ListItem key={k} disablePadding>
-            <ListItemButton
-              sx={{ padding: { xs: 0 }, paddingLeft: { xs: 2 } }}
-              onClick={() => {
-                onChangeConversation(item);
-              }}
-            >
-              <ChatInfoLayer data={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <RenderConversationsList/>
       </List>
     </Box>
   );
