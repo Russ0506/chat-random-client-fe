@@ -17,7 +17,6 @@ export default function PartnerSettingModal(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isSubmit, setIsSubmit] = React.useState(false);
   const [isSearch, setIsSearch] = React.useState(false);
-
   const [outputData, setOutputData] = React.useState(false);
   const [isSaveDataSearch, setIsSaveDataSearch] = React.useState(false);
   const childEvents = { saveDataSearchPartnerSetting: () => {} };
@@ -34,7 +33,9 @@ export default function PartnerSettingModal(props) {
     if (activeStep === 1) {
       setIsSearch(true);
       searchRef.current.click();
-      // setActiveStep(activeStep + 1);
+      props.onParing();
+      setActiveStep(0);
+      props.onClose();
     }
   };
 
@@ -159,7 +160,7 @@ export default function PartnerSettingModal(props) {
                   )}
 
                   <Button
-                    disabled={isSearch && activeStep === 1}
+                    // disabled={isSearch && activeStep === 1}
                     variant="contained"
                     onClick={handleNext}
                     sx={{ pl: "25px", pr: "25px" }}
