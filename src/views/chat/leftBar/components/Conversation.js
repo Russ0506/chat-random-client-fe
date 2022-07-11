@@ -3,100 +3,31 @@ import React, { useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import { Avatar, Stack, Typography } from "@mui/material";
-import { format } from "date-fns";
-import moment from "moment";
+import { onlineStatusSocket } from '../../../sockets/Socket'
+import { selectOnlineStatus } from '../../../../features/chat/onlineStatusesSlice'
+import { useSelector } from "react-redux";
 
 // + lastMsg :
 //   -> {sender (true: you send msg/ false: partner send msg),
 //   -> msg: content message,
 //   -> read: (true: partner read, false: partner hasn't read)}
-export default function ChatInfoLayer(props) {
-  // ==== option: ==== //
-  // -- op1: time offline
-  // [format:
-  //  +-- time offline < 1h --> "mm mins"
-  //  +-- time offline < 1 day --> hh hours
-  //  +-- time offline = 1 day --> 01 day
-  //  +-- time offline > 1 day --> dd days
-  // ]
-  const [offTime, setOffTime] = React.useState("");
-  const [data, setData] = React.useState(props.data);
+export default function Conversation({data}) {
+  const onlineStatus = useSelector((state)=> {
+    return selectOnlineStatus(state, data.partner?.id)
+  })
 
-  function difference2Parts(milliseconds, typeOfTm) {
-    let secs, mins, hours;
-    // case condition to display time difference.
-    switch (typeOfTm) {
-      case 0: // diff count by miliseconds
-        return Math.floor(Math.abs(milliseconds)) % 1000;
-      case 1: // diff count by seconds
-        return Math.floor(Math.abs(milliseconds) / 1000);
-      case 2: // diff count by minutes
-        secs = Math.floor(Math.abs(milliseconds) / 1000);
-        return Math.floor(secs / 60);
-      case 3: // diff count by hours
-        secs = Math.floor(Math.abs(milliseconds) / 1000);
-        mins = Math.floor(secs / 60);
-        return Math.floor(mins / 60);
-      case 4: // diff count by days
-        secs = Math.floor(Math.abs(milliseconds) / 1000);
-        mins = Math.floor(secs / 60);
-        hours = Math.floor(mins / 60);
-        return Math.floor(hours / 24);
-      default:
-        return null;
-    }
+  useEffect(()=>{
+    if (data.partner?.id) onlineStatusSocket(data.partner.id);
+  }, [])
+
+  const onlineInfo = () => {
+    return onlineStatus || data.partner || {}
   }
-  function offlineTmDiff() {
-    const offTm = new Date(
-      new Date(moment(data.lastOnlineTm, "YYYYMMDDhhmmss").format())
-    );
-
-    const diff = () => {
-      const diffs = difference2Parts(offTm - new Date(), 2);
-      // case offline time < 1 minute -> display 1 minute only
-      if (diffs <= 1) {
-        setOffTime("1 minute");
-      }
-      // case offline time < 60 minutes -> display n minutes
-      else if (diffs < 60) {
-        setOffTime(diffs + " minutes");
-      }
-      // case offline time between 60m <= time < 120m
-      else if (60 <= diffs && diffs < 120) {
-        setOffTime("1 hour");
-      }
-      // case onffline time between 60m <= time < 120m -> display off line n hours
-      else if (120 <= diffs && diffs < 1440) {
-        setOffTime(difference2Parts(offTm - new Date(), 3) + " hours");
-      } else if (diffs <= 1440 && diff < 2880) {
-        setOffTime("1 day");
-      } else if (diffs <= 2880) {
-        setOffTime(difference2Parts(offTm - new Date(), 4) + " days");
-      }
-      setTimeout(diff, 500);
-    };
-    return diff();
-  }
-
-  const shapeStyles = {
-    bgcolor: "primary.main",
-    width: 12,
-    height: 12,
-    marginTop: 1,
-  };
-  const shapeCircleStyles = { borderRadius: "50%" };
-  const circle = (
-    <Box component="span" sx={{ ...shapeStyles, ...shapeCircleStyles }} />
-  );
-
-  useEffect(() => {
-    offlineTmDiff();
-  }, [offTime]);
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
-      backgroundColor: data.partner?.is_online ? "#44b700" : "#ffc107",
-      color: data.partner?.is_online ? "#44b700" : "#ffc107",
+      backgroundColor: onlineInfo().is_online ? "#44b700" : "#ffc107",
+      color: onlineInfo().is_online ? "#44b700" : "#ffc107",
       boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
       "&::after": {
         position: "absolute",
@@ -175,8 +106,7 @@ export default function ChatInfoLayer(props) {
             sx={{ width: "100px", height: "40px" }}
             alignItems="flex-end"
             justifyContent="flex-start"
-          >
-          </Stack>
+          />
         </Stack>
       </Box>
     </>

@@ -77,7 +77,9 @@ var DateDiff = {
 
 export default function ChatMessageItem({ message, onOpenLightbox }) {
   const [showHistoryTimeFlg, setShowHistoryTimeFlg] = React.useState(false)
-  const lastestMsgStatus = useSelector((state) => {return selectMsgLatestStatus(state, message)});
+  const lastestMsgStatus = useSelector((state) => {
+    return selectMsgLatestStatus(state, message)
+  });
   const myId = localStorage.getItem('user_id')
   const senderDetails =
     message.recipient_id != myId
