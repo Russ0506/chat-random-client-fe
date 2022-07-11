@@ -3,6 +3,7 @@ import { useLayoutEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getDataSearch } from "../../../../features/user-setting";
 import Iconify from "../../../common/base/icon/Iconify";
+import PairingSuccessModal from "../../popup/components/PairingSuccessModal";
 import WaitingConfirmModal from "../../popup/components/WaitingConfirmModal";
 import PartnerSettingModal from "../../popup/PartnerSettingModal";
 let pairingInterval = setInterval(() => {}, 1000);
@@ -12,6 +13,7 @@ export default function ConversationControlBox() {
   const [userSetting, setUserSetting] = useState(null);
   const [openPartnerDialog, setOpenPartnerDialog] = useState(false);
   const [openWaitingModal, setOpenWaitingModal] = useState(false);
+  const [openPairingSuccessModal, setOpenPairingSuccessModal]= useState(false);
   let time = 0;
   function counterTm() {
     ++time;
@@ -35,18 +37,23 @@ export default function ConversationControlBox() {
   function handlePairing() {
     startPairing(true);
     pairingInterval = setInterval(counterTm, 1000);
+   
+    setTimeout(()=>{
+       setOpenPairingSuccessModal(true);
+    }, 10000)
   }
 
-  const handleOpenModal = () => {
+  const handleOpenSettingModal = () => {
     setOpenPartnerDialog(true);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseSettingModal = () => {
     setOpenPartnerDialog(false);
   };
 
   function cancelPairing() {
     setPairing(false);
+    setOpenPairingSuccessModal(false);
     clearInterval(pairingInterval);
     pairingInterval = null;
     time = 0;
@@ -65,7 +72,7 @@ export default function ConversationControlBox() {
       >
         <Button
           variant="contained"
-          onClick={pairing == false ? handleOpenModal : cancelPairing}
+          onClick={pairing == false ? handleOpenSettingModal : cancelPairing}
           sx={{ boxShadow: "0px 8px 10px rgb(237 221 255)" }}
           endIcon={
             pairing == false ? (
@@ -117,7 +124,7 @@ export default function ConversationControlBox() {
       </Stack>
       <PartnerSettingModal
         open={openPartnerDialog} // status modal event listenter
-        onClose={handleCloseModal} // close modal event listener
+        onClose={handleCloseSettingModal} // close modal event listener
         onParing={handlePairing} // waiting pairing event listener
         userSetting={userSetting} // pairing setting
       />
@@ -126,6 +133,7 @@ export default function ConversationControlBox() {
         oncloseModal={handleCloseWaitingModal} // close modal event listener
         onCanclPairing={cancelPairing}
       />
+      <PairingSuccessModal open={openPairingSuccessModal} onClose={cancelPairing}/>
     </>
   );
 }

@@ -6,21 +6,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
-import pairingImg from "../img/pairing.png"
+import pairingSuccess from "../img/pairingSuccess.png";
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="down" ref={ref} {...props} />;
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function WaitingConfirmModal(props) {
-
-  const handleKeepWaiting = () => {
-    props.oncloseModal();
-  };
-
-    const handleCancelWaiting = () => {
-      props.oncloseModal();
-      props.onCanclPairing();
-    };
+export default function PairingSuccessModal(props) {
 
   return (
     <>
@@ -28,20 +19,30 @@ export default function WaitingConfirmModal(props) {
         open={props.open}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleKeepWaiting}
+        onClose={props.onClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>Stuck in finding partner</DialogTitle>
+        <DialogTitle>Congratulate!</DialogTitle>
+
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            It seem you are waiting a bit long, do you still want to continue
-            finding partner?
+          <DialogContentText
+            id="alert-dialog-slide-description"
+            variant="h4"
+            color="#817cce"
+            fontWeight="bold"
+          >
+            You have matched a partner!
           </DialogContentText>
-          <img width="100%" src={pairingImg} alt=""></img>
+          <img width="100%" src={pairingSuccess} alt=""></img>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancelWaiting}>Cancel</Button>
-          <Button onClick={handleKeepWaiting}>Continute</Button>
+          <Button
+            variant="contained"
+            onClick={props.onClose}
+            sx={{ position: "relative", bottom: 10, right: 10 }}
+          >
+            Continue
+          </Button>
         </DialogActions>
       </Dialog>
     </>
