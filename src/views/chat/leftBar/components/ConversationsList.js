@@ -2,10 +2,11 @@ import { Box, InputBase, List, ListItem, ListItemButton } from "@mui/material";
 import React, { useEffect } from "react";
 import { styled } from "@mui/styles";
 import { alpha } from "@mui/material/styles";
-import ChatInfoLayer from "./ChatInfoLayer";
+import Conversation from "./Conversation";
 import SearchIcon from "@mui/icons-material/Search";
 import { axiosClient } from "../../../../setup/axiosClient";
 import { changeConversation, seenConversation, selectMostRecentConversationId } from "../../../../features/chat/conversationSlice"
+import { resetMessages } from "../../../../features/chat/messagesSlice"
 import { useDispatch, useSelector } from 'react-redux';
 
 const Search = styled("div")(({ theme }) => ({
@@ -75,6 +76,7 @@ export default function ConversationsList() {
   const onChangeConversation = (item) => {
     dispatch(changeConversation(item))
     dispatch(seenConversation({conversation_id: item.id}))
+    dispatch(resetMessages());
   }
 
   const RenderConversationsList = () => {
@@ -88,7 +90,7 @@ export default function ConversationsList() {
               onChangeConversation(conversation);
             }}
           >
-            <ChatInfoLayer data={conversation} />
+            <Conversation data={conversation} />
           </ListItemButton>
         </ListItem>
       ))

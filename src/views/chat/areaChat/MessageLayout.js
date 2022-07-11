@@ -10,6 +10,13 @@ import { MB_LEFT_SIDEBAR_WIDTH } from "../../../constant/css_constant";
 
 export default function MessageLayout({ openBar }) {
   const conversation = useSelector(selectConversation);
+
+  const renderChatHeader = () => {
+    if (!conversation?.partner) return(<></>);
+    return (
+      <ChatHeaderDetail partner={conversation?.partner} openBar={openBar} />
+    )
+  }
   return (
     <Box
       sx={{
@@ -20,7 +27,7 @@ export default function MessageLayout({ openBar }) {
       }}
     >
       <Box sx={{ height: "calc(100% - 70px)", width: "100%", pl: 2, pt: 0 }}>
-        <ChatHeaderDetail partner={conversation?.partner} openBar={openBar} />
+        { renderChatHeader() }
         <ChatMessageList conversation={conversation} />
       </Box>
       <Box sx={{ height: "60px", padding: "0px", paddingBottom: "10px" }}>

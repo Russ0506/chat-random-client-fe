@@ -36,12 +36,14 @@ export const messagesSlice = createSlice({
   initialState,
   reducers: {
     receiveNewMessage: (state, { payload }) => {
-      console.log('duc', payload)
       state.newMessages.push(payload);
     },
     updateLatestStatuses: (state, { payload }) => {
       state.latestStatuses[payload.id] = payload.status
       state.latestStatuses[payload.uuid] = payload.status
+    },
+    resetMessages: (state) => {
+      return initialState;
     }
   },
   extraReducers: (builder) => {
@@ -60,7 +62,7 @@ export const messagesSlice = createSlice({
   }
 });
 
-export const { receiveNewMessage, updateLatestStatuses } = messagesSlice.actions;
+export const { receiveNewMessage, updateLatestStatuses, resetMessages } = messagesSlice.actions;
 
 export const selectNewMessages = (state) => {
   return state.messages.newMessages;

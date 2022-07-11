@@ -8,16 +8,13 @@ import { appearanceSocket, newMessageSocket, msgLatestStatusSocket } from "./soc
 import React, { useEffect, useState } from "react";
 import { receiveNewMessage } from "../features/chat/messagesSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { selectConversation } from "../features/chat/conversationSlice";
 
 export default function Homepage() {
-  const conversation = useSelector(selectConversation);
-  const dispatch = useDispatch();
   const [openRightBar, setOpenRightBar] = React.useState(true);
 
   useEffect(() => {
-    newMessageSocket();
     appearanceSocket();
+    newMessageSocket();
     msgLatestStatusSocket();
     window.addEventListener(
       "resize",
