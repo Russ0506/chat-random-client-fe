@@ -1,6 +1,7 @@
 import store from '../../store/store'
 import { updateLatestStatuses, receiveNewMessage } from "../../features/chat/messagesSlice";
 import { seenConversation } from "../../features/chat/conversationSlice";
+import { partnerGoOnline, partnerGoOffline } from "../../features/chat/onlineStatusesSlice";
 
 function Socket(props) {
   const ActionCable = require('actioncable');
@@ -27,6 +28,22 @@ function appearanceSocket(){
     connected: ()=>{},
     disconnected: ()=>{},
     received: ()=>{}
+  })
+}
+
+function onlineStatusSocket(userId){
+  Socket({
+    channel: "OnlineStatusChannel",
+    user_id: userId,
+    connected: ()=>{},
+    disconnected: ()=>{},
+    received: (data)=>{
+      if (data.is_online) {
+        store.dispatch(partnerGoOnline(data))
+      } else {
+        store.dispatch(partnerGoOffline(data))
+      }
+    }
   })
 }
 
@@ -64,4 +81,6 @@ function msgLatestStatusSocket(props){
   })
 }
 
-export { pairingSocket, appearanceSocket, newMessageSocket, msgLatestStatusSocket };
+export {
+  pairingSocket, appearanceSocket, onlineStatusSocket,
+  newMessageSocket, msgLatestStatusSocket };

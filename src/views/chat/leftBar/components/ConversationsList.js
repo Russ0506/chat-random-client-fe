@@ -2,7 +2,7 @@ import { Box, InputBase, List, ListItem, ListItemButton } from "@mui/material";
 import React, { useEffect } from "react";
 import { styled } from "@mui/styles";
 import { alpha } from "@mui/material/styles";
-import ChatInfoLayer from "./ChatInfoLayer";
+import Conversation from "./Conversation";
 import SearchIcon from "@mui/icons-material/Search";
 import { axiosClient } from "../../../../setup/axiosClient";
 import { changeConversation, seenConversation, selectMostRecentConversationId } from "../../../../features/chat/conversationSlice"
@@ -88,7 +88,7 @@ export default function ConversationsList() {
               onChangeConversation(conversation);
             }}
           >
-            <ChatInfoLayer data={conversation} />
+            <Conversation data={conversation} />
           </ListItemButton>
         </ListItem>
       ))

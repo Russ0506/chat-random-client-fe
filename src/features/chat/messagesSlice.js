@@ -36,7 +36,6 @@ export const messagesSlice = createSlice({
   initialState,
   reducers: {
     receiveNewMessage: (state, { payload }) => {
-      console.log('duc', payload)
       state.newMessages.push(payload);
     },
     updateLatestStatuses: (state, { payload }) => {
