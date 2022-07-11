@@ -262,6 +262,7 @@ export default function PartnerSetting(props) {
                         maxLength: 10,
                       },
                     }}
+                    inputProps={{ min: 0, max: 100 }}
                     sx={{ ml: 1, marginTop: "0 !important" }}
                     onChange={(e) => {
                       var value = parseInt(e.target.value, 10);
@@ -294,6 +295,7 @@ export default function PartnerSetting(props) {
                         maxLength: 10,
                       },
                     }}
+                    inputProps={{ min: 0, max: 100 }}
                     sx={{ ml: 1, marginTop: "0 !important" }}
                     onChange={(e) => {
                       var value = parseInt(e.target.value, 10);
