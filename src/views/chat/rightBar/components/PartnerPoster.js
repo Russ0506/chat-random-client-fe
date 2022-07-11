@@ -42,10 +42,7 @@ export default function PartnerPoster() {
         </ListItemIcon>
         <ListItemText
           primary={
-            <Typography
-              variant="h5"
-              sx={{ fontWeight: 700 }}
-            >
+            <Typography variant="h5" sx={{ fontWeight: 700 }}>
               Poster
             </Typography>
           }
@@ -68,6 +65,7 @@ export default function PartnerPoster() {
               sx={{ width: "100%", overflow: "auto" }}
               container
               rowSpacing={1}
+              columns={{ xs: 8, sm: 4,md: 4, lg: 8, xl: 12, }}
               columnSpacing={{ xs: 0.5, sm: 0.5, md: 0.5 }}
             >
               <Grid item xs={4}>
