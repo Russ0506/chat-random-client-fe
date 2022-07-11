@@ -97,7 +97,7 @@ export default function GgmCurrentPlaceText2St() {
         sx={{ ml: 2, width: 300 }}
         id="outlined-number"
         type="text"
-        inputProps={{
+        InputProps={{
           readOnly: true,
         }}
         defaultValue={fullLocation == null ? null : fullLocation.address}

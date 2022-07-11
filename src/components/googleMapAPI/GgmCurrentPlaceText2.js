@@ -102,9 +102,7 @@ export default class GgmCurrentPlaceText2 extends Component {
           sx={{ ml: 2, width: 300 }}
           id="__curr_address_temp"
           type="text"
-          inputProps={{
-            readOnly: true,
-          }}
+          inputProps={{ readOnly: true }}
         />
       </>
     );

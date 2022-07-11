@@ -2,9 +2,6 @@ import {
   Checkbox,
   Chip,
   FormControlLabel,
-  FormGroup,
-  Radio,
-  RadioGroup,
   Stack,
   Typography,
 } from "@mui/material";
@@ -13,10 +10,8 @@ import Button from "@mui/material/Button";
 import DialogContent from "@mui/material/DialogContent";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import Grid from "@mui/material/Grid";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Select from "@mui/material/Select";
-import Switch from "@mui/material/Switch";
 import { styled } from "@mui/styles";
 import * as React from "react";
 import { useEffect } from "react";
@@ -33,10 +28,7 @@ export default function PartnerSettingView(props) {
   const [data, setData] = React.useState(props.data.user_setting);
   const [isSubmit, setIsSubmit] = React.useState(false);
   const { message } = useSelector((state) => state.message);
-
   const dispatch = useDispatch();
-
-  const label = { inputProps: { "aria-label": "Switch demo" } };
 
   useEffect(() => {
     dispatch(clearMessage());
