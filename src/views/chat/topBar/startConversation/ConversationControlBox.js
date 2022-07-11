@@ -11,12 +11,12 @@ export default function ConversationControlBox() {
   const [pairing, setPairing] = useState(false);
   const [userSetting, setUserSetting] = useState(null);
   const [openPartnerDialog, setOpenPartnerDialog] = useState(false);
-  const [continuteWaiting, setContinuteWaiting] = useState(false);
+  const [openWaitingModal, setOpenWaitingModal] = useState(false);
   let time = 0;
   function counterTm() {
     ++time;
     if (time == 5) {
-      setContinuteWaiting(true);
+      setOpenWaitingModal(true);
     }
   }
   useLayoutEffect(() => {
@@ -28,9 +28,6 @@ export default function ConversationControlBox() {
       .catch(() => {});
   }, []);
 
-  
-
-  
   function startPairing() {
     setPairing(true);
   }
@@ -51,8 +48,12 @@ export default function ConversationControlBox() {
   function cancelPairing() {
     setPairing(false);
     clearInterval(pairingInterval);
-    pairingInterval=null;
+    pairingInterval = null;
     time = 0;
+  }
+
+  function handleCloseWaitingModal() {
+    setOpenWaitingModal(false);
   }
 
   return (
@@ -120,7 +121,11 @@ export default function ConversationControlBox() {
         onParing={handlePairing} // waiting pairing event listener
         userSetting={userSetting} // pairing setting
       />
-      <WaitingConfirmModal open={continuteWaiting} />
+      <WaitingConfirmModal
+        open={openWaitingModal} // status modal event listener
+        oncloseModal={handleCloseWaitingModal} // close modal event listener
+        onCanclPairing={cancelPairing}
+      />
     </>
   );
 }
