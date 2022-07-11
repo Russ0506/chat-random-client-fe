@@ -5,13 +5,20 @@ import { getDataSearch } from "../../../../features/user-setting";
 import Iconify from "../../../common/base/icon/Iconify";
 import WaitingConfirmModal from "../../popup/components/WaitingConfirmModal";
 import PartnerSettingModal from "../../popup/PartnerSettingModal";
-
+let pairingInterval = setInterval(() => {}, 1000);
 export default function ConversationControlBox() {
   const dispatch = useDispatch();
   const [pairing, setPairing] = useState(false);
   const [userSetting, setUserSetting] = useState(null);
   const [openPartnerDialog, setOpenPartnerDialog] = useState(false);
   const [continuteWaiting, setContinuteWaiting] = useState(false);
+  let time = 0;
+  function counterTm() {
+    ++time;
+    if (time == 5) {
+      setContinuteWaiting(true);
+    }
+  }
   useLayoutEffect(() => {
     dispatch(getDataSearch())
       .unwrap()
@@ -21,23 +28,16 @@ export default function ConversationControlBox() {
       .catch(() => {});
   }, []);
 
-  function cancelPairing() {
-    setPairing(false);
-  }
+  
+
+  
   function startPairing() {
     setPairing(true);
   }
 
   function handlePairing() {
     startPairing(true);
-    let time = 0;
-    setInterval(() => {
-      ++time;
-      if (time == 5) {
-        // alert("continue to waiting?");
-        setContinuteWaiting(true);
-      }
-    }, 1000);
+    pairingInterval = setInterval(counterTm, 1000);
   }
 
   const handleOpenModal = () => {
@@ -47,6 +47,13 @@ export default function ConversationControlBox() {
   const handleCloseModal = () => {
     setOpenPartnerDialog(false);
   };
+
+  function cancelPairing() {
+    setPairing(false);
+    clearInterval(pairingInterval);
+    pairingInterval=null;
+    time = 0;
+  }
 
   return (
     <>
@@ -113,7 +120,7 @@ export default function ConversationControlBox() {
         onParing={handlePairing} // waiting pairing event listener
         userSetting={userSetting} // pairing setting
       />
-      <WaitingConfirmModal open={continuteWaiting}/>
+      <WaitingConfirmModal open={continuteWaiting} />
     </>
   );
 }
