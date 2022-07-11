@@ -23,6 +23,7 @@ import { CmmnInputLabel } from "../chat/popup/components/CmmnInputLabel";
 import { CmmnSelect } from "../chat/popup/components/CmmnSelect";
 import { CmmnGroupSelect } from "../chat/popup/components/CmmnGroupSelect";
 import { useTheme } from "@mui/material/styles";
+import AvatarFramEdit from "./components/AvatarFramEdit";
 class ChangePwdCls extends Component {
   constructor(props) {
     super(props);
@@ -75,14 +76,10 @@ class ChangePwdCls extends Component {
             // justifyContent="center"
             sx={{ width: "200px", height: "100%" }}
           >
-            <Box
-              sx={{
-                width: "125px",
-                height: "125px",
-                background: "gray",
-                borderRadius: "50%",
-              }}
-            ></Box>
+            <AvatarFramEdit
+              img={null}
+              sx={{ width: "100px", height: "100px", position: "relative" }}
+            />
             <Typography
               variant="body1"
               sx={{ mt: 1, color: "#4f4f4f", justifySelf: "flex-end" }}

@@ -1,11 +1,24 @@
-import { Box, Button, Container, Grid, Paper, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Divider from "@mui/material/Divider";
 import NewPosterLayout from "./components/NewPosterLayout";
+import myidol from "../profile/components/img/myidol.jpg"
 // import $ from "jquery";
 import { Link } from "react-router-dom";
+import {
+  StyledFemaleIcon,
+  StyledMaleIcon,
+} from "../common/base/icon/GenderIcon";
 
 const shapeStyles = {
   bgcolor: "primary.main",
@@ -13,10 +26,10 @@ const shapeStyles = {
   height: { xs: 80, md: 120 },
   marginTop: 1,
 };
-const shapeCircleStyles = { borderRadius: "50%" };
-const circle = (
-  <Box component="span" sx={{ ...shapeStyles, ...shapeCircleStyles }} />
-);
+const shapeCircleStyles = {
+  borderRadius: "50%",
+  
+};
 
 const Item = styled(Paper)(({ theme }) => ({
   //   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -31,7 +44,19 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function UserProfile() {
-  
+  const [gender, setGender] = React.useState("female");
+
+  const circle = (
+    <Box
+      component="span"
+      sx={{
+        ...shapeStyles,
+        ...shapeCircleStyles,
+        backgroundImage: `url(${myidol})`,
+      }}
+    />
+  );
+
   return (
     <>
       <Container
@@ -48,12 +73,37 @@ export default function UserProfile() {
           justifyContent="flex-start"
           padding={{ xs: 0, sm: 1.5, md: 2 }}
           flexWrap="nowrap"
-          sx={{ width: "100%"}}
+          sx={{ width: "100%" }}
         >
           <Badge>{circle}</Badge>
-          <Box sx={{ml: 2 }}>
-            <Stack flexDirection={{ xs: "column", md: "row" }}>
-              <Typography variant="h5">Tuong Vy Bui Anh</Typography>
+          <Box sx={{ ml: 2 }}>
+            <Stack flexDirection={{ xs: "column", md: "column" }}>
+              <Typography
+                variant="h5"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                Tuong Vy Bui Anh{" "}
+                {gender === "male" ? (
+                  <StyledMaleIcon
+                    fontSize="18px"
+                    sx={{
+                      ...shapeCircleStyles,
+                      pb: "5px",
+                    }}
+                  />
+                ) : (
+                  <StyledFemaleIcon
+                    fontSize="18px"
+                    sx={{
+                      ...shapeCircleStyles,
+                      pb: "5px",
+                    }}
+                  />
+                )}
+              </Typography>
               <Button
                 component={Link}
                 to={"/users/profile/edit"}
@@ -70,7 +120,6 @@ export default function UserProfile() {
               display={{ xs: "none", md: "flex" }}
               sx={{ mt: 2 }}
             >
-              <Typography variant="body1">Gender: Male</Typography>
               <Typography variant="body1">Hobies: Tinder</Typography>
               <Typography variant="body1">
                 Location: Cam Le, Danang, Viet Nam
