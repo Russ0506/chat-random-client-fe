@@ -6,21 +6,22 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
+import { Container } from "@mui/material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function WaitingConfirmModal(props) {
-//   const [open, setOpen] = React.useState(false);
+  //   const [open, setOpen] = React.useState(false);
 
-//   const handleClickOpen = () => {
-//     setOpen(true);
-//   };
+  //   const handleClickOpen = () => {
+  //     setOpen(true);
+  //   };
 
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
+  //   const handleClose = () => {
+  //     setOpen(false);
+  //   };
 
   return (
     <div>
@@ -34,16 +35,18 @@ export default function WaitingConfirmModal(props) {
         // onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+        <DialogTitle>Stuck in finding partner</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
+            It seem you are waiting a bit long, do you still want to continute
+            finding partner?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button /* onClick={handleClose} */>Disagree</Button>
-          <Button /* onClick={handleClose} */>Agree</Button>
+          <Container maxWidth="xl" >
+            <Button /* onClick={handleClose} */>Cancel</Button>
+            <Button /* onClick={handleClose} */>Continute</Button>
+          </Container>
         </DialogActions>
       </Dialog>
     </div>
