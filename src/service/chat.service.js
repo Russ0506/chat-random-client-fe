@@ -19,7 +19,11 @@ const enqueuingChat = async (params, thunkAPI) => {
 
 const loadConversation = async (params, thunkAPI) => {
   try {
-    const res = await axiosClient.get(`${URL}/conversations/${params.conversation_id}/messages`)
+    let requestParams = {
+      page: params.page,
+      per_page: params.per_page,
+    }
+    const res = await axiosClient.get(`${URL}/conversations/${params.conversation_id}/messages?page=${requestParams.page}&per_page=${requestParams.per_page}`)
     return res
   } catch (error) {
     const message =
