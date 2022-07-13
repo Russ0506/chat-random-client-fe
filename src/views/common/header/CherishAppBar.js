@@ -30,7 +30,7 @@ const settings = [
     name: "Account",
     linkUrl: "/users/profile/edit",
   },
-  { name: "Logout", linkUrl: null },
+  { name: "Logout", linkUrl: "/users/logout" },
 ];
 
 const CherishAppBar = () => {
