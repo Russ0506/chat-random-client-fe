@@ -12,14 +12,14 @@ import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Divider from "@mui/material/Divider";
 import NewPosterLayout from "./components/NewPosterLayout";
-import myidol from "../profile/components/img/myidol.jpg"
+import myidol from "../profile/components/img/myidol.jpg";
 // import $ from "jquery";
 import { Link } from "react-router-dom";
 import {
   StyledFemaleIcon,
   StyledMaleIcon,
 } from "../common/base/icon/GenderIcon";
-
+import AddIcon from "@mui/icons-material/Add";
 const shapeStyles = {
   bgcolor: "primary.main",
   width: { xs: 80, md: 120 },
@@ -28,7 +28,6 @@ const shapeStyles = {
 };
 const shapeCircleStyles = {
   borderRadius: "50%",
-  
 };
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -140,6 +139,16 @@ export default function UserProfile() {
           justifyContent={{ xs: "center", md: "flex-start" }}
         >
           <Grid item>
+            <Item
+              sx={{
+                backgroundColor: "black",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: " center",
+              }}
+            >
+              <AddIcon sx={{width:"50px", height: "50px", color: "#fff"}} />
+            </Item>
             <NewPosterLayout />
           </Grid>
           <Grid item>
