@@ -53,7 +53,7 @@ export default function ChatHeaderDetail({ openBar, partner }) {
 
   return (
     <RootStyle>
-      <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ display: "flex", alignItems: "center", ml: 1 }}>
         <Box sx={{ position: "relative" }}>
           <Avatar
             src={partner.avatar}

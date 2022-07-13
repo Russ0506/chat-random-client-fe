@@ -26,7 +26,7 @@ export default function MessageLayout({ openBar }) {
         paddingLeft: { xs: `${MB_LEFT_SIDEBAR_WIDTH}px`, md: "0" },
       }}
     >
-      <Box sx={{ height: "calc(100% - 70px)", width: "100%", pl: 2, pt: 0 }}>
+      <Box sx={{ height: "calc(100% - 70px)", width: "100%", pt: 0 }}>
         { renderChatHeader() }
         <ChatMessageList conversation={conversation} />
       </Box>

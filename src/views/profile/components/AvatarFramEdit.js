@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
-import avatarDemo from "../components/img/ko.png";
+import avatarDemo from "../components/img/myidol.jpg";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { IconButton } from "@mui/material";
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -22,8 +22,7 @@ function loadScript(src, position, id) {
 }
 
 const autocompleteService = { current: null };
-export default function GmapApiChatManualInput(props) {
-
+export default function GgmApiForPost(props) {
   const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState("");
   const [options, setOptions] = React.useState([]);
@@ -107,12 +106,11 @@ export default function GmapApiChatManualInput(props) {
       }}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
-        document.getElementById("__curr_address").value = newInputValue;
         Geocode.fromAddress(newInputValue).then(
           (response) => {
             const { lat, lng } = response.results[0].geometry.location;
-            document.getElementById("__curr_lo").value = lng;
-            document.getElementById("__curr_la").value = lat;
+            props.reponseLocation({ addr: newInputValue, lo: lng, lat: lat });
+            props.onBack(true);
           },
           (error) => {
             console.error(error);
@@ -120,13 +118,7 @@ export default function GmapApiChatManualInput(props) {
         );
       }}
       renderInput={(params) => (
-        <TextField
-          size="small"
-          {...params}
-          label=""
-          fullWidth
-          sx={{ mt: 3 }}
-        />
+        <TextField size="small" {...params} label="" fullWidth sx={{ mt: 3 }} />
       )}
       renderOption={(props, option) => {
         const matches =

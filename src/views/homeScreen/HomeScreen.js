@@ -46,12 +46,12 @@ const imgList = [
     img: img6,
     postTm: "18-06-2022",
   },
-  {
-    userNm: "Russ",
-    content: "Tim kiem real love",
-    img: img7,
-    postTm: "18-06-2022",
-  },
+  // {
+  //   userNm: "Russ",
+  //   content: "Tim kiem real love",
+  //   img: img7,
+  //   postTm: "18-06-2022",
+  // },
 ];
 
 export default function HomeScreen() {
