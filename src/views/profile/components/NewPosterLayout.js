@@ -25,7 +25,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function NewPosterLayout(props) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const fileInputRef = React.useRef(null);
   const [message, setMessage] = useState("");
   const [openLocationBox, setOpenLocationBox] = useState(false);
