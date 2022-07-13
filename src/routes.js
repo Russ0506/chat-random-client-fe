@@ -17,6 +17,7 @@ import UserProfile from "./views/profile/UserProfile";
 import CherishApp from "./views/common/header/CherishApp";
 import MenuPreProfile from "./views/profile/components/MenuPreProfile";
 import HomeScreen from "./views/homeScreen/HomeScreen";
+import Logout from "./views/auth/Logout";
 
 export const ProtectedRoute = ({ link = "/", children }) => {
   return <AuthenLoading link={link} children={children} />;
@@ -60,7 +61,7 @@ export default function Routes() {
           path: "login",
           element: <ProtectedRoute link="/users/login" children={<Login />} />,
         },
-        { path: "logout", element: <Welcome /> },
+        { path: "logout", element: <Logout /> },
         {
           path: "reset-password",
           element: <ResetPassword />,
@@ -125,10 +126,7 @@ export default function Routes() {
         {
           path: "email-success",
           element: (
-            <ProtectedRoute
-              link="/users/email-success"
-              children={<RegisterEmailSendSuccess />}
-            />
+            <RegisterEmailSendSuccess />
           ),
         },
       ],

@@ -173,8 +173,7 @@ class SignUp extends React.PureComponent {
       .post(`${URL}`, formData)
       .then((data) => {
         if (data.success) {
-          // this function still not convert to class
-          // this.props.navigation.navigate("email-success");
+          window.location.replace("register/email-success")
         }
       })
       .catch(() => {
