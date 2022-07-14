@@ -12,8 +12,10 @@ const sideWidth = "60px";
 export default function CherishApp({ index = 1, body }) {
   const [useNewPost, setUseNewPost] = React.useState(false);
   function handleOpenNewPost() {
-    setUseNewPost(false);
     setUseNewPost(true);
+  }
+  function handleCloseNewPost() {
+    setUseNewPost(false);
   }
 
   return (
@@ -105,7 +107,7 @@ export default function CherishApp({ index = 1, body }) {
         >
           {body}
         </Box>
-        {useNewPost == true ? <NewPosterLayout openModal={true} /> : ""}
+        {useNewPost == true ? <NewPosterLayout open={true} onClose={handleCloseNewPost}/> : ""}
       </Box>
     </Stack>
   );

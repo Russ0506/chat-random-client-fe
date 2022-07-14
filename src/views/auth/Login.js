@@ -27,7 +27,7 @@ import "../../styles/login.scss";
 import Loading from "../common/base/loading/Loading";
 // import { useCookies } from "react-cookie";
 import bgNew from "../auth/img/conv.png";
-import { Stack } from "@mui/material";
+import { Fade, Slide, Stack, Zoom } from "@mui/material";
 export default function SignIn(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,6 +35,7 @@ export default function SignIn(props) {
   const [isSubmit, setIsSubmit] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
+  const containerRef = React.useRef(null);
   // const [cookies, setCookie, removeCookie] = useCookies(['_random_chat']);
 
   const initialValues = {
@@ -232,7 +233,7 @@ export default function SignIn(props) {
                           lineHeight: LINE_HEIGHT.lh17,
                           fontWeight: FONT_WEIGHT.middle,
                           textDecoration: "none",
-                          ml: "3px"
+                          ml: "3px",
                         }}
                       >
                         Sign Up
@@ -245,7 +246,7 @@ export default function SignIn(props) {
           </Box>
         </Container>
         <Stack
-        display={{xs: "none", md: "flex"}}
+          display={{ xs: "none", md: "flex" }}
           sx={{
             width: "400px",
             height: "100%",
@@ -256,19 +257,39 @@ export default function SignIn(props) {
           }}
           justifyContent="center"
         >
-          <Box sx={{ width: "100%", padding: 5 }}>
-            <Typography
-              variant="h2"
-              color="#fff"
-              sx={{ fontWeight: 700, lineHeight: 1.1 }}
+          <Box sx={{ width: "100%", padding: 5 }} ref={containerRef}>
+            <Slide
+              direction="left"
+              in={true}
+              timeout={700}
+              container={containerRef.current}
             >
-              Adventure Starts Here
-            </Typography>
-            <Typography color="#fff">
-              Create an account to join the community and finding your friends!
-            </Typography>
+              <Box ref={containerRef}>
+                <Fade in={true} timeout={1000} container={containerRef.current}>
+                  <Typography
+                    variant="h2"
+                    color="#fff"
+                    sx={{ fontWeight: 700, lineHeight: 1.1 }}
+                  >
+                    Adventure Starts Here
+                  </Typography>
+                </Fade>
+              </Box>
+            </Slide>
+            <Fade in={true} timeout={1000} container={containerRef.current}>
+              <Typography color="#fff">
+                Create an account to join the community and finding your
+                friends!
+              </Typography>
+            </Fade>
           </Box>
-          <img src={`${bgNew}`} alt="registCover" width="100%" />
+          <Fade in={true} timeout={1000} container={containerRef.current}>
+            <Box ref={containerRef}>
+              <Zoom in={true} container={containerRef.current} timeout={700}>
+                <img src={`${bgNew}`} alt="registCover" width="100%" />
+              </Zoom>
+            </Box>
+          </Fade>
         </Stack>
       </Grid>
       {/* <Box className="login-main"></Box> */}
