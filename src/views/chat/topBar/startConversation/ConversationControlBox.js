@@ -6,6 +6,8 @@ import Iconify from "../../../common/base/icon/Iconify";
 import PairingSuccessModal from "../../popup/components/PairingSuccessModal";
 import WaitingConfirmModal from "../../popup/components/WaitingConfirmModal";
 import PartnerSettingModal from "../../popup/PartnerSettingModal";
+import Snackbar from "@mui/material/Snackbar";
+
 
 let pairingInterval = setInterval(() => {}, 1000);
 export default function ConversationControlBox() {
@@ -41,9 +43,9 @@ export default function ConversationControlBox() {
     startPairing(true);
     pairingInterval = setInterval(counterTm, 1000);
 
-    setTimeout(() => {
-      setOpenPairingSuccessModal(true);
-    }, 10000);
+    // setTimeout(() => {
+    //   enqueueSnackbar("This is a success message!", { variant: "success" });
+    // }, 10000);
   }
 
   const handleOpenSettingModal = () => {
@@ -135,15 +137,15 @@ export default function ConversationControlBox() {
         onParing={handlePairing} // waiting pairing event listener
         userSetting={userSetting} // pairing setting
       />
-      <WaitingConfirmModal
+      {/* <WaitingConfirmModal
         open={openWaitingModal} // status modal event listener
         oncloseModal={handleCloseWaitingModal} // close modal event listener
         onCanclPairing={cancelPairing}
-      />
-      <PairingSuccessModal
+      /> */}
+      {/* <PairingSuccessModal
         open={openPairingSuccessModal}
         onClose={cancelPairing}
-      />
+      /> */}
     </>
   );
 }

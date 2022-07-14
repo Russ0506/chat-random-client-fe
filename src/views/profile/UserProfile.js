@@ -147,6 +147,7 @@ export default function UserProfile() {
               <Button
                 onClick={handleOpenNewPost}
                 variant="outlined"
+                // variant="contained"
                 sx={{
                   ml: 1,
                   mb: 1,
@@ -174,7 +175,7 @@ export default function UserProfile() {
           </Box>
         </Stack>
 
-        <Box sx={{ maxWidth: 800, height: "100%", overflowY: "auto" }}>
+        <Box sx={{ maxWidth: {md: 500,lg: 600, xl: 800}, height: "100%", overflowY: "auto" }}>
           {/* <Divider
             variant="middle"
             sx={{ width: "100%", mt: 5, mb: 3, ml: 0, mr: 0 }}

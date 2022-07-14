@@ -14,6 +14,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Fade } from "@mui/material";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -34,7 +35,8 @@ export default function PostLayout({ data }) {
         maxWidth: { sm: 400, md: 750 },
         mb: "30px",
         boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-        width: "100%"
+        width: "100%",
+        borderRadius:"7px"
       }}
     >
       <CardHeader
@@ -64,7 +66,15 @@ export default function PostLayout({ data }) {
           {data.content}
         </Typography>
       </CardContent>
-      <CardMedia component="img" image={data.img} alt="img" width="100%" />
+      <Fade in={true}>
+        <CardMedia
+          component="img"
+          image={data.img}
+          alt="img"
+          width="100%"
+          loading="lazy"
+        />
+      </Fade>
 
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
