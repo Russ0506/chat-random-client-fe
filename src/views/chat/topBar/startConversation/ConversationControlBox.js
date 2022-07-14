@@ -1,13 +1,18 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import {
+  Alert,
+  AlertTitle,
+  Button,
+  SnackbarContent,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useLayoutEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getDataSearch } from "../../../../features/user-setting";
 import Iconify from "../../../common/base/icon/Iconify";
-import PairingSuccessModal from "../../popup/components/PairingSuccessModal";
-import WaitingConfirmModal from "../../popup/components/WaitingConfirmModal";
 import PartnerSettingModal from "../../popup/PartnerSettingModal";
 import Snackbar from "@mui/material/Snackbar";
-
+import { styled } from "@mui/styles";
 
 let pairingInterval = setInterval(() => {}, 1000);
 export default function ConversationControlBox() {
@@ -15,14 +20,23 @@ export default function ConversationControlBox() {
   const [pairing, setPairing] = useState(false);
   const [userSetting, setUserSetting] = useState(null);
   const [openPartnerDialog, setOpenPartnerDialog] = useState(false);
-  const [openWaitingModal, setOpenWaitingModal] = useState(false);
-  const [openPairingSuccessModal, setOpenPairingSuccessModal] = useState(false);
   const [finishLoading, setFinishLoading] = useState(false);
+  const [openWaitingModal, setOpenWaitingModal] = useState({
+    open: false,
+    vertical: "bottom",
+    horizontal: "left",
+  });
+  const [openPairingSuccessModal, setOpenPairingSuccessModal] = useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+
   let time = 0;
   function counterTm() {
     ++time;
-    if (time == 5) {
-      setOpenWaitingModal(true);
+    if (time === 5) {
+      handleOpenWaitingModal();
     }
   }
   useLayoutEffect(() => {
@@ -43,9 +57,10 @@ export default function ConversationControlBox() {
     startPairing(true);
     pairingInterval = setInterval(counterTm, 1000);
 
-    // setTimeout(() => {
-    //   enqueueSnackbar("This is a success message!", { variant: "success" });
-    // }, 10000);
+    setTimeout(() => {
+      setPairing(false);
+      handleOpenPairingSuccess();
+    }, 15000);
   }
 
   const handleOpenSettingModal = () => {
@@ -58,14 +73,40 @@ export default function ConversationControlBox() {
 
   function cancelPairing() {
     setPairing(false);
-    setOpenPairingSuccessModal(false);
+    handleClosePairingSuccess();
+    handleCloseWaitingModal();
     clearInterval(pairingInterval);
     pairingInterval = null;
     time = 0;
   }
 
+  function continuePairing() {
+    setPairing(true);
+    handleCloseWaitingModal();
+  }
+
   function handleCloseWaitingModal() {
-    setOpenWaitingModal(false);
+    setOpenWaitingModal({
+      ...openWaitingModal,
+      open: false,
+    });
+  }
+
+  function handleOpenWaitingModal() {
+    setOpenWaitingModal({
+      ...openWaitingModal,
+      open: true,
+    });
+  }
+
+  function handleOpenPairingSuccess() {
+    setOpenPairingSuccessModal({
+      ...openPairingSuccessModal,
+      open: true,
+    });
+  }
+  function handleClosePairingSuccess() {
+    setOpenPairingSuccessModal({ ...openPairingSuccessModal, open: false });
   }
 
   return (
@@ -78,10 +119,10 @@ export default function ConversationControlBox() {
         >
           <Button
             variant="contained"
-            onClick={pairing == false ? handleOpenSettingModal : cancelPairing}
+            onClick={pairing === false ? handleOpenSettingModal : cancelPairing}
             sx={{ boxShadow: "0px 8px 10px rgb(237 221 255)" }}
             endIcon={
-              pairing == false ? (
+              pairing === false ? (
                 <Iconify
                   display={{ xs: "none", md: "inline-block" }}
                   icon={"mdi:chat-plus-outline"}
@@ -94,7 +135,7 @@ export default function ConversationControlBox() {
               )
             }
           >
-            {pairing == false ? (
+            {pairing === false ? (
               <>
                 <Iconify
                   width="27px"
@@ -126,7 +167,6 @@ export default function ConversationControlBox() {
               </>
             )}
           </Button>
-          {/* <Typography color="black">Time here</Typography> */}
         </Stack>
       ) : (
         <></>
@@ -141,11 +181,68 @@ export default function ConversationControlBox() {
         open={openWaitingModal} // status modal event listener
         oncloseModal={handleCloseWaitingModal} // close modal event listener
         onCanclPairing={cancelPairing}
-      /> */}
-      {/* <PairingSuccessModal
+      />
+      <PairingSuccessModal
         open={openPairingSuccessModal}
         onClose={cancelPairing}
       /> */}
+
+      <Snackbar
+        anchorOrigin={openPairingSuccessModal}
+        open={openPairingSuccessModal.open}
+        onClose={handleClosePairingSuccess}
+        autoHideDuration={6000}
+        message="You have matched a partner!"
+        key={
+          openPairingSuccessModal.vertical + openPairingSuccessModal.horizontal
+        }
+      >
+        <Alert
+          onClose={handleClosePairingSuccess}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          You have matched a partner!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        anchorOrigin={openWaitingModal}
+        open={openWaitingModal.open}
+        onClose={handleCloseWaitingModal}
+        key={
+          openPairingSuccessModal.vertical + openPairingSuccessModal.horizontal
+        }
+      >
+        <Alert severity="warning" sx={{ backgroundColor: "#282c34" }}>
+          <Stack flexDirection="column" maxWidth="md">
+            <AlertTitle color="#fff">
+              It seem you are waiting a bit long, do you still want to continue
+              finding partner?
+            </AlertTitle>
+            <Stack
+              flexDirection="row"
+              justifyContent="flex-end"
+              alignItems="center"
+              marginTop={2}
+            >
+              <Button
+                size="small"
+                sx={{ color: "#e06c75" }}
+                onClick={cancelPairing}
+              >
+                Cancel
+              </Button>
+              <Button
+                size="small"
+                sx={{ marginLeft: "10px", color: "#98b379" }}
+                onClick={continuePairing}
+              >
+                Continute
+              </Button>
+            </Stack>
+          </Stack>
+        </Alert>
+      </Snackbar>
     </>
   );
 }
