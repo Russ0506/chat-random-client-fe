@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Container,
-  Grid,
   Grow,
   ImageList,
   ImageListItem,
@@ -13,7 +12,6 @@ import {
 import React from "react";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
-import Divider from "@mui/material/Divider";
 import NewPosterLayout from "./components/NewPosterLayout";
 import myidol from "../profile/components/img/myidol.jpg";
 // import $ from "jquery";
@@ -22,13 +20,8 @@ import {
   StyledFemaleIcon,
   StyledMaleIcon,
 } from "../common/base/icon/GenderIcon";
-import AddIcon from "@mui/icons-material/Add";
 import MyPostLayout from "./components/MyPostLayout";
-import myPost1 from "../profile/components/img/post/myPost_1.jpg";
-import myPost2 from "../profile/components/img/post/myPost_2.jpg";
-import myPost3 from "../profile/components/img/post/myPost_3.jpg";
-import myPost4 from "../profile/components/img/post/myPost_4.gif";
-import PostCard from "./components/PostCard";
+import AddIcon from "@mui/icons-material/Add";
 
 const shapeStyles = {
   bgcolor: "primary.main",
@@ -39,18 +32,6 @@ const shapeStyles = {
 const shapeCircleStyles = {
   borderRadius: "50%",
 };
-
-const Item = styled(Paper)(({ theme }) => ({
-  //   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-  height: "300px",
-  boxShadow: "none",
-  backgroundColor: "gray",
-  minWidth: "250px",
-}));
 
 export default function UserProfile() {
   const [gender, setGender] = React.useState("female");
@@ -174,6 +155,7 @@ export default function UserProfile() {
                   color: "rgb(30 20 189 / 70%)",
                 }}
                 size="small"
+                startIcon={<AddIcon />}
               >
                 New Post
               </Button>
@@ -206,8 +188,10 @@ export default function UserProfile() {
               >
                 <ImageListItem key={item.image}>
                   <img
-                    src={`${item.image}?w=248&fit=crop&auto=format`}
-                    srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                    // src={`${item.image}?w=248&fit=crop&auto=format`}
+                    // srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                    src={`${item.image}`}
+                    srcSet={`${item.image}`}
                     alt={item.content}
                     loading="lazy"
                     style={{ cursor: "pointer" }}
@@ -238,7 +222,8 @@ export default function UserProfile() {
 }
 const itemData = [
   {
-    image: "https://images.unsplash.com/photo-1549388604-817d15aa0110",
+    image:
+      "https://c4.wallpaperflare.com/wallpaper/51/258/367/iu-iu-lee-ji-eun-hd-wallpaper-preview.jpg",
     content: "Bed",
     likeCount: 1310,
   },
@@ -247,6 +232,12 @@ const itemData = [
       "https://i.pinimg.com/originals/65/9e/82/659e82e7eddcaab52961c135b7d97a4d.jpg",
     content: "Books",
     likeCount: 12300,
+  },
+  {
+    image:
+      "https://www.allkpop.com/upload/2021/12/content/231225/web_data/allkpop_1640280755_untitled-1.jpg",
+    content: "Bed",
+    likeCount: 1310,
   },
   {
     image:
@@ -269,16 +260,6 @@ const itemData = [
     image: "https://images.unsplash.com/photo-1574180045827-681f8a1a9622",
     content: "Chairs",
     likeCount: 1340,
-  },
-  {
-    image: "https://images.unsplash.com/photo-1530731141654-5993c3016c77",
-    content: "Laptop",
-    likeCount: 130,
-  },
-  {
-    image: "https://pbs.twimg.com/media/Ep_Z5-hUYAA_x7H.jpg",
-    content: "Laptop",
-    likeCount: 15340,
   },
   {
     image:

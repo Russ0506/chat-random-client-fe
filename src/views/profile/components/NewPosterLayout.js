@@ -5,31 +5,37 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
 import myIdol from "../components/img/myidol.jpg";
 import { styled } from "@mui/styles";
-import { Fade, IconButton, Input, Stack, TextField, Typography, Zoom } from "@mui/material";
+import {
+  IconButton,
+  Input,
+  Stack,
+  Typography,
+  Zoom,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import Iconify from "../../common/base/icon/Iconify";
-import EmojiPicker from "../../common/base/emoji/EmojiPicker";
+// import EmojiPicker from "../../common/base/emoji/EmojiPicker"; // ko xoa nha
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CloseIcon from "@mui/icons-material/Close";
 import { CmmnFormControl } from "../../chat/popup/components/CmmnFormControl";
 import GgmApiForPost from "./GgmApiForPost";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import InputEmoji from "react-input-emoji";
-import Picker from "emoji-picker-react";
-import EmojiTextarea from "react-emoji-textarea";
+// import InputEmoji from "react-input-emoji"; // ko xoa nha
+// import Picker from "emoji-picker-react"; // ko xoa nha
+// import EmojiTextarea from "react-emoji-textarea"; // ko xoa nha
+
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Zoom ref={ref} {...props} in={true}/>;
+  return <Zoom ref={ref} {...props} in={true} />;
 });
-function defaultHandle(){
+function defaultHandle() {
   return false;
 }
 
 export default function NewPosterLayout({
   open = true,
-  onClose = defaultHandle()
+  onClose = defaultHandle(),
 }) {
   const [openModal, setOpenModal] = useState(open);
   const fileInputRef = React.useRef(null);

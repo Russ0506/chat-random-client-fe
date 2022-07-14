@@ -6,6 +6,7 @@ import Iconify from "../../../common/base/icon/Iconify";
 import PairingSuccessModal from "../../popup/components/PairingSuccessModal";
 import WaitingConfirmModal from "../../popup/components/WaitingConfirmModal";
 import PartnerSettingModal from "../../popup/PartnerSettingModal";
+
 let pairingInterval = setInterval(() => {}, 1000);
 export default function ConversationControlBox() {
   const dispatch = useDispatch();
@@ -13,7 +14,8 @@ export default function ConversationControlBox() {
   const [userSetting, setUserSetting] = useState(null);
   const [openPartnerDialog, setOpenPartnerDialog] = useState(false);
   const [openWaitingModal, setOpenWaitingModal] = useState(false);
-  const [openPairingSuccessModal, setOpenPairingSuccessModal]= useState(false);
+  const [openPairingSuccessModal, setOpenPairingSuccessModal] = useState(false);
+  const [finishLoading, setFinishLoading] = useState(false);
   let time = 0;
   function counterTm() {
     ++time;
@@ -26,6 +28,7 @@ export default function ConversationControlBox() {
       .unwrap()
       .then((data) => {
         setUserSetting(data);
+        setFinishLoading(true);
       })
       .catch(() => {});
   }, []);
@@ -37,10 +40,10 @@ export default function ConversationControlBox() {
   function handlePairing() {
     startPairing(true);
     pairingInterval = setInterval(counterTm, 1000);
-   
-    setTimeout(()=>{
-       setOpenPairingSuccessModal(true);
-    }, 10000)
+
+    setTimeout(() => {
+      setOpenPairingSuccessModal(true);
+    }, 10000);
   }
 
   const handleOpenSettingModal = () => {
@@ -65,63 +68,67 @@ export default function ConversationControlBox() {
 
   return (
     <>
-      <Stack
-        direction="row"
-        spacing={2}
-        sx={{ alignItems: "center", justifyContent: "center" }}
-      >
-        <Button
-          variant="contained"
-          onClick={pairing == false ? handleOpenSettingModal : cancelPairing}
-          sx={{ boxShadow: "0px 8px 10px rgb(237 221 255)" }}
-          endIcon={
-            pairing == false ? (
-              <Iconify
-                display={{ xs: "none", md: "inline-block" }}
-                icon={"mdi:chat-plus-outline"}
-              />
-            ) : (
-              <Iconify
-                display={{ xs: "none", md: "inline-block" }}
-                icon={"eos-icons:bubble-loading"}
-              />
-            )
-          }
+      {finishLoading === true ? (
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{ alignItems: "center", justifyContent: "center" }}
         >
-          {pairing == false ? (
-            <>
-              <Iconify
-                width="27px"
-                height="27px"
-                display={{ xs: "inline-block", md: "none" }}
-                icon={"mdi:chat-plus-outline"}
-              />
-              <Typography
-                variant="button"
-                sx={{ display: { xs: "none", md: "inline-block" } }}
-              >
-                New Conversation
-              </Typography>
-            </>
-          ) : (
-            <>
-              <Iconify
-                width="27px"
-                height="27px"
-                display={{ xs: "inline-block", md: "none" }}
-                icon="eos-icons:bubble-loading"
-              />
-              <Typography
-                variant="button"
-                sx={{ display: { xs: "none", md: "inline-block" } }}
-              >
-                Pairing...
-              </Typography>
-            </>
-          )}
-        </Button>
-        {/* <Typography color="black">Time here</Typography> */}
-      </Stack>
+          <Button
+            variant="contained"
+            onClick={pairing == false ? handleOpenSettingModal : cancelPairing}
+            sx={{ boxShadow: "0px 8px 10px rgb(237 221 255)" }}
+            endIcon={
+              pairing == false ? (
+                <Iconify
+                  display={{ xs: "none", md: "inline-block" }}
+                  icon={"mdi:chat-plus-outline"}
+                />
+              ) : (
+                <Iconify
+                  display={{ xs: "none", md: "inline-block" }}
+                  icon={"eos-icons:bubble-loading"}
+                />
+              )
+            }
+          >
+            {pairing == false ? (
+              <>
+                <Iconify
+                  width="27px"
+                  height="27px"
+                  display={{ xs: "inline-block", md: "none" }}
+                  icon={"mdi:chat-plus-outline"}
+                />
+                <Typography
+                  variant="button"
+                  sx={{ display: { xs: "none", md: "inline-block" } }}
+                >
+                  New Conversation
+                </Typography>
+              </>
+            ) : (
+              <>
+                <Iconify
+                  width="27px"
+                  height="27px"
+                  display={{ xs: "inline-block", md: "none" }}
+                  icon="eos-icons:bubble-loading"
+                />
+                <Typography
+                  variant="button"
+                  sx={{ display: { xs: "none", md: "inline-block" } }}
+                >
+                  Pairing...
+                </Typography>
+              </>
+            )}
+          </Button>
+          {/* <Typography color="black">Time here</Typography> */}
+        </Stack>
+      ) : (
+        <></>
+      )}
       <PartnerSettingModal
         open={openPartnerDialog} // status modal event listenter
         onClose={handleCloseSettingModal} // close modal event listener
@@ -133,7 +140,10 @@ export default function ConversationControlBox() {
         oncloseModal={handleCloseWaitingModal} // close modal event listener
         onCanclPairing={cancelPairing}
       />
-      <PairingSuccessModal open={openPairingSuccessModal} onClose={cancelPairing}/>
+      <PairingSuccessModal
+        open={openPairingSuccessModal}
+        onClose={cancelPairing}
+      />
     </>
   );
 }
