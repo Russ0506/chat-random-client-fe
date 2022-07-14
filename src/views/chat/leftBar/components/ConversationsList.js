@@ -24,19 +24,19 @@ import ConversationControlBox from "../../topBar/startConversation/ConversationC
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
-  borderRadius: theme.shape.borderRadius,
+  margin: theme.spacing(1),
   backgroundColor: alpha(theme.palette.common.white, 1),
   color: alpha(theme.palette.common.black, 0.5),
+  border: "1px solid rgb(0 0 0 / 7%)",
+  borderRadius: "5px",
   "& .Mui-focused": {
     color: alpha(theme.palette.common.black, 1),
   },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
+  // width: "100%",
+  // [theme.breakpoints.up("sm")]: {
+  //   marginLeft: theme.spacing(3),
+  //   width: "auto",
+  // },
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({

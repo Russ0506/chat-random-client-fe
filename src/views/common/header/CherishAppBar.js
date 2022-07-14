@@ -20,6 +20,7 @@ import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import { APP_BAR_HEIGHT } from "../../../constant/css_constant";
 import { Link, useLocation } from "react-router-dom";
 import { ThemeConsumer } from "styled-components";
+import { cilBorderTop } from "@coreui/icons";
 
 const settings = [
   {
@@ -72,6 +73,8 @@ const CherishAppBar = () => {
         background: "white",
         boxShadow: "none",
         border: "1px solid #e5e0e0",
+        borderLeft: 0,
+        borderTop:0
       }}
     >
       <Container sx={{ width: "100%", maxWidth: "100% !important" }}>
