@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import myIdol from "../components/img/myidol.jpg";
 import { styled } from "@mui/styles";
-import { IconButton, Input, Stack, TextField, Typography } from "@mui/material";
+import { Fade, IconButton, Input, Stack, TextField, Typography, Zoom } from "@mui/material";
 import { Box } from "@mui/system";
 import Iconify from "../../common/base/icon/Iconify";
 import EmojiPicker from "../../common/base/emoji/EmojiPicker";
@@ -21,11 +21,17 @@ import InputEmoji from "react-input-emoji";
 import Picker from "emoji-picker-react";
 import EmojiTextarea from "react-emoji-textarea";
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="down" ref={ref} {...props} />;
+  return <Zoom ref={ref} {...props} in={true}/>;
 });
+function defaultHandle(){
+  return false;
+}
 
-export default function NewPosterLayout(props) {
-  const [open, setOpen] = useState(false);
+export default function NewPosterLayout({
+  open = true,
+  onClose = defaultHandle()
+}) {
+  const [openModal, setOpenModal] = useState(open);
   const fileInputRef = React.useRef(null);
   const [message, setMessage] = useState("");
   const [openLocationBox, setOpenLocationBox] = useState(false);
@@ -39,11 +45,13 @@ export default function NewPosterLayout(props) {
     fileInputRef.current?.click();
   };
   const handleCloseModal = () => {
-    setOpen(false);
+    onClose();
+    setOpenModal(false);
   };
-  const handleCloseSubmit= () => {
-    setOpen(false);
-  }
+  const handleCloseSubmit = () => {
+    onClose();
+    setOpenModal(false);
+  };
 
   const handleKeyUp = (event) => {
     if (event.key === "Enter") {
@@ -77,7 +85,7 @@ export default function NewPosterLayout(props) {
   return (
     <>
       <Dialog
-        open={open}
+        open={openModal}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleCloseModal}

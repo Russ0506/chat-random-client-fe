@@ -33,7 +33,16 @@ export default class MenuPreProfile extends Component {
       <Stack
         flexDirection="row"
         justifyContent="center"
-        sx={{ background: "rgb(236, 236, 250)", height: "100%", width: "100%" }}
+        sx={{
+          /* background: "rgb(236, 236, 250)", */ height: "100%",
+          width: "100%",
+          background: "rgb(247,247,253)",
+          transition: "all 0.2s ease",
+          background:
+            this.state.index === 0
+              ? "linear-gradient(145deg, rgba(242,242,252,1) 50%, rgba(225,220,253,1) 100%)"
+              : "linear-gradient(-145deg, rgba(242,242,252,1) 50%, rgba(225,220,253,1) 100%)",
+        }}
         // sx={{height: "100%", width: "100%" }}
       >
         <Grid

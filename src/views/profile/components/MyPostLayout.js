@@ -5,8 +5,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Fade,
   IconButton,
-  Slide,
   Stack,
   Typography,
 } from "@mui/material";
@@ -18,11 +18,15 @@ import myIdol from "../components/img/myidol.jpg";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="down" ref={ref} {...props} />;
+  return <Fade in={true} ref={ref} {...props} unmountOnExit />;
 });
-export default function PosterLayout({ open = true, image = myIdol}) {
+function handleClose() {
+  return false;
+}
+export default function PosterLayout({ open = true, image, data, onClose = handleClose() }) {
   const [openM, setOpenM] = useState(open);
   const handleCloseModal = () => {
+    onClose();
     setOpenM(false);
   };
   return (
@@ -66,7 +70,7 @@ export default function PosterLayout({ open = true, image = myIdol}) {
             position: "relative",
           }}
         >
-          <Typography variant="body1">Tim kiem real love (K)</Typography>
+          <Typography variant="body1" marginBottom={1.5}>{data.content}</Typography>
           <Box
             borderRadius={4}
             sx={{
@@ -74,15 +78,17 @@ export default function PosterLayout({ open = true, image = myIdol}) {
               overflow: "auto",
             }}
           >
-            <img width="100%" src={image} alt=""></img>
+            <img width="100%" src={data.image} alt=""></img>
           </Box>
         </Box>
       </DialogContent>
-      <DialogActions sx={{justifyContent:"flex-start", alignItems:"center"}}>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
-            </IconButton>
-            <Typography>100 likes</Typography>
+      <DialogActions
+        sx={{ justifyContent: "flex-start", alignItems: "center" }}
+      >
+        <IconButton aria-label="add to favorites">
+          <FavoriteIcon />
+        </IconButton>
+        <Typography>{data.likeCount} likes</Typography>
       </DialogActions>
     </Dialog>
   );

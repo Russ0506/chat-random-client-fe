@@ -21,7 +21,7 @@ import Select from "react-select";
 import { axiosClient, axiosMultipartForm } from "../../setup/axiosClient";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import { Stack } from "@mui/material";
+import { Fade, Slide, Stack, Zoom } from "@mui/material";
 import bgNew from "../auth/img/conv.png";
 const URL = "users";
 
@@ -173,7 +173,7 @@ class SignUp extends React.PureComponent {
       .post(`${URL}`, formData)
       .then((data) => {
         if (data.success) {
-          window.location.replace("register/email-success")
+          window.location.replace("register/email-success");
         }
       })
       .catch(() => {
@@ -270,19 +270,33 @@ class SignUp extends React.PureComponent {
               justifyContent="center"
             >
               <Box sx={{ width: "100%", padding: 5 }}>
-                <Typography
-                  variant="h2"
-                  color="#fff"
-                  sx={{ fontWeight: 700, lineHeight: 1.1 }}
-                >
-                  Adventure Starts Here
-                </Typography>
-                <Typography color="#fff">
-                  Create an account to join the community and finding your
-                  friends!
-                </Typography>
+                <Slide direction="right" in={true} timeout={700}>
+                  <Box>
+                    <Fade in={true} timeout={1000}>
+                      <Typography
+                        variant="h2"
+                        color="#fff"
+                        sx={{ fontWeight: 700, lineHeight: 1.1 }}
+                      >
+                        Adventure Starts Here
+                      </Typography>
+                    </Fade>
+                  </Box>
+                </Slide>
+                <Fade in={true} timeout={1000}>
+                  <Typography color="#fff">
+                    Create an account to join the community and finding your
+                    friends!
+                  </Typography>
+                </Fade>
               </Box>
-              <img src={`${bgNew}`} alt="registCover" width="100%" />
+              <Fade in={true} timeout={1000}>
+                <Box>
+                  <Zoom in={true} timeout={700}>
+                    <img src={`${bgNew}`} alt="registCover" width="100%" />
+                  </Zoom>
+                </Box>
+              </Fade>
             </Stack>
           </Box>
           <Box paddingLeft={{ xs: 0, md: "400px", width: "100%" }}>
