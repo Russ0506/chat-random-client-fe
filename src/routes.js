@@ -18,6 +18,8 @@ import CherishApp from "./views/common/header/CherishApp";
 import MenuPreProfile from "./views/profile/components/MenuPreProfile";
 import HomeScreen from "./views/homeScreen/HomeScreen";
 import Logout from "./views/auth/Logout";
+import DashDefault from "./views/admin/dashboard/DashDefault/DashDefault";
+import AdminLayout from "./components/layouts/AdminLayout/AdminLayout";
 
 export const ProtectedRoute = ({ link = "/", children }) => {
   return <AuthenLoading link={link} children={children} />;
@@ -28,8 +30,18 @@ export default function Routes() {
     { path: "/", element: <Welcome /> },
     {
       path: "/admin",
-      element: <HomePage />,
-      children: [],
+      // element: <HomePage />,
+     
+      children: [
+        {
+          path: "",
+          element: <AdminLayout><DashDefault/></AdminLayout> 
+        },
+        {
+          path: "dashboard",
+          element: <AdminLayout><DashDefault/></AdminLayout> 
+        }
+      ],
     },
     {
       path: "/welcome",

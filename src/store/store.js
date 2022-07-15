@@ -4,15 +4,21 @@ import messageReducer from "../features/message";
 import conversationReducer from "../features/chat/conversationSlice";
 import messagesReducer from "../features/chat/messagesSlice";
 import onlineStatusesReducer from "../features/chat/onlineStatusesSlice";
+import {
+  useDispatch as useReduxDispatch,
+  useSelector as useReduxSelector,
+} from "react-redux";
 
 const reducer = {
   auth: authReducer,
   message: messageReducer,
   conversation: conversationReducer,
   messages: messagesReducer,
-  onlineStatuses: onlineStatusesReducer
-}
+  onlineStatuses: onlineStatusesReducer,
+};
+export const useSelector = useReduxSelector;
 
+export const useDispatch = () => useReduxDispatch();
 const store = configureStore({
   reducer: reducer,
   devTools: true,
