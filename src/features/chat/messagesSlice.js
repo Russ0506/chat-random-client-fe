@@ -28,6 +28,7 @@ export const sendNewMessage = createAsyncThunk(
 const initialState = {
   newMessages: [],
   latestStatuses: {},
+  latestMessages: {},
   status: 'idle'
 };
 
@@ -36,14 +37,22 @@ export const messagesSlice = createSlice({
   initialState,
   reducers: {
     receiveNewMessage: (state, { payload }) => {
-      state.newMessages.push(payload);
+      if (payload.in_current_conversation) {
+        state.newMessages.push(payload.message);
+      }
+      state.latestMessages[payload.message.conversation_id] = payload.message;
     },
     updateLatestStatuses: (state, { payload }) => {
-      state.latestStatuses[payload.id] = payload.status
-      state.latestStatuses[payload.uuid] = payload.status
+      state.latestStatuses[payload.id] = payload.status;
+      state.latestStatuses[payload.uuid] = payload.status;
+    },
+    seenLastMessage: (state, { payload }) => {
+      if (state.latestMessages[payload.conversationId]) {
+        state.latestMessages[payload.conversationId].status = 'seen';
+      }
     },
     resetMessages: (state) => {
-      return initialState;
+      state.newMessages = [];
     }
   },
   extraReducers: (builder) => {
@@ -54,6 +63,7 @@ export const messagesSlice = createSlice({
         let message = action.meta.arg;
         message.status = 'sending'
         state.newMessages.push(message);
+        state.latestMessages[message.conversationId] = message;
       })
       .addCase(sendNewMessage.fulfilled, (state, { payload }) => {
         state.status = 'idle';
@@ -62,7 +72,7 @@ export const messagesSlice = createSlice({
   }
 });
 
-export const { receiveNewMessage, updateLatestStatuses, resetMessages } = messagesSlice.actions;
+export const { receiveNewMessage, updateLatestStatuses, seenLastMessage, resetMessages } = messagesSlice.actions;
 
 export const selectNewMessages = (state) => {
   return state.messages.newMessages;
@@ -73,6 +83,14 @@ export const selectMsgLatestStatus = (state, message) => {
     return state.messages.latestStatuses[message.id];
   } else {
     return state.messages.latestStatuses[message.uuid];
+  }
+}
+
+export const selectLatestMessage = (state, conversationId) => {
+  if (conversationId) {
+    return state.messages.latestMessages[conversationId];
+  } else {
+    return state.messages.latestMessages[conversationId];
   }
 }
 

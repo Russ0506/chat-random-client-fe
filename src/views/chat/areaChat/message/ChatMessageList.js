@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CHAT_HEADER_HEIGHT } from '../../../../constant/css_constant';
 
@@ -13,6 +13,7 @@ import ChatMessageItem from './ChatMessageItem';
 import { selectNewMessages } from "../../../../features/chat/messagesSlice"
 import useLazyLoad from '../../../../features/useLazyLoad';
 import Loading from "../../../common/base/loading/Loading";
+import { resetMessages } from "../../../../features/chat/messagesSlice";
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +34,10 @@ export default function ChatMessageList({ conversation }) {
   const [initFlg, setInitFlag] = useState(false); // flag after init data
   const [isBottom, setIsBottom] = useState(true); // flag for check bottom scroll
   const triggerRef = useRef(null);
+
+  useEffect(()=>{
+    dispatch(resetMessages());
+  }, [conversation]);
 
   const onGrabData = (currentPage) => {
     setIsBottom(false)
@@ -84,10 +89,10 @@ export default function ChatMessageList({ conversation }) {
           scrollBottom={isBottom}
           indentify="chat-scroll-ult"
         >
-          {
+          {/* {
             (conversation?.id && initFlg) ? <div ref={triggerRef} className={clsx("trigger", { visible: loading })}>
             </div> : ""
-          }
+          } */}
           {dataConversation.slice().reverse().map((message, i) => (
             <ChatMessageItem
               key={i}

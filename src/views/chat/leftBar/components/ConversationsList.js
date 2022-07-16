@@ -17,7 +17,7 @@ import {
   seenConversation,
   selectMostRecentConversationId,
 } from "../../../../features/chat/conversationSlice";
-import { resetMessages } from "../../../../features/chat/messagesSlice";
+import { seenLastMessage } from "../../../../features/chat/messagesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { DRAWER_WITH } from "../../../../constant/css_constant";
 import ConversationControlBox from "../../topBar/startConversation/ConversationControlBox";
@@ -91,8 +91,8 @@ export default function ConversationsList() {
 
   const onChangeConversation = (item) => {
     dispatch(changeConversation(item));
-    dispatch(seenConversation({ conversation_id: item.id }));
-    dispatch(resetMessages());
+    dispatch(seenConversation({ conversationId: item.id }));
+    dispatch(seenLastMessage({ conversationId: item.id }));
   };
 
   const RenderConversationsList = () => {

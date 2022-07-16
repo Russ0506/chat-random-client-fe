@@ -6,6 +6,8 @@ import { Avatar, Stack, Typography } from "@mui/material";
 import { onlineStatusSocket } from '../../../sockets/Socket'
 import { selectOnlineStatus } from '../../../../features/chat/onlineStatusesSlice'
 import { useSelector } from "react-redux";
+import { selectLatestMessage } from '../../../../features/chat/messagesSlice'
+import SmartClock from "../../../../utils/smartClock";
 
 // + lastMsg :
 //   -> {sender (true: you send msg/ false: partner send msg),
@@ -13,7 +15,10 @@ import { useSelector } from "react-redux";
 //   -> read: (true: partner read, false: partner hasn't read)}
 export default function Conversation({data}) {
   const onlineStatus = useSelector((state)=> {
-    return selectOnlineStatus(state, data.partner?.id)
+    return selectOnlineStatus(state, data.partner?.id);
+  })
+  const updatedLastMessage = useSelector((state)=> {
+    return selectLatestMessage(state, data.id);
   })
 
   useEffect(()=>{
@@ -21,7 +26,11 @@ export default function Conversation({data}) {
   }, [])
 
   const onlineInfo = () => {
-    return onlineStatus || data.partner || {}
+    return onlineStatus || data.partner || {};
+  }
+
+  const lastMessageData = () => {
+    return updatedLastMessage || data.last_message || {};
   }
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -88,25 +97,25 @@ export default function Conversation({data}) {
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 color:
-                  data.last_message?.recipient_id == localStorage.getItem('user_id') && !data.last_message.seen_at
+                  lastMessageData().recipient_id == localStorage.getItem('user_id') && lastMessageData().status != 'seen'
                     ? "#817cce"
                     : "#c4c6ca",
                 fontWeight:
-                  data.last_message?.recipient_id == localStorage.getItem('user_id') && !data.last_message.seen_at
+                  lastMessageData().recipient_id == localStorage.getItem('user_id') && lastMessageData().status != 'seen'
                     ? "bold"
                     : "normal",
               }}
             >
-              {data.last_message?.recipient_id == localStorage.getItem('user_id')
-                ? data.last_message?.text
-                : "you: " + data.last_message?.text}
+              {lastMessageData().recipient_id == localStorage.getItem('user_id')
+                ? lastMessageData().text
+                : "you: " + lastMessageData().text}
             </Typography>
           </Box>
           <Stack
-            sx={{ width: "100px", height: "40px" }}
+            sx={{ width: "100px", height: "40px", fontSize: "0.8rem" }}
             alignItems="flex-end"
-            justifyContent="flex-start"
-          />
+            justifyContent="flex-end"
+          ><SmartClock date={lastMessageData().created_at}/></Stack>
         </Stack>
       </Box>
     </>

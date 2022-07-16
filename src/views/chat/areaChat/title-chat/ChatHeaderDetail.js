@@ -14,7 +14,7 @@ import { CHAT_HEADER_HEIGHT } from "../../../../constant/css_constant";
 import { selectOnlineStatus } from '../../../../features/chat/onlineStatusesSlice'
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { fToNow } from "../../../../utils/formatTime";
+import SmartClock from "../../../../utils/smartClock";
 
 const RootStyle = styled("div")(({ theme }) => ({
   flexShrink: 0,
@@ -25,16 +25,9 @@ const RootStyle = styled("div")(({ theme }) => ({
 }));
 
 export default function ChatHeaderDetail({ openBar, partner }) {
-  const [counter, setCounter] = useState(0)
   const onlineStatus = useSelector((state)=> {
     return selectOnlineStatus(state, partner.id)
   })
-
-  useState(()=>{
-    setInterval(()=>{
-      setCounter(counter => counter + 1);
-    }, 60000);
-  }, [counter])
 
   useState(()=>{
   }, [onlineStatus])
@@ -45,7 +38,7 @@ export default function ChatHeaderDetail({ openBar, partner }) {
 
   const offFrom = () => {
     if (data().last_online && data().last_online !== ""){
-      return fToNow(data().last_online);
+      return (<SmartClock date={data().last_online}/>);
     } else {
       return ""
     }

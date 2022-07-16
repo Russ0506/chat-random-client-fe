@@ -193,9 +193,9 @@ export default function ConversationControlBox() {
         onClose={handleClosePairingSuccess}
         autoHideDuration={6000}
         message="You have matched a partner!"
-        key={
-          openPairingSuccessModal.vertical + openPairingSuccessModal.horizontal
-        }
+        // key={
+        //   openPairingSuccessModal.vertical + openPairingSuccessModal.horizontal
+        // }
       >
         <Alert
           onClose={handleClosePairingSuccess}
