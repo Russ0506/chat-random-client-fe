@@ -1,10 +1,9 @@
 import { Box } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import ChatMessageInput from "./sendMessageBox/ChatMessageInput";
 import { useSelector } from "react-redux";
 import ChatMessageList from "./message/ChatMessageList";
 import ChatHeaderDetail from "./title-chat/ChatHeaderDetail";
-import moment from "moment";
 import { selectConversation } from "../../../features/chat/conversationSlice";
 import { MB_LEFT_SIDEBAR_WIDTH } from "../../../constant/css_constant";
 
