@@ -5,7 +5,7 @@ import { Avatar, Box, Typography } from '@mui/material';
 import styles from "../../../../styles/chat.scss"
 import image from "../../../../assets/img/find-partner.jpg"
 
-export default function MessageStatus({ status }) {
+export default function MessageStatus({ status, showSeen }) {
   const listStatus = ['sending', 'sent', 'received', 'seen']
 
   const Switch = props => {
@@ -28,14 +28,16 @@ export default function MessageStatus({ status }) {
         <CheckCircleIcon sx={{ width: "16px" }} />
       </div>
       <div className="config-position-icon" value={listStatus[3]}>
-        <Box className="config-position-icon-seen">
+        {
+          showSeen ? <Box className="config-position-icon-seen">
           <img
             src={image}
             className="avatar-circle"
             width="16px"
             height="16px"
           ></img>
-        </Box>
+        </Box> : ''
+        }
       </div>
     </Switch>
   );

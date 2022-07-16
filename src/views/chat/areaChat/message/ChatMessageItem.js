@@ -44,13 +44,20 @@ ChatMessageItem.propTypes = {
   onOpenLightbox: PropTypes.func,
 };
 
-export default function ChatMessageItem({ message, onOpenLightbox }) {
+export default function ChatMessageItem({ message, onOpenLightbox, nextMessage }) {
   const [showHistoryTimeFlg, setShowHistoryTimeFlg] = React.useState(false)
-  const [counter, setCounter] = React.useState(0)
 
   const lastestMsgStatus = useSelector((state) => {
     return selectMsgLatestStatus(state, message)
   });
+
+  const lastestMsgStatusOfNextMsg = useSelector((state) => {
+    return selectMsgLatestStatus(state, nextMessage);
+  });
+  
+  const nextMessageStatus = () => {
+    return lastestMsgStatusOfNextMsg || nextMessage?.status;
+  }
 
   const myId = localStorage.getItem('user_id')
   const senderDetails =
@@ -138,7 +145,7 @@ export default function ChatMessageItem({ message, onOpenLightbox }) {
             </Box>
             {
               isMe ? (
-                <MessageStatus status={ lastestMsgStatus || message.status }/>
+                <MessageStatus status={ lastestMsgStatus || message.status } showSeen = { nextMessageStatus() != "seen" }/>
               ) : ''
             }
           </Box>
