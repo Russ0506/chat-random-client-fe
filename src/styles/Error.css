@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Ruda:400,700');
   #header, #outer-wrapper, #post-wrapper, #sidebar-wrapper, #content-wrapper, #footer-wrapper, #wrapper, .backtotop {display:none}
-  body,html {overflow:hidden; margin:0; padding:0; width:100%; min-height:100vh}
+  /* body,html {overflow:hidden; margin:0; padding:0; width:100%; min-height:100vh} */
   body {background:#fff; color:#1d2129}
   #error404 {background:#eceeee; text-align:center; margin:auto; font-weight:700; font-size:45px; font-family:'Ruda',sans-serif; position:fixed; width:100%; height:100%; line-height:1.25em; z-index:9999;}
   #error404 #error-text {position:relative; font-size:23px; color:#666; top:50%; right:50%; transform:translate(50%,-50%);}

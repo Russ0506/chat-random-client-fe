@@ -18,6 +18,9 @@ import CherishApp from "./views/common/header/CherishApp";
 import MenuPreProfile from "./views/profile/components/MenuPreProfile";
 import HomeScreen from "./views/homeScreen/HomeScreen";
 import Logout from "./views/auth/Logout";
+import DashDefault from "./views/admin/dashboard/DashDefault/DashDefault";
+import AdminLayout from "./components/layouts/AdminLayout/AdminLayout";
+import BootstrapTable from "./views/admin/tables/BootstrapTable";
 
 export const ProtectedRoute = ({ link = "/", children }) => {
   return <AuthenLoading link={link} children={children} />;
@@ -27,9 +30,64 @@ export default function Routes() {
   const routes = useRoutes([
     { path: "/", element: <Welcome /> },
     {
+      path: "/template",
+      children: [
+        {
+          path: "",
+          element: (
+            <AdminLayout>
+              <DashDefault />
+            </AdminLayout>
+          ),
+        },
+        {
+          path: "dashboard",
+          element: (
+            <AdminLayout>
+              <DashDefault />
+            </AdminLayout>
+          ),
+        },
+        {
+          path: "tables",
+          element: (
+            <AdminLayout>
+              <BootstrapTable />
+            </AdminLayout>
+          ),
+        },
+      ],
+    },
+    {
       path: "/admin",
-      element: <HomePage />,
-      children: [],
+      // element: <HomePage />,
+
+      children: [
+        {
+          path: "",
+          element: (
+            <AdminLayout>
+              <DashDefault />
+            </AdminLayout>
+          ),
+        },
+        {
+          path: "dashboard",
+          element: (
+            <AdminLayout>
+              <DashDefault />
+            </AdminLayout>
+          ),
+        },
+        {
+          path: "user-management",
+          element: (
+            <AdminLayout>
+              <BootstrapTable />
+            </AdminLayout>
+          ),
+        },
+      ],
     },
     {
       path: "/welcome",
@@ -125,9 +183,7 @@ export default function Routes() {
         },
         {
           path: "email-success",
-          element: (
-            <RegisterEmailSendSuccess />
-          ),
+          element: <RegisterEmailSendSuccess />,
         },
       ],
     },
