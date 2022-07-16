@@ -79,6 +79,7 @@ export const selectNewMessages = (state) => {
 }
 
 export const selectMsgLatestStatus = (state, message) => {
+  if (!message) return undefined
   if (message.id) {
     return state.messages.latestStatuses[message.id];
   } else {

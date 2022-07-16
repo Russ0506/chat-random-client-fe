@@ -97,6 +97,7 @@ export default function ChatMessageList({ conversation }) {
             <ChatMessageItem
               key={i}
               message={message}
+              nextMessage={(i< dataConversation.length -1 ) ? dataConversation[i+1] : newMessages[0]}
               onOpenLightbox={handleOpenLightbox}
             />
           ))}
@@ -104,6 +105,7 @@ export default function ChatMessageList({ conversation }) {
             <ChatMessageItem
               key={i}
               message={message}
+              nextMessage={(i< newMessages.length -1 ) ? newMessages[i+1] : null}
               onOpenLightbox={handleOpenLightbox}
             />
           ))}
