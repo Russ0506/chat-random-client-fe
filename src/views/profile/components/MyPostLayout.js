@@ -53,7 +53,7 @@ export default function PosterLayout({ open = true, image, data, onClose = handl
         >
           <AvatarFrame />
           <Stack justifyContent="center">
-            <Typography variant="h6" sx={{ fontWeight: 550, ml: 1 }}>
+            <Typography sx={{ fontWeight: 550, ml: 1 }}>
               Tuong Vy Bui Anh
             </Typography>
           </Stack>
