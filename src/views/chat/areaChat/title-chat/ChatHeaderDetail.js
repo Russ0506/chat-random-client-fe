@@ -15,7 +15,6 @@ import { selectOnlineStatus } from '../../../../features/chat/onlineStatusesSlic
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { fToNow } from "../../../../utils/formatTime";
-import { DateDistanceCustom } from "../../../common/time/dateDiff";
 
 const RootStyle = styled("div")(({ theme }) => ({
   flexShrink: 0,
@@ -44,13 +43,13 @@ export default function ChatHeaderDetail({ openBar, partner }) {
     return onlineStatus || partner;
   }
 
-  // const offFrom = () => {
-  //   if (data().last_online && data().last_online !== ""){
-  //     return fToNow(data().last_online);
-  //   } else {
-  //     return ""
-  //   }
-  // }
+  const offFrom = () => {
+    if (data().last_online && data().last_online !== ""){
+      return fToNow(data().last_online);
+    } else {
+      return ""
+    }
+  }
 
   return (
     <RootStyle>
@@ -69,7 +68,7 @@ export default function ChatHeaderDetail({ openBar, partner }) {
         <Box sx={{ ml: 2 }}>
           <Typography variant="subtitle2">{partner.name}</Typography>
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
-            {data().is_online ? "Online" :  DateDistanceCustom(data().last_online)}
+            {data().is_online ? "Online" : offFrom()}
           </Typography>
         </Box>
       </Box>
