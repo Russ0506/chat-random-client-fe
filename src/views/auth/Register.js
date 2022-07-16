@@ -184,7 +184,6 @@ class SignUp extends React.PureComponent {
   handleOpen = () => this.setState({ open: true });
   handleClose = () => this.setState({ open: false });
   handleDateChange(date) {
-    console.log(date);
     this.setState({ selectedDate: date });
   }
 
