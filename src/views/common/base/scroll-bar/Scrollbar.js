@@ -56,13 +56,6 @@ export default function Scrollbar({
       userAgent
     );
 
-  // if (isMobile) {
-  //   return (
-  //     <Box sx={{ overflowX: 'auto', ...sx }} {...other}>
-  //       {children}
-  //     </Box>
-  //   );
-  // }
   const [scrollHeight, setScrollHeight] = React.useState(0);
 
   useEffect(() => {
@@ -78,9 +71,7 @@ export default function Scrollbar({
     </Box>
   ) : (
     <RootStyle id={indentify !== "" ? indentify : ""} className="chat-msg-list">
-      {/* <SimpleBarStyle timeout={500} clickOnTrack={false} sx={sx} {...other}> */}
       {children}
-      {/* </SimpleBarStyle> */}
     </RootStyle>
   );
 }
