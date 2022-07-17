@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import NewPosterLayout from "./components/NewPosterLayout";
@@ -22,6 +22,9 @@ import {
 } from "../common/base/icon/GenderIcon";
 import MyPostLayout from "./components/MyPostLayout";
 import AddIcon from "@mui/icons-material/Add";
+import { axiosClient } from "../../setup/axiosClient";
+
+const URL = 'http://localhost:3000/api'
 
 const shapeStyles = {
   bgcolor: "primary.main",
@@ -34,13 +37,15 @@ const shapeCircleStyles = {
 };
 
 export default function UserProfile() {
+  const user_id = localStorage.getItem('user_id')
   const [gender, setGender] = React.useState("female");
   const [openPoster, setOpenPoster] = React.useState(false);
   const [posterData, setPosterData] = React.useState({
-    content: "",
-    image: "",
-    likeCount: 0,
+    caption: "",
+    image_path: "",
+    no_of_reactions: 0,
   });
+  const [listPosterData, setListPosterData] = React.useState([])
   const [openNewPoster, setOpenNewPoster] = React.useState(false);
   const circle = (
     <Box
@@ -54,9 +59,9 @@ export default function UserProfile() {
   );
   function handleOpenPoster(item) {
     setPosterData({
-      content: item.content,
-      image: item.image,
-      likeCount: item.likeCount,
+      content: item.caption,
+      image: item.image_path,
+      likeCount: item.no_of_reactions,
     });
     setOpenPoster(true);
   }
@@ -66,15 +71,27 @@ export default function UserProfile() {
   function handleOpenNewPost() {
     setOpenNewPoster(true);
   }
-  function handleCloseNewPost() {
-    setOpenNewPoster(false);
+  function handleCloseNewPost(newpostdata) {
+    setOpenNewPoster(false)
   }
+
+  async function getPostList() {
+    await axiosClient.get(`/users/${user_id}/posts`).then((data) => {
+      const  newData = data.map(item => ({...item, image_path: `${URL + item.image_path}`}))
+      setListPosterData(newData)
+    }) .catch(() => {
+    });
+  }
+
+  useLayoutEffect(() => {
+    getPostList()
+  }, [openNewPoster])
 
   return (
     <>
       <Container
         component="main"
-        maxWidth={{ xs: "md", md: "xl" }}
+        // maxWidth={{ xs: "md", md: "xl" }}
         sx={{
           p: 1,
           display: "flex",
@@ -175,12 +192,12 @@ export default function UserProfile() {
           </Box>
         </Stack>
 
-        <Box sx={{ maxWidth: {md: 500,lg: 600, xl: 800}, height: "100%", overflowY: "auto" }}>
+        <Box sx={{ maxWidth: { md: 500, lg: 600, xl: 800 }, height: "100%", overflowY: "auto" }}>
           {/* <Divider
             variant="middle"
             sx={{ width: "100%", mt: 5, mb: 3, ml: 0, mr: 0 }}
           /> */}
-          <ImageList variant="masonry" cols={3} gap={8}>
+          {/* <ImageList variant="masonry" cols={3} gap={8}>
             {itemData.map((item, index) => (
               <Grow
                 in={true}
@@ -194,6 +211,27 @@ export default function UserProfile() {
                     src={`${item.image}`}
                     srcSet={`${item.image}`}
                     alt={item.content}
+                    loading="lazy"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleOpenPoster(item)}
+                  />
+                </ImageListItem>
+              </Grow>
+            ))}
+          </ImageList> */}
+          <ImageList variant="masonry" cols={3} gap={8}>
+            {listPosterData.map((item, index) => (
+              <Grow
+                key={index}
+                in={true}
+                style={{ transformOrigin: "0 0 0 0" }}
+                {...(true ? { timeout: index * 150 } : {})}
+              >
+                <ImageListItem key={item.image}>
+                  <img
+                    src={item.image_path ? `${item.image_path}` : "https://hangnhatxachtay.co/wp-content/uploads/2015/05/hello_kitty.png"}
+                    srcSet={item.image_path ? `${item.image_path}` : "https://hangnhatxachtay.co/wp-content/uploads/2015/05/hello_kitty.png"}
+                    alt={item.caption}
                     loading="lazy"
                     style={{ cursor: "pointer" }}
                     onClick={() => handleOpenPoster(item)}
@@ -221,106 +259,3 @@ export default function UserProfile() {
     </>
   );
 }
-const itemData = [
-  {
-    image:
-      "https://c4.wallpaperflare.com/wallpaper/51/258/367/iu-iu-lee-ji-eun-hd-wallpaper-preview.jpg",
-    content: "Bed",
-    likeCount: 1310,
-  },
-  {
-    image:
-      "https://i.pinimg.com/originals/65/9e/82/659e82e7eddcaab52961c135b7d97a4d.jpg",
-    content: "Books",
-    likeCount: 12300,
-  },
-  {
-    image:
-      "https://www.allkpop.com/upload/2021/12/content/231225/web_data/allkpop_1640280755_untitled-1.jpg",
-    content: "Bed",
-    likeCount: 1310,
-  },
-  {
-    image:
-      "https://i.pinimg.com/originals/1d/e5/b1/1de5b1350ddf2f37ee536aec562680e3.jpg",
-    content: "Sink",
-    likeCount: 21300,
-  },
-  {
-    image:
-      "https://78.media.tumblr.com/9c6b32874418101d8504927371490cfe/tumblr_p3yognlkpJ1rlzlwyo4_1280.jpg",
-    content: "Kitchen",
-    likeCount: 200,
-  },
-  {
-    image: "https://wallpapercave.com/wp/wp9392828.jpg",
-    content: "Blinds",
-    likeCount: 3300,
-  },
-  {
-    image: "https://images.unsplash.com/photo-1574180045827-681f8a1a9622",
-    content: "Chairs",
-    likeCount: 1340,
-  },
-  {
-    image:
-      "https://play-lh.googleusercontent.com/Nk7N1X4GgErY53Lou96nDHqpPvwsVqlp5w7qnu-FDI4klBoDy9x0C2N6CcaY1358ZIc=w512",
-    content: "Laptop",
-    likeCount: 1530,
-  },
-  {
-    image:
-      "https://wallpapers.com/images/high/korean-drama-iu-hotel-del-luna-m89lsnqk1iwimi0y.jpg",
-    content: "Laptop",
-    likeCount: 450,
-  },
-  {
-    image:
-      "https://photo-baomoi.bmcdn.me/w700_r1/2022_05_28_329_42733909/ebf4689d9adf73812ace.jpg",
-    content: "Laptop",
-    likeCount: 23420,
-  },
-  {
-    image:
-      "https://i-giaitri.vnecdn.net/2019/08/13/1523531473-6b61ac9139d17084137a715ebccef47c-yoona-lim-snsd-yoona_m_460x0.jpg",
-    content: "Laptop",
-    likeCount: 1432,
-  },
-  {
-    image:
-      "https://vnn-imgs-f.vgcloud.vn/2020/04/14/00/suzy-tinh-dau-quoc-dan-so-huu-khoi-tai-san-chuc-trieu-do-38.jpg",
-    content: "Laptop",
-    likeCount: 123420,
-  },
-  {
-    image:
-      "https://afamilycdn.com/150157425591193600/2022/7/6/phan-ung-cua-netizen-han-khi-suzy-va-lee-dong-wook-chia-tay-1d2130c3-1657103885218486938283.jpg",
-    content: "Laptop",
-    likeCount: 4230,
-  },
-  {
-    image: "https://images.unsplash.com/photo-1481277542470-605612bd2d61",
-    content: "Doors",
-    likeCount: 144,
-  },
-  {
-    image: "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7",
-    content: "Coffee",
-    likeCount: 105,
-  },
-  {
-    image: "https://images.unsplash.com/photo-1516455207990-7a41ce80f7ee",
-    content: "Storage",
-    likeCount: 103,
-  },
-  {
-    image: "https://images.unsplash.com/photo-1597262975002-c5c3b14bbd62",
-    content: "Candle",
-    likeCount: 102,
-  },
-  {
-    image: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4",
-    content: "Coffee table",
-    likeCount: 101,
-  },
-];
