@@ -21,7 +21,7 @@ const loadConversation = async (params, thunkAPI) => {
   try {
     let requestParams = {
       page: params.page,
-      per_page: params.per_page,
+      per_page: 20,
     }
     const res = await axiosClient.get(`${URL}/conversations/${params.conversation_id}/messages?page=${requestParams.page}&per_page=${requestParams.per_page}`)
     return res
