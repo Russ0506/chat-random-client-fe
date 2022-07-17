@@ -38,6 +38,8 @@ const shapeCircleStyles = {
 
 export default function UserProfile() {
   const user_id = localStorage.getItem('user_id')
+  const avatar_path = `${URL}/${localStorage.getItem('avatar_path')}`
+  const user_display_name= localStorage.getItem('user_display_name')
   const [gender, setGender] = React.useState("female");
   const [openPoster, setOpenPoster] = React.useState(false);
   const [posterData, setPosterData] = React.useState({
@@ -53,7 +55,7 @@ export default function UserProfile() {
       sx={{
         ...shapeStyles,
         ...shapeCircleStyles,
-        backgroundImage: `url(${myidol})`,
+        backgroundImage: `url(${avatar_path})`,
       }}
     />
   );
@@ -127,7 +129,7 @@ export default function UserProfile() {
                   alignItems: "center",
                 }}
               >
-                Tuong Vy Bui Anh{" "}
+                {user_display_name}
                 {gender === "male" ? (
                   <StyledMaleIcon
                     fontSize="18px"
@@ -242,7 +244,7 @@ export default function UserProfile() {
           </ImageList>
         </Box>
         {openNewPoster === true ? (
-          <NewPosterLayout open={openNewPoster} onClose={handleCloseNewPost} />
+          <NewPosterLayout open={openNewPoster} onClose={handleCloseNewPost} userDisplayName = {user_display_name} avatarPath = {avatar_path} />
         ) : (
           <></>
         )}
