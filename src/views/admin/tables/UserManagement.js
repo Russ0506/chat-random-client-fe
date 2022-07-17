@@ -1,14 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Card, Table } from "react-bootstrap";
-import { userList } from "../../admin/mock_data";
+import { userList } from "../mock_data";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { IconButton, Typography } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import BlockIcon from "@mui/icons-material/Block";
-import EditIcon from "@mui/icons-material/Edit";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import Iconify from "../../common/base/icon/Iconify";
+import BlockDialog from "../dialog/blockDialog/BlockDialog";
+import ReportDialog from "../dialog/ReportDialog/ReportDialog";
 const BootstrapTable = () => {
+  const [openReportDialog, setOpenReportDialog] = useState({
+    open: false,
+    data: {
+      userId: "",
+      userName: "",
+      email: "",
+    },
+  });
+  const [openBlockDialog, setOpenBlockDialog] = useState({
+    open: false,
+    data: {
+      userId: "",
+      userName: "",
+      email: "",
+    },
+  });
+  function handleCloseReportDialog() {
+    setOpenReportDialog({
+      open: false,
+      data: {
+        userId: "",
+        userName: "",
+        email: "",
+      },
+    });
+  }
+  function handleOpenReportModal(user) {
+    setOpenReportDialog({ open: true, data: user });
+  }
+  function handleCloseBlockDialog() {
+    setOpenBlockDialog({
+      open: false,
+      data: {
+        userId: "",
+        userName: "",
+        email: "",
+      },
+    });
+  }
+  function handleOpenBlockModal(user) {
+    setOpenBlockDialog({ open: true, data: user });
+  }
   return (
     <React.Fragment>
       <Row>
@@ -49,7 +92,9 @@ const BootstrapTable = () => {
                           ? user.reportCount + " time"
                           : user.reportCount + " times"}
                         {user.reportCount > 0 ? (
-                          <IconButton>
+                          <IconButton
+                            onClick={() => handleOpenReportModal(user)}
+                          >
                             <LaunchIcon />
                           </IconButton>
                         ) : (
@@ -59,9 +104,6 @@ const BootstrapTable = () => {
                       <td className="d-flex justify-content-end">
                         {user.status === "blocked" ? (
                           <>
-                            <IconButton>
-                              <EditIcon />
-                            </IconButton>
                             <IconButton sx={{ marginLeft: 0.5 }}>
                               <Iconify icon="ooui:un-block" />
                             </IconButton>
@@ -71,11 +113,10 @@ const BootstrapTable = () => {
                           </>
                         ) : (
                           <>
-                            <IconButton>
-                              <EditIcon />
-                            </IconButton>
                             <IconButton sx={{ marginLeft: 0.5 }}>
-                              <BlockIcon />
+                              <BlockIcon
+                                onClick={() => handleOpenBlockModal(user)}
+                              />
                             </IconButton>
                             <IconButton sx={{ marginLeft: 0.5 }}>
                               <DeleteForeverIcon />
@@ -91,6 +132,16 @@ const BootstrapTable = () => {
           </Card>
         </Col>
       </Row>
+      <BlockDialog
+        open={openBlockDialog.open}
+        onClose={handleCloseBlockDialog}
+        data={openBlockDialog.data}
+      />
+      <ReportDialog
+        open={openReportDialog.open}
+        onClose={handleCloseReportDialog}
+        data={openReportDialog.data}
+      />
     </React.Fragment>
   );
 };
