@@ -20,7 +20,7 @@ import HomeScreen from "./views/homeScreen/HomeScreen";
 import Logout from "./views/auth/Logout";
 import DashDefault from "./views/admin/dashboard/DashDefault/DashDefault";
 import AdminLayout from "./components/layouts/AdminLayout/AdminLayout";
-import BootstrapTable from "./views/admin/tables/BootstrapTable";
+import UserManagement from "./views/admin/tables/UserManagement";
 
 export const ProtectedRoute = ({ link = "/", children }) => {
   return <AuthenLoading link={link} children={children} />;
@@ -52,7 +52,7 @@ export default function Routes() {
           path: "tables",
           element: (
             <AdminLayout>
-              <BootstrapTable />
+              <UserManagement />
             </AdminLayout>
           ),
         },
@@ -83,7 +83,7 @@ export default function Routes() {
           path: "user-management",
           element: (
             <AdminLayout>
-              <BootstrapTable />
+              <UserManagement />
             </AdminLayout>
           ),
         },
