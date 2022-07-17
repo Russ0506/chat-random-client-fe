@@ -11,10 +11,8 @@ import {
   IconButton,
   Input,
   Stack,
-  TextField,
   Typography,
   Zoom,
-  Modal,
 } from "@mui/material";
 // import DropBox from './DropBox';
 import { Box } from "@mui/system";
@@ -26,9 +24,9 @@ import { CmmnFormControl } from "../../chat/popup/components/CmmnFormControl";
 import GgmApiForPost from "./GgmApiForPost";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "react-image-crop/dist/ReactCrop.css";
-import ReactCrop from "react-image-crop";
 import { axiosMultipartForm } from "../../../setup/axiosClient";
 import styles from "../../../styles/newposterchat-layout.scss"
+import CropImage from "../../common/modal/CropImage";
 
 // import InputEmoji from "react-input-emoji"; // ko xoa nha
 // import Picker from "emoji-picker-react"; // ko xoa nha
@@ -60,8 +58,8 @@ export default function NewPosterLayout({
   const [croppedImageUrl, setCroppedImageUrl] = useState('')
   const [crop, setCrop] = useState({
     unit: "%",
-    width: 30,
-    aspect: 16 / 9,
+    width: 50,
+    // aspect: 16 / 9,
   })
   const [src, setSrc] = useState(null)
   const [croppedImage, setCroppedImage] = useState(null)
@@ -257,10 +255,10 @@ export default function NewPosterLayout({
 
   const style = {
     position: "absolute",
-    top: "50%",
+    top: "100%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 900,
+    width: 700,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -269,28 +267,17 @@ export default function NewPosterLayout({
 
   return (
     <>
-      <Modal
-        open={openCropImgModal}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          {src && (
-            <ReactCrop
-              src={src}
-              crop={crop}
-              ruleOfThirds
-              onImageLoaded={onImageLoaded}
-              onComplete={onCropComplete}
-              onChange={onCropChange}
-            />
-          )}
-          <Button sx={{ float: "right", pt: 4 }} onClick={handleClose}>
-            OK
-          </Button>
-        </Box>
-      </Modal>
+    <CropImage
+     src = {src}
+     open = {openCropImgModal} 
+     style = {style}
+     crop = {crop} 
+     onImageLoaded = {onImageLoaded} 
+     onCropChange = {onCropChange} 
+     handleClose = {handleClose}
+     onCropComplete={onCropComplete}>
+
+     </CropImage>
       <Dialog
         open={openModal}
         TransitionComponent={Transition}
