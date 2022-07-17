@@ -4,7 +4,6 @@ import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -19,10 +18,10 @@ import FormLabel from "@mui/material/FormLabel";
 import Loading from "../common/base/loading/Loading";
 import Select from "react-select";
 import { axiosClient, axiosMultipartForm } from "../../setup/axiosClient";
-import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { Fade, Slide, Stack, Zoom } from "@mui/material";
 import bgNew from "../auth/img/conv.png";
+import CropImage from "../common/modal/CropImage";
 const URL = "users";
 
 class SignUp extends React.PureComponent {
@@ -33,7 +32,7 @@ class SignUp extends React.PureComponent {
       crop: {
         unit: "%",
         width: 30,
-        aspect: 16 / 9,
+        aspect: 16 / 16,
       },
       open: false,
       selectedDate: new Date(),
@@ -189,10 +188,10 @@ class SignUp extends React.PureComponent {
 
   style = {
     position: "absolute",
-    top: "50%",
+    top: "100%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 900,
+    width: 500,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -221,28 +220,16 @@ class SignUp extends React.PureComponent {
         }}
       >
         <Loading show={this.state.isSubmit}></Loading>
-        <Modal
+        <CropImage
+          src={src}
           open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={this.style}>
-            {src && (
-              <ReactCrop
-                src={src}
-                crop={crop}
-                ruleOfThirds
-                onImageLoaded={this.onImageLoaded}
-                onComplete={this.onCropComplete}
-                onChange={this.onCropChange}
-              />
-            )}
-            <Button sx={{ float: "right", pt: 4 }} onClick={this.handleClose}>
-              OK
-            </Button>
-          </Box>
-        </Modal>
+          style={this.style}
+          crop={crop}
+          onImageLoaded={this.onImageLoaded}
+          onCropChange={this.onCropChange}
+          handleClose={this.handleClose}
+          onCropComplete={this.onCropComplete} >
+        </CropImage>
 
         <Grid
           container
