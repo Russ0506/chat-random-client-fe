@@ -21,7 +21,7 @@ import "react-image-crop/dist/ReactCrop.css";
 import { axiosMultipartForm } from "../../../setup/axiosClient";
 import styles from "../../../styles/newposterchat-layout.scss";
 import CropImage from "../../common/modal/CropImage";
-import { FormLabel } from "react-bootstrap";
+import { Form, FormLabel } from "react-bootstrap";
 
 // import InputEmoji from "react-input-emoji"; // ko xoa nha
 // import Picker from "emoji-picker-react"; // ko xoa nha
@@ -276,7 +276,6 @@ export default function NewPosterLayout({
         onClose={handleCloseModal}
         aria-describedby="alert-dialog-slide-description"
         id="des-txtarea-desc"
-        
       >
         <DialogTitle
           sx={{
@@ -314,10 +313,12 @@ export default function NewPosterLayout({
           </DialogContent>
         ) : (
           <>
-            <DialogContent
-              
-            >
-              <DialogContentText id="alert-dialog-slide-description">
+            <DialogContent>
+              <DialogContentText
+                component={Form}
+                id="newPostForm"
+                onSubmit={submitPost}
+              >
                 <Stack
                   className="ct-pt-title"
                   flexDirection="row"
@@ -509,6 +510,7 @@ export default function NewPosterLayout({
                     type="submit"
                     disabled={isPost}
                     sx={{ mt: 2, mb: 0 }}
+                    form="newPostForm"
                   >
                     Post
                   </Button>
