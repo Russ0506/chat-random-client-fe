@@ -28,7 +28,7 @@ export default function AvatarFramEdit(props) {
       display: "block",
       height: "100%",
       width: "100%",
-      backgroundImage: `url(${props.img == null ? avatarDemo : props.img})`,
+      backgroundImage: `url(${(props.img == null || props.img =='' )? avatarDemo : props.img})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",

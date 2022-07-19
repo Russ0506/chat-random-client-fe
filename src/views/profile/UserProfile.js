@@ -5,7 +5,6 @@ import {
   Grow,
   ImageList,
   ImageListItem,
-  Paper,
   Stack,
   Typography,
 } from "@mui/material";
@@ -23,9 +22,9 @@ import {
 import MyPostLayout from "./components/MyPostLayout";
 import AddIcon from "@mui/icons-material/Add";
 import { axiosClient } from "../../setup/axiosClient";
+import { URL } from "../../service/chat.service"
 
-const URL = "http://localhost:3000/api";
-
+const URL_IMAGE = `${URL}/api`
 const shapeStyles = {
   bgcolor: "primary.main",
   width: { xs: 80, md: 120 },
@@ -37,7 +36,9 @@ const shapeCircleStyles = {
 };
 
 export default function UserProfile() {
-  const user_id = localStorage.getItem("user_id");
+  const user_id = localStorage.getItem('user_id')
+  const avatar_path = localStorage.getItem('avatar_path')
+  const user_display_name= localStorage.getItem('user_display_name')
   const [gender, setGender] = React.useState("female");
   const [openPoster, setOpenPoster] = React.useState(false);
   const [posterData, setPosterData] = React.useState({
@@ -55,7 +56,7 @@ export default function UserProfile() {
       sx={{
         ...shapeStyles,
         ...shapeCircleStyles,
-        backgroundImage: `url(${myidol})`,
+        backgroundImage: `url(${avatar_path})`,
       }}
     />
   );
@@ -84,7 +85,7 @@ export default function UserProfile() {
         setPostCount(data.length);
         const newData = data.map((item) => ({
           ...item,
-          image_path: `${URL + item.image_path}`,
+          image_path: `${URL_IMAGE + item.image_path}`,
         }));
         setListPosterData(newData);
       })
@@ -99,7 +100,7 @@ export default function UserProfile() {
     <>
       <Container
         component="main"
-        maxWidth={{ xs: "md", md: "xl" }}
+        // maxWidth={{ xs: "md", md: "xl" }}
         sx={{
           minHeight: "100%",
           p: 1,
@@ -136,7 +137,7 @@ export default function UserProfile() {
                   alignItems: "center",
                 }}
               >
-                Tuong Vy Bui Anh{" "}
+                {user_display_name}
                 {gender === "male" ? (
                   <StyledMaleIcon
                     fontSize="18px"
@@ -265,7 +266,7 @@ export default function UserProfile() {
           </ImageList>
         </Box>
         {openNewPoster === true ? (
-          <NewPosterLayout open={openNewPoster} onClose={handleCloseNewPost} />
+          <NewPosterLayout open={openNewPoster} onClose={handleCloseNewPost} userDisplayName = {user_display_name} avatarPath = {avatar_path} />
         ) : (
           <></>
         )}

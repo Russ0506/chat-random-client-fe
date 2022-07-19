@@ -14,14 +14,9 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { Component } from "react";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { styled } from "@mui/styles";
-import MenuPreProfile from "../profile/components/MenuPreProfile";
 import { CmmnInput } from "../chat/popup/components/CmmnInput";
 import { CmmnFormControl } from "../chat/popup/components/CmmnFormControl";
 import { CmmnInputLabel } from "../chat/popup/components/CmmnInputLabel";
-import { CmmnSelect } from "../chat/popup/components/CmmnSelect";
-import { CmmnGroupSelect } from "../chat/popup/components/CmmnGroupSelect";
 import { useTheme } from "@mui/material/styles";
 import AvatarFramEdit from "./components/AvatarFramEdit";
 class ChangePwdCls extends Component {
@@ -116,7 +111,7 @@ class ChangePwdCls extends Component {
             </CmmnFormControl>
             <CmmnFormControl
               variant="standard"
-              fullwidth
+              // fullWidth
               sx={{ maxWidth: "500px" }}
             >
               <CmmnInputLabel shrink htmlFor="new-pwd-inpt">
@@ -133,7 +128,7 @@ class ChangePwdCls extends Component {
             </CmmnFormControl>
             <CmmnFormControl
               variant="standard"
-              fullwidth
+              // fullWidth
               sx={{ maxWidth: "500px" }}
             >
               <CmmnInputLabel shrink htmlFor="re-new-pwd-inpt">
