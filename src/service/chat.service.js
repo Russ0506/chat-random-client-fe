@@ -1,7 +1,7 @@
 import { axiosClient } from '../setup/axiosClient'
 import { setMessage } from "../features/message";
 
-const URL = ""
+export const URL = ""
 
 const enqueuingChat = async (params, thunkAPI) => {
   try {

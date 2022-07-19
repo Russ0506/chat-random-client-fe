@@ -37,6 +37,8 @@ function defaultHandle() {
 export default function NewPosterLayout({
   open = true,
   onClose = defaultHandle(),
+  userDisplayName,
+  avatarPath
 }) {
   const [isPost, setIsPost] = useState(false);
   const [openModal, setOpenModal] = useState(open);
@@ -325,10 +327,10 @@ export default function NewPosterLayout({
                   alignItems="center"
                   sx={{ width: "100%" }}
                 >
-                  <AvatarFrame />
+                  <AvatarFrame avatarPath = {avatarPath} />
                   <Stack justifyContent="center">
                     <Typography sx={{ fontWeight: 550, ml: 1 }}>
-                      Tuong Vy Bui Anh
+                      {userDisplayName}
                     </Typography>
 
                     {usingLocation === true ? (
@@ -524,7 +526,7 @@ export default function NewPosterLayout({
   );
 }
 
-const AvatarFrame = styled(Box)(({ theme }) => ({
+const AvatarFrame = styled(Box)(({ theme, avatarPath }) => ({
   ...shapeCircleStyles,
   ...shapeStyles,
   "&::before": {
@@ -534,7 +536,7 @@ const AvatarFrame = styled(Box)(({ theme }) => ({
     display: "block",
     height: "100%",
     width: "100%",
-    backgroundImage: `url(${myIdol})`,
+    backgroundImage: `url(${avatarPath})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
