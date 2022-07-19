@@ -7,13 +7,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import myIdol from "../components/img/myidol.jpg";
 import { styled } from "@mui/styles";
-import {
-  IconButton,
-  Input,
-  Stack,
-  Typography,
-  Zoom,
-} from "@mui/material";
+import { IconButton, Input, Stack, Typography, Zoom } from "@mui/material";
 // import DropBox from './DropBox';
 import { Box } from "@mui/system";
 import Iconify from "../../common/base/icon/Iconify";
@@ -25,8 +19,9 @@ import GgmApiForPost from "./GgmApiForPost";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "react-image-crop/dist/ReactCrop.css";
 import { axiosMultipartForm } from "../../../setup/axiosClient";
-import styles from "../../../styles/newposterchat-layout.scss"
+import styles from "../../../styles/newposterchat-layout.scss";
 import CropImage from "../../common/modal/CropImage";
+import { Form, FormLabel } from "react-bootstrap";
 
 // import InputEmoji from "react-input-emoji"; // ko xoa nha
 // import Picker from "emoji-picker-react"; // ko xoa nha
@@ -43,7 +38,7 @@ export default function NewPosterLayout({
   open = true,
   onClose = defaultHandle(),
 }) {
-  const [isPost, setIsPost] = useState(false)
+  const [isPost, setIsPost] = useState(false);
   const [openModal, setOpenModal] = useState(open);
   const fileInputRef = React.useRef(null);
   const [message, setMessage] = useState("");
@@ -56,16 +51,16 @@ export default function NewPosterLayout({
   const [usingLocation, setUsingLocation] = useState(false);
 
   // state for image crop :
-  const [croppedImageUrl, setCroppedImageUrl] = useState('')
+  const [croppedImageUrl, setCroppedImageUrl] = useState("");
   const [crop, setCrop] = useState({
     unit: "%",
     width: 50,
     // aspect: 16 / 9,
-  })
-  const [src, setSrc] = useState(null)
-  const [croppedImage, setCroppedImage] = useState(null)
-  const [openCropImgModal, setOpenCropImgModal] = useState()
-  const [fileUrl, setFileUrl] = useState('')
+  });
+  const [src, setSrc] = useState(null);
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [openCropImgModal, setOpenCropImgModal] = useState();
+  const [fileUrl, setFileUrl] = useState("");
   const [imageRef, setImageRef] = useState(null);
   const URL = "posts";
 
@@ -117,7 +112,7 @@ export default function NewPosterLayout({
   };
 
   const onCropChange = (crop, percentCrop) => {
-    setCrop(crop)
+    setCrop(crop);
   };
 
   async function makeClientCrop(crop) {
@@ -127,17 +122,14 @@ export default function NewPosterLayout({
         crop,
         "newFile.jpeg"
       );
-      setCroppedImageUrl(croppedImageUrl)
-
+      setCroppedImageUrl(croppedImageUrl);
     }
   }
 
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
-      reader.addEventListener("load", () =>
-        setSrc(reader.result)
-      );
+      reader.addEventListener("load", () => setSrc(reader.result));
       reader.readAsDataURL(e.target.files[0]);
     }
     handleOpen();
@@ -178,7 +170,7 @@ export default function NewPosterLayout({
           }
           blob.name = fileName;
           window.URL.revokeObjectURL(fileUrl);
-          const f1 = (window.URL.createObjectURL(blob));
+          const f1 = window.URL.createObjectURL(blob);
           resolve(f1);
           reader.readAsDataURL(blob);
           reader.onloadend = () => {
@@ -189,7 +181,7 @@ export default function NewPosterLayout({
         1
       );
     });
-  };
+  }
 
   function dataURLtoFile(dataurl, filename) {
     let arr = dataurl.split(","),
@@ -202,11 +194,11 @@ export default function NewPosterLayout({
       u8arr[n] = bstr.charCodeAt(n);
     }
     let croppedImage = new File([u8arr], filename, { type: mime });
-    setCroppedImage(croppedImage)
+    setCroppedImage(croppedImage);
   }
 
   const submitPost = (event) => {
-    setIsPost(true)
+    setIsPost(true);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -227,17 +219,16 @@ export default function NewPosterLayout({
     axiosMultipartForm
       .post(`${URL}`, formData)
       .then((data) => {
-        onClose(data.data)
+        onClose(data.data);
       })
-      .catch(() => {
-      });
+      .catch(() => {});
   };
   const handleOpen = () => setOpenCropImgModal(true);
   const handleClose = () => setOpenCropImgModal(false);
 
   const clearImage = () => {
-    setCroppedImageUrl('')
-  }
+    setCroppedImageUrl("");
+  };
 
   // end handle crop image
 
@@ -250,34 +241,34 @@ export default function NewPosterLayout({
     justifyContent: "center",
     padding: "100px",
     border: "1px solid",
-    textShadow: " 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue"
-  }
+    textShadow: " 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue",
+  };
 
   const style = {
-    position: "absolute",
-    top: "100%",
+    position: "fixed",
+    top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 700,
     bgcolor: "background.paper",
-    border: "2px solid #000",
+    border: "1px solid rgb(157, 168, 183)",
     boxShadow: 24,
     p: 4,
+    borderRadius: "10px",
   };
 
   return (
     <>
-    <CropImage
-     src = {src}
-     open = {openCropImgModal} 
-     style = {style}
-     crop = {crop} 
-     onImageLoaded = {onImageLoaded} 
-     onCropChange = {onCropChange} 
-     handleClose = {handleClose}
-     onCropComplete={onCropComplete}>
-
-     </CropImage>
+      <CropImage
+        src={src}
+        open={openCropImgModal}
+        style={style}
+        crop={crop}
+        onImageLoaded={onImageLoaded}
+        onCropChange={onCropChange}
+        handleClose={handleClose}
+        onCropComplete={onCropComplete}
+      ></CropImage>
       <Dialog
         open={openModal}
         TransitionComponent={Transition}
@@ -310,7 +301,9 @@ export default function NewPosterLayout({
           </IconButton>
         </DialogTitle>
         {openLocationBox === true ? (
-          <DialogContent sx={{ position: "relative", minHeight: "420px" }}>
+          <DialogContent
+            sx={{ position: "relative", minHeight: "420px", marginTop: 0 }}
+          >
             <LocationFormControl variant="standard">
               <GgmApiForPost
                 reponseLocation={setLocation}
@@ -319,12 +312,13 @@ export default function NewPosterLayout({
             </LocationFormControl>
           </DialogContent>
         ) : (
-          <Box
-            component="form"
-            noValidate
-            onSubmit={submitPost}>
-            <DialogContent sx={{ position: "relative" }}>
-              <DialogContentText id="alert-dialog-slide-description">
+          <>
+            <DialogContent>
+              <DialogContentText
+                component={Form}
+                id="newPostForm"
+                onSubmit={submitPost}
+              >
                 <Stack
                   className="ct-pt-title"
                   flexDirection="row"
@@ -370,7 +364,7 @@ export default function NewPosterLayout({
                   }}
                   endAdornment={
                     <Stack sx={{ position: "relative" }}>
-                       {/* <EmojiPicker
+                      {/* <EmojiPicker
                         disabled={false}
                         value={message}
                         setValue={setMessage}
@@ -416,7 +410,8 @@ export default function NewPosterLayout({
                         margin: "0",
                         overflow: "auto",
                       }}
-                    ><img
+                    >
+                      <img
                         value="croppedImageUrl"
                         alt="Crop"
                         width="100%"
@@ -427,7 +422,7 @@ export default function NewPosterLayout({
                       sx={{ position: "absolute", top: "2px", right: "7px" }}
                     >
                       <StyledCloseIcon
-                      onClick = {clearImage}
+                        onClick={clearImage}
                         sx={{
                           color: "#606770",
                           background: "rgba(255,255,255,.8)",
@@ -435,29 +430,11 @@ export default function NewPosterLayout({
                           height: "25px",
                         }}
                       />
-
                     </IconButton>
                   </>
-
-                ) :
-                  <Box
-                    borderRadius={4}
-                    sx={boxUploadImage}
-                  >
-                    <Box className="image-upload">
-                      <label htmlFor="file-input">
-                        <svg aria-label="Icon to represent media such as images or videos" className="_8-yf5 " color="#262626" fill="#262626" height="77" role="img" viewBox="0 0 97.6 77.3" width="96"><path d="M16.3 24h.3c2.8-.2 4.9-2.6 4.8-5.4-.2-2.8-2.6-4.9-5.4-4.8s-4.9 2.6-4.8 5.4c.1 2.7 2.4 4.8 5.1 4.8zm-2.4-7.2c.5-.6 1.3-1 2.1-1h.2c1.7 0 3.1 1.4 3.1 3.1 0 1.7-1.4 3.1-3.1 3.1-1.7 0-3.1-1.4-3.1-3.1 0-.8.3-1.5.8-2.1z" fill="currentColor"></path><path d="M84.7 18.4L58 16.9l-.2-3c-.3-5.7-5.2-10.1-11-9.8L12.9 6c-5.7.3-10.1 5.3-9.8 11L5 51v.8c.7 5.2 5.1 9.1 10.3 9.1h.6l21.7-1.2v.6c-.3 5.7 4 10.7 9.8 11l34 2h.6c5.5 0 10.1-4.3 10.4-9.8l2-34c.4-5.8-4-10.7-9.7-11.1zM7.2 10.8C8.7 9.1 10.8 8.1 13 8l34-1.9c4.6-.3 8.6 3.3 8.9 7.9l.2 2.8-5.3-.3c-5.7-.3-10.7 4-11 9.8l-.6 9.5-9.5 10.7c-.2.3-.6.4-1 .5-.4 0-.7-.1-1-.4l-7.8-7c-1.4-1.3-3.5-1.1-4.8.3L7 49 5.2 17c-.2-2.3.6-4.5 2-6.2zm8.7 48c-4.3.2-8.1-2.8-8.8-7.1l9.4-10.5c.2-.3.6-.4 1-.5.4 0 .7.1 1 .4l7.8 7c.7.6 1.6.9 2.5.9.9 0 1.7-.5 2.3-1.1l7.8-8.8-1.1 18.6-21.9 1.1zm76.5-29.5l-2 34c-.3 4.6-4.3 8.2-8.9 7.9l-34-2c-4.6-.3-8.2-4.3-7.9-8.9l2-34c.3-4.4 3.9-7.9 8.4-7.9h.5l34 2c4.7.3 8.2 4.3 7.9 8.9z" fill="currentColor"></path><path d="M78.2 41.6L61.3 30.5c-2.1-1.4-4.9-.8-6.2 1.3-.4.7-.7 1.4-.7 2.2l-1.2 20.1c-.1 2.5 1.7 4.6 4.2 4.8h.3c.7 0 1.4-.2 2-.5l18-9c2.2-1.1 3.1-3.8 2-6-.4-.7-.9-1.3-1.5-1.8zm-1.4 6l-18 9c-.4.2-.8.3-1.3.3-.4 0-.9-.2-1.2-.4-.7-.5-1.2-1.3-1.1-2.2l1.2-20.1c.1-.9.6-1.7 1.4-2.1.8-.4 1.7-.3 2.5.1L77 43.3c1.2.8 1.5 2.3.7 3.4-.2.4-.5.7-.9.9z" fill="currentColor"></path></svg>
-                      </label>
-
-                      <input
-                        type="file"
-                        accept="image/*"
-                        multiple
-                        id="file-input" className="upload"
-                        onChange={onSelectFile}
-                      />
-                    </Box>
-                  </Box>}
+                ) : (
+                  <></>
+                )}
               </Box>
             </DialogContent>
             <DialogActions>
@@ -477,19 +454,34 @@ export default function NewPosterLayout({
                       border: "1px solid #e5e0e0",
                     }}
                   >
-                    <Typography>Check in</Typography>
+                    <Typography>Add to your post</Typography>
                     <Stack flexDirection="row">
-                      {/* <IconButton
+                      <IconButton
                         disabled={false}
                         size="small"
-                        onClick={handleAttach}
+                        sx={{ width: 37, height: 37 }}
                       >
-                        <Iconify
-                          icon="ic:round-add-photo-alternate"
-                          width={22}
-                          height={22}
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          id="file-input"
+                          className="upload"
+                          onChange={onSelectFile}
+                          hidden
                         />
-                      </IconButton> */}
+
+                        <label
+                          htmlFor="file-input"
+                          style={{ margin: 0, padding: 0 }}
+                        >
+                          <Iconify
+                            icon="ic:round-add-photo-alternate"
+                            width={22}
+                            height={22}
+                          />
+                        </label>
+                      </IconButton>
 
                       <IconButton
                         disabled={false}
@@ -497,7 +489,10 @@ export default function NewPosterLayout({
                         onClick={handleOpenLocationBox}
                         sx={{
                           background:
-                            usingLocation == true ? "rgb(236, 236, 250)" : "",
+                            usingLocation === true ? "rgb(236, 236, 250)" : "",
+                          width: 37,
+                          height: 37,
+                          ml: "5px",
                         }}
                       >
                         <LocationOnIcon />
@@ -513,15 +508,16 @@ export default function NewPosterLayout({
                   <Button
                     variant="contained"
                     type="submit"
-                    disabled= {isPost}
+                    disabled={isPost}
                     sx={{ mt: 2, mb: 0 }}
+                    form="newPostForm"
                   >
                     Post
                   </Button>
                 </Stack>
               </DialogContent>
             </DialogActions>
-          </Box>
+          </>
         )}
       </Dialog>
     </>

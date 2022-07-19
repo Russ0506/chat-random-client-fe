@@ -85,6 +85,9 @@
 #des-txtarea-desc .MuiDialog-paper {
   width: 100%;
 }
+legend {
+  width: auto !important;
+}
 
 .items-center{
   text-align: center;
