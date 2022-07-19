@@ -22,7 +22,7 @@ const CropImage = ({src, open, style, crop, onImageLoaded, onCropChange, handleC
                         onChange={onCropChange}
                     />
                 )}
-                <Button sx={{ float: "right", pt: 4 }} onClick={handleClose}>
+                <Button sx={{ float: "right", mt: 3 }} onClick={handleClose}>
                     OK
                 </Button>
             </Box>

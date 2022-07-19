@@ -8,7 +8,7 @@ import Homepage from "../../Homepage";
 import NewPosterLayout from "../../profile/components/NewPosterLayout";
 import Iconify from "../base/icon/Iconify";
 import CherishAppBar from "./CherishAppBar";
-const sideWidth = "60px";
+const sidePadding = 38;
 export default function CherishApp({ index = 1, body }) {
   const [useNewPost, setUseNewPost] = React.useState(false);
   function handleOpenNewPost() {
@@ -26,8 +26,8 @@ export default function CherishApp({ index = 1, body }) {
         alignItems="center"
         sx={{
           height: "100vh",
-          width: sideWidth,
-          p: "38px",
+          width: 0,
+          p: sidePadding + "px",
           borderRight: "1px solid #e5e0e0",
         }}
       >
@@ -94,7 +94,7 @@ export default function CherishApp({ index = 1, body }) {
       </Stack>
 
       <Box
-        width={{ xs: "100vw", md: `calc(100vw - ${sideWidth})` }}
+        width={{ xs: "100vw", md: `calc(100vw - ${sidePadding * 2 + 1}px)` }}
         sx={{ height: "100vh" }}
       >
         <CherishAppBar />
@@ -107,7 +107,11 @@ export default function CherishApp({ index = 1, body }) {
         >
           {body}
         </Box>
-        {useNewPost == true ? <NewPosterLayout open={true} onClose={handleCloseNewPost}/> : ""}
+        {useNewPost == true ? (
+          <NewPosterLayout open={true} onClose={handleCloseNewPost} />
+        ) : (
+          ""
+        )}
       </Box>
     </Stack>
   );

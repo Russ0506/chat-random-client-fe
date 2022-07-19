@@ -24,7 +24,7 @@ import MyPostLayout from "./components/MyPostLayout";
 import AddIcon from "@mui/icons-material/Add";
 import { axiosClient } from "../../setup/axiosClient";
 
-const URL = 'http://localhost:3000/api'
+const URL = "http://localhost:3000/api";
 
 const shapeStyles = {
   bgcolor: "primary.main",
@@ -37,7 +37,7 @@ const shapeCircleStyles = {
 };
 
 export default function UserProfile() {
-  const user_id = localStorage.getItem('user_id')
+  const user_id = localStorage.getItem("user_id");
   const [gender, setGender] = React.useState("female");
   const [openPoster, setOpenPoster] = React.useState(false);
   const [posterData, setPosterData] = React.useState({
@@ -45,8 +45,10 @@ export default function UserProfile() {
     image_path: "",
     no_of_reactions: 0,
   });
-  const [listPosterData, setListPosterData] = React.useState([])
+  const [listPosterData, setListPosterData] = React.useState([]);
   const [openNewPoster, setOpenNewPoster] = React.useState(false);
+  const [postCount, setPostCount] = React.useState(0);
+
   const circle = (
     <Box
       component="span"
@@ -72,27 +74,34 @@ export default function UserProfile() {
     setOpenNewPoster(true);
   }
   function handleCloseNewPost(newpostdata) {
-    setOpenNewPoster(false)
+    setOpenNewPoster(false);
   }
 
   async function getPostList() {
-    await axiosClient.get(`/users/${user_id}/posts`).then((data) => {
-      const  newData = data.map(item => ({...item, image_path: `${URL + item.image_path}`}))
-      setListPosterData(newData)
-    }) .catch(() => {
-    });
+    await axiosClient
+      .get(`/users/${user_id}/posts`)
+      .then((data) => {
+        setPostCount(data.length);
+        const newData = data.map((item) => ({
+          ...item,
+          image_path: `${URL + item.image_path}`,
+        }));
+        setListPosterData(newData);
+      })
+      .catch(() => {});
   }
 
   useLayoutEffect(() => {
-    getPostList()
-  }, [openNewPoster])
+    getPostList();
+  }, [openNewPoster]);
 
   return (
     <>
       <Container
         component="main"
-        // maxWidth={{ xs: "md", md: "xl" }}
+        maxWidth={{ xs: "md", md: "xl" }}
         sx={{
+          minHeight: "100%",
           p: 1,
           display: "flex",
           justifyContent: { xs: "center", lg: "flex-start" },
@@ -192,7 +201,13 @@ export default function UserProfile() {
           </Box>
         </Stack>
 
-        <Box sx={{ maxWidth: { md: 500, lg: 600, xl: 800 }, height: "100%", overflowY: "auto" }}>
+        <Box
+          sx={{
+            maxWidth: { md: 400, lg: 500, xl: 700 },
+            height: "100%",
+            overflowY: "auto",
+          }}
+        >
           {/* <Divider
             variant="middle"
             sx={{ width: "100%", mt: 5, mb: 3, ml: 0, mr: 0 }}
@@ -229,8 +244,16 @@ export default function UserProfile() {
               >
                 <ImageListItem key={item.image}>
                   <img
-                    src={item.image_path ? `${item.image_path}` : "https://hangnhatxachtay.co/wp-content/uploads/2015/05/hello_kitty.png"}
-                    srcSet={item.image_path ? `${item.image_path}` : "https://hangnhatxachtay.co/wp-content/uploads/2015/05/hello_kitty.png"}
+                    src={
+                      item.image_path
+                        ? `${item.image_path}`
+                        : "https://hangnhatxachtay.co/wp-content/uploads/2015/05/hello_kitty.png"
+                    }
+                    srcSet={
+                      item.image_path
+                        ? `${item.image_path}`
+                        : "https://hangnhatxachtay.co/wp-content/uploads/2015/05/hello_kitty.png"
+                    }
                     alt={item.caption}
                     loading="lazy"
                     style={{ cursor: "pointer" }}
