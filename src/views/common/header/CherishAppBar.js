@@ -68,13 +68,14 @@ const CherishAppBar = () => {
   return (
     <AppBar
       position="static"
+      component={Box}
       sx={{
         height: APP_BAR_HEIGHT,
-        background: "white",
+        background: "transparent",
         boxShadow: "none",
-        border: "1px solid #e5e0e0",
+        // border: "1px solid #e5e0e0",
         borderLeft: 0,
-        borderTop:0
+        borderTop: 0,
       }}
     >
       <Container sx={{ width: "100%", maxWidth: "100% !important" }}>
@@ -177,13 +178,13 @@ const CherishAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting,i) => (
+              {settings.map((setting, i) => (
                 <MenuItem key={i} onClick={handleCloseUserMenu}>
                   <Typography
                     component={Link}
                     variant="body1"
                     textAlign="center"
-                    sx={{color: "black", textDecoration: "none"}}
+                    sx={{ color: "black", textDecoration: "none" }}
                     to={setting.linkUrl == null ? "" : setting.linkUrl}
                   >
                     {setting.name}
