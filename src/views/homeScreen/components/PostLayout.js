@@ -32,9 +32,10 @@ export default function PostLayout({ data }) {
   return (
     <Card
       sx={{
-        maxWidth: { sm: 400, md: 750 },
+        maxWidth: { sm: 400, md: 800 },
         mb: "30px",
-        boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+        // boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+        boxShadow: "0 1px 20px 0 rgb(69 90 100 / 8%)",
         width: "100%",
         borderRadius:"7px"
       }}

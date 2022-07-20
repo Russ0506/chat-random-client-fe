@@ -40,7 +40,7 @@
 }
 *::-webkit-scrollbar-thumb:hover {
   /* background: #96dfce; */
-  background: #b3d48f;
+  /* background: #b3d48f; */
   cursor: pointer;
 }
 .App {
