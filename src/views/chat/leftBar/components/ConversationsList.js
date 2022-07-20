@@ -100,7 +100,7 @@ export default function ConversationsList() {
     return conversations.map((conversation, k) => (
       <ListItem key={k} disablePadding>
         <ListItemButton
-          sx={{ padding: { xs: 0 }, paddingLeft: { xs: 2 } }}
+          sx={{ padding: 0, pl: 1, pr: 1 }}
           onClick={() => {
             onChangeConversation(conversation);
           }}
