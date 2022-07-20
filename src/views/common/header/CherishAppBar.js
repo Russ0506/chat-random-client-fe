@@ -71,9 +71,10 @@ const CherishAppBar = () => {
       component={Box}
       sx={{
         height: APP_BAR_HEIGHT,
-        background: "transparent",
-        boxShadow: "none",
+        background: "#fff",
+        // boxShadow: "none",
         // border: "1px solid #e5e0e0",
+        boxShadow: "0 1px 20px 0 rgb(69 90 100 / 8%)",
         borderLeft: 0,
         borderTop: 0,
       }}

@@ -29,6 +29,8 @@ export default function CherishApp({ index = 1, body }) {
           width: 0,
           p: sidePadding + "px",
           borderRight: "1px solid #e5e0e0",
+          background: "#fff",
+          // boxShadow: "0 1px 20px 0 rgb(69 90 100 / 8%)",
         }}
       >
         {index == 1 ? (

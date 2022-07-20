@@ -1,29 +1,15 @@
 import {
-  Avatar,
   Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
   Container,
   Divider,
-  Grow,
-  IconButton,
   ImageList,
-  ImageListItem,
-  Paper,
-  Skeleton,
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useLayoutEffect } from "react";
-import { styled } from "@mui/material/styles";
+import React, { useLayoutEffect } from "react";
 import Badge from "@mui/material/Badge";
 import NewPosterLayout from "./components/NewPosterLayout";
-import myidol from "../profile/components/img/myidol.jpg";
 // import $ from "jquery";
-import { Link } from "react-router-dom";
 import {
   StyledFemaleIcon,
   StyledMaleIcon,
@@ -38,14 +24,10 @@ import img4 from "../profile/components/img/4.png";
 import img5 from "../profile/components/img/5.png";
 import img6 from "../profile/components/img/6.png";
 import PostLayout from "../homeScreen/components/PostLayout";
-import { async } from "validate.js";
 import ImagePoster from "./components/ImagePoster";
-import { URL } from "../../service/chat.service"
+import { URL } from "../../service/chat.service";
 
-const URL_IMAGE = `${URL}/api`
-const fixArr = [
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 11, 1, 1, 1, 1, 1, 11,
-];
+const URL_IMAGE = `${URL}/api`;
 const shapeStyles = {
   bgcolor: "primary.main",
   width: { xs: 80, md: 120 },
@@ -93,18 +75,12 @@ const imgList = [
     img: img6,
     postTm: "18-06-2022",
   },
-  // {
-  //   userNm: "Russ",
-  //   content: "Tim kiem real love",
-  //   img: img7,
-  //   postTm: "18-06-2022",
-  // },
 ];
 
 export default function UserProfile() {
-  const user_id = localStorage.getItem('user_id')
-  const avatar_path = localStorage.getItem('avatar_path')
-  const user_display_name= localStorage.getItem('user_display_name')
+  const user_id = localStorage.getItem("user_id");
+  const avatar_path = localStorage.getItem("avatar_path");
+  const user_display_name = localStorage.getItem("user_display_name");
   const [gender, setGender] = React.useState("female");
   const [openPoster, setOpenPoster] = React.useState(false);
   const [posterData, setPosterData] = React.useState({
@@ -114,9 +90,6 @@ export default function UserProfile() {
   });
   const [listPosterData, setListPosterData] = React.useState([]);
   const [openNewPoster, setOpenNewPoster] = React.useState(false);
-  const [postCnt, setPostCnt] = React.useState(0);
-  const [postLoadingCnt, setPostLoadingCnt] = React.useState(-1);
-  const [postLoadingCntErr, setPostLoadingCntErr] = React.useState(0);
   const circle = (
     <Box
       component="span"
@@ -145,17 +118,11 @@ export default function UserProfile() {
     setOpenNewPoster(false);
   }
 
-  async function handleImgLoadErr() {
-    await setPostLoadingCntErr(postLoadingCntErr + 1);
-    await console.log(postLoadingCntErr);
-  }
 
   async function getPostList() {
     await axiosClient
       .get(`/users/${user_id}/posts`)
       .then((data) => {
-        setPostCnt(data.length);
-        setPostLoadingCnt(0);
         const newData = data.map((item) => ({
           ...item,
           image_path: `${URL_IMAGE + item.image_path}`,
@@ -171,7 +138,13 @@ export default function UserProfile() {
 
   return (
     <Container maxWidth="xl" sx={{ justifyContent: "center", display: "flex" }}>
-      <Stack flexDirection="row" maxWidth="lg" width="100%" position="relative">
+      <Stack
+        flexDirection="row"
+        maxWidth="lg"
+        width="100%"
+        position="relative"
+        sx={{ pt: 4 }}
+      >
         <Container
           maxWidth="xl"
           sx={{
@@ -179,7 +152,6 @@ export default function UserProfile() {
             display: "flex",
             alignItems: "center",
             flexDirection: "column",
-            pt: 1,
           }}
         >
           {/* <Card
@@ -209,14 +181,13 @@ export default function UserProfile() {
           // maxWidth={{ xs: "md", md: "xl" }}
           sx={{
             // minHeight: "100%",
-            p: 1,
             display: "flex",
             justifyContent: { xs: "center", lg: "flex-start" },
             flexDirection: "column",
             alignItems: "flex-start",
             width: "38%",
             position: { sm: "relative", lg: "sticky" },
-            top: 0,
+            top: 5,
             bottom: 0,
             // background: "rgb(247,247,253)",
             height: "calc(100vh - 70px)",
@@ -238,6 +209,7 @@ export default function UserProfile() {
               borderRadius: "5px",
               background: "#fff",
               maxHeight: "180px",
+              boxShadow: "0 1px 20px 0 rgb(69 90 100 / 8%)",
             }}
           >
             <Badge>{circle}</Badge>
@@ -321,6 +293,7 @@ export default function UserProfile() {
               padding: 2,
               height: "calc(100% - 200px)",
               width: "100%",
+              boxShadow: "0 1px 20px 0 rgb(69 90 100 / 8%)",
             }}
           >
             <Box height="60px">
@@ -349,7 +322,11 @@ export default function UserProfile() {
               >
                 <>
                   {listPosterData.map((item, index) => (
-                    <ImagePoster item={item} index={index} handleOpenPoster={handleOpenPoster}/>
+                    <ImagePoster
+                      item={item}
+                      index={index}
+                      handleOpenPoster={handleOpenPoster}
+                    />
                   ))}
                 </>
               </ImageList>

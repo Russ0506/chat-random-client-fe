@@ -37,7 +37,12 @@ export default function Homepage() {
     <>
       {/* <Box w={100} sx={{ borderBottom: ".3px solid #e0e0e0" }}></Box> */}
       <Box
-        sx={{ display: "flex", height: "100%", position: "relative" }}
+        sx={{
+          display: "flex",
+          height: "100%",
+          position: "relative",
+          borderTop: "1px solid #e5e0e0",
+        }}
         className="v11"
       >
         <CssBaseline />
