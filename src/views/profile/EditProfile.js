@@ -16,9 +16,6 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { Component } from "react";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { styled } from "@mui/styles";
-import MenuPreProfile from "../profile/components/MenuPreProfile";
 import { CmmnInput } from "../chat/popup/components/CmmnInput";
 import { CmmnFormControl } from "../chat/popup/components/CmmnFormControl";
 import { CmmnInputLabel } from "../chat/popup/components/CmmnInputLabel";
@@ -49,6 +46,8 @@ class EditProfileCls extends Component {
   render() {
     // Get it from props
     const { theme } = this.props;
+    const avatar_path = localStorage.getItem('avatar_path');
+    const user_display_name= localStorage.getItem('user_display_name');
 
     function getStyles(name, selectName, theme) {
       return {
@@ -78,7 +77,7 @@ class EditProfileCls extends Component {
             sx={{ width: "200px", height: "100%" }}
           >
             <AvatarFramEdit
-              img={null}
+              img={avatar_path}
               sx={{ width: "100px", height: "100px", position: "relative" }}
             />
 
@@ -86,7 +85,7 @@ class EditProfileCls extends Component {
               variant="body1"
               sx={{ mt: 1, color: "#4f4f4f", justifySelf: "flex-end" }}
             >
-              Tuong Vy Bui Anh
+              {user_display_name}
             </Typography>
           </Stack>
 
@@ -101,7 +100,7 @@ class EditProfileCls extends Component {
           >
             <CmmnFormControl
               variant="standard"
-              fullWidth
+              // // fullWidth
               sx={{ maxWidth: "500px" }}
             >
               <CmmnInputLabel shrink htmlFor="last-nm-inpt">
@@ -112,14 +111,14 @@ class EditProfileCls extends Component {
                 type="text"
                 name="lastNm"
                 defaultValue="Bui Anh"
-                InputLabelProps={{
-                  shrink: true,
-                }}
+                // InputLabelProps={{
+                //   shrink: true,
+                // }}
               />
             </CmmnFormControl>
             <CmmnFormControl
               variant="standard"
-              fullwidth
+              // // fullWidth
               sx={{ maxWidth: "500px" }}
             >
               <CmmnInputLabel shrink htmlFor="first-nm-inpt">
@@ -130,14 +129,14 @@ class EditProfileCls extends Component {
                 type="text"
                 name="firstNm"
                 defaultValue="Tuong Vy"
-                InputLabelProps={{
-                  shrink: true,
-                }}
+                // InputLabelProps={{
+                //   shrink: true,
+                // }}
               />
             </CmmnFormControl>
             <CmmnFormControl
               variant="standard"
-              fullwidth
+              // fullWidth
               sx={{ maxWidth: "500px" }}
             >
               <CmmnInputLabel shrink htmlFor="email-inpt">
@@ -149,9 +148,9 @@ class EditProfileCls extends Component {
                 name="email"
                 defaultValue="VyBAT@fsoft.com.vn"
                 disabled
-                InputLabelProps={{
-                  shrink: true,
-                }}
+                // InputLabelProps={{
+                //   shrink: true,
+                // }}
               />
             </CmmnFormControl>
             <Stack sx={{ mt: "15px", maxWidth: "500px" }}>
@@ -183,7 +182,7 @@ class EditProfileCls extends Component {
             </Stack>
             <CmmnFormControl
               variant="standard"
-              fullwidth
+              // fullWidth
               sx={{ maxWidth: "500px" }}
             >
               <CmmnInputLabel shrink htmlFor="age-inpt">
@@ -194,9 +193,9 @@ class EditProfileCls extends Component {
                 type="number"
                 name="age"
                 defaultValue="22"
-                InputLabelProps={{
-                  shrink: true,
-                }}
+                // InputLabelProps={{
+                //   shrink: true,
+                // }}
                 sx={{ width: "150px" }}
               />
             </CmmnFormControl>

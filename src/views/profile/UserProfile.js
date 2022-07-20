@@ -40,7 +40,9 @@ import img6 from "../profile/components/img/6.png";
 import PostLayout from "../homeScreen/components/PostLayout";
 import { async } from "validate.js";
 import ImagePoster from "./components/ImagePoster";
-const URL = "http://localhost:3000/api";
+import { URL } from "../../service/chat.service"
+
+const URL_IMAGE = `${URL}/api`
 const fixArr = [
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 11, 1, 1, 1, 1, 1, 11,
 ];
@@ -100,7 +102,9 @@ const imgList = [
 ];
 
 export default function UserProfile() {
-  const user_id = localStorage.getItem("user_id");
+  const user_id = localStorage.getItem('user_id')
+  const avatar_path = localStorage.getItem('avatar_path')
+  const user_display_name= localStorage.getItem('user_display_name')
   const [gender, setGender] = React.useState("female");
   const [openPoster, setOpenPoster] = React.useState(false);
   const [posterData, setPosterData] = React.useState({
@@ -119,7 +123,7 @@ export default function UserProfile() {
       sx={{
         ...shapeStyles,
         ...shapeCircleStyles,
-        backgroundImage: `url(${myidol})`,
+        backgroundImage: `url(${avatar_path})`,
       }}
     />
   );
@@ -154,7 +158,7 @@ export default function UserProfile() {
         setPostLoadingCnt(0);
         const newData = data.map((item) => ({
           ...item,
-          image_path: `${URL + item.image_path}`,
+          image_path: `${URL_IMAGE + item.image_path}`,
         }));
         setListPosterData(newData);
       })
