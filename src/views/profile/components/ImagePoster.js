@@ -1,27 +1,31 @@
 import { Grow, ImageListItem, Skeleton } from "@mui/material";
+import { Box } from "@mui/system";
 import React, { useState } from "react";
-import errImg from "../components/img/errImg.png"
+import errImg from "../components/img/errImg.png";
 const defaultImg = errImg;
 export default function ImagePoster(props) {
   const [loadingContext, setLoadingContext] = useState(true);
   const [src, setSrc] = useState(props.item.image_path);
   return (
     <>
-      <Grow
-        key={props.index}
-        in={true}
-        style={{ transformOrigin: "0 0 0 0" }}
-        {...(true ? { timeout: props.index * 150 } : {})}
+      <Box
+        sx={{
+          width: "100%",
+          height: "164px",
+          padding: "5px",
+          borderRadius: "4px",
+          display: loadingContext ? "" : "none",
+        }}
       >
-        <Skeleton
-          variant="rectangular"
-          width="100%"
-          height="164px"
-          style={{
-            display: loadingContext ? "" : "none",
-          }}
-        />
-      </Grow>
+        <Grow
+          key={props.index}
+          in={true}
+          style={{ transformOrigin: "0 0 0 0" }}
+          {...(true ? { timeout: props.index * 150 } : {})}
+        >
+          <Skeleton variant="rectangular" width="100%" height="100%" />
+        </Grow>
+      </Box>
       <Grow
         key={props.index}
         in={true}
