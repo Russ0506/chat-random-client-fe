@@ -1,5 +1,6 @@
 import {
   Box,
+  IconButton,
   InputBase,
   List,
   ListItem,
@@ -100,7 +101,7 @@ export default function ConversationsList() {
     return conversations.map((conversation, k) => (
       <ListItem key={k} disablePadding>
         <ListItemButton
-          sx={{ padding: 0, pl: 1, pr: 1 }}
+          sx={{ padding: 0, pl: 2, pr: 2, pt: 1 }}
           onClick={() => {
             onChangeConversation(conversation);
           }}
@@ -115,9 +116,9 @@ export default function ConversationsList() {
       <Box
         className="conversation-his-ctalog"
         sx={{
-          background: "white",
           height: "calc(100% - 70px)",
           overflowY: "auto",
+          position: "relative",
         }}
       >
         <Search>
@@ -137,7 +138,7 @@ export default function ConversationsList() {
         width={DRAWER_WITH}
         height="70px"
         padding={{ xs: 1 }}
-        alignItems={{ xs: "flex-start", md: "center" }}
+        alignItems="center"
         justifyContent="flex-start"
         paddingBottom={2.8}
       >

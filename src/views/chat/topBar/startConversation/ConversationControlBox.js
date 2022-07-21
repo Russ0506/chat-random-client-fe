@@ -123,48 +123,16 @@ export default function ConversationControlBox() {
             sx={{ boxShadow: "0px 8px 10px rgb(237 221 255)" }}
             endIcon={
               pairing === false ? (
-                <Iconify
-                  display={{ xs: "none", md: "inline-block" }}
-                  icon={"mdi:chat-plus-outline"}
-                />
+                <Iconify icon={"mdi:chat-plus-outline"} />
               ) : (
-                <Iconify
-                  display={{ xs: "none", md: "inline-block" }}
-                  icon={"eos-icons:bubble-loading"}
-                />
+                <Iconify icon={"eos-icons:bubble-loading"} />
               )
             }
           >
             {pairing === false ? (
-              <>
-                <Iconify
-                  width="27px"
-                  height="27px"
-                  display={{ xs: "inline-block", md: "none" }}
-                  icon={"mdi:chat-plus-outline"}
-                />
-                <Typography
-                  variant="button"
-                  sx={{ display: { xs: "none", md: "inline-block" } }}
-                >
-                  New Conversation
-                </Typography>
-              </>
+              <Typography variant="button">New Conversation</Typography>
             ) : (
-              <>
-                <Iconify
-                  width="27px"
-                  height="27px"
-                  display={{ xs: "inline-block", md: "none" }}
-                  icon="eos-icons:bubble-loading"
-                />
-                <Typography
-                  variant="button"
-                  sx={{ display: { xs: "none", md: "inline-block" } }}
-                >
-                  Pairing...
-                </Typography>
-              </>
+              <Typography variant="button">Pairing...</Typography>
             )}
           </Button>
         </Stack>

@@ -59,7 +59,8 @@ export default function ChatMessageInput({ disabled, conversation }) {
           paddingLeft: "15px",
           paddingTop: "5px",
           paddingBottom: "5px",
-          background: "#f6f6f6",
+          // background: "#f6f6f6",
+          background: "#f4f7fa",
         }}
         endAdornment={
           <Stack direction="row" spacing={1} sx={{ flexShrink: 0, mr: 1.5 }}>

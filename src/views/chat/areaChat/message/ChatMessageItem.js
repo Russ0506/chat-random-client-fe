@@ -4,7 +4,7 @@ import styles from "../../../../styles/chat.scss"
 import SmartClock from "../../../../utils/smartClock";
 // @mui
 import { styled } from '@mui/material/styles';
-import { Avatar, Box, Typography } from '@mui/material';
+import { Avatar, Box, Tooltip, Typography } from '@mui/material';
 import MessageStatus from './MessageStatus';
 import { selectMsgLatestStatus } from '../../../../features/chat/messagesSlice'
 import { useSelector } from 'react-redux';
@@ -82,9 +82,19 @@ export default function ChatMessageItem({ message, onOpenLightbox, nextMessage }
       element.className = "non-block custom-message-system";
     }
   };
+
+  function showTimeSending(id) {
+
+  }
   return (
     <RootStyle>
-      {isMessageSystem ? (isSenderSysMess ? (<Box className="custom-message-system">{message.text}</Box>) : <></>) : (
+      {isMessageSystem ? (
+        isSenderSysMess ? (
+          <Box className="custom-message-system">{message.text}</Box>
+        ) : (
+          <></>
+        )
+      ) : (
         <>
           <Box
             sx={{
@@ -101,53 +111,50 @@ export default function ChatMessageItem({ message, onOpenLightbox, nextMessage }
               <Avatar sx={{ width: 40, height: 40 }} />
             )}
 
-            <Box sx={{ ml: 2, position: "relative", ...({ marginRight: "17px" }) }} onClick={() => showHistoryTime(message.id || message.uuid)}>
-              <ContentStyle
-                sx={{
-                  ...(isMe && {
-                    color: "white",
-                    // bgcolor: "#c8facd",
-                    bgcolor: "#817cce",
-                  }),
-                  ...(!isMe && {
-                    color: "text.primary",
-                    // bgcolor: "#f4f6f8",
-                    bgcolor: "#e9ecf1",
-                  }),
-                  width: "max-content",
-                  wordWrap: "break-word",
-                }}
+            <Tooltip
+              disableFocusListener
+              placement="left"
+              title={<SmartClock date={message.created_at} />}
+            >
+              <Box
+                sx={{ ml: 2, position: "relative", ...{ marginRight: "17px" } }}
               >
-                {isImage ? (
-                  <MessageImgStyle
-                    alt="attachment"
-                    src={message.text}
-                    onClick={() => onOpenLightbox(message.text)}
-                  />
-                ) : (
-                  <Typography variant="body2">{message.text}</Typography>
-                )}
-
-              </ContentStyle>
-              <Box sx={{ ...(isMe && { position: "absolute", right: "5px" }), ...(!isMe && { position: "absolute", left: "5px" }) }}>
-                <InfoStyle
-                  noWrap
-                  variant="caption"
-                  sx={{ ...(isMe && { justifyContent: "flex-end", width: "max-content" }) }}
-                  id={message.id || message.uuid}
-                  className={`init-history-date non-block`}
+                <ContentStyle
+                  sx={{
+                    ...(isMe && {
+                      color: "white",
+                      // bgcolor: "#c8facd",
+                      bgcolor: "#817cce",
+                    }),
+                    ...(!isMe && {
+                      color: "text.primary",
+                      // bgcolor: "#f4f6f8",
+                      bgcolor: "#e9ecf1",
+                    }),
+                    width: "max-content",
+                    wordWrap: "break-word",
+                  }}
                 >
-                  {(message.created_at && showHistoryTimeFlg) ? (
-                    <SmartClock date={message.created_at}/>
-                  ) : ''}
-                </InfoStyle>
+                  {isImage ? (
+                    <MessageImgStyle
+                      alt="attachment"
+                      src={message.text}
+                      onClick={() => onOpenLightbox(message.text)}
+                    />
+                  ) : (
+                    <Typography variant="body2">{message.text}</Typography>
+                  )}
+                </ContentStyle>
               </Box>
-            </Box>
-            {
-              isMe ? (
-                <MessageStatus status={ lastestMsgStatus || message.status } showSeen = { nextMessageStatus() != "seen" }/>
-              ) : ''
-            }
+            </Tooltip>
+            {isMe ? (
+              <MessageStatus
+                status={lastestMsgStatus || message.status}
+                showSeen={nextMessageStatus() != "seen"}
+              />
+            ) : (
+              ""
+            )}
           </Box>
         </>
       )}

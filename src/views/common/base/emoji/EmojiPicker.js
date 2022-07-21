@@ -16,51 +16,51 @@ const RootStyle = styled(Box)({
   position: 'relative',
 });
 
-const PickerStyle = styled('div')(({ theme }) => ({
-  bottom: 40,
-  overflow: 'hidden',
-  position: 'absolute',
-  left: theme.spacing(-2),
+const PickerStyle = styled("div")(({ theme }) => ({
+  bottom: 45,
+  overflow: "hidden",
+  position: "absolute",
+  left: "calc(100% - 290px)",
   // boxShadow: theme.customShadows.z20,
   borderRadius: Number(theme.shape.borderRadius) * 2,
-  '& .emoji-mart': {
-    border: 'none',
+  "& .emoji-mart": {
+    border: "none",
     backgroundColor: theme.palette.background.paper,
   },
-  '& .emoji-mart-anchor': {
+  "& .emoji-mart-anchor": {
     color: theme.palette.text.disabled,
-    '&:hover, &:focus, &.emoji-mart-anchor-selected': {
+    "&:hover, &:focus, &.emoji-mart-anchor-selected": {
       color: theme.palette.text.primary,
     },
   },
-  '& .emoji-mart-bar': { borderColor: theme.palette.divider },
-  '& .emoji-mart-search input': {
-    backgroundColor: 'transparent',
+  "& .emoji-mart-bar": { borderColor: theme.palette.divider },
+  "& .emoji-mart-search input": {
+    backgroundColor: "transparent",
     color: theme.palette.text.primary,
     borderColor: theme.palette.grey[500_32],
-    '&::placeholder': {
+    "&::placeholder": {
       ...theme.typography.body2,
       color: theme.palette.text.disabled,
     },
   },
-  '& .emoji-mart-search-icon svg': {
+  "& .emoji-mart-search-icon svg": {
     opacity: 1,
     fill: theme.palette.text.disabled,
   },
-  '& .emoji-mart-category-label span': {
+  "& .emoji-mart-category-label span": {
     ...theme.typography.subtitle2,
     ...cssStyles().bgBlur({ color: theme.palette.background.paper }),
     color: theme.palette.text.primary,
   },
-  '& .emoji-mart-title-label': { color: theme.palette.text.primary },
-  '& .emoji-mart-category .emoji-mart-emoji:hover:before': {
+  "& .emoji-mart-title-label": { color: theme.palette.text.primary },
+  "& .emoji-mart-category .emoji-mart-emoji:hover:before": {
     backgroundColor: theme.palette.action.selected,
   },
-  '& .emoji-mart-emoji': { outline: 'none' },
-  '& .emoji-mart-preview-name': {
+  "& .emoji-mart-emoji": { outline: "none" },
+  "& .emoji-mart-preview-name": {
     color: theme.palette.text.primary,
   },
-  '& .emoji-mart-preview-shortname, .emoji-mart-preview-emoticon': {
+  "& .emoji-mart-preview-shortname, .emoji-mart-preview-emoticon": {
     color: theme.palette.text.secondary,
   },
 }));
