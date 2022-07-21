@@ -21,6 +21,7 @@ import Logout from "./views/auth/Logout";
 import DashDefault from "./views/admin/dashboard/DashDefault/DashDefault";
 import AdminLayout from "./components/layouts/AdminLayout/AdminLayout";
 import UserManagement from "./views/admin/tables/UserManagement";
+import UserProfilePage from "./views/profile/UserProfilePage";
 
 export const ProtectedRoute = ({ link = "/", children }) => {
   return <AuthenLoading link={link} children={children} />;
@@ -144,7 +145,7 @@ export default function Routes() {
                   body={
                     <ProtectedRoute
                       link="/users/profile"
-                      children={<UserProfile />}
+                      children={<UserProfilePage />}
                     />
                   }
                   index={3}

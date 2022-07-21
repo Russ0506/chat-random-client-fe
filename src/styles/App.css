@@ -89,7 +89,7 @@ legend {
   width: auto !important;
 }
 
-.items-center{
+.items-center {
   text-align: center;
 }
 
@@ -116,4 +116,23 @@ legend {
   100% {
     transform: rotate(360deg);
   }
+}
+/* .open-mb-left-bar::before {
+  content: '';
+  position: absolute;
+  width:100vw;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: -1;
+} */
+
+.open-mb-left-bar {
+  height: 100%;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  transition: all 0.25s ease;
+  z-index: 11;
 }

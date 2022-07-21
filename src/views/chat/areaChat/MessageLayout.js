@@ -22,7 +22,6 @@ export default function MessageLayout({ openBar }) {
         width: "100%",
         height: "100%",
         padding: "0px",
-        paddingLeft: { xs: `${MB_LEFT_SIDEBAR_WIDTH}px`, md: "0" },
       }}
     >
       <Box sx={{ height: "calc(100% - 70px)", width: "100%", pt: 0 }}>

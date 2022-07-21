@@ -26,6 +26,8 @@ import img6 from "../profile/components/img/6.png";
 import PostLayout from "../homeScreen/components/PostLayout";
 import ImagePoster from "./components/ImagePoster";
 import { URL } from "../../service/chat.service";
+import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const URL_IMAGE = `${URL}/api`;
 const shapeStyles = {
@@ -196,14 +198,7 @@ export default function UserProfile() {
             //   "linear-gradient(115deg, rgba(255,255,255,1) 0%, rgba(242,242,252,1) 25%, rgba(190,181,242,1) 100%)",
           }}
         >
-          <Stack
-            flexDirection="row"
-            alignItems="center"
-            justifyContent="flex-start"
-            padding={{ xs: 1, sm: 1.5, md: 2, lg: 3 }}
-            // marginTop={{ xs: 2, sm: 3 }}
-            marginBottom="20px"
-            flexWrap="nowrap"
+          <Box
             sx={{
               width: "100%",
               borderRadius: "5px",
@@ -212,80 +207,90 @@ export default function UserProfile() {
               boxShadow: "0 1px 20px 0 rgb(69 90 100 / 8%)",
             }}
           >
-            <Badge>{circle}</Badge>
-            <Box sx={{ ml: 2 }}>
-              <Stack flexDirection={{ xs: "column", md: "column" }}>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
+            <Stack
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="flex-start"
+              padding={{ xs: 1, sm: 1.5, md: 2, lg: 3 }}
+              // marginTop={{ xs: 2, sm: 3 }}
+              marginBottom="20px"
+              flexWrap="nowrap"
+            >
+              <Badge>{circle}</Badge>
+              <Box sx={{ ml: 2 }}>
+                <Stack flexDirection={{ xs: "column", md: "column" }}>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    Tuong Vy Bui Anh{" "}
+                    {gender === "male" ? (
+                      <StyledMaleIcon
+                        fontSize="18px"
+                        sx={{
+                          ...shapeCircleStyles,
+                          pb: "5px",
+                        }}
+                      />
+                    ) : (
+                      <StyledFemaleIcon
+                        fontSize="18px"
+                        sx={{
+                          ...shapeCircleStyles,
+                          pb: "5px",
+                        }}
+                      />
+                    )}
+                  </Typography>
+                </Stack>
+                <Stack
+                  flexDirection="column"
+                  flexWrap="wrap"
+                  display={{ xs: "none", md: "flex" }}
+                  sx={{ mt: 2 }}
                 >
-                  Tuong Vy Bui Anh{" "}
-                  {gender === "male" ? (
-                    <StyledMaleIcon
-                      fontSize="18px"
-                      sx={{
-                        ...shapeCircleStyles,
-                        pb: "5px",
-                      }}
-                    />
-                  ) : (
-                    <StyledFemaleIcon
-                      fontSize="18px"
-                      sx={{
-                        ...shapeCircleStyles,
-                        pb: "5px",
-                      }}
-                    />
-                  )}
-                </Typography>
-                {/* <Button
-                  component={Link}
-                  to={"/users/profile/edit"}
-                  variant="outlined"
-                  sx={{
-                    ml: 1,
-                    mb: 1,
-                    maxWidth: 180,
-                    border: "1px solid rgb(30 20 189 / 50%)",
-                    color: "rgb(30 20 189 / 70%)",
-                  }}
-                  size="small"
-                >
-                  Edit profile
-                </Button>
-                <Button
-                  onClick={handleOpenNewPost}
-                  variant="outlined"
-                  // variant="contained"
-                  sx={{
-                    ml: 1,
-                    mb: 1,
-                    maxWidth: 180,
-                    border: "1px solid rgb(30 20 189 / 50%)",
-                    color: "rgb(30 20 189 / 70%)",
-                  }}
-                  size="small"
-                  startIcon={<AddIcon />}
-                >
-                  New Post
-                </Button> */}
-              </Stack>
-              <Stack
-                flexDirection="column"
-                flexWrap="wrap"
-                display={{ xs: "none", md: "flex" }}
-                sx={{ mt: 2 }}
-              >
-                <Typography variant="body2">Hobies: Tinder</Typography>
-                <Typography variant="body2">
-                  Location: Cam Le, Danang, Viet Nam
-                </Typography>
-              </Stack>
-            </Box>
-          </Stack>
+                  <Typography variant="body2">Hobies: Tinder</Typography>
+                  <Typography variant="body2">
+                    Location: Cam Le, Danang, Viet Nam
+                  </Typography>
+                </Stack>
+              </Box>
+            </Stack>
+            <Button
+              component={Link}
+              to={"/users/profile/edit"}
+              variant="outlined"
+              sx={{
+                ml: 1,
+                mb: 1,
+                maxWidth: 180,
+                border: "1px solid rgb(30 20 189 / 50%)",
+                color: "rgb(30 20 189 / 70%)",
+              }}
+              size="small"
+            >
+              Edit profile
+            </Button>
+            <Button
+              onClick={handleOpenNewPost}
+              variant="outlined"
+              // variant="contained"
+              sx={{
+                ml: 1,
+                mb: 1,
+                maxWidth: 180,
+                border: "1px solid rgb(30 20 189 / 50%)",
+                color: "rgb(30 20 189 / 70%)",
+              }}
+              size="small"
+              startIcon={<AddIcon />}
+            >
+              New Post
+            </Button>
+          </Box>
           <Box
             sx={{
               background: "#fff",

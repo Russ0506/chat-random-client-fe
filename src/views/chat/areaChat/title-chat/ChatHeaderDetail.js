@@ -21,7 +21,8 @@ const RootStyle = styled("div")(({ theme }) => ({
   minHeight: CHAT_HEADER_HEIGHT,
   display: "flex",
   alignItems: "center",
-  boxShadow: 'rgb(0 0 0 / 5%) 0px 1px 2px 0px'
+  // boxShadow: 'rgb(0 0 0 / 5%) 0px 1px 2px 0px'
+  boxShadow: "0 0 4px rgba(0, 0, 0, 0.2)",
 }));
 
 export default function ChatHeaderDetail({ openBar, partner }) {
@@ -46,7 +47,7 @@ export default function ChatHeaderDetail({ openBar, partner }) {
 
   return (
     <RootStyle>
-      <Box sx={{ display: "flex", alignItems: "center", ml: 1 }}>
+      <Box sx={{ display: "flex", alignItems: "center", ml: {xs: "60px", md: 1}, }}>
         <Box sx={{ position: "relative" }}>
           <Avatar
             src={partner.avatar}
