@@ -3,6 +3,7 @@ import { styled } from "@mui/styles";
 import { Box } from "@mui/system";
 import React from "react";
 import { Link } from "react-router-dom";
+import { icoList } from "../../../constant/AppBarConstant";
 import { APP_BAR_HEIGHT } from "../../../constant/css_constant";
 import Homepage from "../../Homepage";
 import NewPosterLayout from "../../profile/components/NewPosterLayout";
@@ -150,24 +151,4 @@ const ChosenButtonNav = styled(Stack)(({ theme }) => ({
     color: "#6748da",
   },
 }));
-const icoList = {
-  home: {
-    notChosen: "ci:home-heart",
-    chosen: "ci:home-heart-1",
-    link: "/homepage",
-  },
-  chat: {
-    notChosen: "bi:chat-heart",
-    chosen: "bi:chat-heart-fill",
-    link: "/app",
-  },
-  profile: {
-    notChosen: "healthicons:ui-user-profile-outline",
-    chosen: "healthicons:ui-user-profile",
-    link: "/users/profile",
-  },
-  newPost: {
-    notChosen: "ant-design:plus-square-outlined",
-    chosen: "ant-design:plus-square-filled",
-  },
-};
+

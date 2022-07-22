@@ -115,6 +115,7 @@ export default function ChatMessageItem({ message, onOpenLightbox, nextMessage }
               disableFocusListener
               placement="left"
               title={<SmartClock date={message.created_at} />}
+              enterDelay={500}
             >
               <Box
                 sx={{ ml: 2, position: "relative", ...{ marginRight: "17px" } }}

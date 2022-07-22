@@ -23,7 +23,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useTheme } from "@mui/styles";
 
 export default function Homepage() {
-  const [openRightBar, setOpenRightBar] = React.useState(true);
+  const [openRightBar, setOpenRightBar] = React.useState(false);
   const [openMbLeftBar, setOpenMbLeftBar] = React.useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
