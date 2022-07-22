@@ -21,7 +21,8 @@ import { APP_BAR_HEIGHT } from "../../../constant/css_constant";
 import { Link, useLocation } from "react-router-dom";
 import { ThemeConsumer } from "styled-components";
 import { cilBorderTop } from "@coreui/icons";
-
+import { icoMenuList } from "../../../constant/AppBarConstant";
+import Iconify from "../base/icon/Iconify";
 const settings = [
   {
     name: "Profile",
@@ -111,16 +112,52 @@ const CherishAppBar = () => {
               display: { xs: "flex", md: "none" },
             }}
           >
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
+            <MenuIcon
+              sx={{
+                p: 0,
+                width: "30px",
+                height: "30px",
+                color: "#817cce",
+                cursor: "pointer",
+              }}
               onClick={handleOpenNavMenu}
-              color="inherit"
+            />
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
             >
-              <MenuIcon />
-            </IconButton>
+              {icoMenuList.map(
+                (menu, index) =>
+                  (menu.name === "New Post" ? (
+                    <></>
+                  ) : (
+                    <MenuItem key={menu.name} onClick={handleCloseNavMenu}>
+                      <Typography
+                        component={Link}
+                        to={menu.link}
+                        textAlign="center"
+                        color="#000"
+                      >
+                        {menu.name}
+                      </Typography>
+                    </MenuItem>
+                  ))
+              )}
+            </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
 
