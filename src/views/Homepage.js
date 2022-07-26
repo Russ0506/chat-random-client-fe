@@ -23,10 +23,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useTheme } from "@mui/styles";
 
 export default function Homepage() {
-  const [openRightBar, setOpenRightBar] = React.useState(false);
-  const [openMbLeftBar, setOpenMbLeftBar] = React.useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [openRightBar, setOpenRightBar] = React.useState(
+    isMobile ? false : true
+  );
+  const [openMbLeftBar, setOpenMbLeftBar] = React.useState(false);
+
   useEffect(() => {
     appearanceSocket();
     newMessageSocket();
@@ -47,8 +50,8 @@ export default function Homepage() {
   const handleOpenRightBar = () => {
     setOpenRightBar(!openRightBar);
   };
-  function closeRightBar(){
-    setOpenRightBar(false)
+  function closeRightBar() {
+    setOpenRightBar(false);
   }
 
   function handleOpenMbLeftBar() {
@@ -164,7 +167,10 @@ export default function Homepage() {
                 width: "100vw",
                 height: "100%",
                 maxWidth: "100vw",
-                right: (openRightBar && isMobile) || !isMobile === true ? 0 : "-100%",
+                right:
+                  (openRightBar && isMobile) || !isMobile === true
+                    ? 0
+                    : "-100%",
                 bottom: 0,
                 transition: "all 0.25s ease",
                 // display: openRightBar === true ? "" : "none",
@@ -172,8 +178,19 @@ export default function Homepage() {
                 background: "#fff",
               }}
             >
-              <IconButton sx={{position:"absolute", top: "12px", right: "12px", zIndex: 13, display: isMobile ? "" : "none"}} onClick={closeRightBar}>
-                <CloseIcon sx={{color:"#fff", height:"30px", width: "30px"}}/>
+              <IconButton
+                sx={{
+                  position: "absolute",
+                  top: "12px",
+                  right: "12px",
+                  zIndex: 13,
+                  display: isMobile ? "" : "none",
+                }}
+                onClick={closeRightBar}
+              >
+                <CloseIcon
+                  sx={{ color: "#fff", height: "30px", width: "30px" }}
+                />
               </IconButton>
               <RightBar />
             </Grid>
