@@ -22,6 +22,7 @@ import { axiosMultipartForm } from "../../../setup/axiosClient";
 import styles from "../../../styles/newposterchat-layout.scss";
 import CropImage from "../../common/modal/CropImage";
 import { Form, FormLabel } from "react-bootstrap";
+import StyledCloseIcon from "../../common/base/style-icon/StyledCloseIcon";
 
 // import InputEmoji from "react-input-emoji"; // ko xoa nha
 // import Picker from "emoji-picker-react"; // ko xoa nha
@@ -554,11 +555,6 @@ const shapeStyles = {
   backgroundRepeat: "no-repeat",
 };
 const shapeCircleStyles = { borderRadius: "50%" };
-
-const StyledCloseIcon = styled(CloseIcon)(({ theme }) => ({
-  borderRadius: "50%",
-  border: "1px solid #e5e0e0",
-}));
 
 const LocationFormControl = styled(CmmnFormControl)(({ theme }) => ({
   marginTop: "0px !important",
