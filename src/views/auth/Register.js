@@ -19,9 +19,11 @@ import Loading from "../common/base/loading/Loading";
 import Select from "react-select";
 import { axiosClient, axiosMultipartForm } from "../../setup/axiosClient";
 import "react-image-crop/dist/ReactCrop.css";
-import { Fade, Slide, Stack, Zoom } from "@mui/material";
+import { Fade, IconButton, Slide, Stack, Zoom } from "@mui/material";
 import bgNew from "../auth/img/conv.png";
 import CropImage from "../common/modal/CropImage";
+import StartBarCt from "../common/error/StackBarCt";
+import StyledCloseIcon from "../common/base/style-icon/StyledCloseIcon";
 const URL = "users";
 
 class SignUp extends React.PureComponent {
@@ -39,9 +41,26 @@ class SignUp extends React.PureComponent {
       isSubmit: false,
       message: "",
       options: [],
+      openStb: false,
     };
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleOpenStb = this.handleOpenStb.bind(this);
+    this.handleCloseStb = this.handleCloseStb.bind(this);
+    this.clearImage = this.clearImage.bind(this);
+  }
+
+  handleOpen = () => this.setState({ open: true });
+  handleClose = () => this.setState({ open: false });
+
+  handleOpenStb = () => {
+    this.setState({ openStb: true })
+  }
+  handleCloseStb = () => {
+    this.setState({ openStb: false })
+  }
+  handleDateChange(date) {
+    this.setState({ selectedDate: date });
   }
 
   onSelectFile = (e) => {
@@ -149,7 +168,7 @@ class SignUp extends React.PureComponent {
     });
     const data = new FormData(event.currentTarget);
 
-    data.append("image", this.state.croppedImage, "imagename");
+    if (this.state.croppedImage) data.append("image", this.state.croppedImage, "imagename");
     const params = {
       user: {
         first_name: data.get("firstName"),
@@ -171,19 +190,22 @@ class SignUp extends React.PureComponent {
     axiosMultipartForm
       .post(`${URL}`, formData)
       .then((data) => {
-        if (data.success) {
+        if (data.data.success) {
           window.location.replace("register/email-success");
         }
       })
-      .catch(() => {
-        this.setState({ isSubmit: false });
-      });
+      .catch(
+        function (error) {
+          this.setState({ isSubmit: false });
+          this.setState({ message: error.response.statusText })
+          this.handleOpenStb()
+          return Promise.reject(error)
+        }.bind(this)
+      );
   };
 
-  handleOpen = () => this.setState({ open: true });
-  handleClose = () => this.setState({ open: false });
-  handleDateChange(date) {
-    this.setState({ selectedDate: date });
+  clearImage() {
+    this.setState({croppedImageUrl : ""})
   }
 
   style = {
@@ -219,6 +241,7 @@ class SignUp extends React.PureComponent {
           justifyContent: "space-between",
         }}
       >
+        <StartBarCt openStb={this.state.openStb} closeStb={this.handleCloseStb} titleStb={this.state.message} typeNoti="error"></StartBarCt>
         <Loading show={this.state.isSubmit}></Loading>
         <CropImage
           src={src}
@@ -432,12 +455,27 @@ class SignUp extends React.PureComponent {
                         />
                       </Box>
                       {croppedImageUrl && (
-                        <img
-                          value="croppedImageUrl"
-                          alt="Crop"
-                          style={{ maxWidth: "100%" }}
-                          src={croppedImageUrl}
-                        />
+                        <Box  sx={{ position: "relative"}}>
+                          <IconButton
+                            sx={{ position: "absolute", top: "2px", right: "7px" }}
+                          >
+                            <StyledCloseIcon
+                              onClick={this.clearImage}
+                              sx={{
+                                color: "#606770",
+                                background: "rgba(255,255,255,.8)",
+                                width: "25px",
+                                height: "25px",
+                              }}
+                            />
+                          </IconButton>
+                          <img
+                            value="croppedImageUrl"
+                            alt="Crop"
+                            style={{ maxWidth: "100%" }}
+                            src={croppedImageUrl}
+                          />
+                        </Box>
                       )}
                       <input
                         type="image"
@@ -447,18 +485,6 @@ class SignUp extends React.PureComponent {
                       ></input>
                     </Grid>
                   </Grid>
-                  {this.state.message ? (
-                    <Box
-                      component="div"
-                      variant="h5"
-                      color="red"
-                      fontSize={FONT_SIZE.smallText}
-                    >
-                      {this.state.message}
-                    </Box>
-                  ) : (
-                    ""
-                  )}
                   <Stack alignItems="flex-start" sx={{ mt: 1 }}>
                     <Button
                       type="submit"
