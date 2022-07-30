@@ -62,7 +62,7 @@ export default function ForgotPassword() {
   }
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email("Enter valid Email").required("Email Required"),
+    email: Yup.string().email("Please enter the right email format").required("Email Required"),
   });
 
   const typeButton = {
