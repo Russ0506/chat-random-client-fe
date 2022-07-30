@@ -1,6 +1,6 @@
 import store from '../../store/store'
 import { updateLatestStatuses, receiveNewMessage, seenLastMessage } from "../../features/chat/messagesSlice";
-import { seenConversation, touchConversation } from "../../features/chat/conversationSlice";
+import { seenConversation, touchConversation, createNewConversation } from "../../features/chat/conversationSlice";
 import { partnerGoOnline, partnerGoOffline } from "../../features/chat/onlineStatusesSlice";
 
 function Socket(props) {
@@ -52,7 +52,9 @@ function pairingSocket(){
     channel: "PairingChannel",
     connected: ()=>{},
     disconnected: ()=>{},
-    received: ()=>{}
+    received: (data)=>{
+      store.dispatch(createNewConversation(data));
+    }
   })
 }
 
@@ -67,7 +69,7 @@ function newMessageSocket(props){
       store.dispatch(touchConversation({conversationId: message.conversation_id}));
       if (is_in_current_conversation){
         store.dispatch(seenConversation({conversationId: message.conversation_id}));
-        store.dispatch(seenLastMessage({ conversationId: message.conversation_id }));
+        store.dispatch(updateLatestStatuses(message));
       }
     }
   })

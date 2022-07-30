@@ -15,6 +15,7 @@ export const seenConversation = createAsyncThunk(
 const initialState = {
   currentConversation : null,
   recentConversationIds : [],
+  newConversations: []
 };
 
 export const conversationSlice = createSlice({
@@ -26,11 +27,14 @@ export const conversationSlice = createSlice({
     },
     touchConversation: (state, { payload }) => {
       state.recentConversationIds.push(payload.conversationId);
+    },
+    createNewConversation: (state, { payload }) => {
+      state.newConversations.push(payload)
     }
   }
 });
 
-export const { changeConversation, touchConversation } = conversationSlice.actions;
+export const { changeConversation, touchConversation, createNewConversation } = conversationSlice.actions;
 
 export const selectConversation = (state) => {
   return state.conversation.currentConversation;
@@ -39,6 +43,14 @@ export const selectConversation = (state) => {
 export const selectMostRecentConversationId = (state) => {
   const ids = state.conversation.recentConversationIds
   return ids[ids.length - 1];
+}
+
+export const selectNewestConversations =  (state)  => {
+  if (state.conversation.newConversations) {
+    return state.conversation.newConversations[state.conversation.newConversations.length - 1];
+  } else {
+    return null;
+  }
 }
 
 export default conversationSlice.reducer;

@@ -2,17 +2,22 @@ import {
   Alert,
   AlertTitle,
   Button,
-  SnackbarContent,
   Stack,
   Typography,
 } from "@mui/material";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getDataSearch } from "../../../../features/user-setting";
 import Iconify from "../../../common/base/icon/Iconify";
 import PartnerSettingModal from "../../popup/PartnerSettingModal";
 import Snackbar from "@mui/material/Snackbar";
 import { styled } from "@mui/styles";
+import { pairingSocket } from "../../../sockets/Socket";
+import {
+  selectNewestConversations
+} from "../../../../features/chat/conversationSlice";
+import { useSelector } from "react-redux";
+
 
 let pairingInterval = setInterval(() => {}, 1000);
 export default function ConversationControlBox() {
@@ -31,14 +36,27 @@ export default function ConversationControlBox() {
     vertical: "top",
     horizontal: "center",
   });
+  const newConversation = useSelector(selectNewestConversations);
 
   let time = 0;
   function counterTm() {
     ++time;
-    if (time === 5) {
+    if (time === 5 && pairing === true) {
       handleOpenWaitingModal();
     }
   }
+
+  useEffect(() => {
+    pairingSocket();
+  }, []);
+
+  useEffect(() => {
+    if (newConversation) {
+      setPairing(false);
+      handleOpenPairingSuccess();
+    }
+  }, [newConversation]);
+
   useLayoutEffect(() => {
     dispatch(getDataSearch())
       .unwrap()
@@ -56,11 +74,6 @@ export default function ConversationControlBox() {
   function handlePairing() {
     startPairing(true);
     pairingInterval = setInterval(counterTm, 1000);
-
-    setTimeout(() => {
-      setPairing(false);
-      handleOpenPairingSuccess();
-    }, 15000);
   }
 
   const handleOpenSettingModal = () => {

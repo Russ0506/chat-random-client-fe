@@ -3,10 +3,9 @@ import React, { useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import { Avatar, Stack, Typography } from "@mui/material";
-import { onlineStatusSocket } from '../../../sockets/Socket'
 import { selectOnlineStatus } from '../../../../features/chat/onlineStatusesSlice'
 import { useSelector } from "react-redux";
-import { selectLatestMessage } from '../../../../features/chat/messagesSlice'
+import { selectLatestMessage, selectMsgLatestStatus } from '../../../../features/chat/messagesSlice'
 import SmartClock from "../../../../utils/smartClock";
 
 // + lastMsg :
@@ -17,20 +16,26 @@ export default function Conversation({data}) {
   const onlineStatus = useSelector((state)=> {
     return selectOnlineStatus(state, data.partner?.id);
   })
+
   const updatedLastMessage = useSelector((state)=> {
     return selectLatestMessage(state, data.id);
   })
 
-  useEffect(()=>{
-    if (data.partner?.id) onlineStatusSocket(data.partner.id);
-  }, [])
+  const lastMessageStatus = useSelector((state) => {
+    // console.log(updatedLastMessage || data.last_message)
+    return selectMsgLatestStatus(state, (updatedLastMessage || data.last_message));
+  });
+  // console.log(`${lastMessageStatus} ${(updatedLastMessage || data.last_message).text}`)
 
   const onlineInfo = () => {
     return onlineStatus || data.partner || {};
   }
 
   const lastMessageData = () => {
-    return updatedLastMessage || data.last_message || {};
+    let messageData = {...(updatedLastMessage || data.last_message)};
+    if (!messageData) return {};
+    if (lastMessageStatus) messageData['status'] = lastMessageStatus;
+    return messageData;
   }
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
