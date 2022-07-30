@@ -136,3 +136,18 @@ legend {
   transition: all 0.25s ease;
   z-index: 11;
 }
+
+p[id*="helper-text"], .error-text {
+  color: red;
+}
+
+.custom-select-box {
+  padding: 16px 14px;
+  width: 396px;
+  color: #c4c4c4;
+  border-radius: 4px;
+}
+
+.custom-border-box {
+  border: 0.5px solid #c4c4c4 !important;
+}

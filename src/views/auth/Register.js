@@ -19,11 +19,16 @@ import Loading from "../common/base/loading/Loading";
 import Select from "react-select";
 import { axiosClient, axiosMultipartForm } from "../../setup/axiosClient";
 import "react-image-crop/dist/ReactCrop.css";
-import { Fade, IconButton, Slide, Stack, Zoom } from "@mui/material";
+import { Fade, IconButton, MenuItem, Slide, Stack, Zoom } from "@mui/material";
 import bgNew from "../auth/img/conv.png";
 import CropImage from "../common/modal/CropImage";
 import StartBarCt from "../common/error/StackBarCt";
 import StyledCloseIcon from "../common/base/style-icon/StyledCloseIcon";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import InputAdornment from "@mui/material/InputAdornment";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 const URL = "users";
 
 class SignUp extends React.PureComponent {
@@ -41,13 +46,18 @@ class SignUp extends React.PureComponent {
       isSubmit: false,
       message: "",
       options: [],
+      timeZone: "",
       openStb: false,
+      showPassword: false,
+      showRePassword: false,
+      isValidPhoto: true,
     };
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpenStb = this.handleOpenStb.bind(this);
     this.handleCloseStb = this.handleCloseStb.bind(this);
     this.clearImage = this.clearImage.bind(this);
+    this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
   }
 
   handleOpen = () => this.setState({ open: true });
@@ -63,17 +73,54 @@ class SignUp extends React.PureComponent {
     this.setState({ selectedDate: date });
   }
 
-  onSelectFile = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.addEventListener("load", () =>
-        this.setState({ src: reader.result })
-      );
-      reader.readAsDataURL(e.target.files[0]);
-    }
+  handleClickShowPassword(type) {
+    if (type === 'password') this.setState({ showPassword: !this.state.showPassword })
+    if (type === 'repassword') this.setState({ showRePassword: !this.state.showRePassword })
+  }
 
-    this.handleOpen();
+  onSelectFile = (e) => {
+    console.log(this.state.isValidPhoto);
+    this.setState({isValidPhoto : this.validateFile(e.target.files[0])})
+    if(!this.validateFile(e.target.files[0])) return;
+    else {
+      if (e.target.files && e.target.files.length > 0) {
+        const reader = new FileReader();
+        reader.addEventListener("load", () =>
+          this.setState({ src: reader.result })
+        );
+        reader.readAsDataURL(e.target.files[0]);
+      }
+  
+      this.handleOpen();
+    }
   };
+
+  validateFile(file = null) {
+    if(!this.checkIfFilesAreTooBig(file)) {
+      return false
+    }
+    if(!this.checkIfFilesAreCorrectType(file)) {
+      return false
+    }
+    return true;
+  }
+
+  checkIfFilesAreTooBig(file) {
+    let valid = true
+    const size = file.size / 1024 / 1024
+    if (size > 2) {
+      valid = false
+    }
+    return valid
+  }
+  
+ checkIfFilesAreCorrectType(file) {
+    let valid = true
+    if (!['application/pdf', 'image/jpeg', 'image/png'].includes(file.type)) {
+      valid = false
+    }
+    return valid
+  }
 
   // If you setState the crop in here you should return false.
   onImageLoaded = (image) => {
@@ -161,24 +208,24 @@ class SignUp extends React.PureComponent {
     this.setState({ croppedImage: croppedImage });
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
+  handleSubmit(event) {
+    // event.preventDefault();
     this.setState({
       isSubmit: "true",
     });
-    const data = new FormData(event.currentTarget);
+    // const data = new FormData(event);
 
-    if (this.state.croppedImage) data.append("image", this.state.croppedImage, "imagename");
+    // if (this.state.croppedImage) data.append("image", this.state.croppedImage, "imagename");
     const params = {
       user: {
-        first_name: data.get("firstName"),
-        last_name: data.get("lastName"),
+        first_name: event.firstName,
+        last_name: event.lastName,
         birthday: this.state.selectedDate,
-        email: data.get("email"),
-        password: data.get("password"),
-        gender: data.get("gender"),
-        time_zone: data.get("time_zone"),
-        avatar: data.get("image"),
+        email: event.email,
+        password: event.password,
+        gender: event.gender,
+        time_zone: event.timeZone,
+        avatar: (this.state.croppedImage) ? this.state.croppedImage : null,
       },
     };
 
@@ -205,9 +252,11 @@ class SignUp extends React.PureComponent {
   };
 
   clearImage() {
-    this.setState({croppedImageUrl : ""})
+    this.setState({ croppedImageUrl: "" })
+    this.setState({ src: null })
   }
 
+  // css
   style = {
     position: "absolute",
     top: "100%",
@@ -220,6 +269,11 @@ class SignUp extends React.PureComponent {
     p: 4,
   };
 
+  customAvatarField = {
+    marginTop: "30px"
+  }
+  // end css
+
   componentDidMount() {
     axiosClient.get(`time_zones.json`).then((data) => {
       this.setState({
@@ -228,6 +282,45 @@ class SignUp extends React.PureComponent {
     });
   }
 
+  // yup validation
+
+  initialValues = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    rePassword: "",
+    timeZone: "",
+    gender: "female",
+    // photo: null,
+  };
+  FILE_SIZE = 5242880;
+  SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
+  SignupSchema = Yup.object().shape({
+    firstName: Yup.string()
+      .min(2, 'Please enter more than 1 character')
+      .max(50, 'Please enter less than 50 characters')
+      .required('First Name Required'),
+    lastName: Yup.string()
+      .min(2, 'Please enter more than 1 character')
+      .max(50, 'Please enter less than 50 characters')
+      .required('Last Name Required'),
+    email: Yup.string().email('Please enter the right email format').required('Email Required'),
+    password: Yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, 'Password have minimum eight characters, at least one letter and one number').required('Password Required'),
+    rePassword: Yup.string().when("password", {
+      is: val => (val && val.length > 0 ? true : false),
+      then: Yup.string().oneOf(
+        [Yup.ref("password")],
+        "Confirm password need to be the same as password"
+      )
+    }),
+    // birthday: Yup.object().,
+    // photo: Yup.mixed().test(1000, "File Size is too large", value => value.size <= this.FILE_SIZE) .test('fileType', "Unsupported File Format", value => this.SUPPORTED_FORMATS.includes(['image/*']) )
+  });
+
+  handleStopChange(e) {
+    e.preventDefault();
+  };
   render() {
     const { crop, croppedImageUrl, src, croppedImage } = this.state;
 
@@ -331,187 +424,254 @@ class SignUp extends React.PureComponent {
                 >
                   Sign Up
                 </Typography>
-                <Box
-                  component="form"
-                  noValidate
+                <Formik
+                  initialValues={this.initialValues}
+                  validationSchema={this.SignupSchema}
                   onSubmit={this.handleSubmit}
-                  sx={{ mt: 3, fontSize: FONT_SIZE.smallText }}
                 >
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        autoComplete="given-name"
-                        name="firstName"
-                        required
-                        fullWidth
-                        id="firstName"
-                        label="First Name"
-                        autoFocus
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        required
-                        fullWidth
-                        id="lastName"
-                        label="Last Name"
-                        name="lastName"
-                        autoComplete="family-name"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                      />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        name="password"
-                        label="Enter Password"
-                        type="password"
-                        id="password"
-                        autoComplete="new-password"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        name="re-password"
-                        label="Confirm Password"
-                        type="password"
-                        id="re-password"
-                        autoComplete="new-password"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <DesktopDatePicker
-                          label="Birthday"
-                          value={this.state.selectedDate}
-                          minDate={new Date("1920-01-01")}
-                          maxDate={new Date()}
-                          onChange={this.handleDateChange}
-                          renderInput={(params) => <TextField {...params} />}
-                          id="birthday"
-                          name="birthday"
-                        />
-                      </LocalizationProvider>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <FormControl>
-                        <FormLabel id="demo-row-radio-buttons-group-label">
-                          Gender
-                        </FormLabel>
-                        <RadioGroup
-                          row
-                          aria-labelledby="demo-row-radio-buttons-group-label"
-                          name="gender"
-                          id="gender"
-                          defaultValue="female"
-                        >
-                          <FormControlLabel
-                            value="female"
-                            control={<Radio />}
-                            label="Female"
-                          />
-                          <FormControlLabel
-                            value="male"
-                            control={<Radio />}
-                            label="Male"
-                          />
-                          <FormControlLabel
-                            value="other"
-                            control={<Radio />}
-                            label="Other"
-                          />
-                        </RadioGroup>
-                      </FormControl>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <FormControl>
-                        <FormLabel>Time zome</FormLabel>
-                        <Select options={this.state.options} name="time_zone" />
-                      </FormControl>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <Box pb={3}>
-                        <TextField
-                          type="file"
-                          accept="image/*"
-                          onChange={this.onSelectFile}
-                          multiple
-                        />
-                      </Box>
-                      {croppedImageUrl && (
-                        <Box  sx={{ position: "relative"}}>
-                          <IconButton
-                            sx={{ position: "absolute", top: "2px", right: "7px" }}
-                          >
-                            <StyledCloseIcon
-                              onClick={this.clearImage}
-                              sx={{
-                                color: "#606770",
-                                background: "rgba(255,255,255,.8)",
-                                width: "25px",
-                                height: "25px",
-                              }}
-                            />
-                          </IconButton>
-                          <img
-                            value="croppedImageUrl"
-                            alt="Crop"
-                            style={{ maxWidth: "100%" }}
-                            src={croppedImageUrl}
-                          />
-                        </Box>
-                      )}
-                      <input
-                        type="image"
-                        name="avatar"
-                        hidden
-                        value={croppedImageUrl}
-                      ></input>
-                    </Grid>
-                  </Grid>
-                  <Stack alignItems="flex-start" sx={{ mt: 1 }}>
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      sx={{
-                        // background: "#ff6392e6",
-                        boxShadow: "none",
-                        // width: "200px",
-                      }}
+                  {({ errors, touched }) => (<Form>
+                    <Box
+                      noValidate
+                      sx={{ mt: 3, fontSize: FONT_SIZE.smallText }}
                     >
-                      Sign Up
-                    </Button>
-                    <Stack flexDirection="row" marginTop={2}>
-                      <Typography variant="body1">
-                        Already have an account?
-                      </Typography>
-                      <Link
-                        href="/users/login"
-                        variant="body2"
-                        marginLeft="5px"
-                      >
-                        <Typography variant="body1">Sign in</Typography>
-                      </Link>
-                    </Stack>
-                  </Stack>
-                </Box>
+                      <Grid container spacing={2}>
+                        {/* avatar */}
+                        <Grid item xs={12} sx={this.customAvatarField}>
+                          <Box>
+                            <TextField
+                              className="custom-select-box"
+                              type="file"
+                              accept="image/*"
+                              onChange={this.onSelectFile}
+                              id="contain-select-image"
+                              multiple
+                            />
+                          </Box>
+                          {croppedImageUrl && (
+                            <Box sx={{ position: "relative" }}>
+                              <IconButton
+                                sx={{ position: "absolute", top: "2px", right: "7px" }}
+                              >
+                                <StyledCloseIcon
+                                  onClick={this.clearImage}
+                                  sx={{
+                                    color: "#606770",
+                                    background: "rgba(255,255,255,.8)",
+                                    width: "25px",
+                                    height: "25px",
+                                  }}
+                                />
+                              </IconButton>
+                              <img
+                                value="croppedImageUrl"
+                                alt="Crop"
+                                name = "photo"
+                                style={{ maxWidth: "100%" }}
+                                src={croppedImageUrl}
+                              />
+                            </Box>
+                          )}
+                          <input
+                            type="image"
+                            name="avatar"
+                            hidden
+                            value={croppedImageUrl}
+                          ></input>
+                            {!this.state.isValidPhoto ? (<p className="css-1wc848c-MuiFormHelperText-root error-text" id="date-helper-text">Avatar have to be in image format and under 2MB</p>) : null}
+                        </Grid>
+                        {/* end-avatar */}
+                        <Grid item xs={12} sm={6}>
+                          <Field
+                            as={TextField}
+                            name="firstName"
+                            required
+                            fullWidth
+                            id="firstName"
+                            label="First Name"
+                            autoComplete="firstName"
+                            helperText={<ErrorMessage className="error-text" name="firstName" />}
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <Field
+                            as={TextField}
+                            required
+                            fullWidth
+                            id="lastName"
+                            label="Last Name"
+                            name="lastName"
+                            autoComplete="lastName"
+                            helperText={<ErrorMessage className="error-text" name="lastName" />}
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Field
+                            as={TextField}
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            helperText={<ErrorMessage className="error-text" name="email" />}
+                          />
+                        </Grid>
+
+                        <Grid item xs={12}>
+                          <Field
+                            as={TextField}
+                            required
+                            fullWidth
+                            name="password"
+                            label="Enter Password"
+                            type={this.state.showPassword ? "text" : "password"}
+                            id="password"
+                            autoComplete="new-password"
+                            onCut={this.handleStopChange}
+                            onCopy={this.handleStopChange}
+                            onPaste={this.handleStopChange}
+                            InputProps={{
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={() => this.handleClickShowPassword("password")}
+                                    onMouseDown={() => this.handleClickShowPassword("password")}
+                                  >
+                                    {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                                  </IconButton>
+                                </InputAdornment>
+                              )
+                            }}
+                            helperText={<ErrorMessage className="error-text" name="password" />}
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Field
+                            as={TextField}
+                            required
+                            fullWidth
+                            name="rePassword"
+                            label="Confirm Password"
+                            type={this.state.showRePassword ? "text" : "password"}
+                            id="re-password"
+                            autoComplete="re-password"
+                            onCut={this.handleStopChange}
+                            onCopy={this.handleStopChange}
+                            onPaste={this.handleStopChange}
+                            InputProps={{
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={() => this.handleClickShowPassword("repassword")}
+                                    onMouseDown={() => this.handleClickShowPassword("repassword")}
+                                  >
+                                    {this.state.showRePassword ? <Visibility /> : <VisibilityOff />}
+                                  </IconButton>
+                                </InputAdornment>
+                              )
+                            }}
+                            helperText={<ErrorMessage className="error-text" name="rePassword" />}
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DesktopDatePicker
+                              label="Birthday"
+                              value={this.state.selectedDate}
+                              minDate={new Date("1920-01-01")}
+                              maxDate={new Date()}
+                              onChange={this.handleDateChange}
+                              renderInput={(params) => <TextField {...params} />}
+                              id="birthday"
+                              name="birthday"
+                            />
+                            {errors.birthday && touched.birthday ? (<p className="css-1wc848c-MuiFormHelperText-root error-text" id="date-helper-text">{errors.birthday}</p>) : null}
+                          </LocalizationProvider>
+                        </Grid>
+
+                        <Grid item xs={12}>
+                          <FormControl>
+                            <FormLabel id="demo-row-radio-buttons-group-label">
+                              Gender
+                            </FormLabel>
+                            <Field
+                              as={RadioGroup}
+                              row
+                              aria-labelledby="demo-row-radio-buttons-group-label"
+                              name="gender"
+                              id="gender"
+                              defaultValue="female"
+                            >
+                              <FormControlLabel
+                                value="female"
+                                control={<Radio />}
+                                label="Female"
+                              />
+                              <FormControlLabel
+                                value="male"
+                                control={<Radio />}
+                                label="Male"
+                              />
+                              <FormControlLabel
+                                value="other"
+                                control={<Radio />}
+                                label="Other"
+                              />
+                            </Field>
+                          </FormControl>
+                        </Grid>
+
+                        <Grid item xs={12}>
+                          <FormControl>
+                            <FormLabel>Time zone*</FormLabel>
+                            <Field
+                              as="select"
+                              // options={this.state.options}
+                              name="timeZone"
+                              className = "custom-select-box custom-border-box"
+                            // autoWidth
+                            >
+                              {(this.state.options.length > 0) ? this.state.options?.map((option, index) => {
+                                return (
+                                  <option key={index}>{option.value}</option>
+                                );
+                              }) : 'No timezone'}
+                            </Field>
+                            {errors.timeZone && touched.timeZone ? (<p className="css-1wc848c-MuiFormHelperText-root error-text" id="date-helper-text">{errors.timeZone}</p>) : null}
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                      <Stack alignItems="flex-start" sx={{ mt: 3 }}>
+                        <Button
+                          type="submit"
+                          fullWidth
+                          variant="contained"
+                          sx={{
+                            // background: "#ff6392e6",
+                            boxShadow: "none",
+                            // width: "200px",
+                          }}
+                        >
+                          Sign Up
+                        </Button>
+                        <Stack flexDirection="row" marginTop={2}>
+                          <Typography variant="body1">
+                            Already have an account?
+                          </Typography>
+                          <Link
+                            href="/users/login"
+                            variant="body2"
+                            marginLeft="5px"
+                          >
+                            <Typography variant="body1">Sign in</Typography>
+                          </Link>
+                        </Stack>
+                      </Stack>
+                    </Box>
+                  </Form>)}
+                </Formik>
               </Box>
             </Container>
           </Box>

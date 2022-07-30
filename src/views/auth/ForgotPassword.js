@@ -23,11 +23,13 @@ import Loading from "../common/base/loading/Loading";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { FormHelperText } from "@mui/material";
+import StartBarCt from "../common/error/StackBarCt";
 
 export default function ForgotPassword() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isSubmit, setIsSubmit] = useState(false);
+  const [openStb, setOpenStb] = useState(false)
 
   const { message } = useSelector((state) => state.message);
   useEffect(() => {
@@ -39,7 +41,6 @@ export default function ForgotPassword() {
   };
 
   const onSubmit = (values, props) => {
-    console.log(values);
     setIsSubmit(true);
     dispatch(
       sendMailResetPass({
@@ -52,11 +53,16 @@ export default function ForgotPassword() {
       })
       .catch(() => {
         setIsSubmit(false);
+        setOpenStb(true)
       });
   };
 
+  const handleCloseStb = () => {
+    setOpenStb(false)
+  }
+
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email("Enter valid Email").required("Required"),
+    email: Yup.string().email("Enter valid Email").required("Email Required"),
   });
 
   const typeButton = {
@@ -87,6 +93,7 @@ export default function ForgotPassword() {
         justifyContent: "space-between",
       }}
     >
+      <StartBarCt openStb={openStb} closeStb={handleCloseStb} titleStb={message} typeNoti="error"></StartBarCt>
       <Loading show={isSubmit}></Loading>
       <Container
         component="main"
@@ -133,27 +140,14 @@ export default function ForgotPassword() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  helperText={<ErrorMessage  name="email" />}
+                  helperText={<ErrorMessage className="error-text" name="email" />}
                 />
-
-                {/* {message ? (
-                  <Box
-                    component="div"
-                    variant="h5"
-                    color="red"
-                    fontSize={FONT_SIZE.smallText}
-                  >
-                    {message}
-                  </Box>
-                ) : (
-                  ""
-                )} */}
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
                   sx={typeButton}
-                  disabled={props.isSubmitting}
+                  disabled={isSubmit}
                 >
                   Reset password
                 </Button>
