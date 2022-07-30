@@ -79,13 +79,17 @@ const logout = () => {
   return axiosClient.delete(`${URL}/sign_out`)
 };
 
-const resetPwd = async (params) => {
+const resetPwd = async (params, thunkAPI) => {
   try {
     const res = await axiosClient.put(`${URL}/password`, params)
     return res
   } catch (error) {
-    console.log(error.response.data.errors[0]);
-    return error.response.data.errors[0]
+    const message =
+      (error.response.data.errors[0]) ||
+      error.message ||
+      error.toString();
+    thunkAPI.dispatch(setMessage(message));
+    return thunkAPI.rejectWithValue();
   }
 }
 
