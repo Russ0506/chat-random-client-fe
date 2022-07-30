@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
+// import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+// import FormControlLabel from "@mui/material/FormControlLabel";
+// import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
@@ -14,8 +14,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useDispatch, useSelector } from "react-redux";
-import { login, user_verify } from "../../features/auth";
-import { clearMessage, setMessage } from "../../features/message";
+import { login } from "../../features/auth";
+import { clearMessage } from "../../features/message";
 import {
   GRP_COLOR,
   FONT_SIZE,
@@ -28,8 +28,6 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "../../styles/login.scss";
-import Loading from "../common/base/loading/Loading";
-// import { useCookies } from "react-cookie";
 import bgNew from "../auth/img/conv.png";
 import { Fade, Slide, Stack, Zoom } from "@mui/material";
 import StartBarCt from "../common/error/StackBarCt";

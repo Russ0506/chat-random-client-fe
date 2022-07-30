@@ -6,20 +6,8 @@ const user = JSON.parse(localStorage.getItem("user"));
 export const resetPwd = createAsyncThunk(
   "auth/resetPwd",
   async (params, thunkAPI) => {
-    try {
-      console.log("resetPwd");
-      let response = await AuthService.resetPwd(params);
-      return response.data;
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      thunkAPI.dispatch(setMessage(message));
-      return thunkAPI.rejectWithValue();
-    }
+    const data = await AuthService.resetPwd(params, thunkAPI);
+    return data
   }
 );
 
@@ -56,20 +44,6 @@ export const sendMailResetPass = createAsyncThunk(
   "auth/send-email-reset-pas",
   async (params, thunkAPI) => {
     return await AuthService.sendMailResetPass(params, thunkAPI);
-    // try {
-    //   const data = await AuthService.sendMailResetPass(params);
-    // thunkAPI.dispatch(setMessage(await AuthService.sendMailResetPass(params)));
-    //   return data
-    // } catch (error) {
-    //   const message =
-    //     (error.response &&
-    //       error.response.data &&
-    //       error.response.data.message) ||
-    //     error.message ||
-    //     error.toString();
-    //   thunkAPI.dispatch(setMessage(message));
-    //   return thunkAPI.rejectWithValue();
-    // }
   }
 );
 
