@@ -23,6 +23,7 @@ import ImagePoster from "./components/ImagePoster";
 import { URL } from "../../service/chat.service";
 import { POST_COVER, POST_COVER_MB } from "../../constant/css_constant";
 import { useTheme } from "@mui/styles";
+import { Link } from "react-router-dom";
 
 const URL_IMAGE = `${URL}/api`;
 const shapeStyles = {
@@ -118,10 +119,26 @@ export default function UserProfilePage() {
             background: "#fff",
             maxHeight: "180px",
             boxShadow: "0 1px 20px 0 rgb(69 90 100 / 8%)",
-            // position: "sticky",
-            top: 10,
+            position: "relative",
           }}
         >
+          <Button
+            component={Link}
+            to={"/users/profile/edit"}
+            variant="outlined"
+            // variant="contained"
+            sx={{
+              maxWidth: 180,
+              border: "1px solid rgb(30 20 189 / 50%)",
+              color: "rgb(30 20 189 / 70%)",
+              position: "absolute",
+              right: theme.spacing(2),
+              top: theme.spacing(2),
+            }}
+            size="small"
+          >
+            Edit Profile
+          </Button>
           <Badge>{circle}</Badge>
           <Box sx={{ ml: 2 }}>
             <Stack flexDirection={{ xs: "column", md: "column" }}>
