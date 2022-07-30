@@ -1,9 +1,9 @@
 import React from "react";
-
+import styles from "../../styles/Welcome/styles.css";
+import image from "../../assets/img/welcome_img.svg";
 export default function Welcome() {
   return (
-    // <>welcome error, fix later, say more ping more, say less do more</>
-    <>
+   <>
       {/* <!-- Navbar Section --> */}
       <nav className="navbar">
         <a href="/" className="navbar__logo">
@@ -50,7 +50,7 @@ export default function Welcome() {
           <div className="hero__container--right">
             <input
               type="image"
-              // src={image}
+              src={image}
               alt="image"
               className="hero__container--img"
             />
