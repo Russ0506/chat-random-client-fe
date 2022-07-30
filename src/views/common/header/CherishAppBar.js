@@ -23,6 +23,7 @@ import { ThemeConsumer } from "styled-components";
 import { cilBorderTop } from "@coreui/icons";
 import { icoMenuList } from "../../../constant/AppBarConstant";
 import Iconify from "../base/icon/Iconify";
+import CBCLogo from "../../../assets/img/cbc_logo_xl.png";
 const settings = [
   {
     name: "Profile",
@@ -36,8 +37,6 @@ const settings = [
 ];
 
 const CherishAppBar = () => {
-  const location = useLocation();
-
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -80,32 +79,15 @@ const CherishAppBar = () => {
         borderTop: 0,
       }}
     >
-      <Container sx={{ width: "100%", maxWidth: "100% !important" }}>
-        <Toolbar disableGutters>
-          <AdbIcon
-            sx={{
-              display: { xs: "none", md: "flex", color: "#817cce" },
-              mr: 1,
-            }}
-          />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "black",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
-
+      <Container
+        sx={{
+          width: "100%",
+          maxWidth: "100% !important",
+          height: "100%",
+          pl: "8px !important",
+        }}
+      >
+        <Toolbar disableGutters sx={{ height: "100%" }}>
           <Box
             sx={{
               flexGrow: 1,
@@ -140,26 +122,55 @@ const CherishAppBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {icoMenuList.map(
-                (menu, index) =>
-                  (menu.name === "New Post" ? (
-                    <></>
-                  ) : (
-                    <MenuItem key={menu.name} onClick={handleCloseNavMenu}>
-                      <Typography
-                        component={Link}
-                        to={menu.link}
-                        textAlign="center"
-                        color="#000"
-                      >
-                        {menu.name}
-                      </Typography>
-                    </MenuItem>
-                  ))
+              {icoMenuList.map((menu, index) =>
+                menu.name === "New Post" ? (
+                  <></>
+                ) : (
+                  <MenuItem key={menu.name} onClick={handleCloseNavMenu}>
+                    <Typography
+                      component={Link}
+                      to={menu.link}
+                      textAlign="center"
+                      color="#000"
+                    >
+                      {menu.name}
+                    </Typography>
+                  </MenuItem>
+                )
               )}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <Box height="100%" sx={{ display: { xs: "none", md: "flex" } }}>
+            <img
+              src={CBCLogo}
+              alt=""
+              height="100%"
+              style={{ padding: "16px" }}
+            ></img>
+          </Box>
+          {/* <AdbIcon
+            sx={{
+              display: { xs: "none", md: "flex", color: "#817cce" },
+              mr: 1,
+            }}
+          />*/}
+          {/* <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/homepage"
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "black",
+              textDecoration: "none",
+            }}
+          >
+            F-CBC
+          </Typography> */}
 
           <Typography
             variant="h5"
@@ -175,9 +186,18 @@ const CherishAppBar = () => {
               letterSpacing: ".3rem",
               color: "black",
               textDecoration: "none",
+              height: "100%",
+              position: "absolute",
+              width: "100%",
+              justifyContent: "center",
             }}
           >
-            LOGO
+            <img
+              src={CBCLogo}
+              alt=""
+              height="100%"
+              style={{ padding: "16px" }}
+            ></img>
           </Typography>
           <Box
             sx={{
