@@ -98,6 +98,14 @@ legend {
   width: 60px;
   height: 60px;
 }
+
+.lds-login-ring {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  padding-left: 15px;
+  opacity: 1;
+}
 .lds-dual-ring:after {
   content: " ";
   display: block;
@@ -109,6 +117,18 @@ legend {
   border-color: gray transparent gray transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
+
+.lds-login-ring:after {
+  content: " ";
+  display: block;
+  width: 30px;
+  height: 30px;
+  border: 5px solid rgb(123, 117, 194, 1);
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: rgb(123, 117, 194, 1) transparent transparent transparent;
+}
+
 @keyframes lds-dual-ring {
   0% {
     transform: rotate(0deg);
@@ -144,7 +164,7 @@ p[id*="helper-text"], .error-text {
 .custom-select-box {
   padding: 16px 14px;
   width: 396px;
-  color: #c4c4c4;
+  /* color: #c4c4c4; */
   border-radius: 4px;
 }
 

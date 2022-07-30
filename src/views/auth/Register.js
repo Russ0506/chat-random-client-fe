@@ -32,6 +32,9 @@ import * as Yup from "yup";
 const URL = "users";
 
 class SignUp extends React.PureComponent {
+  FILE_SIZE = 5242880;
+  SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
+
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -73,13 +76,16 @@ class SignUp extends React.PureComponent {
     this.setState({ selectedDate: date });
   }
 
+  handleStopChange(e) {
+    e.preventDefault();
+  };
+
   handleClickShowPassword(type) {
     if (type === 'password') this.setState({ showPassword: !this.state.showPassword })
     if (type === 'repassword') this.setState({ showRePassword: !this.state.showRePassword })
   }
 
   onSelectFile = (e) => {
-    console.log(this.state.isValidPhoto);
     this.setState({isValidPhoto : this.validateFile(e.target.files[0])})
     if(!this.validateFile(e.target.files[0])) return;
     else {
@@ -116,7 +122,7 @@ class SignUp extends React.PureComponent {
   
  checkIfFilesAreCorrectType(file) {
     let valid = true
-    if (!['application/pdf', 'image/jpeg', 'image/png'].includes(file.type)) {
+    if (!this.SUPPORTED_FORMATS.includes(file.type)) {
       valid = false
     }
     return valid
@@ -294,8 +300,7 @@ class SignUp extends React.PureComponent {
     gender: "female",
     // photo: null,
   };
-  FILE_SIZE = 5242880;
-  SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
+
   SignupSchema = Yup.object().shape({
     firstName: Yup.string()
       .min(2, 'Please enter more than 1 character')
@@ -318,9 +323,6 @@ class SignUp extends React.PureComponent {
     // photo: Yup.mixed().test(1000, "File Size is too large", value => value.size <= this.FILE_SIZE) .test('fileType', "Unsupported File Format", value => this.SUPPORTED_FORMATS.includes(['image/*']) )
   });
 
-  handleStopChange(e) {
-    e.preventDefault();
-  };
   render() {
     const { crop, croppedImageUrl, src, croppedImage } = this.state;
 

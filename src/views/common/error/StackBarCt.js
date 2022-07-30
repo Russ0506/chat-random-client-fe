@@ -4,7 +4,7 @@ export default function StartBarCt({openStb, closeStb, titleStb, duration = 3000
 
     return (
         <Snackbar open={openStb} autoHideDuration={duration} onClose={closeStb}>
-        <Alert onClose={closeStb} severity={typeNoti} sx={{ width: '100%' }}>
+        <Alert onClose={closeStb} severity={typeNoti} sx={{ width: '100%', textTransform: "capitalize" }}>
             {titleStb}
         </Alert>
         </Snackbar>

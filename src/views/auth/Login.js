@@ -9,6 +9,10 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { IconButton } from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import InputAdornment from "@mui/material/InputAdornment";
 import { useDispatch, useSelector } from "react-redux";
 import { login, user_verify } from "../../features/auth";
 import { clearMessage, setMessage } from "../../features/message";
@@ -28,46 +32,57 @@ import Loading from "../common/base/loading/Loading";
 // import { useCookies } from "react-cookie";
 import bgNew from "../auth/img/conv.png";
 import { Fade, Slide, Stack, Zoom } from "@mui/material";
+import StartBarCt from "../common/error/StackBarCt";
 export default function SignIn(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
+  const [showPassword , setShowPassword] = useState(false)
+  const [openStb, setOpenStb] = useState(false)
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
   const containerRef = React.useRef(null);
-  // const [cookies, setCookie, removeCookie] = useCookies(['_random_chat']);
 
   const initialValues = {
-    username: "",
+    email: "",
     password: "",
-    remember: false,
+    // remember: false,
   };
 
-  const validationSchema = Yup.object().shape({
-    username: Yup.string()
-      .email("please enter valid email")
-      .required("Required"),
-    password: Yup.string()
-      .required("Required")
-      .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-        "Your password must contain at least 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-      ),
+  const LoginValidationSchema = Yup.object().shape({
+    email: Yup.string().email('Please enter the right email format').required('Email Required'),
+    password: Yup.string().required('Password Required'),
   });
 
   useEffect(() => {
     dispatch(clearMessage());
   }, [dispatch]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleStopChange = (e) => {
+    e.preventDefault();
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword)
+  }
+
+  const handleOpenStb = () => {
+    setOpenStb(true)
+  }
+  const handleCloseStb = () => {
+    setOpenStb(false)
+  }
+
+
+  const handleSubmit = (value) => {
+    // event.preventDefault();
     setIsSubmit(true);
-    const data = new FormData(event.currentTarget);
+    // const data = new FormData(event.currentTarget);
 
     dispatch(
       login({
-        user: { email: data.get("email"), password: data.get("password") },
+        user: { email: value.email, password: value.password },
       })
     )
       .unwrap()
@@ -77,6 +92,7 @@ export default function SignIn(props) {
         }
       })
       .catch(() => {
+        handleOpenStb();
         setIsSubmit(false);
         setLoading(false);
       });
@@ -104,17 +120,19 @@ export default function SignIn(props) {
         justifyContent: "space-between",
       }}
     >
-      <Loading show={isSubmit}></Loading>
+      <StartBarCt openStb={openStb} closeStb={handleCloseStb} titleStb={message} typeNoti="error"></StartBarCt>
       <Grid
         container
         spacing={0}
         sx={{
+          position : "relative",
           width: "100%",
           height: "100%",
           zIndex: 10,
         }}
         columns={{ xs: 1, sm: 2, md: 2 }}
       >
+       
         <Container
           component="main"
           maxWidth="xs"
@@ -148,101 +166,111 @@ export default function SignIn(props) {
             >
               Sign in and start finding your friends!
             </Typography>
-            <Box
-              component="form"
+            <Formik
+              initialValues={initialValues}
+              validationSchema={LoginValidationSchema}
               onSubmit={handleSubmit}
-              noValidate
-              sx={{ mt: 1, fontSize: FONT_SIZE.smallText }}
             >
-              <TextField
-                margin="normal"
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-              <FormControlLabel
-                sx={{
-                  mt: "10px",
-                  lineHeight: LINE_HEIGHT.lh17,
-                  fontWeight: FONT_WEIGHT.middle,
-                }}
-                control={<Checkbox value="remember" />}
-                label="Remember me"
-              />
-              {message ? (
+              {({ errors, touched }) => (<Form>
                 <Box
-                  component="div"
-                  variant="h5"
-                  color="red"
-                  fontSize={FONT_SIZE.smallText}
+                  sx={{ mt: 1, fontSize: FONT_SIZE.smallText }}
                 >
-                  {message}
-                </Box>
-              ) : (
-                ""
-              )}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                disabled={isSubmit}
-                sx={{ marginTop: "10px", boxShadow: "none" }}
-              >
-                Sign In
-              </Button>
-              <Grid container sx={{ margin: "20px 0" }}>
-                <Grid item xs>
-                  <Link
-                    href="/users/forgot-password"
-                    variant="body2"
+                  <Field
+                    as={TextField}
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    helperText={<ErrorMessage className="error-text" name="email" />}
+                  />
+                  <Field
+                    as={TextField}
+                    margin="normal"
+                    variant="outlined"
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    autoComplete="current-password"
+                    onCut={handleStopChange}
+                    onCopy={handleStopChange}
+                    onPaste={handleStopChange}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleClickShowPassword}
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }}
+                    helperText={<ErrorMessage className="error-text" name="password" />}
+
+                  />
+                  {/* <FormControlLabel
                     sx={{
+                      mt: "10px",
                       lineHeight: LINE_HEIGHT.lh17,
                       fontWeight: FONT_WEIGHT.middle,
-                      textDecoration: "none",
                     }}
+                    control={<Checkbox value="remember" />}
+                    label="Remember me"
+                  /> */}
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    disabled={isSubmit}
+                    sx={{ marginTop: "10px", boxShadow: "none" }}
                   >
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Stack flexDirection="row">
-                    <Typography variant="body2">
-                      Don't have an account?
-                    </Typography>
-                    <Typography variant="body2">
+                    Sign In  { isSubmit ? <div className="items-center"><div className="lds-login-ring"></div></div>: <></> }
+                  </Button>
+                  <Grid container sx={{ margin: "20px 0" }}>
+                    <Grid item xs>
                       <Link
-                        href="/register"
-                        variant="body1"
+                        href="/users/forgot-password"
+                        variant="body2"
                         sx={{
                           lineHeight: LINE_HEIGHT.lh17,
                           fontWeight: FONT_WEIGHT.middle,
                           textDecoration: "none",
-                          ml: "3px",
                         }}
                       >
-                        Sign Up
+                        Forgot password?
                       </Link>
-                    </Typography>
-                  </Stack>
-                </Grid>
-              </Grid>
-            </Box>
+                    </Grid>
+                    <Grid item>
+                      <Stack flexDirection="row">
+                        <Typography variant="body2">
+                          Don't have an account?
+                        </Typography>
+                        <Typography variant="body2">
+                          <Link
+                            href="/register"
+                            variant="body1"
+                            sx={{
+                              lineHeight: LINE_HEIGHT.lh17,
+                              fontWeight: FONT_WEIGHT.middle,
+                              textDecoration: "none",
+                              ml: "3px",
+                            }}
+                          >
+                            Sign Up
+                          </Link>
+                        </Typography>
+                      </Stack>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Form>)}
+            </Formik>
           </Box>
         </Container>
         <Stack
@@ -292,7 +320,6 @@ export default function SignIn(props) {
           </Fade>
         </Stack>
       </Grid>
-      {/* <Box className="login-main"></Box> */}
     </Box>
   );
 }
