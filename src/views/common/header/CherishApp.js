@@ -151,4 +151,3 @@ const ChosenButtonNav = styled(Stack)(({ theme }) => ({
     color: "#6748da",
   },
 }));
-

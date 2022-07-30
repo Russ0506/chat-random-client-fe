@@ -1,6 +1,5 @@
 import {
   Box,
-  IconButton,
   InputBase,
   List,
   ListItem,
@@ -17,11 +16,13 @@ import {
   changeConversation,
   seenConversation,
   selectMostRecentConversationId,
+  selectNewestConversations
 } from "../../../../features/chat/conversationSlice";
 import { seenLastMessage } from "../../../../features/chat/messagesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { DRAWER_WITH } from "../../../../constant/css_constant";
 import ConversationControlBox from "../../topBar/startConversation/ConversationControlBox";
+import { onlineStatusSocket } from '../../../sockets/Socket'
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -33,11 +34,6 @@ const Search = styled("div")(({ theme }) => ({
   "& .Mui-focused": {
     color: alpha(theme.palette.common.black, 1),
   },
-  // width: "100%",
-  // [theme.breakpoints.up("sm")]: {
-  //   marginLeft: theme.spacing(3),
-  //   width: "auto",
-  // },
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
@@ -69,13 +65,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function ConversationsList() {
   const dispatch = useDispatch();
   const recentConversationId = useSelector(selectMostRecentConversationId);
+  const newConversation = useSelector(selectNewestConversations);
   const [conversations, setConversations] = React.useState([]);
 
   useEffect(() => {
     axiosClient.get(`conversations`).then((data) => {
       setConversations(data);
+      data.forEach((conversation) => {
+        onlineStatusSocket(conversation.partner.id);
+      })
     });
   }, []);
+
+  useEffect(()=>{
+    setConversations([newConversation, ...conversations])
+  }, [newConversation])
 
   useEffect(() => {
     let orderedConversations = [];
@@ -93,7 +97,7 @@ export default function ConversationsList() {
   const onChangeConversation = (item) => {
     dispatch(changeConversation(item));
     dispatch(seenConversation({ conversationId: item.id }));
-    dispatch(seenLastMessage({ conversationId: item.id }));
+    dispatch(seenLastMessage({ preloadMessage: item.last_message, conversationId: item.id }));
   };
 
   const RenderConversationsList = () => {
@@ -111,6 +115,7 @@ export default function ConversationsList() {
       </ListItem>
     ));
   };
+
   return (
     <>
       <Box

@@ -43,13 +43,13 @@ export const messagesSlice = createSlice({
       state.latestMessages[payload.message.conversation_id] = payload.message;
     },
     updateLatestStatuses: (state, { payload }) => {
-      state.latestStatuses[payload.id] = payload.status;
-      state.latestStatuses[payload.uuid] = payload.status;
+      if (payload?.id) state.latestStatuses[payload.id] = payload.status;
+      if (payload?.uuid) state.latestStatuses[payload.uuid] = payload.status;
     },
     seenLastMessage: (state, { payload }) => {
-      if (state.latestMessages[payload.conversationId]) {
-        state.latestMessages[payload.conversationId].status = 'seen';
-      }
+      let message =  state.latestMessages[payload.conversationId] || payload.preloadMessage
+      if (message?.id) state.latestStatuses[message.id] = 'seen';
+      if (message?.uuid) state.latestStatuses[message.uuid] = 'seen';
     },
     resetMessages: (state) => {
       state.newMessages = [];

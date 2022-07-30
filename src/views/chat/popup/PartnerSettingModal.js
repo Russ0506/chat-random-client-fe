@@ -183,7 +183,7 @@ export default function PartnerSettingModal(props) {
         {/* <DialogContentText sx={{ textAlign: "center", pt: 3 }}>
               These preferences help us suggest matches by determining who you will be matched.
             </DialogContentText>
-            
+
              */}
       </Paper>
     </Dialog>
