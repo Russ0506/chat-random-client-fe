@@ -16,11 +16,32 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useLayoutEffect } from "react";
+import { axiosClient } from "../../../../setup/axiosClient";
+import { useSelector } from "../../../../store/store";
 import ModalPoster from "./ModalPoster";
+import { URL } from "../../../../service/chat.service";
+
+const URL_IMAGE = `${URL}/api`;
 
 export default function PartnerPoster() {
   const [open, setOpen] = React.useState(true);
+  const currentConversation = useSelector(state => state.conversation.currentConversation)
+  const [listPartnerPost, setListPartnerPost] = React.useState([]);
+
+  useEffect(() => {
+    if (currentConversation === null) return
+    axiosClient
+      .get(`/users/${currentConversation?.partner?.id}/posts`)
+      .then((data) => {
+        const newData = data.map((item) => ({
+          ...item,
+          image_path: `${URL_IMAGE + item.image_path}`,
+        }));
+        setListPartnerPost(newData);
+      })
+      .catch(() => { });
+  }, [currentConversation])
 
   const handleClick = () => {
     setOpen(!open);
@@ -30,11 +51,11 @@ export default function PartnerPoster() {
       sx={{ width: "100%", backgroundColor: "#fff", height: "100%" }}
       component="nav"
       aria-labelledby="nested-list-subheader"
-      //   subheader={
-      //     <ListSubheader component="div" id="nested-list-subheader">
-      //       Nested List Items
-      //     </ListSubheader>
-      //   }
+    //   subheader={
+    //     <ListSubheader component="div" id="nested-list-subheader">
+    //       Nested List Items
+    //     </ListSubheader>
+    //   }
     >
       <ListItemButton onClick={handleClick}>
         <ListItemIcon>
@@ -65,42 +86,16 @@ export default function PartnerPoster() {
               sx={{ width: "100%", overflow: "auto" }}
               container
               rowSpacing={1}
-              columns={{ xs: 8, sm: 4,md: 4, lg: 8, xl: 12, }}
+              columns={{ xs: 8, sm: 4, md: 4, lg: 8, xl: 12, }}
               columnSpacing={{ xs: 0.5, sm: 0.5, md: 0.5 }}
             >
-              <Grid item xs={4}>
-                <ModalPoster />
-              </Grid>
-              <Grid item xs={4}>
-                <ModalPoster />
-              </Grid>
-              <Grid item xs={4}>
-                <ModalPoster />
-              </Grid>
-              <Grid item xs={4}>
-                <ModalPoster />
-              </Grid>
-              <Grid item xs={4}>
-                <ModalPoster />
-              </Grid>
-              <Grid item xs={4}>
-                <ModalPoster />
-              </Grid>
-              <Grid item xs={4}>
-                <ModalPoster />
-              </Grid>
-              <Grid item xs={4}>
-                <ModalPoster />
-              </Grid>
-              <Grid item xs={4}>
-                <ModalPoster />
-              </Grid>
-              <Grid item xs={4}>
-                <ModalPoster />
-              </Grid>
-              <Grid item xs={4}>
-                <ModalPoster />
-              </Grid>
+              {
+                listPartnerPost.map((item, index) => (
+                  <Grid item xs={4} key = {index}>
+                    <ModalPoster item={item} />
+                  </Grid>
+                ))
+              }
             </Grid>
           </ListItem>
         </List>

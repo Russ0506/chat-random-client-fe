@@ -1,10 +1,25 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import styled from "@emotion/styled";
-import { Paper } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Fade,
+  IconButton,
+  Menu,
+  MenuItem,
+  Stack,
+  Typography,
+  Paper,
+  Modal,
+  Box,
+  Button,
+} from "@mui/material";
+import AvatarFrame from "../../../common/base/AvatarFrame";
+import { styled } from "@mui/styles";
 
 const style = {
   position: "absolute",
@@ -19,7 +34,7 @@ const style = {
   p: 4,
 };
 
-export default function ModalPoster() {
+export default function ModalPoster({ item }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -31,23 +46,93 @@ export default function ModalPoster() {
     textAlign: "center",
     color: theme.palette.text.secondary,
     height: "180px",
+    minWidth: "120px",
     boxShadow: "none",
     backgroundColor: "gray",
+    backgroundImage: `url(${item.image_path})`,
     cursor: "pointer",
   }));
   return (
     <div>
-      <Item onClick={handleOpen}>Open modal</Item>
+      <Item as={IconButton} onClick={handleOpen}></Item>
       <Modal
         keepMounted
         open={open}
         onClose={handleClose}
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
-        
+
       >
-        <Box sx={style}>
-          
+        <Box sx={style} padding={5}>
+          <div style={{ position: "relative" }}>
+            <DialogTitle
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Stack
+                className="ct-pt-title"
+                flexDirection="row"
+                alignItems="center"
+                sx={{ width: "100%" }}
+              >
+                <AvatarFrame />
+                <Stack
+                  flexDirection="row"
+                  alignItems="center"
+                  width="440px"
+                  className="justify-content-between"
+                >
+                  <Typography sx={{ fontWeight: 550, ml: 1 }}>
+                    {localStorage.getItem('user_display_name')}
+                  </Typography>
+                </Stack>
+              </Stack>
+              <IconButton size="small">
+                <CloseIcon sx={{ width: "30px", height: "30px" }} onClick={handleClose} />
+              </IconButton>
+            </DialogTitle>
+            <DialogContent sx={{ position: "relative" }}>
+              <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
+              <Box
+                sx={{
+                  width: "100%",
+                  position: "relative",
+                }}
+              >
+                <Typography variant="body1" marginBottom={1.5}>
+                  {item.content}
+                </Typography>
+                <Box
+                  borderRadius={4}
+                  sx={{
+                    margin: "0",
+                    overflow: "auto",
+                  }}
+                >
+                  <img src={`${item.image_path}`} alt="" width="50%" loading="lazy"></img>
+                </Box>
+              </Box>
+            </DialogContent>
+            <DialogActions
+              sx={{
+                justifyContent: "space-between",
+                alignItems: "center",
+                pl: 2,
+                pr: 2,
+                pt: 0,
+              }}
+            >
+              <Stack flexDirection="row" alignItems="center">
+                <IconButton aria-label="add to favorites">
+                  <FavoriteIcon />
+                </IconButton>
+                <Typography>{item.likeCount} likes</Typography>
+              </Stack>
+            </DialogActions>
+          </div>
         </Box>
       </Modal>
     </div>
