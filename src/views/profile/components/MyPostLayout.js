@@ -1,5 +1,7 @@
+import CloseIcon from "@mui/icons-material/Close";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -10,18 +12,15 @@ import {
   Menu,
   MenuItem,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
-import React, { useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
-import { Box } from "@mui/system";
 import { styled } from "@mui/styles";
-import myIdol from "../components/img/myidol.jpg";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import SettingsIcon from "@mui/icons-material/Settings";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { Box } from "@mui/system";
+import React, { useState } from "react";
+import { axiosClient } from "../../../setup/axiosClient";
+import Loading from "../../common/base/loading/Loading";
+// import myIdol from "../components/img/myidol.jpg";
+
 const menuList = [
   {
     name: "Edit",
@@ -30,6 +29,7 @@ const menuList = [
     name: "Delete",
   },
 ];
+const URL = "posts";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Fade in={true} ref={ref} {...props} unmountOnExit />;
 });
@@ -41,9 +41,11 @@ export default function PosterLayout({
   image,
   data,
   onClose = handleClose(),
+  onOpenEditBox,
 }) {
   const [openM, setOpenM] = useState(open);
-  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [loading, setLoading] = useState(false)
+  const [anchorElNav, setAnchorElNav] = useState(false);
   const handleClosePostMenu = () => {
     setAnchorElNav(null);
   };
@@ -54,6 +56,33 @@ export default function PosterLayout({
     onClose();
     setOpenM(false);
   };
+
+  const handleCasePost = (index) => {
+    if (index === 0) {
+      handleCloseModal()
+      setTimeout(() => {
+        onOpenEditBox()
+      }, 500);
+    }
+    if (index === 1) {
+      handleDeletePost()
+    }
+  }
+
+  const handleDeletePost = () => {
+    setLoading(true)
+    axiosClient
+    .delete(`${URL}/${data?.id}`)
+    .then((data) => {
+      setTimeout(() => {
+        onClose(data.data);
+      }, 500);
+    })
+    .catch(() => { 
+      // setIsPost(false)
+    });
+  }
+
   return (
     <Dialog
       open={openM}
@@ -63,6 +92,7 @@ export default function PosterLayout({
       aria-describedby="alert-dialog-slide-description"
       id="des-txtarea-desc"
     >
+      <Loading show={loading}></Loading>
       <DialogTitle
         sx={{
           display: "flex",
@@ -78,12 +108,13 @@ export default function PosterLayout({
         >
           <AvatarFrame />
           <Stack
-            justifyContent="center"
             flexDirection="row"
             alignItems="center"
+            width="440px"
+            className="justify-content-between"
           >
             <Typography sx={{ fontWeight: 550, ml: 1 }}>
-              Tuong Vy Bui Anh
+            {localStorage.getItem('user_display_name')}
             </Typography>
             <Box>
               <IconButton onClick={handleOpenPostMenu}>
@@ -107,17 +138,23 @@ export default function PosterLayout({
               >
                 {menuList.map((menu, index) =>
                   menu.name === "New Post" ? (
-                    <></>
+                    <div key={index}></div>
                   ) : (
-                    <MenuItem key={menu.name} onClick={handleClosePostMenu}>
-                      <Typography
-                        // component={Link}
-                        // to={menu.link}
-                        textAlign="center"
-                        color="#000"
-                      >
-                        {menu.name}
-                      </Typography>
+                    <MenuItem key={index} >
+                      <IconButton onClick={() => handleCasePost(index)}
+                        display="flex"
+                        className="justify-content-end">
+                        <Typography
+                          key={index}
+                          // component={Link}
+                          // to={menu.link}
+                          textAlign="center"
+                          color="#000"
+                          fontSize="18px"
+                        >
+                          {menu.name}
+                        </Typography>
+                      </IconButton>
                     </MenuItem>
                   )
                 )}
@@ -196,7 +233,8 @@ const AvatarFrame = styled(Box)(({ theme }) => ({
     display: "block",
     height: "100%",
     width: "100%",
-    backgroundImage: `url(${myIdol})`,
+    backgroundImage: `url(${localStorage.getItem('avatar_path')})`,
+    backgroundColor: "#817cce",
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",

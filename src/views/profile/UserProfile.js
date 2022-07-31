@@ -226,7 +226,7 @@ export default function UserProfile() {
                       alignItems: "center",
                     }}
                   >
-                    Tuong Vy Bui Anh{" "}
+                    {localStorage.getItem('user_display_name')}{" "}
                     {gender === "male" ? (
                       <StyledMaleIcon
                         fontSize="18px"
