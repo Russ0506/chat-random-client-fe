@@ -73,7 +73,7 @@ export default function NewPosterLayout({
   const [openStb, setOpenStb] = useState(false)
   const URL = "posts";
   const [errorMessage, setErrorMessage] = useState('')
-  let checkChangeUrlImg = false
+  const [checkChangeUrlImg, setCheckChangeUrlImg] = useState(false)
 
   const handleCloseModal = () => {
     onClose();
@@ -145,12 +145,12 @@ export default function NewPosterLayout({
       return;
     }
     if (e.target.files && e.target.files.length > 0) {
-      checkChangeUrlImg = true
       const reader = new FileReader();
       reader.addEventListener("load", () => setSrc(reader.result));
       reader.readAsDataURL(e.target.files[0]);
     }
     handleOpen();
+    setCheckChangeUrlImg(true)
   };
 
   function getCroppedImg(image, crop, fileName) {
@@ -227,8 +227,9 @@ export default function NewPosterLayout({
     } else {
       const data = new FormData(event.currentTarget);
       let params = {}
+      const formData = new FormData();
 
-      if (checkChangeUrlImg) {
+      if(checkChangeUrlImg) {
         data.append("image", croppedImage, "imagename");
         params = {
           post: {
@@ -241,17 +242,14 @@ export default function NewPosterLayout({
         params = {
           post: {
             caption: data.get("caption"),
-            image: croppedImageUrl,
             location: location.addr,
           },
         };
       }
-
-      const formData = new FormData();
       for (let param in params["post"]) {
         formData.append(`post[${param}]`, params["post"][param]);
       }
-
+        
       if (type === 'new') {
         axiosMultipartForm
           .post(`${URL}`, formData)
