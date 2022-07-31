@@ -118,9 +118,9 @@ const CherishAppBar = () => {
             >
               {icoMenuList.map((menu, index) =>
                 menu.name === "New Post" ? (
-                  <></>
+                  <div key={index} ></div>
                 ) : (
-                  <MenuItem key={menu.name} onClick={handleCloseNavMenu}>
+                  <MenuItem key={index} onClick={handleCloseNavMenu}>
                     <Typography
                       component={Link}
                       to={menu.link}

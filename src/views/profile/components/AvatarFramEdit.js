@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
-import avatarDemo from "../components/img/myidol.jpg";
+// import avatarDemo from "../components/img/myidol.jpg";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import { IconButton } from "@mui/material";
 
@@ -28,7 +28,8 @@ export default function AvatarFramEdit(props) {
       display: "block",
       height: "100%",
       width: "100%",
-      backgroundImage: `url(${(props.img == null || props.img =='' )? avatarDemo : props.img})`,
+      backgroundImage: `url(${(props.img == null || props.img =='' )? localStorage.getItem('avatar_path') : props.img})`,
+      backgroundColor: "#817cce",
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",

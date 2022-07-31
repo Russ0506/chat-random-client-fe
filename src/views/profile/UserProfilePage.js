@@ -48,7 +48,8 @@ export default function UserProfilePage() {
     no_of_reactions: 0,
   });
   const [listPosterData, setListPosterData] = React.useState([]);
-  const [openNewPoster, setOpenNewPoster] = React.useState(false);
+  const [currentPosterData, setCurrentPosterData] = React.useState(null);
+  const [openNewPoster, setOpenNewPoster] = React.useState({value: false, type: "new"});
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const circle = (
@@ -66,17 +67,22 @@ export default function UserProfilePage() {
       content: item.caption,
       image: item.image_path,
       likeCount: item.no_of_reactions,
+      id: item.id,
     });
     setOpenPoster(true);
   }
-  function handleClosePoster() {
-    setOpenPoster(false);
+  async function handleClosePoster() {
+   await getPostList();
+    setTimeout(() => {
+      setOpenPoster(false);
+    }, 500); 
   }
-  function handleOpenNewPost() {
-    setOpenNewPoster(true);
+  function handleOpenNewPost(type, posterData = null) {
+    setCurrentPosterData(posterData)
+    setOpenNewPoster({value: true, type: type});
   }
-  function handleCloseNewPost(newpostdata) {
-    setOpenNewPoster(false);
+  function handleCloseNewPost() {
+    setOpenNewPoster({value: false, type: "new"});
   }
 
   async function getPostList() {
@@ -149,7 +155,7 @@ export default function UserProfilePage() {
                   alignItems: "center",
                 }}
               >
-                Tuong Vy Bui Anh{" "}
+                {`${localStorage.getItem('user_display_name')} `}
                 {gender === "male" ? (
                   <StyledMaleIcon
                     fontSize="18px"
@@ -199,7 +205,7 @@ export default function UserProfilePage() {
                 My Posts
               </Typography>
               <Button
-                onClick={handleOpenNewPost}
+                onClick={()=>handleOpenNewPost("new",null)}
                 variant="outlined"
                 sx={{
                   ml: 1,
@@ -237,6 +243,7 @@ export default function UserProfilePage() {
               <>
                 {listPosterData.map((item, index) => (
                   <ImagePoster
+                    key={index}
                     item={item}
                     index={index}
                     handleOpenPoster={handleOpenPoster}
@@ -245,9 +252,11 @@ export default function UserProfilePage() {
               </>
             </ImageList>
           </Box>
-          {openNewPoster === true ? (
+          {openNewPoster.value === true ? (
             <NewPosterLayout
-              open={openNewPoster}
+              open={openNewPoster.value}
+              type={openNewPoster.type}
+              posterData={currentPosterData}
               onClose={handleCloseNewPost}
             />
           ) : (
@@ -258,6 +267,7 @@ export default function UserProfilePage() {
               open={openPoster}
               onClose={handleClosePoster}
               data={posterData}
+              onOpenEditBox={()=>handleOpenNewPost("edit", posterData )}
             />
           ) : (
             <></>

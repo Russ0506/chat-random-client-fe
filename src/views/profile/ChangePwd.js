@@ -79,7 +79,7 @@ class ChangePwdCls extends Component {
               variant="body1"
               sx={{ mt: 1, color: "#4f4f4f", justifySelf: "flex-end" }}
             >
-              Tuong Vy Bui Anh
+              {localStorage.getItem('user_display_name')}
             </Typography>
           </Stack>
 
