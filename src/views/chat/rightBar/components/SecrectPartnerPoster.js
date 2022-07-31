@@ -52,7 +52,7 @@ export default function SecrectPartnerPoster(props) {
         <MansoryImageBG />
         <PartnerSecrectInfo />
         <SharedInfoButton variant="contained" onClick={props.showInfo}>
-          Share Profile
+          { props.accepted ? "Waiting ..." : "Share Profile" }
         </SharedInfoButton>
       </Box>
     </>

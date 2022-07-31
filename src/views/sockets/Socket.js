@@ -1,6 +1,7 @@
 import store from '../../store/store'
-import { updateLatestStatuses, receiveNewMessage, seenLastMessage } from "../../features/chat/messagesSlice";
-import { seenConversation, touchConversation, createNewConversation } from "../../features/chat/conversationSlice";
+import { updateLatestStatuses, receiveNewMessage } from "../../features/chat/messagesSlice";
+import { seenConversation, touchConversation, createNewConversation,
+  updateConversationLatestStatus} from "../../features/chat/conversationSlice";
 import { partnerGoOnline, partnerGoOffline } from "../../features/chat/onlineStatusesSlice";
 
 function Socket(props) {
@@ -86,6 +87,17 @@ function msgLatestStatusSocket(props){
   })
 }
 
+function conversationStatusSocket(props){
+  Socket({
+    channel: "ConversationStatusChannel",
+    connected: ()=>{},
+    disconnected: ()=>{},
+    received: (data)=>{
+      store.dispatch(updateConversationLatestStatus(data));
+    }
+  })
+}
+
 export {
   pairingSocket, appearanceSocket, onlineStatusSocket,
-  newMessageSocket, msgLatestStatusSocket };
+  newMessageSocket, msgLatestStatusSocket, conversationStatusSocket };
