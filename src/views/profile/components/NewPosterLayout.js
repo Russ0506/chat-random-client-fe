@@ -417,7 +417,7 @@ export default function NewPosterLayout({
                   sx={{ width: "100%" }}
                 >
                   <AvatarFrame avatarPath={avatarPath} />
-                  <Stack justifyContent="space-evenly" sx={{ml: 1}}>
+                  <Stack justifyContent="center">
                     <Typography sx={{ fontWeight: 550, ml: 1 }}>
                       {userDisplayName ?? "User"}
                     </Typography>
