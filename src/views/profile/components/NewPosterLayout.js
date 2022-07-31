@@ -23,6 +23,7 @@ import { Form } from "react-bootstrap";
 import StyledCloseIcon from "../../common/base/style-icon/StyledCloseIcon";
 import StartBarCt from "../../common/error/StackBarCt";
 import CropImage from "../../common/modal/CropImage";
+import AvatarFrame from "../../common/base/AvatarFrame";
 
 // import InputEmoji from "react-input-emoji"; // ko xoa nha
 // import Picker from "emoji-picker-react"; // ko xoa nha
@@ -39,7 +40,6 @@ export default function NewPosterLayout({
   open = true,
   onClose = defaultHandle(),
   userDisplayName = localStorage.getItem('user_display_name'),
-  avatarPath = localStorage.getItem('avatar_path'),
   type = 'new',
   posterData = { image: '', content: '' },
 }) {
@@ -414,7 +414,7 @@ export default function NewPosterLayout({
                   alignItems="center"
                   sx={{ width: "100%" }}
                 >
-                  <AvatarFrame avatarPath={avatarPath} />
+                  <AvatarFrame />
                   <Stack justifyContent="center">
                     <Typography sx={{ fontWeight: 550, ml: 1 }}>
                       {userDisplayName ?? "User"}
@@ -623,36 +623,6 @@ export default function NewPosterLayout({
     </>
   );
 }
-
-const AvatarFrame = styled(Box)(({ theme, avatarPath }) => ({
-  ...shapeCircleStyles,
-  ...shapeStyles,
-  "&::before": {
-    borderRadius: "50%",
-    zIndex: "-1",
-    content: '""',
-    display: "block",
-    height: "100%",
-    width: "100%",
-    backgroundImage: `url(${avatarPath})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    background: "gray"
-  },
-}));
-
-const shapeStyles = {
-  bgcolor: "primary.main",
-  width: 60,
-  height: 60,
-  padding: 1,
-  backgroundColor: "#fff",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-};
-const shapeCircleStyles = { borderRadius: "50%" };
 
 const LocationFormControl = styled(CmmnFormControl)(({ theme }) => ({
   marginTop: "0px !important",

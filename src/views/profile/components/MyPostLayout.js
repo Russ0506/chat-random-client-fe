@@ -18,6 +18,7 @@ import { styled } from "@mui/styles";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { axiosClient } from "../../../setup/axiosClient";
+import AvatarFrame from "../../common/base/AvatarFrame";
 import Loading from "../../common/base/loading/Loading";
 // import myIdol from "../components/img/myidol.jpg";
 
@@ -38,10 +39,10 @@ function handleClose() {
 }
 export default function PosterLayout({
   open = true,
-  image,
   data,
   onClose = handleClose(),
-  onOpenEditBox,
+  isReadonlyMode = false,
+  onOpenEditBox = handleClose(),
 }) {
   const [openM, setOpenM] = useState(open);
   const [loading, setLoading] = useState(false)
@@ -116,7 +117,7 @@ export default function PosterLayout({
             <Typography sx={{ fontWeight: 550, ml: 1 }}>
             {localStorage.getItem('user_display_name')}
             </Typography>
-            <Box>
+            {isReadonlyMode ? "" : <Box>
               <IconButton onClick={handleOpenPostMenu}>
                 <MoreHorizIcon sx={{ width: "30px", height: "30px" }} />
               </IconButton>
@@ -159,7 +160,7 @@ export default function PosterLayout({
                   )
                 )}
               </Menu>
-            </Box>
+            </Box>}
           </Stack>
         </Stack>
 
@@ -223,32 +224,3 @@ export default function PosterLayout({
     </Dialog>
   );
 }
-const AvatarFrame = styled(Box)(({ theme }) => ({
-  ...shapeCircleStyles,
-  ...shapeStyles,
-  "&::before": {
-    borderRadius: "50%",
-    zIndex: "-1",
-    content: '""',
-    display: "block",
-    height: "100%",
-    width: "100%",
-    backgroundImage: `url(${localStorage.getItem('avatar_path')})`,
-    backgroundColor: "#817cce",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  },
-}));
-
-const shapeStyles = {
-  bgcolor: "primary.main",
-  width: 60,
-  height: 60,
-  padding: 4,
-  backgroundColor: "#fff",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-};
-const shapeCircleStyles = { borderRadius: "50%" };
