@@ -8,21 +8,15 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import ConversationControlBox from "../../chat/topBar/startConversation/ConversationControlBox";
-import { Badge } from "@mui/material";
+import { Badge, useTheme } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import { APP_BAR_HEIGHT } from "../../../constant/css_constant";
-import { Link, useLocation } from "react-router-dom";
-import { ThemeConsumer } from "styled-components";
-import { cilBorderTop } from "@coreui/icons";
+import { Link } from "react-router-dom";
 import { icoMenuList } from "../../../constant/AppBarConstant";
-import Iconify from "../base/icon/Iconify";
 import CBCLogo from "../../../assets/img/cbc_logo_xl.png";
 const settings = [
   {
@@ -39,7 +33,6 @@ const settings = [
 const CherishAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -85,6 +78,7 @@ const CherishAppBar = () => {
           maxWidth: "100% !important",
           height: "100%",
           pl: "8px !important",
+          pr: "8px !important",
         }}
       >
         <Toolbar disableGutters sx={{ height: "100%" }}>
@@ -207,8 +201,13 @@ const CherishAppBar = () => {
             }}
           ></Box>
           <Box sx={{ flexGrow: 0, ml: 2 }}>
+            <IconButton aria-label={notificationsLabel(100)}>
+              <Badge badgeContent={100} color="secondary">
+                <NotificationsNoneIcon sx={{ width: "30px", height: "30px" }} />
+              </Badge>
+            </IconButton>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu}>
+              <IconButton onClick={handleOpenUserMenu} sx={{ml: 1}} size="small"> 
                 <Avatar
                   alt="Memy Sharp"
                   src="#"
@@ -251,11 +250,6 @@ const CherishAppBar = () => {
               ))}
             </Menu>
           </Box>
-          <IconButton aria-label={notificationsLabel(100)}>
-            <Badge badgeContent={100} color="secondary">
-              <NotificationsNoneIcon sx={{ width: "30px", height: "30px" }} />
-            </Badge>
-          </IconButton>
         </Toolbar>
       </Container>
     </AppBar>
