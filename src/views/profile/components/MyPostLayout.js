@@ -39,10 +39,10 @@ function handleClose() {
 }
 export default function PosterLayout({
   open = true,
-  image,
   data,
   onClose = handleClose(),
-  onOpenEditBox,
+  isReadonlyMode = false,
+  onOpenEditBox = handleClose(),
 }) {
   const [openM, setOpenM] = useState(open);
   const [loading, setLoading] = useState(false)
@@ -117,7 +117,7 @@ export default function PosterLayout({
             <Typography sx={{ fontWeight: 550, ml: 1 }}>
             {localStorage.getItem('user_display_name')}
             </Typography>
-            <Box>
+            {isReadonlyMode ? "" : <Box>
               <IconButton onClick={handleOpenPostMenu}>
                 <MoreHorizIcon sx={{ width: "30px", height: "30px" }} />
               </IconButton>
@@ -160,7 +160,7 @@ export default function PosterLayout({
                   )
                 )}
               </Menu>
-            </Box>
+            </Box>}
           </Stack>
         </Stack>
 

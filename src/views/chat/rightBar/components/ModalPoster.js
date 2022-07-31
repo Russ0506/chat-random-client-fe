@@ -19,6 +19,7 @@ import {
   Button,
 } from "@mui/material";
 import AvatarFrame from "../../../common/base/AvatarFrame";
+import PostLayout from "../../../profile/components/MyPostLayout";
 import { styled } from "@mui/styles";
 
 const style = {
@@ -55,6 +56,12 @@ export default function ModalPoster({ item }) {
   return (
     <div>
       <Item as={IconButton} onClick={handleOpen}></Item>
+      {/* <PostLayout
+              open={open}
+              onClose={handleClose}
+              data={item}
+              isReadonlyMode={true}
+            /> */}
       <Modal
         keepMounted
         open={open}
