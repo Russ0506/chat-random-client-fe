@@ -4,7 +4,6 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CHAT_HEADER_HEIGHT } from '../../../../constant/css_constant';
 
-import { loadConversation } from '../../../../features/chat';
 import Scrollbar from "../../../common/base/scroll-bar/Scrollbar"
 import ChatMessageItem from './ChatMessageItem';
 import { selectNewMessages } from "../../../../features/chat/messagesSlice"
@@ -43,7 +42,9 @@ export default function ChatMessageList({conversation}) {
   const handleObserver = useCallback((entries) => {
     const target = entries[0];
     if (target.isIntersecting) {
-      setPage((prev) => prev + 1);
+      if (document.querySelector('#loadMessage') != null) {
+        setPage((prev) => prev + 1);
+      }
     }
   }, []);
 
@@ -72,7 +73,8 @@ export default function ChatMessageList({conversation}) {
           indentify="chat-scroll-ult"
         >
           { loading ? <div className="items-center"><div className="lds-dual-ring"></div></div>: <></> }
-          <div ref={loader}/>
+          <div ref={loader} />
+          { messagesList.length > 0 ? <div id='loadMessage'/> : null }
           {messagesList.slice().reverse().map((message,i) => (
             <ChatMessageItem
               key={i}

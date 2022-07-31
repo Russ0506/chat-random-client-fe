@@ -14,6 +14,7 @@ import {
   appearanceSocket,
   newMessageSocket,
   msgLatestStatusSocket,
+  conversationStatusSocket,
 } from "./sockets/Socket";
 import React, { useEffect, useState } from "react";
 import { receiveNewMessage } from "../features/chat/messagesSlice";
@@ -34,6 +35,7 @@ export default function Homepage() {
     appearanceSocket();
     newMessageSocket();
     msgLatestStatusSocket();
+    conversationStatusSocket();
     window.addEventListener(
       "resize",
       function (event) {
@@ -96,7 +98,7 @@ export default function Homepage() {
               borderRadius: "0 15px 15px 0",
               position: "absolute",
               left: "100%",
-              top: theme.spacing(1), 
+              top: theme.spacing(1),
               background: "rgb(236, 236, 250)",
               display: { xs: "", md: "none" },
             }}
