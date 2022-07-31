@@ -10,11 +10,8 @@ import { useEffect, useState } from "react";
 import { clearMessage } from "../../features/message";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  BORDER_RADIUS,
-  BOX_SHADOW,
   FONT_SIZE,
   FONT_WEIGHT,
-  GRP_COLOR,
   LINE_HEIGHT,
 } from "../../constant/css_constant";
 import { sendMailResetPass } from "../../features/auth";
@@ -22,7 +19,6 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../common/base/loading/Loading";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { FormHelperText } from "@mui/material";
 import StartBarCt from "../common/error/StackBarCt";
 
 export default function ForgotPassword() {
@@ -65,23 +61,11 @@ export default function ForgotPassword() {
     email: Yup.string().email("Please enter the right email format").required("Email Required"),
   });
 
-  const typeButton = {
-    mt: 5,
-    mb: 2,
-    bgcolor: GRP_COLOR.BACKGROUND01,
-    color: GRP_COLOR.WHITECODE,
-    "&:hover": {
-      color: GRP_COLOR.WHITECODE,
-    },
-    borderRadius: BORDER_RADIUS.br10,
-    boxShadow: BOX_SHADOW.CODE001,
-    height: "45px",
-  };
-
   const sxAlignItem = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    mt: 1.5,
   };
 
   return (
@@ -93,7 +77,12 @@ export default function ForgotPassword() {
         justifyContent: "space-between",
       }}
     >
-      <StartBarCt openStb={openStb} closeStb={handleCloseStb} titleStb={message} typeNoti="error"></StartBarCt>
+      <StartBarCt
+        openStb={openStb}
+        closeStb={handleCloseStb}
+        titleStb={message}
+        typeNoti="error"
+      ></StartBarCt>
       <Loading show={isSubmit}></Loading>
       <Container
         component="main"
@@ -140,14 +129,16 @@ export default function ForgotPassword() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  helperText={<ErrorMessage className="error-text" name="email" />}
+                  helperText={
+                    <ErrorMessage className="error-text" name="email" />
+                  }
                 />
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
-                  sx={typeButton}
                   disabled={isSubmit}
+                  sx={{ mt: 1.5 }}
                 >
                   Reset password
                 </Button>
