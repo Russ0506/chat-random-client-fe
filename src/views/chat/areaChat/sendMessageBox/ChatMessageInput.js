@@ -23,7 +23,7 @@ export default function ChatMessageInput({ disabled, conversation }) {
   };
 
   const handleSend = () => {
-    if (!message) {
+    if (!message || (message.trim()==='')) {
       return "";
     }
 
@@ -85,7 +85,7 @@ export default function ChatMessageInput({ disabled, conversation }) {
       />
       <IconButton
         color="primary"
-        disabled={!message}
+        disabled={!message || (message.trim()==='')}
         onClick={handleSend}
         sx={{ mx: 1 }}
       >
