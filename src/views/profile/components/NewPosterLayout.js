@@ -285,6 +285,7 @@ export default function NewPosterLayout({
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            pb: 1
           }}
         >
           {openLocationBox === true ? (
@@ -299,7 +300,7 @@ export default function NewPosterLayout({
           ) : (
             <Typography variant="h6">New Post</Typography>
           )}
-          <IconButton onClick={handleCloseModal}>
+          <IconButton onClick={handleCloseModal} size="small">
             <CloseIcon sx={{ width: "30px", height: "30px" }} />
           </IconButton>
         </DialogTitle>
@@ -328,16 +329,27 @@ export default function NewPosterLayout({
                   alignItems="center"
                   sx={{ width: "100%" }}
                 >
-                  <AvatarFrame avatarPath = {avatarPath} />
-                  <Stack justifyContent="center">
+                  <AvatarFrame avatarPath={avatarPath} />
+                  <Stack justifyContent="space-evenly" sx={{ml: 1}}>
                     <Typography sx={{ fontWeight: 550, ml: 1 }}>
-                      {userDisplayName}
+                      {userDisplayName ?? "chưa làm API get tên, get avatar"}
                     </Typography>
 
                     {usingLocation === true ? (
-                      <Stack justifyContent="center" flexDirection="row">
+                      <Stack justifyContent="center" flexDirection="row" alignItems="center" sx={{mt: 0.5, ml: 0.5}}>
                         <LocationOnIcon />
-                        <Typography>{location.addr}</Typography>
+                        <Typography
+                        variant="subtitle2"
+                          component="p"
+                          sx={{
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            maxWidth: "300px",
+                          }}
+                        >
+                          {location.addr}
+                        </Typography>
                       </Stack>
                     ) : (
                       <></>
@@ -354,13 +366,13 @@ export default function NewPosterLayout({
                   onKeyUp={handleKeyUp}
                   onChange={(event) => setMessage(event.target.value)}
                   aria-label="minimum height"
-                  minRows={2}
+                  minRows={4}
                   placeholder="Write what you are feeling..."
                   multiline
                   sx={{
                     mt: 1,
                     borderRadius: "10px",
-                    padding: "10px 5px",
+                    padding: "10px 10px",
                     display: "flex",
                     flexDirection: "column",
                     overflow: "auto",
@@ -541,6 +553,7 @@ const AvatarFrame = styled(Box)(({ theme, avatarPath }) => ({
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
+    background: "gray"
   },
 }));
 
@@ -548,7 +561,7 @@ const shapeStyles = {
   bgcolor: "primary.main",
   width: 60,
   height: 60,
-  padding: 4,
+  padding: 1,
   backgroundColor: "#fff",
   backgroundSize: "cover",
   backgroundPosition: "center",
