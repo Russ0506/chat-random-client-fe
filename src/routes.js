@@ -22,6 +22,7 @@ import DashDefault from "./views/admin/dashboard/DashDefault/DashDefault";
 import AdminLayout from "./components/layouts/AdminLayout/AdminLayout";
 import UserManagement from "./views/admin/tables/UserManagement";
 import UserProfilePage from "./views/profile/UserProfilePage";
+import WelcomePage from "./views/welcome/WelcomePage";
 
 export const ProtectedRoute = ({ link = "/", children }) => {
   return <AuthenLoading link={link} children={children} />;
@@ -29,7 +30,7 @@ export const ProtectedRoute = ({ link = "/", children }) => {
 
 export default function Routes() {
   const routes = useRoutes([
-    { path: "/", element: <Welcome /> },
+    { path: "/", element: <WelcomePage /> },
     {
       path: "/template",
       children: [
