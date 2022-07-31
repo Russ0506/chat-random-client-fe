@@ -3,40 +3,46 @@ import React, { useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import { Avatar, Stack, Typography } from "@mui/material";
-import { selectOnlineStatus } from '../../../../features/chat/onlineStatusesSlice'
+import { selectOnlineStatus } from "../../../../features/chat/onlineStatusesSlice";
 import { useSelector } from "react-redux";
-import { selectLatestMessage, selectMsgLatestStatus } from '../../../../features/chat/messagesSlice'
+import {
+  selectLatestMessage,
+  selectMsgLatestStatus,
+} from "../../../../features/chat/messagesSlice";
 import SmartClock from "../../../../utils/smartClock";
 
 // + lastMsg :
 //   -> {sender (true: you send msg/ false: partner send msg),
 //   -> msg: content message,
 //   -> read: (true: partner read, false: partner hasn't read)}
-export default function Conversation({data}) {
-  const onlineStatus = useSelector((state)=> {
+export default function Conversation({ data }) {
+  const onlineStatus = useSelector((state) => {
     return selectOnlineStatus(state, data.partner?.id);
-  })
+  });
 
-  const updatedLastMessage = useSelector((state)=> {
+  const updatedLastMessage = useSelector((state) => {
     return selectLatestMessage(state, data.id);
-  })
+  });
 
   const lastMessageStatus = useSelector((state) => {
     // console.log(updatedLastMessage || data.last_message)
-    return selectMsgLatestStatus(state, (updatedLastMessage || data.last_message));
+    return selectMsgLatestStatus(
+      state,
+      updatedLastMessage || data.last_message
+    );
   });
   // console.log(`${lastMessageStatus} ${(updatedLastMessage || data.last_message).text}`)
 
   const onlineInfo = () => {
     return onlineStatus || data.partner || {};
-  }
+  };
 
   const lastMessageData = () => {
-    let messageData = {...(updatedLastMessage || data.last_message)};
+    let messageData = { ...(updatedLastMessage || data.last_message) };
     if (!messageData) return {};
-    if (lastMessageStatus) messageData['status'] = lastMessageStatus;
+    if (lastMessageStatus) messageData["status"] = lastMessageStatus;
     return messageData;
-  }
+  };
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
@@ -50,8 +56,9 @@ export default function Conversation({data}) {
         width: "100%",
         height: "100%",
         borderRadius: "50%",
-        animation:
-          data.partner?.is_online ? "ripple 1.5s infinite ease-in-out" : null,
+        animation: data.partner?.is_online
+          ? "ripple 1.5s infinite ease-in-out"
+          : null,
         border: "1px solid currentColor",
         content: '""',
       },
@@ -93,34 +100,53 @@ export default function Conversation({data}) {
               src="https://3.bp.blogspot.com/-eLFZ4fINjFk/Uq9hlFzEApI/AAAAAAAAG-4/3981yyTvKGM/s1600/28237d4dfe9baf20de1028f64f85ac68.jpg"
             />
           </StyledBadge>
-          <Box sx={{ width: "calc(100% - 40px - 100px)" }}>
-            <Typography variant="subtitle2">{data.partner.name}</Typography>
-            <Typography
-              variant="subtitle2"
-              sx={{
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                color:
-                  lastMessageData().recipient_id == localStorage.getItem('user_id') && lastMessageData().status != 'seen'
-                    ? "#817cce"
-                    : "#c4c6ca",
-                fontWeight:
-                  lastMessageData().recipient_id == localStorage.getItem('user_id') && lastMessageData().status != 'seen'
-                    ? "bold"
-                    : "normal",
-              }}
-            >
-              {lastMessageData().recipient_id == localStorage.getItem('user_id')
-                ? lastMessageData().text
-                : "you: " + lastMessageData().text}
+          <Box sx={{ width: "calc(100% - 40px)" }}>
+            <Typography variant="subtitle2" component="p">
+              {data.partner.name}
             </Typography>
+            <Stack flexDirection="row" width="100%" alignItems="center" justifyContent="space-between">
+              <Typography
+                component="p"
+                variant="subtitle2"
+                sx={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  maxWidth: "100px",
+                  color:
+                    lastMessageData().recipient_id ==
+                      localStorage.getItem("user_id") &&
+                    lastMessageData().status != "seen"
+                      ? "#817cce"
+                      : "#c4c6ca",
+                  fontWeight:
+                    lastMessageData().recipient_id ==
+                      localStorage.getItem("user_id") &&
+                    lastMessageData().status != "seen"
+                      ? "bold"
+                      : "normal",
+                }}
+              >
+                {lastMessageData().recipient_id ==
+                localStorage.getItem("user_id")
+                  ? lastMessageData().text
+                  : "you: " + lastMessageData().text}
+              </Typography>
+              <Typography
+                component="p"
+                variant="caption"
+                sx={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  color: "#65676B",
+                  fontWeight: "normal",
+                  ml: 2,
+                }}
+              >
+                <SmartClock date={lastMessageData().created_at} />
+              </Typography>
+            </Stack>
           </Box>
-          <Stack
-            sx={{ width: "100px", height: "40px", fontSize: "0.8rem" }}
-            alignItems="flex-end"
-            justifyContent="flex-end"
-          ><SmartClock date={lastMessageData().created_at}/></Stack>
         </Stack>
       </Box>
     </>

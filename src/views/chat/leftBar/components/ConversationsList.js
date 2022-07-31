@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React, { useEffect } from "react";
 import { styled } from "@mui/styles";
-import { alpha } from "@mui/material/styles";
+import { alpha, useTheme } from "@mui/material/styles";
 import Conversation from "./Conversation";
 import SearchIcon from "@mui/icons-material/Search";
 import { axiosClient } from "../../../../setup/axiosClient";
@@ -16,13 +16,13 @@ import {
   changeConversation,
   seenConversation,
   selectMostRecentConversationId,
-  selectNewestConversations
+  selectNewestConversations,
 } from "../../../../features/chat/conversationSlice";
 import { seenLastMessage } from "../../../../features/chat/messagesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { DRAWER_WITH } from "../../../../constant/css_constant";
 import ConversationControlBox from "../../topBar/startConversation/ConversationControlBox";
-import { onlineStatusSocket } from '../../../sockets/Socket'
+import { onlineStatusSocket } from "../../../sockets/Socket";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -67,19 +67,19 @@ export default function ConversationsList() {
   const recentConversationId = useSelector(selectMostRecentConversationId);
   const newConversation = useSelector(selectNewestConversations);
   const [conversations, setConversations] = React.useState([]);
-
+  const theme = useTheme();
   useEffect(() => {
     axiosClient.get(`conversations`).then((data) => {
       setConversations(data);
       data.forEach((conversation) => {
         onlineStatusSocket(conversation.partner.id);
-      })
+      });
     });
   }, []);
 
-  useEffect(()=>{
-    setConversations([newConversation, ...conversations])
-  }, [newConversation])
+  useEffect(() => {
+    setConversations([newConversation, ...conversations]);
+  }, [newConversation]);
 
   useEffect(() => {
     let orderedConversations = [];
@@ -97,7 +97,12 @@ export default function ConversationsList() {
   const onChangeConversation = (item) => {
     dispatch(changeConversation(item));
     dispatch(seenConversation({ conversationId: item.id }));
-    dispatch(seenLastMessage({ preloadMessage: item.last_message, conversationId: item.id }));
+    dispatch(
+      seenLastMessage({
+        preloadMessage: item.last_message,
+        conversationId: item.id,
+      })
+    );
   };
 
   const RenderConversationsList = () => {
@@ -126,16 +131,20 @@ export default function ConversationsList() {
           position: "relative",
         }}
       >
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon sx={{ color: "gray" }} />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
-        <List>
+        <Box
+          sx={{ background: "#fff", position: "sticky", zIndex:10, p: theme.spacing(1), height: "75px" }}
+        >
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon sx={{ color: "gray" }} />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search>
+        </Box>
+        <List sx={{height: "calc(100% - 75px)", overflow: "auto"}}>
           <RenderConversationsList />
         </List>
       </Box>
