@@ -42,7 +42,7 @@ export default function Welcome() {
           <div className="hero__container--left">
             <h1>Stranger Meetup in</h1>
             <h2>Cherish chatting</h2>
-            <p>Meet People Like Never Before</p>
+            <p>More friends, more fun</p>
             <button className="hero__container--btn">
               <a href="/register">Get Started</a>
             </button>
