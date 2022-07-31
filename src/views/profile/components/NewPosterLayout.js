@@ -1,28 +1,28 @@
-import React, { useState } from "react";
+import { IconButton, Input, Stack, Typography, Zoom } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import myIdol from "../components/img/myidol.jpg";
 import { styled } from "@mui/styles";
-import { IconButton, Input, Stack, Typography, Zoom } from "@mui/material";
+import React, { useState } from "react";
 // import DropBox from './DropBox';
 import { Box } from "@mui/system";
 import Iconify from "../../common/base/icon/Iconify";
 // import EmojiPicker from "../../common/base/emoji/EmojiPicker"; // ko xoa nha
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import CloseIcon from "@mui/icons-material/Close";
-import { CmmnFormControl } from "../../chat/popup/components/CmmnFormControl";
-import GgmApiForPost from "./GgmApiForPost";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CloseIcon from "@mui/icons-material/Close";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import "react-image-crop/dist/ReactCrop.css";
 import { axiosMultipartForm } from "../../../setup/axiosClient";
+import { CmmnFormControl } from "../../chat/popup/components/CmmnFormControl";
+import GgmApiForPost from "./GgmApiForPost";
 import styles from "../../../styles/newposterchat-layout.scss";
-import CropImage from "../../common/modal/CropImage";
-import { Form, FormLabel } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import StyledCloseIcon from "../../common/base/style-icon/StyledCloseIcon";
+import StartBarCt from "../../common/error/StackBarCt";
+import CropImage from "../../common/modal/CropImage";
 
 // import InputEmoji from "react-input-emoji"; // ko xoa nha
 // import Picker from "emoji-picker-react"; // ko xoa nha
@@ -39,12 +39,16 @@ export default function NewPosterLayout({
   open = true,
   onClose = defaultHandle(),
   userDisplayName,
-  avatarPath
+  avatarPath,
+  type = 'new',
+  posterData = { image: '', content: '' },
 }) {
+
+  const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/gif", "image/png"];
+
   const [isPost, setIsPost] = useState(false);
   const [openModal, setOpenModal] = useState(open);
   const fileInputRef = React.useRef(null);
-  const [message, setMessage] = useState("");
   const [openLocationBox, setOpenLocationBox] = useState(false);
   const [location, setLocation] = useState({
     addr: "",
@@ -54,18 +58,22 @@ export default function NewPosterLayout({
   const [usingLocation, setUsingLocation] = useState(false);
 
   // state for image crop :
-  const [croppedImageUrl, setCroppedImageUrl] = useState("");
+  const [message, setMessage] = useState(posterData?.content);
+  const [croppedImageUrl, setCroppedImageUrl] = useState(posterData?.image);
   const [crop, setCrop] = useState({
     unit: "%",
     width: 50,
-    // aspect: 16 / 9,
+    aspect: 1 / 1,
   });
   const [src, setSrc] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
   const [openCropImgModal, setOpenCropImgModal] = useState();
   const [fileUrl, setFileUrl] = useState("");
   const [imageRef, setImageRef] = useState(null);
+  const [openStb, setOpenStb] = useState(false)
   const URL = "posts";
+  const [errorMessage, setErrorMessage] = useState('')
+  let checkChangeUrlImg = false
 
   const handleCloseModal = () => {
     onClose();
@@ -130,7 +138,14 @@ export default function NewPosterLayout({
   }
 
   const onSelectFile = (e) => {
+    if (!validateFile(e.target.files[0])) {
+      setErrorMessage("Image have to be in image format and under 2MB")
+      setOpenStb(true)
+      setIsPost(false)
+      return;
+    }
     if (e.target.files && e.target.files.length > 0) {
+      checkChangeUrlImg = true
       const reader = new FileReader();
       reader.addEventListener("load", () => setSrc(reader.result));
       reader.readAsDataURL(e.target.files[0]);
@@ -201,40 +216,111 @@ export default function NewPosterLayout({
   }
 
   const submitPost = (event) => {
-    setIsPost(true);
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    setIsPost(true);
 
-    data.append("image", croppedImage, "imagename");
-    const params = {
-      post: {
-        caption: data.get("caption"),
-        image: data.get("image"),
-        location: location.addr,
-      },
-    };
+    if (!croppedImageUrl) {
+      setErrorMessage("You have to add image to post")
+      setOpenStb(true)
+      setIsPost(false);
+      return;
+    } else {
+      const data = new FormData(event.currentTarget);
+      let params = {}
 
-    const formData = new FormData();
-    for (let param in params["post"]) {
-      formData.append(`post[${param}]`, params["post"][param]);
+      if (checkChangeUrlImg) {
+        data.append("image", croppedImage, "imagename");
+        params = {
+          post: {
+            caption: data.get("caption"),
+            image: data.get("image"),
+            location: location.addr,
+          },
+        };
+      } else {
+        params = {
+          post: {
+            caption: data.get("caption"),
+            image: croppedImageUrl,
+            location: location.addr,
+          },
+        };
+      }
+
+      const formData = new FormData();
+      for (let param in params["post"]) {
+        formData.append(`post[${param}]`, params["post"][param]);
+      }
+
+      if (type === 'new') {
+        axiosMultipartForm
+          .post(`${URL}`, formData)
+          .then((data) => {
+            onClose(data.data);
+          })
+          .catch((error) => {
+            setErrorMessage(error.response.statusText)
+            setOpenStb(true)
+            setIsPost(false)
+          });
+      } else {
+        axiosMultipartForm
+          .put(`${URL}/${posterData?.id}`, formData)
+          .then((data) => {
+            onClose(data.data);
+          })
+          .catch((error) => {
+            setErrorMessage(error.response.statusText)
+            setOpenStb(true)
+            setIsPost(false)
+          });
+      }
     }
-
-    axiosMultipartForm
-      .post(`${URL}`, formData)
-      .then((data) => {
-        onClose(data.data);
-      })
-      .catch(() => {});
   };
   const handleOpen = () => setOpenCropImgModal(true);
   const handleClose = () => setOpenCropImgModal(false);
 
   const clearImage = () => {
     setCroppedImageUrl("");
+    setCroppedImage(null)
   };
 
   // end handle crop image
 
+  const handleCloseStb = () => {
+    setOpenStb(false)
+  }
+
+  // validate file
+  function validateFile(file = null) {
+    if (!checkIfFilesAreTooBig(file)) {
+      setErrorMessage("Your image have to in the right format and under 2MB")
+      setOpenStb(true)
+      setIsPost(false);
+      return false
+    }
+    if (!checkIfFilesAreCorrectType(file)) {
+      return false
+    }
+    return true;
+  }
+
+  function checkIfFilesAreTooBig(file) {
+    let valid = true
+    const size = file.size / 1024 / 1024
+    if (size > 2) {
+      valid = false
+    }
+    return valid
+  }
+
+  function checkIfFilesAreCorrectType(file) {
+    let valid = true
+    if (!SUPPORTED_FORMATS.includes(file.type)) {
+      valid = false
+    }
+    return valid
+  }
   // css
   const boxUploadImage = {
     margin: "0",
@@ -262,6 +348,7 @@ export default function NewPosterLayout({
 
   return (
     <>
+      <StartBarCt openStb={openStb} closeStb={handleCloseStb} titleStb={errorMessage} typeNoti="error"></StartBarCt>
       <CropImage
         src={src}
         open={openCropImgModal}
@@ -297,7 +384,7 @@ export default function NewPosterLayout({
               <Typography variant="body1">Search Your Location</Typography>
             </Button>
           ) : (
-            <Typography variant="h6">New Post</Typography>
+            <Typography sx={{ fontSize: "22px" }}>{type === 'new' ? "New Post" : "Update Post"}</Typography>
           )}
           <IconButton onClick={handleCloseModal}>
             <CloseIcon sx={{ width: "30px", height: "30px" }} />
@@ -328,7 +415,7 @@ export default function NewPosterLayout({
                   alignItems="center"
                   sx={{ width: "100%" }}
                 >
-                  <AvatarFrame avatarPath = {avatarPath} />
+                  <AvatarFrame avatarPath={avatarPath} />
                   <Stack justifyContent="center">
                     <Typography sx={{ fontWeight: 550, ml: 1 }}>
                       {userDisplayName}
@@ -457,7 +544,7 @@ export default function NewPosterLayout({
                       border: "1px solid #e5e0e0",
                     }}
                   >
-                    <Typography>Add to your post</Typography>
+                    <Typography>  {type === 'new' ? "Add to your post" : "Update your post"}</Typography>
                     <Stack flexDirection="row">
                       <IconButton
                         disabled={false}
@@ -515,7 +602,7 @@ export default function NewPosterLayout({
                     sx={{ mt: 2, mb: 0 }}
                     form="newPostForm"
                   >
-                    Post
+                    {type === 'new' ? "Post" : "Update Post"}
                   </Button>
                 </Stack>
               </DialogContent>
