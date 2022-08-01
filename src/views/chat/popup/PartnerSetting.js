@@ -39,7 +39,7 @@ export default function PartnerSetting(props) {
       long: props.userSetting.long,
       address: props.userSetting.address,
       radius: props.userSetting.radius,
-      gender: props.userSetting.gender,
+      gender: props.userSetting.gender || 'female',
       hobbies: ["Camping"],
       enable_age_filter: props.userSetting.enable_age_filter,
       enable_gender_filter: props.userSetting.enable_gender_filter,
@@ -199,6 +199,7 @@ export default function PartnerSetting(props) {
                 Expected Distance
               </CmmnInputLabel>
               <CmmnInput
+                as = {TextField}
                 id="expected-dis-inpt"
                 type="number"
                 name="radius"
@@ -249,7 +250,7 @@ export default function PartnerSetting(props) {
                   }}
                 >
                   <FormLabel sx={sxJustifyContent}>From</FormLabel>
-                  <CmmnInput
+                  <CmmnInput as = {TextField}
                     name="from_age"
                     type="number"
                     defaultValue={initData.user_setting.from_age}
@@ -283,11 +284,11 @@ export default function PartnerSetting(props) {
                   }}
                 >
                   <FormLabel sx={sxJustifyContent}>To</FormLabel>
-                  <CmmnInput
+                  <CmmnInput as = {TextField}
                     name="to_age"
                     type="number"
                     defaultValue={initData.user_setting.to_age}
-                    InputProps={{
+                    InputLabelProps={{
                       inputProps: {
                         type: "number",
                         min: 0,

@@ -106,7 +106,7 @@ export default function PartnerSettingModal(props) {
               padding: "20px",
             }}
           >
-            <Typography component="h5" variant="h5" sx={{ fontWeight: "600" }}>
+            <Typography component="div" variant="h5" sx={{ fontWeight: "600" }}>
               Ideal Partner
               <Typography variant="subtitle1">
                 These preferences help us improve suggestion by determining who
@@ -130,7 +130,7 @@ export default function PartnerSettingModal(props) {
           <React.Fragment>
             {activeStep === steps.length ? (
               <React.Fragment>
-                <Typography variant="h5" gutterBottom>
+                <Typography component="div"  variant="h5" gutterBottom>
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
