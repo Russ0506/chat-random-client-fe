@@ -114,7 +114,7 @@ function IllustrationMockups() {
           />
         </filter>
       </defs>
-      <g fill="none" fill-rule="evenodd">
+      <g fill="none" fillRule="evenodd">
         <g transform="translate(10 10)">
           <use fill="#000" filter="url(#a)" /* xlink: */ href="#b" />
           <use fill="#FFF" /* xlink: */ href="#b" />
