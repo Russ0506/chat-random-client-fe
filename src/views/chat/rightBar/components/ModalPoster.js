@@ -97,8 +97,8 @@ export default function ModalPoster({ item }) {
                   </Typography>
                 </Stack>
               </Stack>
-              <IconButton size="small">
-                <CloseIcon sx={{ width: "30px", height: "30px" }} onClick={handleClose} />
+              <IconButton size="small" onClick={handleClose}>
+                <CloseIcon sx={{ width: "30px", height: "30px" }} />
               </IconButton>
             </DialogTitle>
             <DialogContent sx={{ position: "relative" }}>

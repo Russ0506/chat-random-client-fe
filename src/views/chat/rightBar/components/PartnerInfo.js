@@ -39,21 +39,21 @@ export default function PartnerInfo() {
         </Stack>
 
         <Box mt={1}>
-          <Typography variant="body1" fontWeight={700}>
+          <Typography component="span" variant="body1" fontWeight={700}>
             Age:{" "}
-            <Typography variant="body1" display="inline">
+            <Typography component="span" variant="body1" display="inline">
               29
             </Typography>
           </Typography>
-          <Typography variant="body1" fontWeight={700}>
+          <Typography component="span" variant="body1" fontWeight={700}>
             Location:{" "}
-            <Typography variant="body1" display="inline">
+            <Typography component="span" variant="body1" display="inline">
               Danang, Viet Nam
             </Typography>
           </Typography>
-          <Typography variant="body1" fontWeight={700}>
+          <Typography component="span" variant="body1" fontWeight={700}>
             Hobies:{" "}
-            <Typography variant="body1" display="inline">
+            <Typography component="span" variant="body1" display="inline">
               Thich cau ca, Thich ca khia
             </Typography>
           </Typography>

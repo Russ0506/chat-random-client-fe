@@ -51,7 +51,7 @@ function Footer() {
       <small>
         <p>&copy; Copyright 2022 Cherish By chatting. All rights reserved.</p>
 
-        <p class="attribution">
+        <p className="attribution">
           Challenge by{" "}
           <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">
             F-Mentor
