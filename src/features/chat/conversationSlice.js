@@ -13,9 +13,11 @@ export const seenConversation = createAsyncThunk(
 );
 
 const initialState = {
-  currentConversation : null,
-  recentConversationIds : [],
+  currentConversation: null,
+  recentConversationIds: [],
   newConversations: [],
+  listConversation: [],
+  idsOfUnreadCon: [],
   latestStatuses: {}
 };
 
@@ -23,7 +25,8 @@ export const conversationSlice = createSlice({
   name: 'conversation',
   initialState,
   reducers: {
-    changeConversation: (state , { payload }) => {
+    changeConversation: (state, { payload }) => {
+      state.idsOfUnreadCon = state.idsOfUnreadCon.filter(id => id !== payload.id) // update list id of unread conversation if user choose the currentconversation
       state.currentConversation = payload
     },
     touchConversation: (state, { payload }) => {
@@ -34,12 +37,28 @@ export const conversationSlice = createSlice({
     },
     updateConversationLatestStatus: (state, { payload }) => {
       state.latestStatuses[payload.conversation_id] = payload.status
-    }
+    },
+    setIdsOfUnreadCon: (state, { payload }) => {
+      state.idsOfUnreadCon = payload
+    },
+    resetIdsOfUnreadCon: (state, { payload }) => {
+      state.idsOfUnreadCon = []
+    },
+    setlistConversation:  (state, { payload }) => {
+      state.listConversation = payload
+    },
   }
 });
 
-export const { changeConversation, touchConversation,
-  createNewConversation, updateConversationLatestStatus } = conversationSlice.actions;
+export const {
+  changeConversation,
+  touchConversation,
+  createNewConversation,
+  updateConversationLatestStatus,
+  setIdsOfUnreadCon,
+  resetIdsOfUnreadCon,
+  setlistConversation,
+} = conversationSlice.actions;
 
 export const selectConversation = (state) => {
   return state.conversation.currentConversation;
@@ -54,7 +73,7 @@ export const selectConversationLatestStatus = (state, conversationId) => {
   return state.conversation.latestStatuses[conversationId];
 }
 
-export const selectNewestConversations =  (state)  => {
+export const selectNewestConversations = (state) => {
   if (state.conversation.newConversations) {
     return state.conversation.newConversations[state.conversation.newConversations.length - 1];
   } else {
