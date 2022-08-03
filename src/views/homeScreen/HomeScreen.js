@@ -62,8 +62,8 @@ export default function HomeScreen() {
         /* background: "rgb(236, 236, 250)"  */ background: "#f7f7fd",
       }}
     >
-      <Container maxWidth="lg" alignItems="center">
-        <Stack alignItems="center">
+      <Container maxWidth="lg"  sx={{alignItems:"center"}}>
+        <Stack sx={{alignItems:"center"}}>
           {imgList.map((item, key) => (
             <PostLayout data={item} key={key} />
           ))}
