@@ -21,7 +21,7 @@ export default function CherishApp({ index = 1, body }) {
 
   return (
     <Stack flexDirection="row">
-      <Stack
+      {/* <Stack
         display={{ xs: "none", md: "flex" }}
         justifyContent="center"
         alignItems="center"
@@ -94,13 +94,14 @@ export default function CherishApp({ index = 1, body }) {
             />
           </ButtonNav>
         )}
-      </Stack>
+      </Stack> */}
 
       <Box
-        width={{ xs: "100vw", md: `calc(100vw - ${sidePadding * 2 + 1}px)` }}
+        // width={{ xs: "100vw", md: `calc(100vw - ${sidePadding * 2 + 1}px)` }}
+        width="100vw"
         sx={{ height: "100vh" }}
       >
-        <CherishAppBar />
+        <CherishAppBar index={index} />
         <Box
           sx={{
             width: "100%",

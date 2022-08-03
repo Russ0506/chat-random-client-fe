@@ -3,19 +3,36 @@ import Logo from "../svgs/Logo";
 import IllustrationMockups from "../svgs/IllustrationMockups";
 import { StyledHeader } from "./Header.styled";
 import { StyledButton } from "../styled/Button/Button.styled";
-import { Box} from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
-import WelcomeImg from "../../../../assets/img/wellcome.png"
+import WelcomeImg from "../../../../assets/img/wellcome.png";
 function Header() {
   return (
     <StyledHeader>
       <nav>
         <Logo />
-        <Box component={Link} to="/users/login">
-          <StyledButton color={`#111`} bg={"#fff"}>
-            Try It Now
-          </StyledButton>
-        </Box>
+        <Stack flexDirection="row">
+          <Button component={Link} to="/register">
+            <StyledButton
+              style={{
+                background: "#ffffffb3",
+                color: "#817cce",
+                borderRadius: "10px",
+              }}
+            >
+              SIGN UP
+            </StyledButton>
+          </Button>
+          <Button component={Link} to="/users/login">
+            <StyledButton
+              style={{
+                borderRadius: "10px",
+              }}
+            >
+              SIGN IN
+            </StyledButton>
+          </Button>
+        </Stack>
       </nav>
 
       <section className="headerContent">
