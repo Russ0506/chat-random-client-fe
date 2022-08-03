@@ -1,23 +1,49 @@
-import { Button, Stack } from "@mui/material";
+import { Badge, Button, Stack } from "@mui/material";
 import { styled } from "@mui/styles";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { icoList } from "../../../constant/AppBarConstant";
 import { APP_BAR_HEIGHT } from "../../../constant/css_constant";
+import { resetIdsOfUnreadCon, setIdsOfUnreadCon, setlistConversation } from "../../../features/chat/conversationSlice";
+import { axiosClient } from "../../../setup/axiosClient";
 import Homepage from "../../Homepage";
 import NewPosterLayout from "../../profile/components/NewPosterLayout";
 import Iconify from "../base/icon/Iconify";
 import CherishAppBar from "./CherishAppBar";
 const sidePadding = 38;
 export default function CherishApp({ index = 1, body }) {
+  const currentUId = localStorage.getItem('user_id')
   const [useNewPost, setUseNewPost] = React.useState(false);
+  const dispatch = useDispatch()
+  const idsOfUnreadCon = useSelector(state => state.conversation.idsOfUnreadCon)
+  const listConversation = useSelector(state => state.conversation.listConversation)
   function handleOpenNewPost() {
     setUseNewPost(true);
   }
   function handleCloseNewPost() {
     setUseNewPost(false);
   }
+
+  useEffect(() => {
+    if(listConversation.length <= 0) {
+      dispatch(resetIdsOfUnreadCon)
+      let unreadIds = []
+      axiosClient.get(`conversations`).then( async (data) => {
+        if (data) {
+         await data.forEach((element, index) => {
+          if((element["last_message"]["status"] !== "seen") && (element["last_message"]["recipient_id"] == currentUId)) {
+            unreadIds.push(element.id)
+           }
+          });
+        }
+  
+        dispatch(setlistConversation(data))
+        dispatch(setIdsOfUnreadCon(unreadIds))
+      });
+    }
+  }, []);
 
   return (
     <Stack flexDirection="row">
@@ -51,17 +77,21 @@ export default function CherishApp({ index = 1, body }) {
         )}
         {index == 2 ? (
           <ChosenButtonNav>
-            <Iconify
+             <Badge badgeContent={idsOfUnreadCon.length} color="primary">
+             <Iconify
               icon={icoList.chat.chosen}
               style={{ width: "28px", height: "28px" }}
             />
+            </Badge>
           </ChosenButtonNav>
         ) : (
           <ButtonNav component={Link} to={icoList.chat.link}>
-            <Iconify
-              icon={icoList.chat.notChosen}
-              style={{ width: "28px", height: "28px" }}
-            />
+            <Badge badgeContent={idsOfUnreadCon.length} color="primary">
+              <Iconify
+                icon={icoList.chat.notChosen}
+                style={{ width: "28px", height: "28px" }}
+              />
+            </Badge>
           </ButtonNav>
         )}
         {index == 3 ? (
