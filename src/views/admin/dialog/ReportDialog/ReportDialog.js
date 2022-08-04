@@ -5,26 +5,59 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { CardContent, Collapse, DialogTitle, Fade, Input, Stack, Typography } from "@mui/material";
 import { Card } from "react-bootstrap";
+import { mockData3 } from "../../mock_data"
+import { axiosClient } from "../../../../setup/axiosClient";
+import StartBarCt from "../../../common/error/StackBarCt";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Fade in={true} ref={ref} {...props} />;
 });
-const items = [1,2,3,4,5,6,6,7,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,];
+const items = [1, 2, 3, 4, 5, 6, 6, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,];
+const DURATION_ERROR = 2000
 
 export default function ReportDialog(props) {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(false)
+  const [openStb, setOpenStb] = React.useState(false)
+  const [message, setMessage] = React.useState("")
 
   function handleSubmitReport() {
     props.onClose();
   }
 
-  function handleCancelReport() {
+  function handleCloseReport() {
     props.onClose();
   }
 
   function handleToggleExpanded() {
     setExpanded(expanded ? false : true);
   }
+
+  // error noti  
+  const handleCloseStb = () => {
+    setOpenStb(false)
+  }
+
+
+  function handleResolveReport() {
+    axiosClient.put(`admin/reports/${props.data.id}/resolve`)
+      .then(data => {
+        console.log(data);
+        props.onClose();
+      })
+      .catch(err => {
+        setMessage(err.response.statusText)
+        setOpenStb(true)
+      })
+  }
+
+  React.useEffect(() => {
+    axiosClient.get(`/admin/${props.data.id}/reports`)
+      .then(data => console.log(data))
+      .catch(err => {
+        setMessage(err.response.statusText)
+        setOpenStb(true)
+      })
+  }, [props.data])
 
   return (
     <>
@@ -34,11 +67,15 @@ export default function ReportDialog(props) {
         keepMounted
         maxWidth="md"
         fullWidth
-        onClose={handleCancelReport}
+        onClose={handleCloseReport}
         aria-describedby="alert-dialog-slide-description"
       >
+        <StartBarCt openStb={openStb} closeStb={handleCloseStb} titleStb={message} typeNoti="error" duration={DURATION_ERROR}></StartBarCt>
         <DialogTitle>
-          <Typography variant="h5">Report List</Typography>
+          <Typography
+            component="div"
+            variant="h5"
+          >Report List</Typography>
           <Input
             name="userId"
             type="hidden"
@@ -46,45 +83,51 @@ export default function ReportDialog(props) {
             sx={{ display: "none" }}
           />
           <Typography variant="body2">
-            <strong>Name:</strong> {props.data.userName}
+            <strong>Name:</strong> {props.data.name}
           </Typography>
           <Typography variant="body2">
             <strong>Email:</strong> {props.data.email}
           </Typography>
+          <strong>
+            <Button onClick={handleToggleExpanded}>
+              {expanded ? "Hide" : "View Detail"}
+            </Button>{" "}
+          </strong>
         </DialogTitle>
         <DialogContent>
-          {items.map(() => (
-            <Card style={{ width: "100%", marginTop: "20px" }}>
+          {mockData3.map((item, index) => (
+            <Card style={{ width: "100%", marginTop: "20px" }} key={index}>
               <Card.Body>
-                <Card.Title>Conversation ID: #1345111</Card.Title>
+                <Card.Title>Report ID: {item.id}</Card.Title>
                 <Card.Text>
                   {/* <Card.Subtitle className="mb-2 text-muted"> */}
                   <div>
-                    <strong>Reporter:</strong> Hoang Kim Duc
+                    <strong>Reporter:</strong> {item.name}
                   </div>
                   <div>
-                    <strong>Email:</strong> Ducbede@gmail.com
+                    <strong>Email:</strong> {item.email}
                   </div>
                   <div>
-                    <strong>Date Report:</strong> 2022-07-16
+                    <strong>Date Report:</strong> {item.created_at}
                   </div>
                   {/* </Card.Subtitle> */}
                 </Card.Text>
                 <Card.Subtitle>
-                  <strong>
+                  {/* <strong>
                     <Button onClick={handleToggleExpanded}>
                       {expanded ? "Hide" : "View Report"}
                     </Button>{" "}
-                  </strong>
+                  </strong> */}
                   <Stack>
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                       <CardContent>
-                        <Typography paragraph>Method:</Typography>
+                        <Typography paragraph>Method: {item.problem_type}</Typography>
                         <Typography paragraph>
-                          Heat 1/2 cup of the broth in a pot until simmering,
-                          add saffron and set aside for 10 minutes.
+                          Detail : {
+                            item.text
+                          }
                         </Typography>
-                        <Typography paragraph>
+                        {/* <Typography paragraph>
                           Heat oil in a (14- to 16-inch) paella pan or a large,
                           deep skillet over medium-high heat. Add chicken,
                           shrimp and chorizo, and cook, stirring occasionally
@@ -109,7 +152,7 @@ export default function ReportDialog(props) {
                         <Typography>
                           Set aside off of the heat to let rest for 10 minutes,
                           and then serve.
-                        </Typography>
+                        </Typography> */}
                       </CardContent>
                     </Collapse>
                   </Stack>
@@ -119,6 +162,13 @@ export default function ReportDialog(props) {
           ))}
         </DialogContent>
         <DialogActions sx={{ marginBottom: 1 }}>
+          <Button
+            variant="contained"
+            onClick={handleResolveReport}
+            sx={{ marginLeft: 1, marginRight: 1, backgroundColor: "#1dd8cc" }}
+          >
+            Resolve
+          </Button>
           <Button
             variant="contained"
             onClick={handleSubmitReport}

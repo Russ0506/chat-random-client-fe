@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Table } from "react-bootstrap";
-import { userList } from "../mock_data";
+import { userList2 } from "../mock_data";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { IconButton, Typography } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import BlockIcon from "@mui/icons-material/Block";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+// import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import FlagIcon from '@mui/icons-material/Flag';
 import Iconify from "../../common/base/icon/Iconify";
 import BlockDialog from "../dialog/blockDialog/BlockDialog";
 import ReportDialog from "../dialog/ReportDialog/ReportDialog";
+import { axiosClient } from "../../../setup/axiosClient";
+
 const BootstrapTable = () => {
+  const [adminList, setAdminList] = React.useState([])
+
   const [openReportDialog, setOpenReportDialog] = useState({
     open: false,
     data: {
@@ -52,6 +57,13 @@ const BootstrapTable = () => {
   function handleOpenBlockModal(user) {
     setOpenBlockDialog({ open: true, data: user });
   }
+
+  useEffect(() => {
+    axiosClient.get('/admin/users')
+      .then(data => setAdminList(data))
+      .catch(err => console.log(err))
+  },[])
+
   return (
     <React.Fragment>
       <Row>
@@ -63,21 +75,33 @@ const BootstrapTable = () => {
             <Card.Body>
               <Table responsive hover>
                 <thead>
-                  <tr>
+                  <tr className="text-center ">
                     <th>No.</th>
                     <th>User Name</th>
                     <th>User Email</th>
+                    <th>Total Unresolved Reports</th>
+                    <th>Total Reports</th>
                     <th>Status</th>
-                    <th>Reports</th>
-                    <th className="text-right ">Action</th>
+                    {/* <th>Reports</th> */}
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {userList.map((user, index) => (
-                    <tr>
-                      <th scope="row">{userList.length - index}</th>
-                      <td>{user.userName}</td>
-                      <td>{user.email}</td>
+                  {adminList.map((user, index) => (
+                    <tr className="text-center" key={index}>
+                      <th scope="row" onClick={() => handleOpenReportModal(user)}>{index}</th>
+                      <td className="text-left" onClick={() => handleOpenReportModal(user)}>{user.name}</td>
+                      <td className="text-left" onClick={() => handleOpenReportModal(user)}>{user.email}</td>
+                      <td onClick={() => handleOpenReportModal(user)}>{
+                        user.no_of_unresolved_reports < 2
+                          ? user.no_of_unresolved_reports + " time"
+                          : user.no_of_unresolved_reports + " times"}</td>
+                      <td onClick={() => handleOpenReportModal(user)}>
+                      {
+                        user.no_of_reports < 2
+                          ? user.no_of_reports + " time"
+                          : user.no_of_reports + " times"}
+                        </td>
                       <td>
                         {user.status === "blocked" ? (
                           <Typography variant="body2" color="red">
@@ -87,7 +111,7 @@ const BootstrapTable = () => {
                           <Typography variant="body2">Normal</Typography>
                         )}
                       </td>
-                      <td>
+                      {/* <td>
                         {user.reportCount < 2
                           ? user.reportCount + " time"
                           : user.reportCount + " times"}
@@ -100,8 +124,8 @@ const BootstrapTable = () => {
                         ) : (
                           <></>
                         )}
-                      </td>
-                      <td className="d-flex justify-content-end">
+                      </td> */}
+                      <td className="text-left">
                         {user.status === "blocked" ? (
                           <>
                             <IconButton sx={{ marginLeft: 0.5 }}>
@@ -118,9 +142,12 @@ const BootstrapTable = () => {
                                 onClick={() => handleOpenBlockModal(user)}
                               />
                             </IconButton>
-                            <IconButton sx={{ marginLeft: 0.5 }}>
-                              <DeleteForeverIcon />
-                            </IconButton>
+
+                            {user.no_of_unresolved_reports >= 10 ?
+                              <IconButton sx={{ marginLeft: 0.5 }}>
+                                <FlagIcon sx={{ color: "red" }} />
+                              </IconButton>
+                              : ""}
                           </>
                         )}
                       </td>
