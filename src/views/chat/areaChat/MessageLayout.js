@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import React from "react";
 import ChatMessageInput from "./sendMessageBox/ChatMessageInput";
 import { useSelector } from "react-redux";
@@ -6,15 +6,32 @@ import ChatMessageList from "./message/ChatMessageList";
 import ChatHeaderDetail from "./title-chat/ChatHeaderDetail";
 import { selectConversation } from "../../../features/chat/conversationSlice";
 import { MB_LEFT_SIDEBAR_WIDTH } from "../../../constant/css_constant";
-
+import ChatBg from "../../../assets/img/bigChat.png";
 export default function MessageLayout({ openBar }) {
   const conversation = useSelector(selectConversation);
 
   const renderChatHeader = () => {
+    if (!conversation?.partner) return (
+      <Stack
+        justifyContent="center"
+        alignItems="center"
+        sx={{ opacity: "0.6", width: "100%", height: "100%" }}
+      >
+        <img src={ChatBg} alt="" height="80%"></img>
+      </Stack>
+    );
+    return (
+      <>
+        <ChatHeaderDetail partner={conversation?.partner} openBar={openBar} />
+        <ChatMessageList conversation={conversation} />
+      </>
+    );
+  }
+  const renderChatInput = () => {
     if (!conversation?.partner) return(<></>);
     return (
-      <ChatHeaderDetail partner={conversation?.partner} openBar={openBar} />
-    )
+        <ChatMessageInput disabled={false} conversation={conversation} />
+    );
   }
   return (
     <Box
@@ -25,11 +42,10 @@ export default function MessageLayout({ openBar }) {
       }}
     >
       <Box sx={{ height: "calc(100% - 70px)", width: "100%", pt: 0 }}>
-        { renderChatHeader() }
-        <ChatMessageList conversation={conversation} />
+        {renderChatHeader()}
       </Box>
       <Box sx={{ height: "60px", padding: "0px", paddingBottom: "10px" }}>
-        <ChatMessageInput disabled={false} conversation={conversation} />
+        {renderChatInput()}
       </Box>
     </Box>
   );

@@ -93,7 +93,7 @@ export default function Routes() {
     },
     {
       path: "/welcome",
-      element: <Welcome />,
+      element: <WelcomePage />,
       children: [],
     },
     {

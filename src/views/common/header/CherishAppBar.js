@@ -17,8 +17,19 @@ import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import { APP_BAR_HEIGHT } from "../../../constant/css_constant";
 import { Link } from "react-router-dom";
 import { icoList, icoMenuList } from "../../../constant/AppBarConstant";
-import CBCLogo from "../../../assets/img/cbc_logo_xl.png";
+import CBCLogo from "../../../assets/img/cbc_logo_sm.png";
+import CBCTitle from "../../../assets/img/cbc_title.png";
 import Iconify from "../base/icon/Iconify";
+import { useSelector } from "react-redux";
+import TipsGuide from "../tipsGuide/TipsGuide";
+import NewPosterLayout from "../../profile/components/NewPosterLayout";
+import { useDispatch } from "../../../store/store";
+import {
+  resetIdsOfUnreadCon,
+  setIdsOfUnreadCon,
+  setlistConversation,
+} from "../../../features/chat/conversationSlice";
+import { axiosClient } from "../../../setup/axiosClient";
 const settings = [
   {
     name: "Profile",
@@ -28,13 +39,26 @@ const settings = [
     name: "Account",
     linkUrl: "/users/profile/edit",
   },
+  {
+    name: "Tips & guide",
+  },
   { name: "Logout", linkUrl: "/users/logout" },
 ];
 const sidePadding = 38;
 const CherishAppBar = ({ index = 1 }) => {
+  const currentUId = localStorage.getItem("user_id");
+  const idsOfUnreadCon = useSelector(
+    (state) => state.conversation.idsOfUnreadCon
+  );
+  const listConversation = useSelector(
+    (state) => state.conversation.listConversation
+  );
+  const dispatch = useDispatch();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [useNewPost, setUseNewPost] = React.useState(false);
+  const [openTips, setOpenTips] = React.useState(true);
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -44,6 +68,9 @@ const CherishAppBar = ({ index = 1 }) => {
   function handleOpenNewPost() {
     setUseNewPost(true);
   }
+  function handleCloseNewPost() {
+    setUseNewPost(false);
+  }
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -51,7 +78,6 @@ const CherishAppBar = ({ index = 1 }) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   function notificationsLabel(count) {
     if (count === 0) {
       return "no notifications";
@@ -61,6 +87,28 @@ const CherishAppBar = ({ index = 1 }) => {
     }
     return `${count} notifications`;
   }
+
+  React.useEffect(() => {
+    if (listConversation.length <= 0) {
+      dispatch(resetIdsOfUnreadCon);
+      let unreadIds = [];
+      axiosClient.get(`conversations`).then(async (data) => {
+        if (data) {
+          await data.forEach((element, index) => {
+            if (
+              element["last_message"]["status"] !== "seen" &&
+              element["last_message"]["recipient_id"] == currentUId
+            ) {
+              unreadIds.push(element.id);
+            }
+          });
+        }
+
+        dispatch(setlistConversation(data));
+        dispatch(setIdsOfUnreadCon(unreadIds));
+      });
+    }
+  }, []);
 
   return (
     <AppBar
@@ -91,7 +139,7 @@ const CherishAppBar = ({ index = 1 }) => {
               flexGrow: 1,
               height: "100%",
               alignItems: "center",
-              display: "flex"
+              display: "flex",
             }}
           >
             <MenuIcon
@@ -109,13 +157,18 @@ const CherishAppBar = ({ index = 1 }) => {
               component={Link}
               to="/homepage"
               height="100%"
-              sx={{ display: "flex" }}
+              sx={{ display: "flex", padding: "10px", alignItems: "flex-end" }}
             >
               <img
                 src={CBCLogo}
                 alt=""
                 height="100%"
-                style={{ padding: "16px" }}
+                // style={{ padding: "16px" }}
+              ></img>
+              <img
+                src={CBCTitle}
+                alt=""
+                style={{ height: "calc(100% / 2.5)", marginLeft: "5px" }}
               ></img>
             </Box>
             <Menu
@@ -229,7 +282,7 @@ const CherishAppBar = ({ index = 1 }) => {
 
             {/* </Stack> */}
             <IconButton aria-label={notificationsLabel(100)}>
-              <Badge badgeContent={100} color="secondary">
+              <Badge badgeContent={idsOfUnreadCon.length} color="secondary">
                 <NotificationsNoneIcon sx={{ width: "30px", height: "30px" }} />
               </Badge>
             </IconButton>
@@ -268,21 +321,39 @@ const CherishAppBar = ({ index = 1 }) => {
             >
               {settings.map((setting, i) => (
                 <MenuItem key={i} onClick={handleCloseUserMenu}>
-                  <Typography
-                    component={Link}
-                    variant="body1"
-                    textAlign="center"
-                    sx={{ color: "black", textDecoration: "none" }}
-                    to={setting.linkUrl == null ? "" : setting.linkUrl}
-                  >
-                    {setting.name}
-                  </Typography>
+                  {setting.name === "Tips & guide" ? (
+                    <Typography
+                      component={Link}
+                      variant="body1"
+                      textAlign="center"
+                      sx={{ color: "black", textDecoration: "none" }}
+                      to={setting.linkUrl == null ? "" : setting.linkUrl}
+                    >
+                      {setting.name}
+                    </Typography>
+                  ) : (
+                    <Typography
+                      component={Link}
+                      variant="body1"
+                      textAlign="center"
+                      sx={{ color: "black", textDecoration: "none" }}
+                      to={setting.linkUrl == null ? "" : setting.linkUrl}
+                    >
+                      {setting.name}
+                    </Typography>
+                  )}
                 </MenuItem>
               ))}
             </Menu>
           </Stack>
         </Toolbar>
       </Container>
+      {openTips ? <TipsGuide /> : <></>}
+      {useNewPost == true ? (
+        <NewPosterLayout open={true} onClose={handleCloseNewPost} />
+      ) : (
+        ""
+      )}
     </AppBar>
   );
 };
