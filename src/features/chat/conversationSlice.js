@@ -33,6 +33,7 @@ export const conversationSlice = createSlice({
       state.recentConversationIds.push(payload.conversationId);
     },
     createNewConversation: (state, { payload }) => {
+      state.idsOfUnreadCon.push(payload.id)
       state.newConversations.push(payload)
     },
     updateConversationLatestStatus: (state, { payload }) => {
@@ -43,6 +44,11 @@ export const conversationSlice = createSlice({
     },
     resetIdsOfUnreadCon: (state, { payload }) => {
       state.idsOfUnreadCon = []
+    },
+    updateIdsOfUnreadCon: (state, { payload }) => {
+     if( state.currentConversation?.id != payload.conversation_id && (!state.idsOfUnreadCon.includes(payload.conversation_id)) )  {
+      state.idsOfUnreadCon.push( payload.conversation_id )
+     }
     },
     setlistConversation:  (state, { payload }) => {
       state.listConversation = payload
@@ -58,6 +64,7 @@ export const {
   setIdsOfUnreadCon,
   resetIdsOfUnreadCon,
   setlistConversation,
+  updateIdsOfUnreadCon,
 } = conversationSlice.actions;
 
 export const selectConversation = (state) => {
