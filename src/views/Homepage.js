@@ -22,15 +22,20 @@ import { useSelector, useDispatch } from "react-redux";
 import ChatIcon from "@mui/icons-material/Chat";
 import CloseIcon from "@mui/icons-material/Close";
 import { useTheme } from "@mui/styles";
+import { selectConversation } from "../features/chat/conversationSlice";
 
 export default function Homepage() {
+  const conversation = useSelector(selectConversation);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [openRightBar, setOpenRightBar] = React.useState(
     isMobile ? false : true
   );
   const [openMbLeftBar, setOpenMbLeftBar] = React.useState(false);
-
+  const renderChatInput = () => {
+    if (!conversation?.partner) return <></>;
+    return <RightBar />;
+  };
   useEffect(() => {
     appearanceSocket();
     newMessageSocket();
@@ -151,9 +156,8 @@ export default function Homepage() {
           >
             <Grid
               item
-              xs={openRightBar && !isMobile === true ? 8.5 : 12}
+              xs={openRightBar && !isMobile && conversation?.partner ? 8.5 : 12}
               sx={{
-                borderRight: "1px solid #e0e0e0",
                 height: "100%",
                 transition: "all 0.25s ease",
               }}
@@ -163,7 +167,7 @@ export default function Homepage() {
             <Grid
               id="msg-right-bar-lt"
               item
-              xs={openRightBar && !isMobile === true ? 3.5 : 0}
+              xs={openRightBar && !isMobile && conversation?.partner ? 3.5 : 0}
               sx={{
                 position: { xs: "absolute", md: "relative" },
                 width: "100vw",
@@ -176,6 +180,7 @@ export default function Homepage() {
                 bottom: 0,
                 transition: "all 0.25s ease",
                 // display: openRightBar === true ? "" : "none",
+                borderLeft: "1px solid #e0e0e0",
                 zIndex: 20,
                 background: "#fff",
               }}
@@ -194,7 +199,7 @@ export default function Homepage() {
                   sx={{ color: "#fff", height: "30px", width: "30px" }}
                 />
               </IconButton>
-              <RightBar />
+              {renderChatInput()}
             </Grid>
           </Grid>
         </Box>

@@ -1,53 +1,53 @@
-import { Badge, Button, Stack } from "@mui/material";
-import { styled } from "@mui/styles";
+import { Stack } from "@mui/material";
+// import { styled } from "@mui/styles";
 import { Box } from "@mui/system";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { icoList } from "../../../constant/AppBarConstant";
+import React from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { Link } from "react-router-dom";
+// import { icoList } from "../../../constant/AppBarConstant";
 import { APP_BAR_HEIGHT } from "../../../constant/css_constant";
-import { resetIdsOfUnreadCon, setIdsOfUnreadCon, setlistConversation } from "../../../features/chat/conversationSlice";
-import { axiosClient } from "../../../setup/axiosClient";
-import Homepage from "../../Homepage";
-import NewPosterLayout from "../../profile/components/NewPosterLayout";
-import Iconify from "../base/icon/Iconify";
+// import { resetIdsOfUnreadCon, setIdsOfUnreadCon, setlistConversation } from "../../../features/chat/conversationSlice";
+// import { axiosClient } from "../../../setup/axiosClient";
+// import Homepage from "../../Homepage";
+// import NewPosterLayout from "../../profile/components/NewPosterLayout";
+// import Iconify from "../base/icon/Iconify";
 import CherishAppBar from "./CherishAppBar";
-const sidePadding = 38;
+// const sidePadding = 38;
 export default function CherishApp({ index = 1, body }) {
-  const currentUId = localStorage.getItem('user_id')
-  const [useNewPost, setUseNewPost] = React.useState(false);
-  const dispatch = useDispatch()
-  const idsOfUnreadCon = useSelector(state => state.conversation.idsOfUnreadCon)
-  const listConversation = useSelector(state => state.conversation.listConversation)
-  function handleOpenNewPost() {
-    setUseNewPost(true);
-  }
-  function handleCloseNewPost() {
-    setUseNewPost(false);
-  }
+  // const currentUId = localStorage.getItem('user_id')
+  // const [useNewPost, setUseNewPost] = React.useState(false);
+  // const dispatch = useDispatch()
+  // const idsOfUnreadCon = useSelector(state => state.conversation.idsOfUnreadCon)
+  // const listConversation = useSelector(state => state.conversation.listConversation)
+  // function handleOpenNewPost() {
+  //   setUseNewPost(true);
+  // }
+  // function handleCloseNewPost() {
+  //   setUseNewPost(false);
+  // }
 
-  useEffect(() => {
-    if(listConversation.length <= 0) {
-      dispatch(resetIdsOfUnreadCon)
-      let unreadIds = []
-      axiosClient.get(`conversations`).then( async (data) => {
-        if (data) {
-         await data.forEach((element, index) => {
-          if((element["last_message"]["status"] !== "seen") && (element["last_message"]["recipient_id"] == currentUId)) {
-            unreadIds.push(element.id)
-           }
-          });
-        }
-  
-        dispatch(setlistConversation(data))
-        dispatch(setIdsOfUnreadCon(unreadIds))
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if(listConversation.length <= 0) {
+  //     dispatch(resetIdsOfUnreadCon)
+  //     let unreadIds = []
+  //     axiosClient.get(`conversations`).then( async (data) => {
+  //       if (data) {
+  //        await data.forEach((element, index) => {
+  //         if((element["last_message"]["status"] !== "seen") && (element["last_message"]["recipient_id"] == currentUId)) {
+  //           unreadIds.push(element.id)
+  //          }
+  //         });
+  //       }
+
+  //       dispatch(setlistConversation(data))
+  //       dispatch(setIdsOfUnreadCon(unreadIds))
+  //     });
+  //   }
+  // }, []);
 
   return (
     <Stack flexDirection="row">
-      <Stack
+      {/* <Stack
         display={{ xs: "none", md: "flex" }}
         justifyContent="center"
         alignItems="center"
@@ -124,13 +124,14 @@ export default function CherishApp({ index = 1, body }) {
             />
           </ButtonNav>
         )}
-      </Stack>
+      </Stack> */}
 
       <Box
-        width={{ xs: "100vw", md: `calc(100vw - ${sidePadding * 2 + 1}px)` }}
+        // width={{ xs: "100vw", md: `calc(100vw - ${sidePadding * 2 + 1}px)` }}
+        width="100vw"
         sx={{ height: "100vh" }}
       >
-        <CherishAppBar />
+        <CherishAppBar index={index} />
         <Box
           sx={{
             width: "100%",
@@ -140,44 +141,44 @@ export default function CherishApp({ index = 1, body }) {
         >
           {body}
         </Box>
-        {useNewPost == true ? (
+        {/* {useNewPost == true ? (
           <NewPosterLayout open={true} onClose={handleCloseNewPost} />
         ) : (
           ""
-        )}
+        )} */}
       </Box>
     </Stack>
   );
 }
 
-const navBtnCmm = {
-  borderRadius: "8px",
-  width: "50px",
-  height: "50px",
-  margin: "5px 0",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  cursor: "pointer",
-  transition: "all 0.2s ease",
-};
+// const navBtnCmm = {
+//   borderRadius: "8px",
+//   width: "50px",
+//   height: "50px",
+//   margin: "5px 0",
+//   display: "flex",
+//   alignItems: "center",
+//   justifyContent: "center",
+//   cursor: "pointer",
+//   transition: "all 0.2s ease",
+// };
 
-const ButtonNav = styled(Stack)(({ theme }) => ({
-  color: "#9da8b7",
-  ...navBtnCmm,
-  "&:active": {
-    color: "#6748da",
-  },
-  "&:hover": {
-    color: "#6748da",
-  },
-}));
+// const ButtonNav = styled(Stack)(({ theme }) => ({
+//   color: "#9da8b7",
+//   ...navBtnCmm,
+//   "&:active": {
+//     color: "#6748da",
+//   },
+//   "&:hover": {
+//     color: "#6748da",
+//   },
+// }));
 
-const ChosenButtonNav = styled(Stack)(({ theme }) => ({
-  backgroundColor: "#ececfa",
-  color: "#6748da",
-  ...navBtnCmm,
-  "&:active": {
-    color: "#6748da",
-  },
-}));
+// const ChosenButtonNav = styled(Stack)(({ theme }) => ({
+//   backgroundColor: "#ececfa",
+//   color: "#6748da",
+//   ...navBtnCmm,
+//   "&:active": {
+//     color: "#6748da",
+//   },
+// }));

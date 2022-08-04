@@ -11,13 +11,25 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import { Badge, useTheme } from "@mui/material";
+import { Badge, Stack, styled, useTheme } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import { APP_BAR_HEIGHT } from "../../../constant/css_constant";
 import { Link } from "react-router-dom";
-import { icoMenuList } from "../../../constant/AppBarConstant";
-import CBCLogo from "../../../assets/img/cbc_logo_xl.png";
+import { icoList, icoMenuList } from "../../../constant/AppBarConstant";
+import CBCLogo from "../../../assets/img/cbc_logo_sm.png";
+import CBCTitle from "../../../assets/img/cbc_title.png";
+import Iconify from "../base/icon/Iconify";
+import { useSelector } from "react-redux";
+import TipsGuide from "../tipsGuide/TipsGuide";
+import NewPosterLayout from "../../profile/components/NewPosterLayout";
+import { useDispatch } from "../../../store/store";
+import {
+  resetIdsOfUnreadCon,
+  setIdsOfUnreadCon,
+  setlistConversation,
+} from "../../../features/chat/conversationSlice";
+import { axiosClient } from "../../../setup/axiosClient";
 const settings = [
   {
     name: "Profile",
@@ -27,19 +39,38 @@ const settings = [
     name: "Account",
     linkUrl: "/users/profile/edit",
   },
+  {
+    name: "Tips & guide",
+  },
   { name: "Logout", linkUrl: "/users/logout" },
 ];
-
-const CherishAppBar = () => {
+const sidePadding = 38;
+const CherishAppBar = ({ index = 1 }) => {
+  const currentUId = localStorage.getItem("user_id");
+  const idsOfUnreadCon = useSelector(
+    (state) => state.conversation.idsOfUnreadCon
+  );
+  const listConversation = useSelector(
+    (state) => state.conversation.listConversation
+  );
+  const dispatch = useDispatch();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [useNewPost, setUseNewPost] = React.useState(false);
+  const [openTips, setOpenTips] = React.useState(true);
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
+  function handleOpenNewPost() {
+    setUseNewPost(true);
+  }
+  function handleCloseNewPost() {
+    setUseNewPost(false);
+  }
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -47,7 +78,6 @@ const CherishAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   function notificationsLabel(count) {
     if (count === 0) {
       return "no notifications";
@@ -57,6 +87,28 @@ const CherishAppBar = () => {
     }
     return `${count} notifications`;
   }
+
+  React.useEffect(() => {
+    if (listConversation.length <= 0) {
+      dispatch(resetIdsOfUnreadCon);
+      let unreadIds = [];
+      axiosClient.get(`conversations`).then(async (data) => {
+        if (data) {
+          await data.forEach((element, index) => {
+            if (
+              element["last_message"]["status"] !== "seen" &&
+              element["last_message"]["recipient_id"] == currentUId
+            ) {
+              unreadIds.push(element.id);
+            }
+          });
+        }
+
+        dispatch(setlistConversation(data));
+        dispatch(setIdsOfUnreadCon(unreadIds));
+      });
+    }
+  }, []);
 
   return (
     <AppBar
@@ -85,7 +137,9 @@ const CherishAppBar = () => {
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "flex", md: "none" },
+              height: "100%",
+              alignItems: "center",
+              display: "flex",
             }}
           >
             <MenuIcon
@@ -95,9 +149,28 @@ const CherishAppBar = () => {
                 height: "30px",
                 color: "#817cce",
                 cursor: "pointer",
+                display: { xs: "flex", md: "none" },
               }}
               onClick={handleOpenNavMenu}
             />
+            <Box
+              component={Link}
+              to="/homepage"
+              height="100%"
+              sx={{ display: "flex", padding: "10px", alignItems: "flex-end" }}
+            >
+              <img
+                src={CBCLogo}
+                alt=""
+                height="100%"
+                // style={{ padding: "16px" }}
+              ></img>
+              <img
+                src={CBCTitle}
+                alt=""
+                style={{ height: "calc(100% / 2.5)", marginLeft: "5px" }}
+              ></img>
+            </Box>
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -118,7 +191,7 @@ const CherishAppBar = () => {
             >
               {icoMenuList.map((menu, index) =>
                 menu.name === "New Post" ? (
-                  <div key={index} ></div>
+                  <div key={index}></div>
                 ) : (
                   <MenuItem key={index} onClick={handleCloseNavMenu}>
                     <Typography
@@ -134,65 +207,6 @@ const CherishAppBar = () => {
               )}
             </Menu>
           </Box>
-          <Box height="100%" sx={{ display: { xs: "none", md: "flex" } }}>
-            <img
-              src={CBCLogo}
-              alt=""
-              height="100%"
-              style={{ padding: "16px" }}
-            ></img>
-          </Box>
-          {/* <AdbIcon
-            sx={{
-              display: { xs: "none", md: "flex", color: "#817cce" },
-              mr: 1,
-            }}
-          />*/}
-          {/* <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/homepage"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "black",
-              textDecoration: "none",
-            }}
-          >
-            F-CBC
-          </Typography> */}
-
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "black",
-              textDecoration: "none",
-              height: "100%",
-              position: "absolute",
-              width: "100%",
-              justifyContent: "center",
-            }}
-          >
-            <img
-              src={CBCLogo}
-              alt=""
-              height="100%"
-              style={{ padding: "16px" }}
-            ></img>
-          </Typography>
           <Box
             sx={{
               flexGrow: 1,
@@ -200,14 +214,84 @@ const CherishAppBar = () => {
               justifyContent: "flex-end",
             }}
           ></Box>
-          <Box sx={{ flexGrow: 0, ml: 2 }}>
+          <Stack
+            flexDirection="row"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ flexGrow: 0, ml: 2, height: "100%" }}
+          >
+            {/* <Stack
+              display={{ xs: "none", md: "flex" }}
+              flexDirection="row"
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                width: 0,
+                p: sidePadding + "px",
+                borderRight: "1px solid #e5e0e0",
+                background: "#fff",
+              }}
+            > */}
+            <Box height="100%" display={{ xs: "none", md: "flex" }}>
+              {index == 1 ? (
+                <ChosenButtonNav>
+                  <Iconify
+                    icon={icoList.home.chosen}
+                    style={{ width: "35px", height: "35px" }}
+                  />
+                </ChosenButtonNav>
+              ) : (
+                <ButtonNav component={Link} to={icoList.home.link}>
+                  <Iconify
+                    icon={icoList.home.notChosen}
+                    style={{ width: "35px", height: "35px" }}
+                  />
+                </ButtonNav>
+              )}
+              {index == 2 ? (
+                <ChosenButtonNav>
+                  <Iconify
+                    icon={icoList.chat.chosen}
+                    style={{ width: "28px", height: "28px" }}
+                  />
+                </ChosenButtonNav>
+              ) : (
+                <ButtonNav component={Link} to={icoList.chat.link}>
+                  <Iconify
+                    icon={icoList.chat.notChosen}
+                    style={{ width: "28px", height: "28px" }}
+                  />
+                </ButtonNav>
+              )}
+              {index == 3 ? (
+                <ChosenButtonNav onClick={(e) => handleOpenNewPost()}>
+                  <Iconify
+                    icon={icoList.newPost.notChosen}
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </ChosenButtonNav>
+              ) : (
+                <ButtonNav onClick={(e) => handleOpenNewPost()}>
+                  <Iconify
+                    icon={icoList.newPost.notChosen}
+                    style={{ width: "28px", height: "28px" }}
+                  />
+                </ButtonNav>
+              )}
+            </Box>
+
+            {/* </Stack> */}
             <IconButton aria-label={notificationsLabel(100)}>
-              <Badge badgeContent={100} color="secondary">
+              <Badge badgeContent={idsOfUnreadCon.length} color="secondary">
                 <NotificationsNoneIcon sx={{ width: "30px", height: "30px" }} />
               </Badge>
             </IconButton>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ml: 1}} size="small"> 
+              <IconButton
+                onClick={handleOpenUserMenu}
+                sx={{ ml: 1 }}
+                size="small"
+              >
                 <Avatar
                   alt="Memy Sharp"
                   src="#"
@@ -237,22 +321,72 @@ const CherishAppBar = () => {
             >
               {settings.map((setting, i) => (
                 <MenuItem key={i} onClick={handleCloseUserMenu}>
-                  <Typography
-                    component={Link}
-                    variant="body1"
-                    textAlign="center"
-                    sx={{ color: "black", textDecoration: "none" }}
-                    to={setting.linkUrl == null ? "" : setting.linkUrl}
-                  >
-                    {setting.name}
-                  </Typography>
+                  {setting.name === "Tips & guide" ? (
+                    <Typography
+                      component={Link}
+                      variant="body1"
+                      textAlign="center"
+                      sx={{ color: "black", textDecoration: "none" }}
+                      to={setting.linkUrl == null ? "" : setting.linkUrl}
+                    >
+                      {setting.name}
+                    </Typography>
+                  ) : (
+                    <Typography
+                      component={Link}
+                      variant="body1"
+                      textAlign="center"
+                      sx={{ color: "black", textDecoration: "none" }}
+                      to={setting.linkUrl == null ? "" : setting.linkUrl}
+                    >
+                      {setting.name}
+                    </Typography>
+                  )}
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Stack>
         </Toolbar>
       </Container>
+      {openTips ? <TipsGuide /> : <></>}
+      {useNewPost == true ? (
+        <NewPosterLayout open={true} onClose={handleCloseNewPost} />
+      ) : (
+        ""
+      )}
     </AppBar>
   );
 };
 export default CherishAppBar;
+const navBtnCmm = {
+  borderRadius: "0px",
+  width: "50px",
+  height: "100%",
+  margin: "0px 20px 0px 0px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  cursor: "pointer",
+  transition: "all 0.2s ease",
+};
+
+const ButtonNav = styled(Stack)(({ theme }) => ({
+  color: "#9da8b7",
+  ...navBtnCmm,
+  "&:active": {
+    color: "#6748da",
+  },
+  "&:hover": {
+    color: "#6748da",
+  },
+}));
+
+const ChosenButtonNav = styled(Stack)(({ theme }) => ({
+  // backgroundColor: "#ececfa",
+  color: "#6748da",
+  ...navBtnCmm,
+  borderBottom: "3px solid #6748da",
+  "&:active": {
+    color: "#6748da",
+  },
+}));
