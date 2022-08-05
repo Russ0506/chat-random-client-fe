@@ -1,8 +1,15 @@
 import {
+  Avatar,
   Box,
   Container,
   Divider,
   ImageList,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
   Stack,
   Typography,
 } from "@mui/material";
@@ -32,8 +39,8 @@ import { Link } from "react-router-dom";
 const URL_IMAGE = `${URL}/api`;
 const shapeStyles = {
   bgcolor: "primary.main",
-  width: { xs: 80, md: 120 },
-  height: { xs: 80, md: 120 },
+  width: { xs: 60, md: 60 },
+  height: { xs: 60, md: 60 },
   marginTop: 1,
 };
 const shapeCircleStyles = {
@@ -120,7 +127,6 @@ export default function UserProfile() {
     setOpenNewPoster(false);
   }
 
-
   async function getPostList() {
     await axiosClient
       .get(`/users/${user_id}/posts`)
@@ -142,7 +148,7 @@ export default function UserProfile() {
     <Container maxWidth="xl" sx={{ justifyContent: "center", display: "flex" }}>
       <Stack
         flexDirection="row"
-        maxWidth="lg"
+        maxWidth="md"
         width="100%"
         position="relative"
         sx={{ pt: 4 }}
@@ -150,31 +156,12 @@ export default function UserProfile() {
         <Container
           maxWidth="xl"
           sx={{
-            width: "62%",
+            width: "60%",
             display: "flex",
             alignItems: "center",
             flexDirection: "column",
           }}
         >
-          {/* <Card
-            sx={{
-              maxWidth: { sm: 400, md: 750 },
-              mb: "30px",
-              // boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-              boxShadow: "0 1px 20px 0 rgb(69 90 100 / 8%)",
-              width: "100%",
-              borderRadius: "7px",
-            }}
-          >
-            
-            <CardContent>
-             fsdfsdff
-            </CardContent>
-            
-            <CardActions disableSpacing>
-              sfvsfdsd
-            </CardActions>
-          </Card> */}
           {imgList.map((item, key) => (
             <PostLayout data={item} key={key} />
           ))}
@@ -182,12 +169,11 @@ export default function UserProfile() {
         <Container
           // maxWidth={{ xs: "md", md: "xl" }}
           sx={{
-            // minHeight: "100%",
             display: "flex",
             justifyContent: { xs: "center", lg: "flex-start" },
             flexDirection: "column",
             alignItems: "flex-start",
-            width: "38%",
+            width: "40%",
             position: { sm: "relative", lg: "sticky" },
             top: 5,
             bottom: 0,
@@ -201,17 +187,17 @@ export default function UserProfile() {
           <Box
             sx={{
               width: "100%",
-              borderRadius: "5px",
-              background: "#fff",
-              maxHeight: "180px",
-              boxShadow: "0 1px 20px 0 rgb(69 90 100 / 8%)",
+              // borderRadius: "5px",
+              // background: "#fff",
+              // maxHeight: "180px",
+              // boxShadow: "0 1px 20px 0 rgb(69 90 100 / 8%)",
             }}
           >
             <Stack
               flexDirection="row"
               alignItems="center"
               justifyContent="flex-start"
-              padding={{ xs: 1, sm: 1.5, md: 2, lg: 3 }}
+              // padding={{ xs: 1, md: 2, lg: 1 }}
               // marginTop={{ xs: 2, sm: 3 }}
               marginBottom="20px"
               flexWrap="nowrap"
@@ -226,89 +212,158 @@ export default function UserProfile() {
                       alignItems: "center",
                     }}
                   >
-                    {localStorage.getItem('user_display_name')}{" "}
-                    {gender === "male" ? (
-                      <StyledMaleIcon
-                        fontSize="18px"
-                        sx={{
-                          ...shapeCircleStyles,
-                          pb: "5px",
-                        }}
-                      />
-                    ) : (
-                      <StyledFemaleIcon
-                        fontSize="18px"
-                        sx={{
-                          ...shapeCircleStyles,
-                          pb: "5px",
-                        }}
-                      />
-                    )}
-                  </Typography>
-                </Stack>
-                <Stack
-                  flexDirection="column"
-                  flexWrap="wrap"
-                  display={{ xs: "none", md: "flex" }}
-                  sx={{ mt: 2 }}
-                >
-                  <Typography variant="body2">Hobies: Tinder</Typography>
-                  <Typography variant="body2">
-                    Location: Cam Le, Danang, Viet Nam
+                    {localStorage.getItem("user_display_name")}{" "}
                   </Typography>
                 </Stack>
               </Box>
             </Stack>
-            <Button
-              component={Link}
-              to={"/users/profile/edit"}
-              variant="outlined"
-              sx={{
-                ml: 1,
-                mb: 1,
-                maxWidth: 180,
-                border: "1px solid rgb(30 20 189 / 50%)",
-                color: "rgb(30 20 189 / 70%)",
-              }}
-              size="small"
-            >
-              Edit profile
-            </Button>
-            <Button
-              onClick={handleOpenNewPost}
-              variant="outlined"
-              // variant="contained"
-              sx={{
-                ml: 1,
-                mb: 1,
-                maxWidth: 180,
-                border: "1px solid rgb(30 20 189 / 50%)",
-                color: "rgb(30 20 189 / 70%)",
-              }}
-              size="small"
-              startIcon={<AddIcon />}
-            >
-              New Post
-            </Button>
           </Box>
           <Box
             sx={{
-              background: "#fff",
-              borderRadius: "10px",
-              padding: 2,
-              height: "calc(100% - 200px)",
+              // background: "#fff",
+              // borderRadius: "10px",
+              // padding: 2,
+              // height: "calc(100% - 200px)",
               width: "100%",
-              boxShadow: "0 1px 20px 0 rgb(69 90 100 / 8%)",
+              // boxShadow: "0 1px 20px 0 rgb(69 90 100 / 8%)",
             }}
           >
-            <Box height="60px">
-              <Typography variant="h6" color="black">
-                Images
+            <Box height="60px" width="xl">
+              <Typography variant="subtitle1" color="rgb(142, 142, 142)" fontWeight="bold">
+                Shared Partner List
               </Typography>
-              <Divider
+              {/* <Divider
                 variant="middle"
-                sx={{ width: "100%", mt: 1, mb: 3, ml: 0, mr: 0 }}
-              />
+                sx={{ width: "100%", mt: 1, ml: 0, mr: 0 }}
+              /> */}
+              <List
+                sx={{
+                  width: "100%",
+                  maxWidth: 360,
+                }}
+                aria-label="contacts"
+              >
+                <ListItem
+                  disablePadding
+                  sx={{ borderRadius: "10px", overflow: "hidden" }}
+                >
+                  <ListItemButton sx={{ pl: 0, ml: 0 }}>
+                    <ListItemIcon>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src="/static/images/avatar/1.jpg"
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          variant="subtitle2"
+                          color="black"
+                          fontWeight="bold"
+                        >
+                          Chelsea Otakan
+                        </Typography>
+                      }
+                    />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem
+                  disablePadding
+                  sx={{ borderRadius: "10px", overflow: "hidden" }}
+                >
+                  <ListItemButton sx={{ pl: 0, ml: 0 }}>
+                    <ListItemIcon>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src="/static/images/avatar/1.jpg"
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          variant="subtitle2"
+                          color="black"
+                          fontWeight="bold"
+                        >
+                          Eric Homande
+                        </Typography>
+                      }
+                    />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem
+                  disablePadding
+                  sx={{ borderRadius: "10px", overflow: "hidden" }}
+                >
+                  <ListItemButton sx={{ pl: 0, ml: 0 }}>
+                    <ListItemIcon>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src="/static/images/avatar/1.jpg"
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          variant="subtitle2"
+                          color="black"
+                          fontWeight="bold"
+                        >
+                          Eric Hoffman
+                        </Typography>
+                      }
+                    />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem
+                  disablePadding
+                  sx={{ borderRadius: "10px", overflow: "hidden" }}
+                >
+                  <ListItemButton sx={{ pl: 0, ml: 0 }}>
+                    <ListItemIcon>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src="/static/images/avatar/1.jpg"
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          variant="subtitle2"
+                          color="black"
+                          fontWeight="bold"
+                        >
+                          Eric Hoffman
+                        </Typography>
+                      }
+                    />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem
+                  disablePadding
+                  sx={{ borderRadius: "10px", overflow: "hidden" }}
+                >
+                  <ListItemButton sx={{ pl: 0, ml: 0 }}>
+                    <ListItemIcon>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src="/static/images/avatar/1.jpg"
+                      />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          variant="subtitle2"
+                          color="black"
+                          fontWeight="bold"
+                        >
+                          Eric Hoffman
+                        </Typography>
+                      }
+                    />
+                  </ListItemButton>
+                </ListItem>
+              </List>
             </Box>
             <Box
               sx={{
@@ -317,25 +372,7 @@ export default function UserProfile() {
                 height: "calc(100% - 60px)",
                 overflow: "auto",
               }}
-            >
-              <ImageList
-                variant="standard"
-                cols={3}
-                gap={0}
-                rowHeight={164}
-                style={{ overflow: "hidden" }}
-              >
-                <>
-                  {listPosterData.map((item, index) => (
-                    <ImagePoster
-                      item={item}
-                      index={index}
-                      handleOpenPoster={handleOpenPoster}
-                    />
-                  ))}
-                </>
-              </ImageList>
-            </Box>
+            ></Box>
             {openNewPoster === true ? (
               <NewPosterLayout
                 open={openNewPoster}

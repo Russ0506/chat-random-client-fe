@@ -250,17 +250,21 @@ const CherishAppBar = ({ index = 1 }) => {
               )}
               {index == 2 ? (
                 <ChosenButtonNav>
-                  <Iconify
-                    icon={icoList.chat.chosen}
-                    style={{ width: "28px", height: "28px" }}
-                  />
+                  <Badge color="secondary" badgeContent={idsOfUnreadCon.length}>
+                    <Iconify
+                      icon={icoList.chat.chosen}
+                      style={{ width: "28px", height: "28px" }}
+                    />
+                  </Badge>
                 </ChosenButtonNav>
               ) : (
                 <ButtonNav component={Link} to={icoList.chat.link}>
-                  <Iconify
-                    icon={icoList.chat.notChosen}
-                    style={{ width: "28px", height: "28px" }}
-                  />
+                  <Badge color="secondary" badgeContent={idsOfUnreadCon.length}>
+                    <Iconify
+                      icon={icoList.chat.notChosen}
+                      style={{ width: "28px", height: "28px" }}
+                    />
+                  </Badge>
                 </ButtonNav>
               )}
               {index == 3 ? (
@@ -282,7 +286,7 @@ const CherishAppBar = ({ index = 1 }) => {
 
             {/* </Stack> */}
             <IconButton aria-label={notificationsLabel(100)}>
-              <Badge badgeContent={idsOfUnreadCon.length} color="secondary">
+              <Badge color="secondary">
                 <NotificationsNoneIcon sx={{ width: "30px", height: "30px" }} />
               </Badge>
             </IconButton>

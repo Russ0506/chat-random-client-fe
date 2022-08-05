@@ -33,7 +33,7 @@ export const conversationSlice = createSlice({
       state.recentConversationIds.push(payload.conversationId);
     },
     createNewConversation: (state, { payload }) => {
-      state.idsOfUnreadCon.push(payload.id)
+      // state.idsOfUnreadCon.push(payload.id)
       state.newConversations.push(payload)
     },
     updateConversationLatestStatus: (state, { payload }) => {
