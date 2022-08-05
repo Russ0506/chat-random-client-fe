@@ -23,7 +23,7 @@ import AdminLayout from "./components/layouts/AdminLayout/AdminLayout";
 import UserManagement from "./views/admin/tables/UserManagement";
 import UserProfilePage from "./views/profile/UserProfilePage";
 import WelcomePage from "./views/welcome/WelcomePage";
-import HomeScreenPage from "./views/homeScreen/HomeScreenPage";
+// import HomeScreenPage from "./views/homeScreen/HomeScreenPage";
 
 export const ProtectedRoute = ({ link = "/", children }) => {
   return <AuthenLoading link={link} children={children} />;
@@ -111,7 +111,7 @@ export default function Routes() {
       element: (
         <CherishApp
           body={
-            <ProtectedRoute link="/homepage" children={<UserProfile />} /> 
+            <ProtectedRoute link="/homepage" children={<UserProfile />} />
           }
           index={1}
         />
