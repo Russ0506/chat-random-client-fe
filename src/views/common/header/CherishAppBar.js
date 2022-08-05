@@ -267,7 +267,7 @@ const CherishAppBar = ({ index = 1 }) => {
                   </Badge>
                 </ButtonNav>
               )}
-              {index == 3 ? (
+              {/* {index == 3 ? (
                 <ChosenButtonNav onClick={(e) => handleOpenNewPost()}>
                   <Iconify
                     icon={icoList.newPost.notChosen}
@@ -281,7 +281,7 @@ const CherishAppBar = ({ index = 1 }) => {
                     style={{ width: "28px", height: "28px" }}
                   />
                 </ButtonNav>
-              )}
+              )} */}
             </Box>
 
             {/* </Stack> */}

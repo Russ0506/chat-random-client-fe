@@ -3,6 +3,7 @@ import {
   Box,
   Container,
   Divider,
+  IconButton,
   ImageList,
   List,
   ListItem,
@@ -35,7 +36,7 @@ import ImagePoster from "./components/ImagePoster";
 import { URL } from "../../service/chat.service";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 const URL_IMAGE = `${URL}/api`;
 const shapeStyles = {
   bgcolor: "primary.main",
@@ -229,9 +230,22 @@ export default function UserProfile() {
             }}
           >
             <Box height="60px" width="xl">
-              <Typography variant="subtitle1" color="rgb(142, 142, 142)" fontWeight="bold">
-                Shared Partner List
-              </Typography>
+              <Stack
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Typography
+                  variant="subtitle1"
+                  color="rgb(142, 142, 142)"
+                  fontWeight="bold"
+                >
+                  Shared Partner List
+                </Typography>
+                <Typography variant="subtitle2" fontWeight="bold">
+                  See All
+                </Typography>
+              </Stack>
               {/* <Divider
                 variant="middle"
                 sx={{ width: "100%", mt: 1, ml: 0, mr: 0 }}
@@ -245,6 +259,11 @@ export default function UserProfile() {
               >
                 <ListItem
                   disablePadding
+                  secondaryAction={
+                    <IconButton edge="end" aria-label="comments">
+                      <NavigateNextIcon />
+                    </IconButton>
+                  }
                   sx={{ borderRadius: "10px", overflow: "hidden" }}
                 >
                   <ListItemButton sx={{ pl: 0, ml: 0 }}>
@@ -259,7 +278,7 @@ export default function UserProfile() {
                         <Typography
                           variant="subtitle2"
                           color="black"
-                          fontWeight="bold"
+                          fontWeight="500"
                         >
                           Chelsea Otakan
                         </Typography>
@@ -269,6 +288,11 @@ export default function UserProfile() {
                 </ListItem>
                 <ListItem
                   disablePadding
+                  secondaryAction={
+                    <IconButton edge="end" aria-label="comments">
+                      <NavigateNextIcon />
+                    </IconButton>
+                  }
                   sx={{ borderRadius: "10px", overflow: "hidden" }}
                 >
                   <ListItemButton sx={{ pl: 0, ml: 0 }}>
@@ -283,7 +307,7 @@ export default function UserProfile() {
                         <Typography
                           variant="subtitle2"
                           color="black"
-                          fontWeight="bold"
+                          fontWeight="500"
                         >
                           Eric Homande
                         </Typography>
@@ -293,6 +317,11 @@ export default function UserProfile() {
                 </ListItem>
                 <ListItem
                   disablePadding
+                  secondaryAction={
+                    <IconButton edge="end" aria-label="comments">
+                      <NavigateNextIcon />
+                    </IconButton>
+                  }
                   sx={{ borderRadius: "10px", overflow: "hidden" }}
                 >
                   <ListItemButton sx={{ pl: 0, ml: 0 }}>
@@ -307,7 +336,7 @@ export default function UserProfile() {
                         <Typography
                           variant="subtitle2"
                           color="black"
-                          fontWeight="bold"
+                          fontWeight="500"
                         >
                           Eric Hoffman
                         </Typography>
@@ -317,6 +346,11 @@ export default function UserProfile() {
                 </ListItem>
                 <ListItem
                   disablePadding
+                  secondaryAction={
+                    <IconButton edge="end" aria-label="comments">
+                      <NavigateNextIcon />
+                    </IconButton>
+                  }
                   sx={{ borderRadius: "10px", overflow: "hidden" }}
                 >
                   <ListItemButton sx={{ pl: 0, ml: 0 }}>
@@ -331,7 +365,7 @@ export default function UserProfile() {
                         <Typography
                           variant="subtitle2"
                           color="black"
-                          fontWeight="bold"
+                          fontWeight="500"
                         >
                           Eric Hoffman
                         </Typography>
@@ -341,6 +375,11 @@ export default function UserProfile() {
                 </ListItem>
                 <ListItem
                   disablePadding
+                  secondaryAction={
+                    <IconButton edge="end" aria-label="comments">
+                      <NavigateNextIcon />
+                    </IconButton>
+                  }
                   sx={{ borderRadius: "10px", overflow: "hidden" }}
                 >
                   <ListItemButton sx={{ pl: 0, ml: 0 }}>
@@ -355,7 +394,7 @@ export default function UserProfile() {
                         <Typography
                           variant="subtitle2"
                           color="black"
-                          fontWeight="bold"
+                          fontWeight="500"
                         >
                           Eric Hoffman
                         </Typography>
