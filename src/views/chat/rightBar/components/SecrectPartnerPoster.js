@@ -49,7 +49,10 @@ export default function SecrectPartnerPoster(props) {
   return (
     <>
       <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
-        <MansoryImageBG />
+        {/* <MansoryImageBG /> */}
+        <Button variant="contained" onClick={props.reportUser}>
+          Report
+        </Button>
         <PartnerSecrectInfo />
         <SharedInfoButton variant="contained" onClick={props.showInfo}>
           { props.accepted ? "Waiting ..." : "Share Profile" }
