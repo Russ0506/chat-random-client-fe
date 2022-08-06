@@ -20,7 +20,7 @@ export default function AuthenLoading(props) {
       .then((res) => {
         if (res.logged_in && authenRouteOneTime.includes(props.link)) {
           setIsAccess(true);
-          navigate("/app");
+          navigate("/homepage");
         } else if (res.logged_in && authenRoute.includes(props.link)) {
           setIsAccess(true);
         } else if (

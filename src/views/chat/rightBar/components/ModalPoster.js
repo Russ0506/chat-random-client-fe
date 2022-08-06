@@ -7,33 +7,14 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Fade,
   IconButton,
-  Menu,
-  MenuItem,
   Stack,
   Typography,
   Paper,
-  Modal,
   Box,
-  Button,
 } from "@mui/material";
 import AvatarFrame from "../../../common/base/AvatarFrame";
-import PostLayout from "../../../profile/components/MyPostLayout";
 import { styled } from "@mui/styles";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "40vw",
-  height: "60vh",
-  bgcolor: "background.paper",
-  borderRadius: "10px",
-  boxShadow: 24,
-  p: 4,
-};
 
 export default function ModalPoster({ item }) {
   const [open, setOpen] = React.useState(false);
@@ -54,7 +35,7 @@ export default function ModalPoster({ item }) {
     cursor: "pointer",
   }));
   return (
-    <div>
+    <>
       <Item as={IconButton} onClick={handleOpen}></Item>
       {/* <PostLayout
               open={open}
@@ -62,86 +43,88 @@ export default function ModalPoster({ item }) {
               data={item}
               isReadonlyMode={true}
             /> */}
-      <Modal
+      <Dialog
         keepMounted
         open={open}
         onClose={handleClose}
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
-
       >
-        <Box sx={style} padding={5}>
-          <div style={{ position: "relative" }}>
-            <DialogTitle
+        <DialogTitle
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            pb: 1,
+          }}
+        >
+          <Stack
+            flexDirection="row"
+            alignItems="center"
+            sx={{ width: "100%" }}
+          >
+            <AvatarFrame />
+            <Stack
+              flexDirection="row"
+              alignItems="center"
+              className="justify-content-between"
+            >
+              <Typography sx={{ fontWeight: 550, ml: 1 }}>
+                {localStorage.getItem("user_display_name")}
+              </Typography>
+            </Stack>
+          </Stack>
+          <IconButton size="small" onClick={handleClose}>
+            <CloseIcon sx={{ width: "30px", height: "30px" }} />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent sx={{ position: "relative", pt: 0, pb:0 }}>
+          <DialogContentText id="alert-dialog-slide-description">
+            {item.content}
+          </DialogContentText>
+          <Box
+            sx={{
+              width: "100%",
+              height:"100%",
+              position: "relative",
+            }}
+          >
+            <Box
+              borderRadius={4}
               sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
+                margin: "0",
+                overflow: "auto",
+                height:"100%",
+                width:"100%"
               }}
             >
-              <Stack
-                className="ct-pt-title"
-                flexDirection="row"
-                alignItems="center"
-                sx={{ width: "100%" }}
-              >
-                <AvatarFrame />
-                <Stack
-                  flexDirection="row"
-                  alignItems="center"
-                  width="440px"
-                  className="justify-content-between"
-                >
-                  <Typography sx={{ fontWeight: 550, ml: 1 }}>
-                    {localStorage.getItem('user_display_name')}
-                  </Typography>
-                </Stack>
-              </Stack>
-              <IconButton size="small" onClick={handleClose}>
-                <CloseIcon sx={{ width: "30px", height: "30px" }} />
-              </IconButton>
-            </DialogTitle>
-            <DialogContent sx={{ position: "relative" }}>
-              <DialogContentText id="alert-dialog-slide-description"></DialogContentText>
-              <Box
-                sx={{
-                  width: "100%",
-                  position: "relative",
-                }}
-              >
-                <Typography variant="body1" marginBottom={1.5}>
-                  {item.content}
-                </Typography>
-                <Box
-                  borderRadius={4}
-                  sx={{
-                    margin: "0",
-                    overflow: "auto",
-                  }}
-                >
-                  <img src={`${item.image_path}`} alt="" width="50%" loading="lazy"></img>
-                </Box>
-              </Box>
-            </DialogContent>
-            <DialogActions
-              sx={{
-                justifyContent: "space-between",
-                alignItems: "center",
-                pl: 2,
-                pr: 2,
-                pt: 0,
-              }}
-            >
-              <Stack flexDirection="row" alignItems="center">
-                <IconButton aria-label="add to favorites">
-                  <FavoriteIcon />
-                </IconButton>
-                <Typography>{item.likeCount} likes</Typography>
-              </Stack>
-            </DialogActions>
-          </div>
-        </Box>
-      </Modal>
-    </div>
+              <img
+                src={`${item.image_path}`}
+                alt=""
+                height="100%"
+                width="100%"
+                loading="lazy"
+              ></img>
+            </Box>
+          </Box>
+        </DialogContent>
+        <DialogActions
+          sx={{
+            justifyContent: "space-between",
+            alignItems: "center",
+            pl: 2,
+            pr: 2,
+            pt: 0,
+          }}
+        >
+          <Stack flexDirection="row" alignItems="center">
+            <IconButton aria-label="add to favorites">
+              <FavoriteIcon />
+            </IconButton>
+            <Typography>{item.likeCount} likes</Typography>
+          </Stack>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 }

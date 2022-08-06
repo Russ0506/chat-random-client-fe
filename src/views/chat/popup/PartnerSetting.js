@@ -1,4 +1,4 @@
-import { Chip, InputBase, InputLabel, Stack } from "@mui/material";
+import { Chip, Input, InputBase, InputLabel, Stack, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import DialogContent from "@mui/material/DialogContent";
@@ -7,8 +7,7 @@ import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import Select from "@mui/material/Select";
-import { styled, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
@@ -24,7 +23,8 @@ import { CmmnFormControl } from "./components/CmmnFormControl";
 import { CmmnInputLabel } from "./components/CmmnInputLabel";
 import { CmmnSelect } from "./components/CmmnSelect";
 import { CmmnGroupSelect } from "./components/CmmnGroupSelect";
-
+import Slider from "@mui/material/Slider";
+import InputAdornment from '@mui/material/InputAdornment';
 export default function PartnerSetting(props) {
   const theme = useTheme();
   const useEffect = React.useEffect;
@@ -39,14 +39,14 @@ export default function PartnerSetting(props) {
       long: props.userSetting.long,
       address: props.userSetting.address,
       radius: props.userSetting.radius,
-      gender: props.userSetting.gender || 'female',
+      gender: props.userSetting.gender || "female",
       hobbies: ["Camping"],
       enable_age_filter: props.userSetting.enable_age_filter,
       enable_gender_filter: props.userSetting.enable_gender_filter,
       enable_location_filter: props.userSetting.enable_location_filter,
     },
   });
-
+  const [slideVal, setSlideVal] = React.useState(props.userSetting.radius);
   const [currentLocationPermision, setcurrentLocationPermision] =
     React.useState(false);
 
@@ -129,7 +129,21 @@ export default function PartnerSetting(props) {
           : theme.typography.fontWeightMedium,
     };
   }
+  const handleSliderChange = (event, newValue) => {
+    setSlideVal(newValue);
+  };
 
+  const handleInputChange = (event) => {
+    setSlideVal(event.target.value === "" ? "" : Number(event.target.value));
+  };
+
+  const handleBlur = () => {
+    if (slideVal < 5) {
+      setSlideVal(5);
+    } else if (slideVal > 100) {
+      setSlideVal(100);
+    }
+  };
   return (
     <Box>
       <DialogContent>
@@ -198,16 +212,58 @@ export default function PartnerSetting(props) {
               <CmmnInputLabel shrink htmlFor="expected-dis-inpt">
                 Expected Distance
               </CmmnInputLabel>
-              <CmmnInput
-                as = {TextField}
-                id="expected-dis-inpt"
-                type="number"
-                name="radius"
-                defaultValue={initData.user_setting.radius}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
+              <Box width="xl" sx={{ mt: 3, pl: 1, pr: 1 }}>
+                <Grid container spacing={2}>
+                  {/* <Grid item>
+                    <SocialDistanceIcon sx={{width:"40px", height: "40px"}}/>
+                  </Grid> */}
+                  <Grid item xs>
+                    <Slider
+                      min={5}
+                      max={100}
+                      value={typeof slideVal === "number" ? slideVal : 5}
+                      onChange={handleSliderChange}
+                      aria-labelledby="input-slider"
+                    />
+                  </Grid>
+                  <Grid item>
+                    <Input
+                      name="radius"
+                      value={slideVal}
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
+                      endAdornment={
+                        <InputAdornment position="end">Km</InputAdornment>
+                      }
+                      inputProps={{
+                        step: 10,
+                        min: 5,
+                        max: 100,
+                        type: "number",
+                        "aria-labelledby": "input-slider",
+                      }}
+                      sx={{width: "75px", pt: 0, pb:0, mt: 0}}
+                    />
+                    {/* <MuiInput
+                      name="radius"
+                      value={slideVal}
+                      size="small"
+                      onChange={handleInputChange}
+                      onBlur={handleBlur}
+                      endAdornment={
+                        <InputAdornment position="end">kg</InputAdornment>
+                      }
+                      inputProps={{
+                        step: 10,
+                        min: 5,
+                        max: 100,
+                        type: "number",
+                        "aria-labelledby": "input-slider",
+                      }}
+                    /> */}
+                  </Grid>
+                </Grid>
+              </Box>
             </CmmnFormControl>
             <Stack sx={{ mt: "15px" }}>
               <CmmnInputLabel shrink htmlFor="gender-inpt">
@@ -250,7 +306,8 @@ export default function PartnerSetting(props) {
                   }}
                 >
                   <FormLabel sx={sxJustifyContent}>From</FormLabel>
-                  <CmmnInput as = {TextField}
+                  <CmmnInput
+                    as={TextField}
                     name="from_age"
                     type="number"
                     defaultValue={initData.user_setting.from_age}
@@ -284,7 +341,8 @@ export default function PartnerSetting(props) {
                   }}
                 >
                   <FormLabel sx={sxJustifyContent}>To</FormLabel>
-                  <CmmnInput as = {TextField}
+                  <CmmnInput
+                    as={TextField}
                     name="to_age"
                     type="number"
                     defaultValue={initData.user_setting.to_age}

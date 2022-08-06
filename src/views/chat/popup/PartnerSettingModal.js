@@ -9,10 +9,8 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import PartnerSetting from "./PartnerSetting";
 import PartnerSettingView from "./PartnerSettingView";
-import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-import KeyboardTabIcon from "@mui/icons-material/KeyboardTab";
-const steps = ["Fill data search", "Ready to find your partner"];
 
+const steps = ["Fill data search", "Ready to find your partner"];
 export default function PartnerSettingModal(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isSubmit, setIsSubmit] = React.useState(false);

@@ -363,7 +363,6 @@ export default function NewPosterLayout({
         keepMounted
         onClose={handleCloseModal}
         aria-describedby="alert-dialog-slide-description"
-        id="des-txtarea-desc"
       >
         <DialogTitle
           sx={{

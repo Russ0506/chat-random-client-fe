@@ -86,7 +86,7 @@ export default function SignIn(props) {
       .unwrap()
       .then((data) => {
         if (data.success) {
-          navigate("/app");
+          navigate("/homepage");
         }
       })
       .catch(() => {
