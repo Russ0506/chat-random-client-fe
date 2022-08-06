@@ -50,14 +50,15 @@ export default function ReportDialog(props) {
       })
   }
 
-  React.useEffect(() => {
-    axiosClient.get(`/admin/${props.data.id}/reports`)
-      .then(data => console.log(data))
-      .catch(err => {
-        setMessage(err.response.statusText)
-        setOpenStb(true)
-      })
-  }, [props.data])
+  React.useLayoutEffect(() => {
+    if(props.data.id) {
+      axiosClient.get(`/admin/reports?target_id_eq=${props.data.id}`)
+        .then(data => console.log(data))
+        .catch(err => {
+          setMessage(err.response.statusText)
+          setOpenStb(true)
+        })
+    }}, [props.data])
 
   return (
     <>
