@@ -324,13 +324,23 @@ const CherishAppBar = ({ index = 1 }) => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting, i) => (
-                <MenuItem key={i} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={i}
+                  onClick={handleCloseUserMenu}
+                  sx={{ pl: 0, pr: 0 }}
+                >
                   {setting.name === "Tips & guide" ? (
                     <Typography
                       component={Link}
                       variant="body1"
-                      textAlign="center"
-                      sx={{ color: "black", textDecoration: "none" }}
+                      textAlign="left"
+                      sx={{
+                        color: "black",
+                        textDecoration: "none",
+                        width: "100%",
+                        pl: 2,
+                        pr: 2,
+                      }}
                       to={setting.linkUrl == null ? "" : setting.linkUrl}
                     >
                       {setting.name}
@@ -339,8 +349,14 @@ const CherishAppBar = ({ index = 1 }) => {
                     <Typography
                       component={Link}
                       variant="body1"
-                      textAlign="center"
-                      sx={{ color: "black", textDecoration: "none" }}
+                      textAlign="left"
+                      sx={{
+                        color: "black",
+                        textDecoration: "none",
+                        width: "100%",
+                        pl: 2,
+                        pr: 2,
+                      }}
                       to={setting.linkUrl == null ? "" : setting.linkUrl}
                     >
                       {setting.name}
