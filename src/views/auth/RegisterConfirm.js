@@ -46,7 +46,7 @@ export default function RegisterConfirm() {
           sx={button_style}
           href="/admin"
            >
-              Cotinue
+              Continue
           </Button>
         </Box>
     )

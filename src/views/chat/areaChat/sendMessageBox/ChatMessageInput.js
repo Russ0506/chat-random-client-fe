@@ -1,20 +1,40 @@
-import { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { styled } from "@mui/material/styles";
-import { Stack, Input, IconButton } from "@mui/material";
+import { Stack, Input, IconButton, Box } from "@mui/material";
 import Iconify from "../../../common/base/icon/Iconify";
 import EmojiPicker from "../../../common/base/emoji/EmojiPicker";
 import { sendNewMessage } from "../../../../features/chat/messagesSlice";
 import { touchConversation } from "../../../../features/chat/conversationSlice";
+import StyledCloseIcon from "../../../common/base/style-icon/StyledCloseIcon";
 
 export default function ChatMessageInput({ disabled, conversation }) {
   const dispatch = useDispatch();
   const fileInputRef = useRef(null);
   const [message, setMessage] = useState("");
-  const handleAttach = () => {
-    fileInputRef.current?.click();
+  const [src, setSrc] = useState(null);
+  const [srcUrl, setSrcUrl] = useState(null);
+  const curentConversation = useSelector((state) => state.conversation)
+
+  useEffect(()=> {
+    clearImage();
+  },[curentConversation])
+
+  const onSelectFile = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => setSrc(reader.result));
+      reader.readAsDataURL(e.target.files[0]);
+      setSrcUrl(e.target.files[0])
+    }
   };
+
+  const clearImage = () => {
+    setSrc(null)
+    setSrcUrl(null)
+    document.getElementById('file-input').value = null
+  }
 
   const handleKeyUp = (event) => {
     if (event.key === "Enter") {
@@ -31,6 +51,7 @@ export default function ChatMessageInput({ disabled, conversation }) {
       let params = {
         conversationId: conversation.id,
         text: message,
+        attachment: srcUrl || null,
         recipient_id: conversation.partner.id,
         created_at: moment().format()
       };
@@ -39,12 +60,46 @@ export default function ChatMessageInput({ disabled, conversation }) {
       element.scrollTop = element.scrollHeight;
     }
 
-    if(conversation.id) dispatch(touchConversation({conversationId: conversation.id}));
+    if (conversation.id) dispatch(touchConversation({ conversationId: conversation.id }));
     return setMessage("");
   };
 
   return (
     <RootStyle>
+      {src ? (
+        <Box className="image-contain">
+          <Box
+            // borderRadius={4}
+            sx={{
+              margin: "0",
+              overflow: "auto",
+            }}
+          >
+            <img
+              value="src"
+              alt="Crop"
+              width="20%"
+              borderRadius="5px"
+              src={src}
+            />
+          </Box>
+          <IconButton
+          sx={{ position: "absolute", top: "2px", left: "7px" }}
+          >
+            <StyledCloseIcon
+              onClick={clearImage}
+              sx={{
+                color: "#606770",
+                background: "rgba(255,255,255,.8)",
+                width: "25px",
+                height: "25px",
+              }}
+            />
+          </IconButton>
+        </Box>
+      ) : (
+        ''
+      )}
       <Input
         disabled={disabled}
         fullWidth
@@ -64,13 +119,28 @@ export default function ChatMessageInput({ disabled, conversation }) {
         }}
         endAdornment={
           <Stack direction="row" spacing={1} sx={{ flexShrink: 0, mr: 1.5 }}>
-            <IconButton disabled={disabled} size="small" onClick={handleAttach}>
-              <Iconify
-                icon="ic:round-add-photo-alternate"
-                width={22}
-                height={22}
+            <IconButton disabled={disabled} size="small" onClick={onSelectFile}>
+              <label
+                htmlFor="file-input"
+                style={{ margin: 0, padding: 0 }}
+              >
+                <Iconify
+                  icon="ic:round-add-photo-alternate"
+                  width={22}
+                  height={22}
+                />
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                id="file-input"
+                className="upload"
+                onChange={onSelectFile}
+                hidden
               />
             </IconButton>
+
             <EmojiPicker
               disabled={disabled}
               value={message}
@@ -83,6 +153,7 @@ export default function ChatMessageInput({ disabled, conversation }) {
           </Stack>
         }
       />
+
       <IconButton
         color="primary"
         disabled={!message || (message.trim()==='')}
