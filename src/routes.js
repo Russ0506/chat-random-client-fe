@@ -4,7 +4,6 @@ import { useRoutes } from "react-router-dom";
 import HomePage from "./views/admin/homePage/HomePage";
 import ResetPassword from "./views/auth/ResetPassword";
 import SignUp from "./views/auth/Register";
-import Welcome from "./views/welcome/Welcome";
 import RegisterConfirm from "./views/auth/RegisterConfirm";
 import ForgotPassword from "./views/auth/ForgotPassword";
 import ResetPwdEmailSendSuccess from "./views/auth/ResetPwdEmailSendSuccess";
@@ -13,7 +12,6 @@ import RegisterEmailSendSuccess from "./views/auth/RegisterEmailSendSuccess";
 import Error404 from "./views/error/Error404";
 import Homepage from "./views/Homepage";
 import AuthenLoading from "./views/common/base/loading/AuthenLoading";
-import UserProfile from "./views/profile/UserProfile";
 import CherishApp from "./views/common/header/CherishApp";
 import MenuPreProfile from "./views/profile/components/MenuPreProfile";
 import HomeScreen from "./views/homeScreen/HomeScreen";
@@ -110,9 +108,7 @@ export default function Routes() {
       path: "/homepage",
       element: (
         <CherishApp
-          body={
-            <ProtectedRoute link="/homepage" children={<UserProfile />} />
-          }
+          body={<ProtectedRoute link="/homepage" children={<HomeScreen />} />}
           index={1}
         />
       ),

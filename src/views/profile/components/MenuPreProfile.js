@@ -5,6 +5,7 @@ import {
   ListItem,
   ListItemButton,
   Stack,
+  Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { Component } from "react";
@@ -13,6 +14,7 @@ import { styled } from "@mui/styles";
 import { Link } from "react-router-dom";
 import EditProfile from "../EditProfile";
 import ChangePwd from "../ChangePwd";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 export default class MenuPreProfile extends Component {
   constructor(props) {
     super(props);
@@ -68,6 +70,18 @@ export default class MenuPreProfile extends Component {
             }}
           >
             <Stack flexDirection="column" sx={{ width: "100%" }}>
+              <ListItem key="Return back profile Page" disablePadding fullWidth>
+                <Button
+                  component={Link}
+                  to="/users/profile"
+                  startIcon={<ArrowBackIcon />}
+                  sx={{ borderRadius: "0 10px 10px 0" }}
+                >
+                  <Typography variant="button" sx={{ p: 1, fontWeight:"500" }}>
+                    Back to Profile Page
+                  </Typography>
+                </Button>
+              </ListItem>
               <List>
                 {menuList.map((item, k) => (
                   <ListItem key={k} disablePadding fullWidth>
