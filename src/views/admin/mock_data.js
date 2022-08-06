@@ -192,7 +192,8 @@ export const userList2 = [
     "last_online": null,
     "no_of_reports": 7,
     "no_of_unresolved_reports": 6,
-    "is_online": false
+    "is_online": false,
+    "isResolve": false,
   },
   {
     "id": 53,
@@ -200,8 +201,9 @@ export const userList2 = [
     "avatar_path": "/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--005f872734dbe54bf351f256aca7cb74d43a1cab/Screen%20Shot%202022-06-27%20at%2015.52.56.png",
     "last_online": null,
     "no_of_reports": 7,
-    "no_of_unresolved_reports": 10,
-    "is_online": false
+    "no_of_unresolved_reports": 11,
+    "is_online": false,
+    "isResolve": true,
   }
 ]
 

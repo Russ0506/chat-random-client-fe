@@ -171,3 +171,13 @@ p[id*="helper-text"], .error-text {
 .custom-border-box {
   border: 0.5px solid #c4c4c4 !important;
 }
+
+
+.gray-color {
+  color: gray;
+}
+
+.black-color {
+  color: black;
+  font-weight: 700;
+}
