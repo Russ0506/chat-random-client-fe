@@ -41,8 +41,8 @@ const BootstrapTable = () => {
       },
     });
   }
-  function handleOpenReportModal(user) {
-    setOpenReportDialog({ open: true, data: user });
+  function handleOpenReportModal(user, filter = "") {
+    setOpenReportDialog({ open: true, data: user, filter : filter });
   }
   function handleCloseBlockDialog() {
     setOpenBlockDialog({
@@ -59,8 +59,14 @@ const BootstrapTable = () => {
   }
 
   useEffect(() => {
-    axiosClient.get('/admin/users')
-      .then(data => setAdminList(data))
+    axios.get('/admin/users')
+      .then(data => {
+        const newData = data.map((item) => ({
+          ...item,
+          isResolve: 0 === item.no_of_unresolved_reports,
+        }));
+        setAdminList(newData);
+      })
       .catch(err => console.log(err))
   },[])
 
@@ -75,64 +81,37 @@ const BootstrapTable = () => {
             <Card.Body>
               <Table responsive hover>
                 <thead>
-                  <tr className="text-center ">
+                  <tr>
                     <th>No.</th>
                     <th>User Name</th>
                     <th>User Email</th>
-                    <th>Total Unresolved Reports</th>
-                    <th>Total Reports</th>
-                    <th>Status</th>
+                    <th  className="text-center ">Total Unresolved Reports</th>
+                    <th  className="text-center ">Total Reports</th>
                     {/* <th>Reports</th> */}
-                    <th>Action</th>
+                    <th className="text-left ">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {adminList.map((user, index) => (
-                    <tr className="text-center" key={index}>
-                      <th scope="row" onClick={() => handleOpenReportModal(user)}>{index}</th>
-                      <td className="text-left" onClick={() => handleOpenReportModal(user)}>{user.name}</td>
-                      <td className="text-left" onClick={() => handleOpenReportModal(user)}>{user.email}</td>
+                    <tr className={(user.isResolve) ? "text-center black-color fw-bolder " : "text-center gray-color"} key={index}>
+                      <th scope="row">{index}</th>
+                      <td className="text-left">{user.name}</td>
+                      <td className="text-left">{user.email}</td>
                       <td onClick={() => handleOpenReportModal(user)}>{
-                        user.no_of_unresolved_reports < 2
-                          ? user.no_of_unresolved_reports + " time"
-                          : user.no_of_unresolved_reports + " times"}</td>
-                      <td onClick={() => handleOpenReportModal(user)}>
-                      {
                         user.no_of_reports < 2
                           ? user.no_of_reports + " time"
-                          : user.no_of_reports + " times"}
+                          : user.no_of_reports + " times"}</td>
+                      <td onClick={() => handleOpenReportModal(user, "unresolved")}>
+                      {
+                        user.no_of_unresolved_reports < 2
+                          ? user.no_of_unresolved_reports + " time"
+                          : user.no_of_unresolved_reports + " times"}
                         </td>
-                      <td>
-                        {user.status === "blocked" ? (
-                          <Typography variant="body2" color="red">
-                            Blocked
-                          </Typography>
-                        ) : (
-                          <Typography variant="body2">Normal</Typography>
-                        )}
-                      </td>
-                      {/* <td>
-                        {user.reportCount < 2
-                          ? user.reportCount + " time"
-                          : user.reportCount + " times"}
-                        {user.reportCount > 0 ? (
-                          <IconButton
-                            onClick={() => handleOpenReportModal(user)}
-                          >
-                            <LaunchIcon />
-                          </IconButton>
-                        ) : (
-                          <></>
-                        )}
-                      </td> */}
                       <td className="text-left">
-                        {user.status === "blocked" ? (
+                        {user.status !== "blocked" ? (
                           <>
                             <IconButton sx={{ marginLeft: 0.5 }}>
                               <Iconify icon="ooui:un-block" />
-                            </IconButton>
-                            <IconButton sx={{ marginLeft: 0.5 }}>
-                              <DeleteForeverIcon />
                             </IconButton>
                           </>
                         ) : (
@@ -142,14 +121,14 @@ const BootstrapTable = () => {
                                 onClick={() => handleOpenBlockModal(user)}
                               />
                             </IconButton>
-
-                            {user.no_of_unresolved_reports >= 10 ?
-                              <IconButton sx={{ marginLeft: 0.5 }}>
-                                <FlagIcon sx={{ color: "red" }} />
-                              </IconButton>
-                              : ""}
                           </>
+                           
                         )}
+                        {user.no_of_unresolved_reports >= 10 ?
+                            <IconButton sx={{ marginLeft: 0.5 }}>
+                              <FlagIcon sx={{ color: "red" }} />
+                            </IconButton>
+                            : ""}
                       </td>
                     </tr>
                   ))}
