@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { axiosClient } from '../../setup/axiosClient'
+import { axiosMultipartForm } from '../../setup/axiosClient'
 import { v4 as uuidv4 } from 'uuid';
 
 function wait() {
@@ -13,11 +13,7 @@ export const sendNewMessage = createAsyncThunk(
   async (params, thunkAPI) => {
     try {
       await wait();
-      const response = await axiosClient.post(`/conversations/${params.conversationId}/messages`, {
-        text: params.text,
-        recipient_id: params.recipient_id,
-        uuid: params.uuid
-      })
+      const response = await axiosMultipartForm.post(`/conversations/${params.conversationId}/messages`, params)
       return params
     } catch (error) {
       return thunkAPI.rejectWithValue();

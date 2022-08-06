@@ -37,3 +37,11 @@
     right: -3px;
     width: 16px;
 }
+
+.image-contain {
+    position: absolute;
+    bottom: 50px;
+    display: flex;
+    padding-right: 15px;
+    // justify-content: flex-end;
+}
