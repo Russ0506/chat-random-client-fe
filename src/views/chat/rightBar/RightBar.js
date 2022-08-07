@@ -43,8 +43,8 @@ export default function RightBar() {
       <ReportModal
         onClose={() => setReportModal(false)}
         open={reportModal}
-        data = {currentConversation.partner}
-        ></ReportModal>
+        data={currentConversation.partner}
+      ></ReportModal>
       <SecrectPartnerPoster showInfo={shareInformation}
         reportUser={reportUser}
         accepted={currentConversation?.current_user_conversation?.status === 'sharing'} />
@@ -58,10 +58,10 @@ export default function RightBar() {
         alignItems="center"
         sx={{ height: "30%", minHeight: "320px" }}
       >
-        <PartnerInfo />
+        <PartnerInfo partnerInfor={currentConversation.partner} />
       </Stack>
       <Box sx={{ height: "40%" }}>
-        <PartnerPoster />
+        <PartnerPoster partnerInfor={currentConversation.partner} />
       </Box>
     </>
   );

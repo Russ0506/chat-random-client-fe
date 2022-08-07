@@ -1,6 +1,7 @@
 import * as React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {
   Dialog,
   DialogActions,
@@ -15,16 +16,32 @@ import {
 } from "@mui/material";
 import AvatarFrame from "../../../common/base/AvatarFrame";
 import { styled } from "@mui/styles";
+import { URL } from "../../../../service/chat.service";
+import { axiosClient } from "../../../../setup/axiosClient";
 
-export default function ModalPoster({ item }) {
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "40vw",
+  height: "60vh",
+  bgcolor: "background.paper",
+  borderRadius: "10px",
+  boxShadow: 24,
+  p: 4,
+};
+
+export default function ModalPoster({ item, partnerDetail }) {
+  console.log(partnerDetail, item);
   const [open, setOpen] = React.useState(false);
+  const [toggle, setToggle] = React.useState(false);
+  const [increaseLike, setIncreaseLike] = React.useState(0);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const Item = styled(Paper)(({ theme }) => ({
-    //   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
-    // padding: theme.spacing(1),
     textAlign: "center",
     color: theme.palette.text.secondary,
     height: "180px",
@@ -34,6 +51,19 @@ export default function ModalPoster({ item }) {
     backgroundImage: `url(${item.image_path})`,
     cursor: "pointer",
   }));
+
+  const reactPost = () => {
+    axiosClient.post(`${item.id}/toggle_react`).then((data) => console.log(data))
+      .catch(err => console.error(err))
+    setToggle(!toggle)
+  }
+
+  React.useEffect(() => {
+    if (toggle) {
+      setIncreaseLike(1)
+    } else setIncreaseLike(0)
+  }, [toggle])
+  
   return (
     <>
       <Item as={IconButton} onClick={handleOpen}></Item>

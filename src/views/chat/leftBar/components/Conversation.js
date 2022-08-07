@@ -10,6 +10,9 @@ import {
   selectMsgLatestStatus,
 } from "../../../../features/chat/messagesSlice";
 import SmartClock from "../../../../utils/smartClock";
+import { URL } from "../../../../service/chat.service";
+
+const URL_IMAGE = `${URL}/api`;
 
 // + lastMsg :
 //   -> {sender (true: you send msg/ false: partner send msg),
@@ -97,7 +100,7 @@ export default function Conversation({ data }) {
             <Avatar
               sx={{ width: 50, height: 50 }}
               alt=""
-              src="https://3.bp.blogspot.com/-eLFZ4fINjFk/Uq9hlFzEApI/AAAAAAAAG-4/3981yyTvKGM/s1600/28237d4dfe9baf20de1028f64f85ac68.jpg"
+              src={URL_IMAGE + data.partner.avatar_path}
             />
           </StyledBadge>
           <Box sx={{ width: "calc(100% - 40px)" }}>

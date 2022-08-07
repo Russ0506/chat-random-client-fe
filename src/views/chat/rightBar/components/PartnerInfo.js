@@ -5,6 +5,7 @@ import {
   StyledFemaleIcon,
   StyledMaleIcon,
 } from "../../../common/base/icon/GenderIcon";
+import { URL } from "../../../../service/chat.service";
 
 const shapeStyles = {
   bgcolor: "primary.main",
@@ -15,11 +16,17 @@ const shapeStyles = {
 };
 const shapeCircleStyles = { borderRadius: "50%" };
 
-const circle = (
-  <Box component="span" sx={{ ...shapeStyles, ...shapeCircleStyles }} />
-);
-export default function PartnerInfo() {
-  const [gender, setGender] = React.useState("male");
+export default function PartnerInfo(props) {
+  const circle = (
+    <Box
+    component="span"
+    sx={{
+      ...shapeStyles,
+      ...shapeCircleStyles,
+      backgroundImage: `url(${URL}/api${props.partnerInfor.avatar_path})`,
+    }}
+  />
+  );
   return (
     <Stack flexDirection="column" justifyContent="center" alignItems="center">
       <Badge>{circle}</Badge>
@@ -31,10 +38,10 @@ export default function PartnerInfo() {
           sx={{ width: "100%" }}
         >
           <Typography variant="h4" fontWeight={600} textAlign="center">
-            Nhat Quy{" "}
+           {props.partnerInfor.name}{" "}
           </Typography>
           <Typography variant="h4" fontWeight={600} textAlign="center">
-            {gender == "male" ? <StyledMaleIcon /> : <StyledFemaleIcon />}
+            {props.partnerInfor.gender == "male" ? <StyledMaleIcon /> : <StyledFemaleIcon />}
           </Typography>
         </Stack>
 

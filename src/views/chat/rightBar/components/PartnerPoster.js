@@ -24,7 +24,7 @@ import { URL } from "../../../../service/chat.service";
 
 const URL_IMAGE = `${URL}/api`;
 
-export default function PartnerPoster() {
+export default function PartnerPoster(props) {
   const [open, setOpen] = React.useState(true);
   const currentConversation = useSelector(state => state.conversation.currentConversation)
   const [listPartnerPost, setListPartnerPost] = React.useState([]);
@@ -37,6 +37,7 @@ export default function PartnerPoster() {
         const newData = data.map((item) => ({
           ...item,
           image_path: `${URL_IMAGE + item.image_path}`,
+          // image_path: `${"http://localhost:3000/api" + item.image_path}`,
         }));
         setListPartnerPost(newData);
       })
@@ -91,8 +92,8 @@ export default function PartnerPoster() {
             >
               {
                 listPartnerPost.map((item, index) => (
-                  <Grid item xs={4} key = {index}>
-                    <ModalPoster item={item} />
+                  <Grid item xs={4} key={index}>
+                    <ModalPoster item={item} partnerDetail={props.partnerInfor} />
                   </Grid>
                 ))
               }
