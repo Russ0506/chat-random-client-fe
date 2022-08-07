@@ -59,7 +59,7 @@ const BootstrapTable = () => {
   }
 
   useEffect(() => {
-    axios.get('/admin/users')
+    axiosClient.get('/admin/users')
       .then(data => {
         const newData = data.map((item) => ({
           ...item,
