@@ -17,9 +17,9 @@ export default function ChatMessageInput({ disabled, conversation }) {
   const [srcUrl, setSrcUrl] = useState(null);
   const curentConversation = useSelector((state) => state.conversation)
 
-  useEffect(()=> {
+  useEffect(() => {
     clearImage();
-  },[curentConversation])
+  }, [curentConversation])
 
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -43,19 +43,32 @@ export default function ChatMessageInput({ disabled, conversation }) {
   };
 
   const handleSend = () => {
-    if (!message || (message.trim()==='')) {
+    let params = {}
+    if (!message || (message.trim() === '')) {
       return "";
     }
 
     if (conversation?.id) {
-      let params = {
-        conversationId: conversation.id,
-        text: message,
-        attachment: srcUrl || null,
-        recipient_id: conversation.partner.id,
-        created_at: moment().format()
-      };
-      dispatch(sendNewMessage(params));
+      if (srcUrl) {
+        params = {
+          conversationId: conversation.id,
+          text: message,
+          attachment: srcUrl || null,
+          recipient_id: conversation.partner.id,
+          created_at: moment().format()
+        };
+        dispatch(sendNewMessage(params));
+      } else {
+        params = {
+          conversationId: conversation.id,
+          text: message,
+          // attachment: srcUrl || null,
+          recipient_id: conversation.partner.id,
+          created_at: moment().format()
+        };
+        dispatch(sendNewMessage(params));
+      }
+
       var element = document.getElementById("chat-scroll-ult");
       element.scrollTop = element.scrollHeight;
     }
@@ -84,7 +97,7 @@ export default function ChatMessageInput({ disabled, conversation }) {
             />
           </Box>
           <IconButton
-          sx={{ position: "absolute", top: "2px", left: "7px" }}
+            sx={{ position: "absolute", top: "2px", left: "7px" }}
           >
             <StyledCloseIcon
               onClick={clearImage}
@@ -156,7 +169,7 @@ export default function ChatMessageInput({ disabled, conversation }) {
 
       <IconButton
         color="primary"
-        disabled={!message || (message.trim()==='')}
+        disabled={!message || (message.trim() === '')}
         onClick={handleSend}
         sx={{ mx: 1 }}
       >

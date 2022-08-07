@@ -1,6 +1,7 @@
 import * as React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {
   Dialog,
   DialogActions,
@@ -21,6 +22,8 @@ import {
 import AvatarFrame from "../../../common/base/AvatarFrame";
 import PostLayout from "../../../profile/components/MyPostLayout";
 import { styled } from "@mui/styles";
+import { URL } from "../../../../service/chat.service";
+import { axiosClient } from "../../../../setup/axiosClient";
 
 const style = {
   position: "absolute",
@@ -35,15 +38,16 @@ const style = {
   p: 4,
 };
 
-export default function ModalPoster({ item }) {
+export default function ModalPoster({ item, partnerDetail }) {
+  console.log(partnerDetail, item);
   const [open, setOpen] = React.useState(false);
+  const [toggle, setToggle] = React.useState(false);
+  const [increaseLike, setIncreaseLike] = React.useState(0);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const Item = styled(Paper)(({ theme }) => ({
-    //   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
-    // padding: theme.spacing(1),
     textAlign: "center",
     color: theme.palette.text.secondary,
     height: "180px",
@@ -53,6 +57,19 @@ export default function ModalPoster({ item }) {
     backgroundImage: `url(${item.image_path})`,
     cursor: "pointer",
   }));
+
+  const reactPost = () => {
+    axiosClient.post(`${item.id}/toggle_react`).then((data) => console.log(data))
+      .catch(err => console.error(err))
+    setToggle(!toggle)
+  }
+
+  React.useEffect(() => {
+    if (toggle) {
+      setIncreaseLike(1)
+    } else setIncreaseLike(0)
+  }, [toggle])
+  
   return (
     <div>
       <Item as={IconButton} onClick={handleOpen}></Item>
@@ -85,7 +102,7 @@ export default function ModalPoster({ item }) {
                 alignItems="center"
                 sx={{ width: "100%" }}
               >
-                <AvatarFrame />
+                <AvatarFrame avatarImage={`${URL}/api${partnerDetail.avatar_path}`} />
                 <Stack
                   flexDirection="row"
                   alignItems="center"
@@ -93,7 +110,7 @@ export default function ModalPoster({ item }) {
                   className="justify-content-between"
                 >
                   <Typography sx={{ fontWeight: 550, ml: 1 }}>
-                    {localStorage.getItem('user_display_name')}
+                    {partnerDetail.name}
                   </Typography>
                 </Stack>
               </Stack>
@@ -110,13 +127,14 @@ export default function ModalPoster({ item }) {
                 }}
               >
                 <Typography variant="body1" marginBottom={1.5}>
-                  {item.content}
+                  {item.caption}
                 </Typography>
                 <Box
                   borderRadius={4}
                   sx={{
+                    maxHeight: "300px",
                     margin: "0",
-                    overflow: "auto",
+                    overflowY: "scroll",
                   }}
                 >
                   <img src={`${item.image_path}`} alt="" width="50%" loading="lazy"></img>
@@ -133,10 +151,10 @@ export default function ModalPoster({ item }) {
               }}
             >
               <Stack flexDirection="row" alignItems="center">
-                <IconButton aria-label="add to favorites">
-                  <FavoriteIcon />
+                <IconButton aria-label="add to favorites" onClick={reactPost} >
+                  {toggle ? <FavoriteIcon sx={{ color: "red" }} /> : <FavoriteBorderIcon />}
                 </IconButton>
-                <Typography>{item.likeCount} likes</Typography>
+                <Typography>{item.no_of_reactions + increaseLike > 1 ? (item.no_of_reactions + increaseLike + " likes") : (item.no_of_reactions + increaseLike + " like")}</Typography>
               </Stack>
             </DialogActions>
           </div>
