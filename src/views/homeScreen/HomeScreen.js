@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Container,
   IconButton,
   List,
@@ -21,6 +22,8 @@ import img5 from "../profile/components/img/5.png";
 import img6 from "../profile/components/img/6.png";
 import PostLayout from "./components/PostLayout";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { Link } from "react-router-dom";
+
 const shapeStyles = {
   bgcolor: "primary.main",
   width: { xs: 52, md: 52 },
@@ -154,6 +157,9 @@ export default function UserProfile() {
                   >
                     {localStorage.getItem("user_display_name")}{" "}
                   </Typography>
+                  <Button size="small" variant="outlined" component={Link} to="/users/profile">
+                    My Profile
+                  </Button>
                 </Stack>
               </Box>
             </Stack>
