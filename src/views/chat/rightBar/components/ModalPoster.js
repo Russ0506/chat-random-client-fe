@@ -1,7 +1,7 @@
 import * as React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import {
   Dialog,
   DialogActions,
@@ -53,17 +53,19 @@ export default function ModalPoster({ item, partnerDetail }) {
   }));
 
   const reactPost = () => {
-    axiosClient.post(`${item.id}/toggle_react`).then((data) => console.log(data))
-      .catch(err => console.error(err))
-    setToggle(!toggle)
-  }
+    axiosClient
+      .post(`${item.id}/toggle_react`)
+      .then((data) => console.log(data))
+      .catch((err) => console.error(err));
+    setToggle(!toggle);
+  };
 
   React.useEffect(() => {
     if (toggle) {
-      setIncreaseLike(1)
-    } else setIncreaseLike(0)
-  }, [toggle])
-  
+      setIncreaseLike(1);
+    } else setIncreaseLike(0);
+  }, [toggle]);
+
   return (
     <>
       <Item as={IconButton} onClick={handleOpen}></Item>
@@ -88,19 +90,17 @@ export default function ModalPoster({ item, partnerDetail }) {
             pb: 1,
           }}
         >
-          <Stack
-            flexDirection="row"
-            alignItems="center"
-            sx={{ width: "100%" }}
-          >
-            <AvatarFrame />
+          <Stack flexDirection="row" alignItems="center" sx={{ width: "100%" }}>
+            <AvatarFrame
+              avatarImage={`${URL}/api${partnerDetail.avatar_path}`}
+            />
             <Stack
               flexDirection="row"
               alignItems="center"
               className="justify-content-between"
             >
               <Typography sx={{ fontWeight: 550, ml: 1 }}>
-                {localStorage.getItem("user_display_name")}
+                {partnerDetail.name}
               </Typography>
             </Stack>
           </Stack>
@@ -108,14 +108,14 @@ export default function ModalPoster({ item, partnerDetail }) {
             <CloseIcon sx={{ width: "30px", height: "30px" }} />
           </IconButton>
         </DialogTitle>
-        <DialogContent sx={{ position: "relative", pt: 0, pb:0 }}>
+        <DialogContent sx={{ position: "relative", pt: 0, pb: 0 }}>
           <DialogContentText id="alert-dialog-slide-description">
-            {item.content}
+            {item.caption}
           </DialogContentText>
           <Box
             sx={{
               width: "100%",
-              height:"100%",
+              height: "100%",
               position: "relative",
             }}
           >
@@ -124,8 +124,8 @@ export default function ModalPoster({ item, partnerDetail }) {
               sx={{
                 margin: "0",
                 overflow: "auto",
-                height:"100%",
-                width:"100%"
+                height: "100%",
+                width: "100%",
               }}
             >
               <img
@@ -148,10 +148,18 @@ export default function ModalPoster({ item, partnerDetail }) {
           }}
         >
           <Stack flexDirection="row" alignItems="center">
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
+            <IconButton aria-label="add to favorites" onClick={reactPost}>
+              {toggle ? (
+                <FavoriteIcon sx={{ color: "red" }} />
+              ) : (
+                <FavoriteBorderIcon />
+              )}
             </IconButton>
-            <Typography>{item.likeCount} likes</Typography>
+            <Typography>
+              {item.no_of_reactions + increaseLike > 1
+                ? item.no_of_reactions + increaseLike + " likes"
+                : item.no_of_reactions + increaseLike + " like"}
+            </Typography>
           </Stack>
         </DialogActions>
       </Dialog>
