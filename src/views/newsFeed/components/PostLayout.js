@@ -5,16 +5,13 @@ import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Fade } from "@mui/material";
+import SmartClock from "../../../utils/smartClock";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -44,8 +41,8 @@ export default function PostLayout({ data }) {
         avatar={
           <Avatar
             aria-label="recipe"
-            alt={data.userNm}
-            src={data.img}
+            alt="avatar"
+            src={`api/${data.user.avatar_path}`}
             sx={{
               bgcolor: red[500],
               p: 0,
@@ -54,23 +51,18 @@ export default function PostLayout({ data }) {
             }}
           />
         }
-        // action={
-        //   <IconButton aria-label="settings">
-        //     <MoreVertIcon />
-        //   </IconButton>
-        // }
-        title={data.userNm}
-        subheader="September 14, 2016"
+        title={data.user.name}
+        subheader={<SmartClock date={data.created_at} />}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {data.content}
+          {data.caption}
         </Typography>
       </CardContent>
       <Fade in={true}>
         <CardMedia
           component="img"
-          image={data.img}
+          image={`api/${data.image_path}`}
           alt="img"
           width="100%"
           loading="lazy"
