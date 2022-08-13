@@ -33,7 +33,7 @@ import { axiosClient } from "../../../setup/axiosClient";
 const settings = [
   {
     name: "Profile",
-    linkUrl: "/users/profile",
+    linkUrl: `/users/${localStorage.getItem('user_id')}/profile`,
   },
   {
     name: "Account",
