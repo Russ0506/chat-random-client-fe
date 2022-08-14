@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Container,
@@ -57,7 +58,7 @@ export default function UserProfilePage() {
       sx={{
         ...shapeStyles,
         ...shapeCircleStyles,
-        backgroundImage: `url(${userData?.avatar_path})`,
+        backgroundImage: `url(/api${userData?.avatar_path})`,
       }}
     />
   );
