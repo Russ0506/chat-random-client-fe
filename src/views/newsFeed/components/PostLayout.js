@@ -12,6 +12,7 @@ import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Fade } from "@mui/material";
 import SmartClock from "../../../utils/smartClock";
+import { axiosClient } from "../../../setup/axiosClient";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -25,7 +26,21 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function PostLayout({ data }) {
+  const [reacted, setReacted] = React.useState(undefined)
+  const isReacted = () => {
+    if (reacted === undefined) return data.reacted_by_current_user;
 
+    return reacted;
+  }
+  const noOfReactions = () => {
+    let res = data?.no_of_reactions;
+    if (data?.reacted_by_current_user) res -= 1
+    return (isReacted() ? (res + 1) : res);
+  }
+  const toggleReaction = async () => {
+    await axiosClient.post(`/posts/${data.id}/toggle_react`);
+    setReacted(!isReacted())
+  }
   return (
     <Card
       sx={{
@@ -70,9 +85,12 @@ export default function PostLayout({ data }) {
       </Fade>
 
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton aria-label="add to favorites" onClick={toggleReaction}
+          color={isReacted()? 'error': 'default'}
+         >
           <FavoriteIcon />
         </IconButton>
+        <Typography>{noOfReactions()}</Typography>
       </CardActions>
     </Card>
   );
