@@ -49,7 +49,6 @@ class SignUp extends React.PureComponent {
       isSubmit: false,
       message: "",
       options: [],
-      timeZone: "",
       openStb: false,
       showPassword: false,
       showRePassword: false,
@@ -96,7 +95,7 @@ class SignUp extends React.PureComponent {
         );
         reader.readAsDataURL(e.target.files[0]);
       }
-  
+
       this.handleOpen();
     }
   };
@@ -119,7 +118,7 @@ class SignUp extends React.PureComponent {
     }
     return valid
   }
-  
+
  checkIfFilesAreCorrectType(file) {
     let valid = true
     if (!this.SUPPORTED_FORMATS.includes(file.type)) {
@@ -230,7 +229,6 @@ class SignUp extends React.PureComponent {
         email: event.email,
         password: event.password,
         gender: event.gender,
-        time_zone: event.timeZone,
         avatar: (this.state.croppedImage) ? this.state.croppedImage : null,
       },
     };
@@ -296,7 +294,6 @@ class SignUp extends React.PureComponent {
     email: "",
     password: "",
     rePassword: "",
-    timeZone: "",
     gender: "female",
     // photo: null,
   };
@@ -622,26 +619,6 @@ class SignUp extends React.PureComponent {
                                 label="Other"
                               />
                             </Field>
-                          </FormControl>
-                        </Grid>
-
-                        <Grid item xs={12}>
-                          <FormControl>
-                            <FormLabel>Time zone*</FormLabel>
-                            <Field
-                              as="select"
-                              // options={this.state.options}
-                              name="timeZone"
-                              className = "custom-select-box custom-border-box"
-                            // autoWidth
-                            >
-                              {(this.state.options.length > 0) ? this.state.options?.map((option, index) => {
-                                return (
-                                  <option key={index}>{option.value}</option>
-                                );
-                              }) : 'No timezone'}
-                            </Field>
-                            {errors.timeZone && touched.timeZone ? (<p className="css-1wc848c-MuiFormHelperText-root error-text" id="date-helper-text">{errors.timeZone}</p>) : null}
                           </FormControl>
                         </Grid>
                       </Grid>

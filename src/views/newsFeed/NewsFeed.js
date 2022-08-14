@@ -33,7 +33,6 @@ export default function NewsFeed() {
   const avatar_path = localStorage.getItem("avatar_path");
   const [posts, setPosts] = useState([]);
   const [partners] = useFetch("partners", []);
-  console.log(partners);
 
   useEffect(() => {
     axiosClient
