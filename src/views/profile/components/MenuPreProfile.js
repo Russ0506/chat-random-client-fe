@@ -73,7 +73,7 @@ export default class MenuPreProfile extends Component {
               {/* <ListItem key="Return back profile Page" disablePadding fullWidth>
                 <Button
                   component={Link}
-                  to="/users/profile"
+                  to={ `/users/${localStorage.getItem('user_id')}/profile` }
                   startIcon={<ArrowBackIcon />}
                   sx={{ borderRadius: "0 10px 10px 0" }}
                 >

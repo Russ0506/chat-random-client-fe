@@ -5,16 +5,14 @@ import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Fade } from "@mui/material";
+import SmartClock from "../../../utils/smartClock";
+import { axiosClient } from "../../../setup/axiosClient";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -28,7 +26,21 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function PostLayout({ data }) {
+  const [reacted, setReacted] = React.useState(undefined)
+  const isReacted = () => {
+    if (reacted === undefined) return data.reacted_by_current_user;
 
+    return reacted;
+  }
+  const noOfReactions = () => {
+    let res = data?.no_of_reactions;
+    if (data?.reacted_by_current_user) res -= 1
+    return (isReacted() ? (res + 1) : res);
+  }
+  const toggleReaction = async () => {
+    await axiosClient.post(`/posts/${data.id}/toggle_react`);
+    setReacted(!isReacted())
+  }
   return (
     <Card
       sx={{
@@ -44,8 +56,8 @@ export default function PostLayout({ data }) {
         avatar={
           <Avatar
             aria-label="recipe"
-            alt={data.userNm}
-            src={data.img}
+            alt="avatar"
+            src={`api/${data.user.avatar_path}`}
             sx={{
               bgcolor: red[500],
               p: 0,
@@ -54,23 +66,18 @@ export default function PostLayout({ data }) {
             }}
           />
         }
-        // action={
-        //   <IconButton aria-label="settings">
-        //     <MoreVertIcon />
-        //   </IconButton>
-        // }
-        title={data.userNm}
-        subheader="September 14, 2016"
+        title={data.user.name}
+        subheader={<SmartClock date={data.created_at} />}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {data.content}
+          {data.caption}
         </Typography>
       </CardContent>
       <Fade in={true}>
         <CardMedia
           component="img"
-          image={data.img}
+          image={`api/${data.image_path}`}
           alt="img"
           width="100%"
           loading="lazy"
@@ -78,9 +85,12 @@ export default function PostLayout({ data }) {
       </Fade>
 
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton aria-label="add to favorites" onClick={toggleReaction}
+          color={isReacted()? 'error': 'default'}
+         >
           <FavoriteIcon />
         </IconButton>
+        <Typography>{noOfReactions()}</Typography>
       </CardActions>
     </Card>
   );

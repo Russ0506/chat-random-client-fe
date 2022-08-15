@@ -33,7 +33,7 @@ import { axiosClient } from "../../../setup/axiosClient";
 const settings = [
   {
     name: "Profile",
-    linkUrl: "/users/profile",
+    linkUrl: `/users/${localStorage.getItem('user_id')}/profile`,
   },
   {
     name: "Edit profile",
@@ -298,7 +298,7 @@ const CherishAppBar = ({ index = 1 }) => {
               >
                 <Avatar
                   alt="Memy Sharp"
-                  src="#"
+                  src={localStorage.getItem("avatar_path")}
                   sx={{
                     p: 0,
                     background: "#817cce",

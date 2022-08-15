@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Container,
@@ -23,7 +24,8 @@ import ImagePoster from "./components/ImagePoster";
 import { URL } from "../../service/chat.service";
 import { POST_COVER, POST_COVER_MB } from "../../constant/css_constant";
 import { useTheme } from "@mui/styles";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import useFetch from "../../utils/useFetch";
 
 const URL_IMAGE = `${URL}/api`;
 const shapeStyles = {
@@ -37,10 +39,8 @@ const shapeCircleStyles = {
 };
 
 export default function UserProfilePage() {
-  const user_id = localStorage.getItem("user_id");
-  const avatar_path = localStorage.getItem("avatar_path");
-  const user_display_name = localStorage.getItem("user_display_name");
-  const [gender, setGender] = React.useState("female");
+  const { userId } = useParams();
+  const [userData] = useFetch(`users/${userId}`);
   const [openPoster, setOpenPoster] = React.useState(false);
   const [posterData, setPosterData] = React.useState({
     caption: "",
@@ -58,7 +58,7 @@ export default function UserProfilePage() {
       sx={{
         ...shapeStyles,
         ...shapeCircleStyles,
-        backgroundImage: `url(${avatar_path})`,
+        backgroundImage: `url(/api${userData?.avatar_path})`,
       }}
     />
   );
@@ -71,12 +71,14 @@ export default function UserProfilePage() {
     });
     setOpenPoster(true);
   }
+
   async function handleClosePoster() {
    await getPostList();
     setTimeout(() => {
       setOpenPoster(false);
-    }, 500); 
+    }, 500);
   }
+
   function handleOpenNewPost(type, posterData = null) {
     setCurrentPosterData(posterData)
     setOpenNewPoster({value: true, type: type});
@@ -87,7 +89,7 @@ export default function UserProfilePage() {
 
   async function getPostList() {
     await axiosClient
-      .get(`/users/${user_id}/posts`)
+      .get(`/users/${userId}/posts`)
       .then((data) => {
         const newData = data.map((item) => ({
           ...item,
@@ -155,30 +157,33 @@ export default function UserProfilePage() {
                   alignItems: "center",
                 }}
               >
-                {`${localStorage.getItem('user_display_name')} `}
-                {gender === "male" ? (
-                  <StyledMaleIcon
-                    fontSize="18px"
-                    sx={{
-                      ...shapeCircleStyles,
-                      pb: "5px",
-                    }}
-                  />
-                ) : (
-                  <StyledFemaleIcon
-                    fontSize="18px"
-                    sx={{
-                      ...shapeCircleStyles,
-                      pb: "5px",
-                    }}
-                  />
-                )}
+                {userData?.name}
+                {userData &&
+                  <>
+                    {userData.gender === "male" ? (
+                      <StyledMaleIcon
+                        fontSize="18px"
+                        sx={{
+                          ...shapeCircleStyles,
+                          pb: "5px",
+                        }}
+                      />
+                    ) : (
+                      <StyledFemaleIcon
+                        fontSize="18px"
+                        sx={{
+                          ...shapeCircleStyles,
+                          pb: "5px",
+                        }}
+                      />
+                    )}
+                  </>
+                }
               </Typography>
             </Stack>
             <Stack
               flexDirection="column"
               flexWrap="wrap"
-              // display={{ xs: "none", md: "flex" }}
               sx={{ mt: 2 }}
             >
               <Typography variant="body2">Hobbies: Tinder</Typography>

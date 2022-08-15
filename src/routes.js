@@ -14,14 +14,13 @@ import Homepage from "./views/Homepage";
 import AuthenLoading from "./views/common/base/loading/AuthenLoading";
 import CherishApp from "./views/common/header/CherishApp";
 import MenuPreProfile from "./views/profile/components/MenuPreProfile";
-import HomeScreen from "./views/homeScreen/HomeScreen";
+import NewsFeed from "./views/newsFeed/NewsFeed";
 import Logout from "./views/auth/Logout";
 import DashDefault from "./views/admin/dashboard/DashDefault/DashDefault";
 import AdminLayout from "./components/layouts/AdminLayout/AdminLayout";
 import UserManagement from "./views/admin/tables/UserManagement";
 import UserProfilePage from "./views/profile/UserProfilePage";
 import WelcomePage from "./views/welcome/WelcomePage";
-// import HomeScreenPage from "./views/homeScreen/HomeScreenPage";
 
 export const ProtectedRoute = ({ link = "/", children }) => {
   return <AuthenLoading link={link} children={children} />;
@@ -61,8 +60,6 @@ export default function Routes() {
     },
     {
       path: "/admin",
-      // element: <HomePage />,
-
       children: [
         {
           path: "",
@@ -108,7 +105,7 @@ export default function Routes() {
       path: "/homepage",
       element: (
         <CherishApp
-          body={<ProtectedRoute link="/homepage" children={<HomeScreen />} />}
+          body={<ProtectedRoute link="/homepage" children={<NewsFeed />} />}
           index={1}
         />
       ),
@@ -136,10 +133,10 @@ export default function Routes() {
           ),
         },
         {
-          path: "profile",
+          path: ":userId",
           children: [
             {
-              path: "",
+              path: "profile",
               element: (
                 <CherishApp
                   body={
@@ -148,10 +145,14 @@ export default function Routes() {
                       children={<UserProfilePage />}
                     />
                   }
-                  index={3}
                 />
               ),
-            },
+            }
+          ]
+        },
+        {
+          path: "profile",
+          children: [
             {
               path: "edit",
               element: (
