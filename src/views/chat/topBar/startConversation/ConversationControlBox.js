@@ -197,8 +197,7 @@ export default function ConversationControlBox() {
         <Alert severity="warning" sx={{ backgroundColor: "#282c34" }}>
           <Stack flexDirection="column" maxWidth="md">
             <AlertTitle color="#fff">
-              It seem you are waiting a bit long, do you still want to continue
-              finding partner?
+              "Patient is a good virtue, and your partner will love you for that"
             </AlertTitle>
             <Stack
               flexDirection="row"
@@ -218,7 +217,7 @@ export default function ConversationControlBox() {
                 sx={{ marginLeft: "10px", color: "#98b379" }}
                 onClick={continuePairing}
               >
-                Continute
+                Keep Waiting
               </Button>
             </Stack>
           </Stack>

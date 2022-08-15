@@ -36,7 +36,7 @@ const settings = [
     linkUrl: "/users/profile",
   },
   {
-    name: "Account",
+    name: "Edit profile",
     linkUrl: "/users/profile/edit",
   },
   {
