@@ -18,6 +18,10 @@ export const icoList = {
     notChosen: "ant-design:plus-square-outlined",
     chosen: "ant-design:plus-square-filled",
   },
+  newConversation: {
+    notChosen: "mdi:chat-plus-outline",
+    chosen: "mdi:chat-plus",
+  },
 };
 export const icoMenuList = [
   {

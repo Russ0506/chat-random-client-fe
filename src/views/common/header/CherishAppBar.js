@@ -14,7 +14,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import { Badge, Stack, styled, useTheme } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import { APP_BAR_HEIGHT } from "../../../constant/css_constant";
+import { APP_BAR_HEIGHT, DRAWER_WITH } from "../../../constant/css_constant";
 import { Link } from "react-router-dom";
 import { icoList, icoMenuList } from "../../../constant/AppBarConstant";
 import CBCLogo from "../../../assets/img/cbc_logo_sm.png";
@@ -30,10 +30,11 @@ import {
   setlistConversation,
 } from "../../../features/chat/conversationSlice";
 import { axiosClient } from "../../../setup/axiosClient";
+import ConversationControlBox from "../../chat/topBar/startConversation/ConversationControlBox";
 const settings = [
   {
     name: "Profile",
-    linkUrl: `/users/${localStorage.getItem('user_id')}/profile`,
+    linkUrl: `/users/profile/${localStorage.getItem("user_id")}`,
   },
   {
     name: "Edit profile",
@@ -44,7 +45,6 @@ const settings = [
   },
   { name: "Logout", linkUrl: "/users/logout" },
 ];
-const sidePadding = 38;
 const CherishAppBar = ({ index = 1 }) => {
   const currentUId = localStorage.getItem("user_id");
   const idsOfUnreadCon = useSelector(
@@ -57,7 +57,7 @@ const CherishAppBar = ({ index = 1 }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [useNewPost, setUseNewPost] = React.useState(false);
-  const [openTips, setOpenTips] = React.useState(true);
+  const [openTips, setOpenTips] = React.useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -142,7 +142,7 @@ const CherishAppBar = ({ index = 1 }) => {
               display: "flex",
             }}
           >
-            <MenuIcon
+            {/* <MenuIcon
               sx={{
                 p: 0,
                 width: "30px",
@@ -152,7 +152,7 @@ const CherishAppBar = ({ index = 1 }) => {
                 display: { xs: "flex", md: "none" },
               }}
               onClick={handleOpenNavMenu}
-            />
+            /> */}
             <Box
               component={Link}
               to="/homepage"
@@ -232,28 +232,38 @@ const CherishAppBar = ({ index = 1 }) => {
                 background: "#fff",
               }}
             > */}
-            <Box height="100%" display={{ xs: "none", md: "flex" }}>
-              {index == 1 ? (
-                <ChosenButtonNav>
+            <Stack
+              width={DRAWER_WITH}
+              height="100%"
+              padding={{ xs: 1 }}
+              alignItems="center"
+              justifyContent="center"
+              display={{ xs: "none", md: "flex" }}
+            >
+              <ConversationControlBox />
+            </Stack>
+            <Box height="100%" display="flex">
+              {index === 1 ? (
+                <ChosenButtonNav component={Link} to={icoList.home.link}>
                   <Iconify
                     icon={icoList.home.chosen}
-                    style={{ width: "35px", height: "35px" }}
+                    style={{ width: "31px", height: "31px" }}
                   />
                 </ChosenButtonNav>
               ) : (
                 <ButtonNav component={Link} to={icoList.home.link}>
                   <Iconify
                     icon={icoList.home.notChosen}
-                    style={{ width: "35px", height: "35px" }}
+                    style={{ width: "31px", height: "31px" }}
                   />
                 </ButtonNav>
               )}
-              {index == 2 ? (
-                <ChosenButtonNav>
+              {index === 2 ? (
+                <ChosenButtonNav component={Link} to={icoList.chat.link}>
                   <Badge color="secondary" badgeContent={idsOfUnreadCon.length}>
                     <Iconify
                       icon={icoList.chat.chosen}
-                      style={{ width: "28px", height: "28px" }}
+                      style={{ width: "25px", height: "25px" }}
                     />
                   </Badge>
                 </ChosenButtonNav>
@@ -262,7 +272,7 @@ const CherishAppBar = ({ index = 1 }) => {
                   <Badge color="secondary" badgeContent={idsOfUnreadCon.length}>
                     <Iconify
                       icon={icoList.chat.notChosen}
-                      style={{ width: "28px", height: "28px" }}
+                      style={{ width: "25px", height: "25px" }}
                     />
                   </Badge>
                 </ButtonNav>
@@ -282,20 +292,25 @@ const CherishAppBar = ({ index = 1 }) => {
                   />
                 </ButtonNav>
               )} */}
+              <ButtonNav>
+                <Badge color="secondary" badgeContent={idsOfUnreadCon.length}>
+                  <Iconify
+                    icon={icoList.newConversation.notChosen}
+                    style={{ width: "28px", height: "28px" }}
+                  />
+                </Badge>
+              </ButtonNav>
+              <ButtonNav>
+                <Badge color="secondary">
+                  <NotificationsNoneIcon
+                    sx={{ width: "28px", height: "28px" }}
+                  />
+                </Badge>
+              </ButtonNav>
             </Box>
-
             {/* </Stack> */}
-            <IconButton aria-label={notificationsLabel(100)}>
-              <Badge color="secondary">
-                <NotificationsNoneIcon sx={{ width: "30px", height: "30px" }} />
-              </Badge>
-            </IconButton>
             <Tooltip title="Open settings">
-              <IconButton
-                onClick={handleOpenUserMenu}
-                sx={{ ml: 1 }}
-                size="small"
-              >
+              <IconButton onClick={handleOpenUserMenu} size="small">
                 <Avatar
                   alt="Memy Sharp"
                   src={localStorage.getItem("avatar_path")}
@@ -342,6 +357,9 @@ const CherishAppBar = ({ index = 1 }) => {
                         pr: 2,
                       }}
                       to={setting.linkUrl == null ? "" : setting.linkUrl}
+                      onClick={() => {
+                        setOpenTips(true);
+                      }}
                     >
                       {setting.name}
                     </Typography>
@@ -368,8 +386,8 @@ const CherishAppBar = ({ index = 1 }) => {
           </Stack>
         </Toolbar>
       </Container>
-      {openTips ? <TipsGuide /> : <></>}
-      {useNewPost == true ? (
+      {openTips ? <TipsGuide onClose={() => setOpenTips(false)} /> : <></>}
+      {useNewPost === true ? (
         <NewPosterLayout open={true} onClose={handleCloseNewPost} />
       ) : (
         ""
@@ -380,9 +398,9 @@ const CherishAppBar = ({ index = 1 }) => {
 export default CherishAppBar;
 const navBtnCmm = {
   borderRadius: "0px",
-  width: "50px",
+  width: "auto",
   height: "100%",
-  margin: "0px 20px 0px 0px",
+  margin: "0px 25px 0px 0px",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",

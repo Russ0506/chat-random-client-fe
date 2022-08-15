@@ -4,7 +4,6 @@ import {
   List,
   ListItem,
   ListItemButton,
-  Stack,
 } from "@mui/material";
 import React, { useEffect } from "react";
 import { styled } from "@mui/styles";
@@ -20,8 +19,6 @@ import {
 } from "../../../../features/chat/conversationSlice";
 import { seenLastMessage } from "../../../../features/chat/messagesSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { DRAWER_WITH } from "../../../../constant/css_constant";
-import ConversationControlBox from "../../topBar/startConversation/ConversationControlBox";
 import { onlineStatusSocket } from "../../../sockets/Socket";
 
 const Search = styled("div")(({ theme }) => ({
@@ -148,16 +145,6 @@ export default function ConversationsList() {
           <RenderConversationsList />
         </List>
       </Box>
-      <Stack
-        width={DRAWER_WITH}
-        height="70px"
-        padding={{ xs: 1 }}
-        alignItems="center"
-        justifyContent="flex-start"
-        paddingBottom={2.8}
-      >
-        <ConversationControlBox />
-      </Stack>
     </>
   );
 }
