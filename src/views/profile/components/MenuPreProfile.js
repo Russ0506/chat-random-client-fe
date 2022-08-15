@@ -70,7 +70,7 @@ export default class MenuPreProfile extends Component {
             }}
           >
             <Stack flexDirection="column" sx={{ width: "100%" }}>
-              <ListItem key="Return back profile Page" disablePadding fullWidth>
+              {/* <ListItem key="Return back profile Page" disablePadding fullWidth>
                 <Button
                   component={Link}
                   to={ `/users/${localStorage.getItem('user_id')}/profile` }
@@ -81,7 +81,7 @@ export default class MenuPreProfile extends Component {
                     Back to Profile Page
                   </Typography>
                 </Button>
-              </ListItem>
+              </ListItem> */}
               <List>
                 {menuList.map((item, k) => (
                   <ListItem key={k} disablePadding fullWidth>
@@ -120,7 +120,7 @@ export default class MenuPreProfile extends Component {
 
 const menuList = [
   {
-    name: "Profile",
+    name: "Edit Profile",
     link: "/users/profile/edit",
     component: <EditProfile />,
   },

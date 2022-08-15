@@ -49,7 +49,10 @@ export default function UserProfilePage() {
   });
   const [listPosterData, setListPosterData] = React.useState([]);
   const [currentPosterData, setCurrentPosterData] = React.useState(null);
-  const [openNewPoster, setOpenNewPoster] = React.useState({value: false, type: "new"});
+  const [openNewPoster, setOpenNewPoster] = React.useState({
+    value: false,
+    type: "new",
+  });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const circle = (
@@ -73,18 +76,18 @@ export default function UserProfilePage() {
   }
 
   async function handleClosePoster() {
-   await getPostList();
+    await getPostList();
     setTimeout(() => {
       setOpenPoster(false);
     }, 500);
   }
 
   function handleOpenNewPost(type, posterData = null) {
-    setCurrentPosterData(posterData)
-    setOpenNewPoster({value: true, type: type});
+    setCurrentPosterData(posterData);
+    setOpenNewPoster({ value: true, type: type });
   }
   function handleCloseNewPost() {
-    setOpenNewPoster({value: false, type: "new"});
+    setOpenNewPoster({ value: false, type: "new" });
   }
 
   async function getPostList() {
@@ -130,23 +133,27 @@ export default function UserProfilePage() {
             position: "relative",
           }}
         >
-          <Button
-            component={Link}
-            to={"/users/profile/edit"}
-            variant="outlined"
-            // variant="contained"
-            sx={{
-              maxWidth: 180,
-              border: "1px solid rgb(30 20 189 / 50%)",
-              color: "rgb(30 20 189 / 70%)",
-              position: "absolute",
-              right: theme.spacing(2),
-              top: theme.spacing(2),
-            }}
-            size="small"
-          >
-            Edit Profile
-          </Button>
+          {userId === localStorage.getItem("user_id") ? (
+            <Button
+              component={Link}
+              to={"/users/profile/edit"}
+              variant="outlined"
+              // variant="contained"
+              sx={{
+                maxWidth: 180,
+                border: "1px solid rgb(30 20 189 / 50%)",
+                color: "rgb(30 20 189 / 70%)",
+                position: "absolute",
+                right: theme.spacing(2),
+                top: theme.spacing(2),
+              }}
+              size="small"
+            >
+              Edit Profile
+            </Button>
+          ) : (
+            <></>
+          )}
           <Badge>{circle}</Badge>
           <Box sx={{ ml: 2 }}>
             <Stack flexDirection={{ xs: "column", md: "column" }}>
@@ -158,7 +165,7 @@ export default function UserProfilePage() {
                 }}
               >
                 {userData?.name}
-                {userData &&
+                {userData && (
                   <>
                     {userData.gender === "male" ? (
                       <StyledMaleIcon
@@ -178,14 +185,10 @@ export default function UserProfilePage() {
                       />
                     )}
                   </>
-                }
+                )}
               </Typography>
             </Stack>
-            <Stack
-              flexDirection="column"
-              flexWrap="wrap"
-              sx={{ mt: 2 }}
-            >
+            <Stack flexDirection="column" flexWrap="wrap" sx={{ mt: 2 }}>
               <Typography variant="body2">Hobbies: Tinder</Typography>
               <Typography variant="body2">
                 Location: Cam Le, Danang, Viet Nam
@@ -206,24 +209,32 @@ export default function UserProfilePage() {
         >
           <Box height="60px">
             <Stack flexDirection="row" justifyContent="space-between">
-              <Typography variant="h6" color="black">
-                My Posts
-              </Typography>
-              <Button
-                onClick={()=>handleOpenNewPost("new",null)}
-                variant="outlined"
-                sx={{
-                  ml: 1,
-                  mb: 1,
-                  maxWidth: 180,
-                  border: "1px solid rgb(30 20 189 / 50%)",
-                  color: "rgb(30 20 189 / 70%)",
-                }}
-                size="small"
-                startIcon={<AddIcon />}
-              >
-                New Post
-              </Button>
+              {userId === localStorage.getItem("user_id") ? (
+                <>
+                  <Typography variant="h6" color="black">
+                    My Posts
+                  </Typography>
+                  <Button
+                    onClick={() => handleOpenNewPost("new", null)}
+                    variant="outlined"
+                    sx={{
+                      ml: 1,
+                      mb: 1,
+                      maxWidth: 180,
+                      border: "1px solid rgb(30 20 189 / 50%)",
+                      color: "rgb(30 20 189 / 70%)",
+                    }}
+                    size="small"
+                    startIcon={<AddIcon />}
+                  >
+                    New Post
+                  </Button>
+                </>
+              ) : (
+                <Typography variant="h6" color="black">
+                  Partner Posts
+                </Typography>
+              )}
             </Stack>
             <Divider
               variant="middle"
@@ -241,7 +252,7 @@ export default function UserProfilePage() {
             <ImageList
               variant="standard"
               cols={isMobile ? 2 : 3}
-              gap={0}
+              gap={3}
               rowHeight={isMobile ? POST_COVER_MB : POST_COVER}
               style={{ overflow: "hidden" }}
             >
@@ -272,7 +283,7 @@ export default function UserProfilePage() {
               open={openPoster}
               onClose={handleClosePoster}
               data={posterData}
-              onOpenEditBox={()=>handleOpenNewPost("edit", posterData )}
+              onOpenEditBox={() => handleOpenNewPost("edit", posterData)}
             />
           ) : (
             <></>

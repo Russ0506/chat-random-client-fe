@@ -133,24 +133,6 @@ export default function Routes() {
           ),
         },
         {
-          path: ":userId",
-          children: [
-            {
-              path: "profile",
-              element: (
-                <CherishApp
-                  body={
-                    <ProtectedRoute
-                      link="/users/profile"
-                      children={<UserProfilePage />}
-                    />
-                  }
-                />
-              ),
-            }
-          ]
-        },
-        {
           path: "profile",
           children: [
             {
@@ -164,6 +146,19 @@ export default function Routes() {
                     />
                   }
                   index={3}
+                />
+              ),
+            },
+            {
+              path: ":userId",
+              element: (
+                <CherishApp
+                  body={
+                    <ProtectedRoute
+                      link="/users/profile"
+                      children={<UserProfilePage />}
+                    />
+                  }
                 />
               ),
             },

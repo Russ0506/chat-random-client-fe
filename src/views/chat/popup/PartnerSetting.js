@@ -1,4 +1,11 @@
-import { Chip, Input, InputBase, InputLabel, Stack, Typography } from "@mui/material";
+import {
+  Chip,
+  Input,
+  InputBase,
+  InputLabel,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import DialogContent from "@mui/material/DialogContent";
@@ -24,7 +31,11 @@ import { CmmnInputLabel } from "./components/CmmnInputLabel";
 import { CmmnSelect } from "./components/CmmnSelect";
 import { CmmnGroupSelect } from "./components/CmmnGroupSelect";
 import Slider from "@mui/material/Slider";
-import InputAdornment from '@mui/material/InputAdornment';
+import InputAdornment from "@mui/material/InputAdornment";
+const minDistance = 0;
+function valuetext(value) {
+  return `${value}°C`;
+}
 export default function PartnerSetting(props) {
   const theme = useTheme();
   const useEffect = React.useEffect;
@@ -60,7 +71,10 @@ export default function PartnerSetting(props) {
   const label = { inputProps: { "aria-label": "Switch demo" } };
   const min = 0;
   const max = 100;
-
+  const [ageSlideVal, setAgeSlideVal] = React.useState([
+    props.userSetting.from_age,
+    props.userSetting.to_age,
+  ]);
   const setCurrentLocationPermision = (event, child) => {
     setcurrentLocationPermision(
       currentLocationPermision === false ? true : false
@@ -135,6 +149,24 @@ export default function PartnerSetting(props) {
 
   const handleInputChange = (event) => {
     setSlideVal(event.target.value === "" ? "" : Number(event.target.value));
+  };
+
+  const handleChangeAgeSlideVal = (event, newValue, activeThumb) => {
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+
+    if (activeThumb === 0) {
+      setAgeSlideVal([
+        Math.min(newValue[0], ageSlideVal[1] - minDistance),
+        ageSlideVal[1],
+      ]);
+    } else {
+      setAgeSlideVal([
+        ageSlideVal[0],
+        Math.max(newValue[1], ageSlideVal[0] + minDistance),
+      ]);
+    }
   };
 
   const handleBlur = () => {
@@ -214,9 +246,6 @@ export default function PartnerSetting(props) {
               </CmmnInputLabel>
               <Box width="xl" sx={{ mt: 3, pl: 1, pr: 1 }}>
                 <Grid container spacing={2}>
-                  {/* <Grid item>
-                    <SocialDistanceIcon sx={{width:"40px", height: "40px"}}/>
-                  </Grid> */}
                   <Grid item xs>
                     <Slider
                       min={5}
@@ -242,25 +271,8 @@ export default function PartnerSetting(props) {
                         type: "number",
                         "aria-labelledby": "input-slider",
                       }}
-                      sx={{width: "75px", pt: 0, pb:0, mt: 0}}
+                      sx={{ width: "75px", pt: 0, pb: 0, mt: 0 }}
                     />
-                    {/* <MuiInput
-                      name="radius"
-                      value={slideVal}
-                      size="small"
-                      onChange={handleInputChange}
-                      onBlur={handleBlur}
-                      endAdornment={
-                        <InputAdornment position="end">kg</InputAdornment>
-                      }
-                      inputProps={{
-                        step: 10,
-                        min: 5,
-                        max: 100,
-                        type: "number",
-                        "aria-labelledby": "input-slider",
-                      }}
-                    /> */}
                   </Grid>
                 </Grid>
               </Box>
@@ -305,31 +317,16 @@ export default function PartnerSetting(props) {
                     flexDirection: "row",
                   }}
                 >
-                  <FormLabel sx={sxJustifyContent}>From</FormLabel>
+                  <FormLabel sx={sxJustifyContent}>
+                    From {ageSlideVal[0]}
+                  </FormLabel>
                   <CmmnInput
                     as={TextField}
                     name="from_age"
                     type="number"
                     defaultValue={initData.user_setting.from_age}
-                    InputLabelProps={{
-                      shrink: true,
-                      inputProps: {
-                        type: "number",
-                        min: 0,
-                        max: 100,
-                        maxLength: 10,
-                      },
-                    }}
-                    inputProps={{ min: 0, max: 100 }}
-                    sx={{ ml: 1, marginTop: "0 !important" }}
-                    onChange={(e) => {
-                      var value = parseInt(e.target.value, 10);
-
-                      if (value > max) value = max;
-                      if (value < min) value = min;
-
-                      return value;
-                    }}
+                    value={ageSlideVal[0]}
+                    sx={{ display: "none" }}
                   />
                 </FormControl>
                 <FormControl
@@ -340,33 +337,27 @@ export default function PartnerSetting(props) {
                     flexDirection: "row",
                   }}
                 >
-                  <FormLabel sx={sxJustifyContent}>To</FormLabel>
+                  <FormLabel sx={sxJustifyContent}>
+                    To {ageSlideVal[1]}
+                  </FormLabel>
                   <CmmnInput
                     as={TextField}
                     name="to_age"
                     type="number"
                     defaultValue={initData.user_setting.to_age}
-                    InputLabelProps={{
-                      inputProps: {
-                        type: "number",
-                        min: 0,
-                        max: 100,
-                        maxLength: 10,
-                      },
-                    }}
-                    inputProps={{ min: 0, max: 100 }}
-                    sx={{ ml: 1, marginTop: "0 !important" }}
-                    onChange={(e) => {
-                      var value = parseInt(e.target.value, 10);
-
-                      if (value > max) value = max;
-                      if (value < min) value = min;
-
-                      return value;
-                    }}
+                    value={ageSlideVal[1]}
+                    sx={{ display: "none" }}
                   />
                 </FormControl>
               </Stack>
+              <Slider
+                getAriaLabel={() => "Minimum distance"}
+                value={ageSlideVal}
+                onChange={handleChangeAgeSlideVal}
+                valueLabelDisplay="auto"
+                getAriaValueText={valuetext}
+                disableSwap
+              />
             </Stack>
             <Stack sx={{ mt: "15px" }}>
               <CmmnInputLabel shrink htmlFor="demo-multiple-chip">

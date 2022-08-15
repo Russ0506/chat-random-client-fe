@@ -22,6 +22,7 @@ export default function ImagePoster(props) {
           opacity: loadingContext ? "1" : "0",
           overflow: "hidden",
           transition: "all 0.25s ease",
+          border: "1px solid #efefef",
         }}
       >
         <Grow
@@ -66,6 +67,7 @@ export default function ImagePoster(props) {
               overflow: "hidden",
               boxShadow:
                 " rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
+              border: "1px solid #f7f7f7",
             }}
             onClick={() => props.handleOpenPoster(props.item)}
             onError={() => {

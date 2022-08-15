@@ -47,11 +47,12 @@ const images = [
   },
 ];
 
-export default function TipsGuide({ open = true }) {
+export default function TipsGuide({ open = true, onClose = () => {} }) {
   const [openM, setOpenM] = useState(open);
 
   const handleCloseModal = () => {
     setOpenM(false);
+    onClose();
   };
 
   const theme = useTheme();
