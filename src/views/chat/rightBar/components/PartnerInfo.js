@@ -49,7 +49,7 @@ export default function PartnerInfo(props) {
           <Typography component="div" variant="body1" fontWeight={700}>
             Age:{" "}
             <Typography component="div" variant="body1" display="inline">
-              29
+            {props.partnerInfor.age}
             </Typography>
           </Typography>
           <Typography component="div" variant="body1" fontWeight={700}>

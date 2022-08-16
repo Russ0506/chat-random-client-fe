@@ -33,7 +33,7 @@ export default function RegisterConfirm() {
             alignItems: 'center',
           }}
         >
-            <Typography component="h1" variant="h5">
+            <Typography component="h1">
             Register
           </Typography>
         <br></br><br></br>

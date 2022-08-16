@@ -99,17 +99,17 @@ export default function Conversation({ data }) {
           >
             <Avatar
               sx={{ width: 50, height: 50 }}
-              alt=""
+              alt={data.partner.name}
               src={URL_IMAGE + data.partner.avatar_path}
             />
           </StyledBadge>
           <Box sx={{ width: "calc(100% - 40px)" }}>
-            <Typography variant="subtitle2" component="p">
+            <Typography variant="subtitle2" component="div">
               {data.partner.name}
             </Typography>
             <Stack flexDirection="row" width="100%" alignItems="center" justifyContent="space-between">
               <Typography
-                component="p"
+                component="div"
                 variant="subtitle2"
                 sx={{
                   whiteSpace: "nowrap",

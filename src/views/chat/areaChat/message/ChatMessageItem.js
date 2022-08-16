@@ -44,7 +44,7 @@ ChatMessageItem.propTypes = {
   onOpenLightbox: PropTypes.func,
 };
 
-export default function ChatMessageItem({ message, onOpenLightbox, nextMessage }) {
+export default function ChatMessageItem({ message, onOpenLightbox, nextMessage, avatarPath, name }) {
   const [showHistoryTimeFlg, setShowHistoryTimeFlg] = React.useState(false)
 
   const lastestMsgStatus = useSelector((state) => {
@@ -108,7 +108,7 @@ export default function ChatMessageItem({ message, onOpenLightbox, nextMessage }
           >
             {senderDetails.type !== "me" && (
               // <Avatar alt={senderDetails.name} src={senderDetails.avatar} sx={{ width: 32, height: 32 }} />
-              <Avatar sx={{ width: 40, height: 40 }} />
+              <Avatar  alt={name} src={avatarPath} sx={{ width: 40, height: 40 }} />
             )}
 
             <Tooltip
@@ -150,6 +150,8 @@ export default function ChatMessageItem({ message, onOpenLightbox, nextMessage }
             </Tooltip>
             {isMe ? (
               <MessageStatus
+                avatarPath = {avatarPath}
+                // name = {name}
                 status={lastestMsgStatus || message.status}
                 showSeen={nextMessageStatus() != "seen"}
               />

@@ -88,7 +88,7 @@ export default function TipsGuide({ open = true, onClose = () => {} }) {
           alignItems: "center",
         }}
       >
-        <Typography variant="h5">Tips & Guide</Typography>
+        <Typography component={"h5"} >Tips & Guide</Typography>
         <IconButton onClick={handleCloseModal} size="small">
           <CloseIcon sx={{ width: "30px", height: "30px" }} />
         </IconButton>
