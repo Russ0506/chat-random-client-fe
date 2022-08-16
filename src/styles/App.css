@@ -181,3 +181,6 @@ p[id*="helper-text"], .error-text {
   color: black;
   font-weight: 700;
 }
+a.MuiTypography-root:hover, .__mui_navigate {
+  color: #6748da !important;
+}

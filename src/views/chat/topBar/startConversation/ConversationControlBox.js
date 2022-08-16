@@ -1,10 +1,4 @@
-import {
-  Alert,
-  AlertTitle,
-  Button,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Alert, AlertTitle, Button, Stack, Typography } from "@mui/material";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getDataSearch } from "../../../../features/user-setting";
@@ -13,14 +7,12 @@ import PartnerSettingModal from "../../popup/PartnerSettingModal";
 import Snackbar from "@mui/material/Snackbar";
 import { styled } from "@mui/styles";
 import { pairingSocket } from "../../../sockets/Socket";
-import {
-  selectNewestConversations
-} from "../../../../features/chat/conversationSlice";
+import { selectNewestConversations } from "../../../../features/chat/conversationSlice";
 import { useSelector } from "react-redux";
-
+import { icoList } from "../../../../constant/AppBarConstant";
 
 let pairingInterval = setInterval(() => {}, 1000);
-export default function ConversationControlBox() {
+export default function ConversationControlBox({ isNav = false }) {
   const dispatch = useDispatch();
   const [pairing, setPairing] = useState(false);
   const [userSetting, setUserSetting] = useState(null);
@@ -122,32 +114,77 @@ export default function ConversationControlBox() {
     setOpenPairingSuccessModal({ ...openPairingSuccessModal, open: false });
   }
 
+  function renderDefaultPairingBtn() {
+    if (isNav === true) {
+      return (
+        <Stack
+          justifyContent="center"
+          alignItems="center"
+          height="100%"
+          width="100%"
+          onClick={pairing === false ? handleOpenSettingModal : cancelPairing}
+        >
+          {pairing === false ? (
+            <Iconify
+              icon={icoList.newConversation.notChosen}
+              style={{
+                width: "28px",
+                height: "28px",
+              }}
+            />
+          ) : (
+            <Iconify
+              onClick={
+                pairing === false ? handleOpenSettingModal : cancelPairing
+              }
+              icon={icoList.newConversation.chosen}
+              style={{
+                width: "28px",
+                height: "28px",
+                color: "#817cce",
+              }}
+            />
+          )}
+        </Stack>
+      );
+    } else {
+      return (
+        <Button
+          variant="contained"
+          onClick={pairing === false ? handleOpenSettingModal : cancelPairing}
+          sx={{ boxShadow: "0px 8px 10px rgb(237 221 255)" }}
+          endIcon={
+            pairing === false ? (
+              <Iconify icon={"mdi:chat-plus-outline"} />
+            ) : (
+              <Iconify icon={"eos-icons:bubble-loading"} />
+            )
+          }
+        >
+          {pairing === false ? (
+            <Typography variant="button">New Conversation</Typography>
+          ) : (
+            <Typography variant="button">Pairing...</Typography>
+          )}
+        </Button>
+      );
+    }
+  }
+
   return (
     <>
       {finishLoading === true ? (
         <Stack
           direction="row"
           spacing={2}
-          sx={{ alignItems: "center", justifyContent: "center" }}
+          sx={{
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+            width: "100%",
+          }}
         >
-          <Button
-            variant="contained"
-            onClick={pairing === false ? handleOpenSettingModal : cancelPairing}
-            sx={{ boxShadow: "0px 8px 10px rgb(237 221 255)" }}
-            endIcon={
-              pairing === false ? (
-                <Iconify icon={"mdi:chat-plus-outline"} />
-              ) : (
-                <Iconify icon={"eos-icons:bubble-loading"} />
-              )
-            }
-          >
-            {pairing === false ? (
-              <Typography variant="button">New Conversation</Typography>
-            ) : (
-              <Typography variant="button">Pairing...</Typography>
-            )}
-          </Button>
+          {renderDefaultPairingBtn()}
         </Stack>
       ) : (
         <></>
@@ -197,7 +234,8 @@ export default function ConversationControlBox() {
         <Alert severity="warning" sx={{ backgroundColor: "#282c34" }}>
           <Stack flexDirection="column" maxWidth="md">
             <AlertTitle color="#fff">
-              "Patient is a good virtue, and your partner will love you for that"
+              "Patient is a good virtue, and your partner will love you for
+              that"
             </AlertTitle>
             <Stack
               flexDirection="row"

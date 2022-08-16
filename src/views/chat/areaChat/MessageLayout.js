@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 import ChatMessageInput from "./sendMessageBox/ChatMessageInput";
 import { useSelector } from "react-redux";
@@ -9,30 +9,35 @@ import { MB_LEFT_SIDEBAR_WIDTH } from "../../../constant/css_constant";
 import ChatBg from "../../../assets/img/bigChat.png";
 export default function MessageLayout({ openBar }) {
   const conversation = useSelector(selectConversation);
-
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const renderChatHeader = () => {
-    if (!conversation?.partner) return (
-      <Stack
-        justifyContent="center"
-        alignItems="center"
-        sx={{ opacity: "0.6", width: "100%", height: "100%" }}
-      >
-        <img src={ChatBg} alt="" height="80%"></img>
-      </Stack>
-    );
+    if (!conversation?.partner)
+      return (
+        <Stack
+          justifyContent="center"
+          alignItems="center"
+          sx={{ opacity: "0.6", width: "100%", height: "100%" }}
+        >
+          <img
+            src={ChatBg}
+            alt=""
+            height={isMobile ? "auto" : "80%"}
+            width={isMobile ? "100%" : ""}
+          ></img>
+        </Stack>
+      );
     return (
       <>
         <ChatHeaderDetail partner={conversation?.partner} openBar={openBar} />
         <ChatMessageList conversation={conversation} />
       </>
     );
-  }
+  };
   const renderChatInput = () => {
-    if (!conversation?.partner) return(<></>);
-    return (
-        <ChatMessageInput disabled={false} conversation={conversation} />
-    );
-  }
+    if (!conversation?.partner) return <></>;
+    return <ChatMessageInput disabled={false} conversation={conversation} />;
+  };
   return (
     <Box
       sx={{
