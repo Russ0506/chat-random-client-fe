@@ -203,7 +203,6 @@ export default function ResetPassword(props) {
               <Button
                 type="submit"
                 variant="contained"
-                color="success"
                 size="large"
                 disabled={loading}
                 sx={{ fontWeight: "bold" }}
@@ -221,6 +220,7 @@ export default function ResetPassword(props) {
           </Form>)}
         </Formik>
       </Box>
+      <Box className="login-main"></Box>
     </Box>
   );
 }

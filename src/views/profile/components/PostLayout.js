@@ -12,7 +12,7 @@ import {
   Menu,
   MenuItem,
   Stack,
-  Typography
+  Typography,
 } from "@mui/material";
 import { styled } from "@mui/styles";
 import { Box } from "@mui/system";
@@ -37,7 +37,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function handleClose() {
   return false;
 }
-export default function PosterLayout({
+export default function PostLayout({
   open = true,
   data,
   onClose = handleClose(),
@@ -45,7 +45,7 @@ export default function PosterLayout({
   onOpenEditBox = handleClose(),
 }) {
   const [openM, setOpenM] = useState(open);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [anchorElNav, setAnchorElNav] = useState(false);
   const handleClosePostMenu = () => {
     setAnchorElNav(null);
@@ -60,29 +60,29 @@ export default function PosterLayout({
 
   const handleCasePost = (index) => {
     if (index === 0) {
-      handleCloseModal()
+      handleCloseModal();
       setTimeout(() => {
-        onOpenEditBox()
+        onOpenEditBox();
       }, 500);
     }
     if (index === 1) {
-      handleDeletePost()
+      handleDeletePost();
     }
-  }
+  };
 
   const handleDeletePost = () => {
-    setLoading(true)
+    setLoading(true);
     axiosClient
-    .delete(`${URL}/${data?.id}`)
-    .then((data) => {
-      setTimeout(() => {
-        onClose(data.data);
-      }, 500);
-    })
-    .catch(() => { 
-      // setIsPost(false)
-    });
-  }
+      .delete(`${URL}/${data?.id}`)
+      .then((data) => {
+        setTimeout(() => {
+          onClose(data.data);
+        }, 500);
+      })
+      .catch(() => {
+        // setIsPost(false)
+      });
+  };
 
   return (
     <Dialog
@@ -115,52 +115,53 @@ export default function PosterLayout({
             className="justify-content-between"
           >
             <Typography sx={{ fontWeight: 550, ml: 1 }}>
-            {localStorage.getItem('user_display_name')}
+              {localStorage.getItem("user_display_name")}
             </Typography>
-            {isReadonlyMode ? "" : <Box>
-              <IconButton onClick={handleOpenPostMenu}>
-                <MoreHorizIcon sx={{ width: "30px", height: "30px" }} />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "center",
-                  horizontal: "right",
-                }}
-                elevation={3}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleClosePostMenu}
-              >
-                {menuList.map((menu, index) =>
-                  menu.name === "New Post" ? (
-                    <div key={index}></div>
-                  ) : (
-                    <MenuItem key={index} >
-                      <IconButton onClick={() => handleCasePost(index)}
-                        display="flex"
-                        className="justify-content-end">
+            {isReadonlyMode ? (
+              ""
+            ) : (
+              <Box>
+                <IconButton onClick={handleOpenPostMenu}>
+                  <MoreHorizIcon sx={{ width: "30px", height: "30px" }} />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: "center",
+                    horizontal: "right",
+                  }}
+                  elevation={3}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleClosePostMenu}
+                >
+                  {menuList.map((menu, index) =>
+                    menu.name === "New Post" ? (
+                      <div key={index}></div>
+                    ) : (
+                      <MenuItem
+                        key={index}
+                        onClick={() => handleCasePost(index)}
+                      >
                         <Typography
                           key={index}
-                          // component={Link}
-                          // to={menu.link}
                           textAlign="center"
                           color="#000"
                           fontSize="18px"
                         >
                           {menu.name}
                         </Typography>
-                      </IconButton>
-                    </MenuItem>
-                  )
-                )}
-              </Menu>
-            </Box>}
+                      </MenuItem>
+                    )
+                  )}
+                </Menu>
+              </Box>
+            )}
           </Stack>
         </Stack>
 

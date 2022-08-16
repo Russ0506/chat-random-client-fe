@@ -8,10 +8,10 @@ import PartnerInfo from "./components/PartnerInfo";
 import PartnerPoster from "./components/PartnerPoster";
 import ReportModal from "./components/ReportModal";
 import SecrectPartnerPoster from "./components/SecrectPartnerPoster";
+import SharedPartnerInfo from "./components/SharedPartnerInfo";
 
 export default function RightBar() {
 
-  const [reportModal, setReportModal] = React.useState(false)
 
   const dispatch = useDispatch();
   const currentConversation = useSelector(selectConversation);
@@ -34,35 +34,17 @@ export default function RightBar() {
     dispatch(changeConversation(changedCurrentConversation));
   }
 
-  function reportUser() {
-    setReportModal(true);
-  }
 
-  return (conversationLatestStatus || currentConversation?.status) !== 'sharing' ? (
-    <>
-      <ReportModal
-        onClose={() => setReportModal(false)}
-        open={reportModal}
-        data={currentConversation.partner}
-      ></ReportModal>
-      <SecrectPartnerPoster showInfo={shareInformation}
-        reportUser={reportUser}
-        accepted={currentConversation?.current_user_conversation?.status === 'sharing'} />
-    </>
 
+  return (conversationLatestStatus || currentConversation?.status) !==
+    "sharing" ? (
+    <SecrectPartnerPoster
+      showInfo={shareInformation}
+      accepted={
+        currentConversation?.current_user_conversation?.status === "sharing"
+      }
+    />
   ) : (
-    <>
-      <Stack
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ height: "30%", minHeight: "320px" }}
-      >
-        <PartnerInfo partnerInfor={currentConversation.partner} />
-      </Stack>
-      <Box sx={{ height: "40%" }}>
-        <PartnerPoster partnerInfor={currentConversation.partner} />
-      </Box>
-    </>
+    <SharedPartnerInfo partnerInfor={currentConversation.partner} />
   );
 }
