@@ -71,7 +71,7 @@ export default function ResetPassword(props) {
       is: val => (val && val.length > 0 ? true : false),
       then: Yup.string().oneOf(
         [Yup.ref("password")],
-        "Confirm password need to be the same as password"
+        "Confirm password need to match your password"
       )
     }),
   });
