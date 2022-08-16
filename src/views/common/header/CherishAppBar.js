@@ -5,18 +5,15 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import { Badge, Stack, styled, useTheme } from "@mui/material";
+import { Badge, Stack, styled, useMediaQuery, useTheme } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import { APP_BAR_HEIGHT, DRAWER_WITH } from "../../../constant/css_constant";
+import { APP_BAR_HEIGHT} from "../../../constant/css_constant";
 import { Link } from "react-router-dom";
-import { icoList, icoMenuList } from "../../../constant/AppBarConstant";
+import { icoList } from "../../../constant/AppBarConstant";
 import CBCLogo from "../../../assets/img/cbc_logo_sm.png";
 import CBCTitle from "../../../assets/img/cbc_title.png";
 import Iconify from "../base/icon/Iconify";
@@ -58,6 +55,8 @@ const CherishAppBar = ({ index = 1 }) => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [useNewPost, setUseNewPost] = React.useState(false);
   const [openTips, setOpenTips] = React.useState(false);
+  const theme= useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -168,10 +167,14 @@ const CherishAppBar = ({ index = 1 }) => {
               <img
                 src={CBCTitle}
                 alt=""
-                style={{ height: "calc(100% / 2.5)", marginLeft: "5px" }}
+                style={{
+                  height: "calc(100% / 2.5)",
+                  marginLeft: "5px",
+                  display: isMobile ? "none" : "block",
+                }}
               ></img>
             </Box>
-            <Menu
+            {/* <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -205,20 +208,20 @@ const CherishAppBar = ({ index = 1 }) => {
                   </MenuItem>
                 )
               )}
-            </Menu>
+            </Menu> */}
           </Box>
-          <Box
+          {/* <Box
             sx={{
               flexGrow: 1,
               display: { xs: "none", md: "flex" },
               justifyContent: "flex-end",
             }}
-          ></Box>
+          ></Box> */}
           <Stack
             flexDirection="row"
             justifyContent="center"
             alignItems="center"
-            sx={{ flexGrow: 0, ml: 2, height: "100%" }}
+            sx={{ flexGrow: isMobile ? 1 : 0, height: "100%" }}
           >
             {/* <Stack
               display={{ xs: "none", md: "flex" }}
@@ -232,16 +235,6 @@ const CherishAppBar = ({ index = 1 }) => {
                 background: "#fff",
               }}
             > */}
-            <Stack
-              width={DRAWER_WITH}
-              height="100%"
-              padding={{ xs: 1 }}
-              alignItems="center"
-              justifyContent="center"
-              display={{ xs: "none", md: "flex" }}
-            >
-              <ConversationControlBox />
-            </Stack>
             <Box height="100%" display="flex">
               {index === 1 ? (
                 <ChosenButtonNav component={Link} to={icoList.home.link}>
@@ -277,28 +270,8 @@ const CherishAppBar = ({ index = 1 }) => {
                   </Badge>
                 </ButtonNav>
               )}
-              {/* {index == 3 ? (
-                <ChosenButtonNav onClick={(e) => handleOpenNewPost()}>
-                  <Iconify
-                    icon={icoList.newPost.notChosen}
-                    style={{ width: "30px", height: "30px" }}
-                  />
-                </ChosenButtonNav>
-              ) : (
-                <ButtonNav onClick={(e) => handleOpenNewPost()}>
-                  <Iconify
-                    icon={icoList.newPost.notChosen}
-                    style={{ width: "28px", height: "28px" }}
-                  />
-                </ButtonNav>
-              )} */}
               <ButtonNav>
-                <Badge color="secondary" badgeContent={idsOfUnreadCon.length}>
-                  <Iconify
-                    icon={icoList.newConversation.notChosen}
-                    style={{ width: "28px", height: "28px" }}
-                  />
-                </Badge>
+                <ConversationControlBox isNav={true} />
               </ButtonNav>
               <ButtonNav>
                 <Badge color="secondary">
@@ -308,6 +281,13 @@ const CherishAppBar = ({ index = 1 }) => {
                 </Badge>
               </ButtonNav>
             </Box>
+            <Box
+            sx={{
+              flexGrow: 1,
+              display:  isMobile ? "flex" :"none",
+              justifyContent: "flex-end",
+            }}
+          ></Box>
             {/* </Stack> */}
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} size="small">
@@ -400,7 +380,7 @@ const navBtnCmm = {
   borderRadius: "0px",
   width: "auto",
   height: "100%",
-  margin: "0px 25px 0px 0px",
+  margin: "0px 12px 0px 12px",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -425,6 +405,9 @@ const ChosenButtonNav = styled(Stack)(({ theme }) => ({
   ...navBtnCmm,
   borderBottom: "3px solid #6748da",
   "&:active": {
+    color: "#6748da",
+  },
+  "&:hover": {
     color: "#6748da",
   },
 }));
