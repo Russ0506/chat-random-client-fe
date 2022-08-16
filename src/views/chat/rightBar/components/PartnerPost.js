@@ -19,12 +19,12 @@ import {
 import React, { useEffect, useLayoutEffect } from "react";
 import { axiosClient } from "../../../../setup/axiosClient";
 import { useSelector } from "../../../../store/store";
-import ModalPoster from "./ModalPoster";
+import ModalPost from "./ModalPost";
 import { URL } from "../../../../service/chat.service";
 
 const URL_IMAGE = `${URL}/api`;
 
-export default function PartnerPoster(props) {
+export default function PartnerPost(props) {
   const [open, setOpen] = React.useState(true);
   const currentConversation = useSelector(state => state.conversation.currentConversation)
   const [listPartnerPost, setListPartnerPost] = React.useState([]);
@@ -37,7 +37,6 @@ export default function PartnerPoster(props) {
         const newData = data.map((item) => ({
           ...item,
           image_path: `${URL_IMAGE + item.image_path}`,
-          // image_path: `${"http://localhost:3000/api" + item.image_path}`,
         }));
         setListPartnerPost(newData);
       })
@@ -93,7 +92,7 @@ export default function PartnerPoster(props) {
               {
                 listPartnerPost.map((item, index) => (
                   <Grid item xs={4} key={index}>
-                    <ModalPoster item={item} partnerDetail={props.partnerInfor} />
+                    <ModalPost item={item} partnerDetail={props.partnerInfor} />
                   </Grid>
                 ))
               }

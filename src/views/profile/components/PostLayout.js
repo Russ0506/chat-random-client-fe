@@ -15,6 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/styles";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { axiosClient } from "../../../setup/axiosClient";
@@ -114,9 +115,27 @@ export default function PostLayout({
             width="440px"
             className="justify-content-between"
           >
+            <div>
             <Typography sx={{ fontWeight: 550, ml: 1 }}>
-              {localStorage.getItem("user_display_name")}
+            {localStorage.getItem('user_display_name')}
             </Typography>
+
+            <Stack justifyContent="center" flexDirection="row" alignItems="center" sx={{mt: 0.5, ml: 0.5}}>
+              {data.location ? <LocationOnIcon /> : "" }
+              <Typography
+              variant="subtitle2"
+                component="p"
+                sx={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  maxWidth: "300px",
+                }}
+              >
+                {data.location}
+              </Typography>
+              </Stack>
+            </div>
             {isReadonlyMode ? (
               ""
             ) : (

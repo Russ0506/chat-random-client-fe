@@ -1,12 +1,7 @@
-import { Button, Stack } from "@mui/material";
-import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeConversation, selectConversation, selectConversationLatestStatus } from "../../../features/chat/conversationSlice";
 import { axiosClient } from "../../../setup/axiosClient";
-import PartnerInfo from "./components/PartnerInfo";
-import PartnerPoster from "./components/PartnerPoster";
-import ReportModal from "./components/ReportModal";
 import SecrectPartnerPoster from "./components/SecrectPartnerPoster";
 import SharedPartnerInfo from "./components/SharedPartnerInfo";
 
