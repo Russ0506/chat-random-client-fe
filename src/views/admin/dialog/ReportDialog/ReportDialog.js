@@ -51,11 +51,10 @@ export default function ReportDialog(props) {
   }
 
   React.useLayoutEffect(() => {
-    // let params = new HttpParams
     const params = {
         "q[target_id_eq]" : props.data.id,
-       "q[status_eq]": props.filter,
-        "q[target_type_eq]" : null
+        "q[status_eq]": props.filter,
+        "q[target_type_eq]" : "User"
     }
 
 
@@ -183,7 +182,7 @@ export default function ReportDialog(props) {
             onClick={handleSubmitReport}
             sx={{ marginLeft: 1, marginRight: 1 }}
           >
-            Close
+            Block
           </Button>
         </DialogActions>
       </Dialog>
