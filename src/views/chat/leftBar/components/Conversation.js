@@ -99,7 +99,7 @@ export default function Conversation({ data }) {
           >
             <Avatar
               sx={{ width: 50, height: 50 }}
-              alt=""
+              alt={data.partner.name}
               src={URL_IMAGE + data.partner.avatar_path}
             />
           </StyledBadge>

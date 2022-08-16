@@ -15,6 +15,9 @@ import { selectOnlineStatus } from '../../../../features/chat/onlineStatusesSlic
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import SmartClock from "../../../../utils/smartClock";
+import { URL } from "../../../../service/chat.service";
+
+const URL_IMAGE = `${URL}/api`;
 
 const RootStyle = styled("div")(({ theme }) => ({
   flexShrink: 0,
@@ -50,7 +53,7 @@ export default function ChatHeaderDetail({ openBar, partner }) {
       <Box sx={{ display: "flex", alignItems: "center", ml: {xs: "60px", md: 1}, }}>
         <Box sx={{ position: "relative" }}>
           <Avatar
-            src={partner.avatar}
+            src={URL_IMAGE + partner.avatar_path}
             alt={partner.name}
             style={{ width: 52, height: 52 }}
           />

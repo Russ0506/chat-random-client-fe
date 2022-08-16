@@ -9,6 +9,9 @@ import ChatMessageItem from './ChatMessageItem';
 import { selectNewMessages } from "../../../../features/chat/messagesSlice"
 import { resetMessages } from "../../../../features/chat/messagesSlice";
 import useFetchList from '../../../../utils/useFetchList';
+import { URL } from "../../../../service/chat.service";
+
+const URL_IMAGE = `${URL}/api`;
 
 ChatMessageList.propTypes = {
   newMessages: PropTypes.array,
@@ -28,6 +31,8 @@ export default function ChatMessageList({conversation}) {
     params: {conversationId: conversation?.id},
     page: page
   });
+  const avatarPath = URL_IMAGE + conversation?.partner.avatar_path
+  const name = conversation?.partner.name
 
   useEffect(()=>{
     if (page > 1) setScrollToBottom(false)
@@ -81,6 +86,8 @@ export default function ChatMessageList({conversation}) {
               message={message}
               nextMessage={(i< messagesList.length -1 ) ? messagesList[i+1] : newMessages[0]}
               onOpenLightbox={handleOpenLightbox}
+              avatarPath = {avatarPath}
+              name = {name}
             />
           ))}
           {newMessages.map((message, i) => (
@@ -89,6 +96,8 @@ export default function ChatMessageList({conversation}) {
               message={message}
               nextMessage={(i< newMessages.length -1 ) ? newMessages[i+1] : null}
               onOpenLightbox={handleOpenLightbox}
+              avatarPath = {avatarPath}
+              name = {name}
             />
           ))}
         </Scrollbar>
