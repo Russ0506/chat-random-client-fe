@@ -63,7 +63,7 @@ export default function PartnerSecrectInfo() {
       >
         Tuong Vy{" "}
       </Typography>
-      <Typography variant="h4" fontWeight={600} textAlign="center">
+      <Typography component={"h4"} fontWeight={600} textAlign="center">
         {gender == "male" ? <StyledMaleIcon /> : <StyledFemaleIcon />}
       </Typography>
     </Stack>

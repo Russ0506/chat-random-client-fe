@@ -129,8 +129,8 @@ export default function ReportDialog(props) {
                   <Stack>
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                       <CardContent>
-                        <Typography paragraph>Method: {item.problem_type}</Typography>
-                        <Typography paragraph>
+                        <Typography>Method: {item.problem_type}</Typography>
+                        <Typography>
                           Detail : {
                             item.text
                           }

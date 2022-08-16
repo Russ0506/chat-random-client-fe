@@ -33,7 +33,6 @@ const style = {
 };
 
 export default function ModalPoster({ item, partnerDetail }) {
-  console.log(partnerDetail, item);
   const [open, setOpen] = React.useState(false);
   const [toggle, setToggle] = React.useState(false);
   const [increaseLike, setIncreaseLike] = React.useState(0);

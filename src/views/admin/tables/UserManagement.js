@@ -1,21 +1,15 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Row, Col, Card, Table } from "react-bootstrap";
-import { userList2 } from "../mock_data";
-import LaunchIcon from "@mui/icons-material/Launch";
-import { IconButton, Typography, InputAdornment, TextField, Grid } from "@mui/material";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import BlockIcon from "@mui/icons-material/Block";
+import { IconButton } from "@mui/material";
+import React, { useLayoutEffect, useState } from "react";
+import { Card, Col, Row, Table } from "react-bootstrap";
 // import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import FlagIcon from '@mui/icons-material/Flag';
+import Pagination from '@mui/material/Pagination';
+import { axiosClient } from "../../../setup/axiosClient";
 import Iconify from "../../common/base/icon/Iconify";
+import Search from "../../common/Search";
 import BlockDialog from "../dialog/blockDialog/BlockDialog";
 import ReportDialog from "../dialog/ReportDialog/ReportDialog";
-import { axiosClient } from "../../../setup/axiosClient";
-import Search from "../../common/Search";
-import Pagination from '@mui/material/Pagination';
-import { borderBottom } from "@mui/system";
-
-
 
 
 const UserManagement = () => {
