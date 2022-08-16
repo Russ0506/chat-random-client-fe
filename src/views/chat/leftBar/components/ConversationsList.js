@@ -123,7 +123,8 @@ export default function ConversationsList() {
       <Box
         className="conversation-his-ctalog"
         sx={{
-          height: "calc(100% - 70px)",
+          // height: "calc(100% - 70px)",
+          height: "calc(100%)",
           overflowY: "auto",
           position: "relative",
         }}

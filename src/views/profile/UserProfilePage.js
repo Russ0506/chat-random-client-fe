@@ -17,7 +17,7 @@ import {
   StyledFemaleIcon,
   StyledMaleIcon,
 } from "../common/base/icon/GenderIcon";
-import MyPostLayout from "./components/MyPostLayout";
+import PostLayout from "./components/PostLayout";
 import AddIcon from "@mui/icons-material/Add";
 import { axiosClient } from "../../setup/axiosClient";
 import ImagePoster from "./components/ImagePoster";
@@ -279,7 +279,7 @@ export default function UserProfilePage() {
             <></>
           )}
           {openPoster === true ? (
-            <MyPostLayout
+            <PostLayout
               open={openPoster}
               onClose={handleClosePoster}
               data={posterData}

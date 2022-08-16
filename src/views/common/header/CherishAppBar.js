@@ -132,7 +132,10 @@ const CherishAppBar = ({ index = 1 }) => {
           pr: "8px !important",
         }}
       >
-        <Toolbar disableGutters sx={{ height: "100%" }}>
+        <Toolbar
+          disableGutters
+          sx={{ height: "100%", minHeight: "60px !important" }}
+        >
           <Box
             sx={{
               flexGrow: 1,
@@ -282,12 +285,12 @@ const CherishAppBar = ({ index = 1 }) => {
               </ButtonNav>
             </Box>
             <Box
-            sx={{
-              flexGrow: 1,
-              display:  isMobile ? "flex" :"none",
-              justifyContent: "flex-end",
-            }}
-          ></Box>
+              sx={{
+                flexGrow: 1,
+                display: isMobile ? "flex" : "none",
+                justifyContent: "flex-end",
+              }}
+            ></Box>
             {/* </Stack> */}
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} size="small">
