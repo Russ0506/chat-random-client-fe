@@ -23,7 +23,7 @@ const BoxModal = styled(Box)(({ theme }) => ({
 }));
 
 
-export default function ModalPoster() {
+export default function ModalPost() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeConversation, selectConversation, selectConversationLatestStatus } from "../../../features/chat/conversationSlice";
 import { axiosClient } from "../../../setup/axiosClient";
 import PartnerInfo from "./components/PartnerInfo";
-import PartnerPoster from "./components/PartnerPoster";
+import PartnerPost from "./components/PartnerPost";
 import ReportModal from "./components/ReportModal";
 import SecrectPartnerPoster from "./components/SecrectPartnerPoster";
 
@@ -61,7 +61,7 @@ export default function RightBar() {
         <PartnerInfo partnerInfor={currentConversation.partner} />
       </Stack>
       <Box sx={{ height: "40%" }}>
-        <PartnerPoster partnerInfor={currentConversation.partner} />
+        <PartnerPost partnerInfor={currentConversation.partner} />
       </Box>
     </>
   );

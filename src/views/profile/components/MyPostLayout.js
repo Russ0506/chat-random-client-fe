@@ -15,11 +15,13 @@ import {
   Typography
 } from "@mui/material";
 import { styled } from "@mui/styles";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { axiosClient } from "../../../setup/axiosClient";
 import AvatarFrame from "../../common/base/AvatarFrame";
 import Loading from "../../common/base/loading/Loading";
+
 // import myIdol from "../components/img/myidol.jpg";
 
 const menuList = [
@@ -114,9 +116,27 @@ export default function PosterLayout({
             width="440px"
             className="justify-content-between"
           >
+            <div>
             <Typography sx={{ fontWeight: 550, ml: 1 }}>
             {localStorage.getItem('user_display_name')}
             </Typography>
+
+            <Stack justifyContent="center" flexDirection="row" alignItems="center" sx={{mt: 0.5, ml: 0.5}}>
+              {data.location ? <LocationOnIcon /> : "" }
+              <Typography
+              variant="subtitle2"
+                component="p"
+                sx={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  maxWidth: "300px",
+                }}
+              >
+                {data.location}
+              </Typography>
+              </Stack>
+            </div>
             {isReadonlyMode ? "" : <Box>
               <IconButton onClick={handleOpenPostMenu}>
                 <MoreHorizIcon sx={{ width: "30px", height: "30px" }} />
