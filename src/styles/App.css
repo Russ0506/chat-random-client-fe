@@ -190,3 +190,6 @@ p[id*="helper-text"], .error-text {
 a.MuiTypography-root:hover, .__mui_navigate {
   color: #6748da !important;
 }
+.__chosen_conversation {
+  background: #f4f3fd;
+}
