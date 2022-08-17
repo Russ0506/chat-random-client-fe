@@ -62,6 +62,8 @@ export default function PartnerSetting(props) {
     React.useState(false);
 
   const [hobbies, setHobbies] = React.useState(initData.user_setting.hobbies);
+  const [majors, setMajors] = React.useState([]);
+  const [topic, setTopic] = React.useState(["Sharing Stories"]);
   const [loading, setLoading] = React.useState(false);
   const [location, setLocation] = React.useState({
     address: initData.user_setting.address,
@@ -92,6 +94,15 @@ export default function PartnerSetting(props) {
       target: { value },
     } = event;
     setHobbies(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+  const handleChangeMajor = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setMajors(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
@@ -183,6 +194,29 @@ export default function PartnerSetting(props) {
       sx={{ color: GRP_COLOR.CODE016, alignItems: "center" }}
     >
       <Button ref={props.submitRef} type="submit" style={{ display: "none" }} />
+      <Stack sx={{ mt: "15px" }}>
+        <CmmnInputLabel shrink htmlFor="gender-inpt">
+          Conversation Topic
+        </CmmnInputLabel>
+        <FormControl
+          className="__fc__gender"
+          variant="standard"
+          sx={{ width: "70%" }}
+        >
+          <CmmnSelect
+            id="gender-inpt"
+            name="gender"
+            defaultValue={topic}
+            sx={{ border: "1px solid #e5e0e0", boxShadow: "none", width: "100%" }}
+          >
+            {topicList.map((item, index) => (
+              <MenuItem key={index} value={item} selected={true}>
+                {item}
+              </MenuItem>
+            ))}
+          </CmmnSelect>
+        </FormControl>
+      </Stack>
       <Stack sx={{ width: "100%" }}>
         <CmmnFormControl variant="standard">
           <CmmnInputLabel shrink htmlFor="location-inpt">
@@ -385,6 +419,11 @@ export default function PartnerSetting(props) {
               ))}
             </CmmnGroupSelect>
           </CmmnFormControl>
+        </Stack>
+        <Stack sx={{ mt: "15px", mb: 1 }}>
+          <CmmnInputLabel shrink htmlFor="demo-multiple-chip">
+            Majors
+          </CmmnInputLabel>
           <CmmnFormControl
             variant="outlined"
             sx={{ boxShadow: "none", outline: "none", mt: "0 !important" }}
@@ -394,8 +433,8 @@ export default function PartnerSetting(props) {
               labelId="demo-multiple-chip-label"
               id="demo-multiple-chip"
               multiple
-              value={hobbies}
-              onChange={handleChangeHobby}
+              value={majors}
+              onChange={handleChangeMajor}
               input={<OutlinedInput id="select-multiple-chip" />}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
@@ -406,11 +445,11 @@ export default function PartnerSetting(props) {
               )}
               MenuProps={MenuProps}
             >
-              {names.map((name) => (
+              {majorNames.map((name) => (
                 <MenuItem
                   key={name}
                   value={name}
-                  style={getStyles(name, hobbies, theme)}
+                  style={getStyles(name, majors, theme)}
                 >
                   {name}
                 </MenuItem>
@@ -451,4 +490,24 @@ const names = [
   "Ocean",
   "Animal",
   "Romantic",
+];
+
+const majorNames = [
+  "Software Engineering",
+  "Information Assurance",
+  "Graphic Design",
+  "Business Administration",
+  "International Business",
+  "Travel and Tourism Management",
+  "Hotel Management",
+  "Multimedia Communication",
+  "English Language",
+  "Japanese Language",
+];
+const topicList = [
+  "Sharing Stories",
+  "Education",
+  "Entertainment",
+  "Small talk",
+  "finding a lover",
 ];
