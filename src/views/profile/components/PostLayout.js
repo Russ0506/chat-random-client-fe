@@ -119,54 +119,34 @@ export default function PostLayout({
             <Typography sx={{ fontWeight: 550, ml: 1 }}>
             {localStorage.getItem('user_display_name')}
             </Typography>
-
-            <Stack justifyContent="center" flexDirection="row" alignItems="center" sx={{mt: 0.5, ml: 0.5}}>
-              {data.location ? <LocationOnIcon /> : "" }
-              <Typography
-              variant="subtitle2"
-                component="p"
-                sx={{
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  maxWidth: "300px",
+            {isReadonlyMode ? "" : <Box>
+              <IconButton onClick={handleOpenPostMenu}>
+                <MoreHorizIcon sx={{ width: "30px", height: "30px" }} />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: "center",
+                  horizontal: "right",
                 }}
+                elevation={3}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleClosePostMenu}
               >
-                {data.location}
-              </Typography>
-              </Stack>
-            </div>
-            {isReadonlyMode ? (
-              ""
-            ) : (
-              <Box>
-                <IconButton onClick={handleOpenPostMenu}>
-                  <MoreHorizIcon sx={{ width: "30px", height: "30px" }} />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorElNav}
-                  anchorOrigin={{
-                    vertical: "center",
-                    horizontal: "right",
-                  }}
-                  elevation={3}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  open={Boolean(anchorElNav)}
-                  onClose={handleClosePostMenu}
-                >
-                  {menuList.map((menu, index) =>
-                    menu.name === "New Post" ? (
-                      <div key={index}></div>
-                    ) : (
-                      <MenuItem
-                        key={index}
-                        onClick={() => handleCasePost(index)}
-                      >
+                {menuList.map((menu, index) =>
+                  menu.name === "New Post" ? (
+                    <div key={index}></div>
+                  ) : (
+                    <MenuItem key={index} >
+                      <IconButton onClick={() => handleCasePost(index)}
+                        display="flex"
+                        className="justify-content-end">
                         <Typography
                           key={index}
                           textAlign="center"
