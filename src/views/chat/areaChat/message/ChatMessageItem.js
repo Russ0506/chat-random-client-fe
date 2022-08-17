@@ -54,7 +54,7 @@ export default function ChatMessageItem({ message, onOpenLightbox, nextMessage, 
   const lastestMsgStatusOfNextMsg = useSelector((state) => {
     return selectMsgLatestStatus(state, nextMessage);
   });
-  
+
   const nextMessageStatus = () => {
     return lastestMsgStatusOfNextMsg || nextMessage?.status;
   }
@@ -68,7 +68,7 @@ export default function ChatMessageItem({ message, onOpenLightbox, nextMessage, 
   const isMessageSystem = message.is_system_message
 
   const isMe = senderDetails.type === 'me';
-  const isImage = message.contentType === 'image';
+  const isImage = message.attachment_path?.length > 0;
   const isSenderSysMess = localStorage.getItem('user_id') == message.recipient_id
 
   function showHistoryTime(id) {
@@ -136,15 +136,14 @@ export default function ChatMessageItem({ message, onOpenLightbox, nextMessage, 
                     wordWrap: "break-word",
                   }}
                 >
-                  {isImage ? (
+                  {isImage && (
                     <MessageImgStyle
                       alt="attachment"
-                      src={message.text}
+                      src={message.is_new_message ? message.attachment_path : `/api${message.attachment_path}`}
                       onClick={() => onOpenLightbox(message.text)}
                     />
-                  ) : (
-                    <Typography variant="body2">{message.text}</Typography>
                   )}
+                    <Typography variant="body2" sx={{ marginTop: '8px' }}>{message.text}</Typography>
                 </ContentStyle>
               </Box>
             </Tooltip>
