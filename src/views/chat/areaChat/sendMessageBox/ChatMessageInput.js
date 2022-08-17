@@ -158,7 +158,7 @@ export default function ChatMessageInput({ disabled, conversation }) {
               disabled={disabled}
               value={message}
               setValue={setMessage}
-              sx={{ zIndex: 100 }}
+              sx={{ zIndex: 11 }}
             />
             <IconButton disabled={disabled} size="small">
               <Iconify icon="eva:mic-fill" width={22} height={22} />
