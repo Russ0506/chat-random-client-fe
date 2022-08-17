@@ -124,7 +124,7 @@ const Search = ({onSearch}) => {
                 style={{ width: 500 }}
                 variant="standard"
                 placeholder="Filter by keyword "
-                onChange={(newValue) => {setTFValue(newValue.target.value); refDataFilter({statusBlock: undefined, statusEQ: undefined, text: newValue.target.value})}}
+                onChange={(newValue) => {console.log(newValue);setTFValue(newValue.target.value); refDataFilter({statusBlock: undefined, statusEQ: undefined, text: newValue.target.value})}}
                 iconStart={<FilterListIcon />}
             />
             <div className="mr-6 dark d-flex align-items-center">

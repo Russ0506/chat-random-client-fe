@@ -12,6 +12,7 @@ import {
 import React, { useLayoutEffect } from "react";
 import Badge from "@mui/material/Badge";
 import NewPosterLayout from "./components/NewPosterLayout";
+// import $ from "jquery";
 import {
   StyledFemaleIcon,
   StyledMaleIcon,
@@ -25,9 +26,17 @@ import { POST_COVER, POST_COVER_MB } from "../../constant/css_constant";
 import { useTheme } from "@mui/styles";
 import { Link, useParams } from "react-router-dom";
 import useFetch from "../../utils/useFetch";
-import { shapeCircleStyles, shapeStyles } from "../common/StyleIcon";
 
 const URL_IMAGE = `${URL}/api`;
+const shapeStyles = {
+  bgcolor: "primary.main",
+  width: { xs: 80, md: 120 },
+  height: { xs: 80, md: 120 },
+  marginTop: 1,
+};
+const shapeCircleStyles = {
+  borderRadius: "50%",
+};
 
 export default function UserProfilePage() {
   const { userId } = useParams();
@@ -46,11 +55,20 @@ export default function UserProfilePage() {
   });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const circle = (
+    <Box
+      component="span"
+      sx={{
+        ...shapeStyles,
+        ...shapeCircleStyles,
+        backgroundImage: `url(/api${userData?.avatar_path})`,
+      }}
+    />
+  );
   function handleOpenPoster(item) {
     setPosterData({
       content: item.caption,
       image: item.image_path,
-      location: item.location,
       likeCount: item.no_of_reactions,
       id: item.id,
     });
@@ -136,9 +154,7 @@ export default function UserProfilePage() {
           ) : (
             <></>
           )}
-          <Badge>
-          <Avatar  alt={userData?.name} src={userData?.avatar_path} sx={{ width: "100px", height: "100px", ...shapeStyles }}  />  
-          </Badge>
+          <Badge>{circle}</Badge>
           <Box sx={{ ml: 2 }}>
             <Stack flexDirection={{ xs: "column", md: "column" }}>
               <Typography
