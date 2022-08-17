@@ -1,52 +1,8 @@
 import styled from "@emotion/styled";
 import { Box, Stack, Typography } from "@mui/material";
 import React from "react";
-import vybat from "../img/vyBatBG.jpg";
-import FemaleIcon from "@mui/icons-material/Female";
-import MaleIcon from "@mui/icons-material/Male";
-
-const shapeStyles = {
-  bgcolor: "primary.main",
-  width: 130,
-  height: 130,
-  padding: 4,
-  backgroundColor: "#fff",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-};
-const shapeCircleStyles = { borderRadius: "50%" };
-const StyledMaleIcon = styled(MaleIcon)(({ theme }) => ({
-  fontSize: "3rem",
-  transition: "0.2s ease-in-out",
-  color: "#1793c3",
-}));
-
-const StyledFemaleIcon = styled(FemaleIcon)(({ theme }) => ({
-  fontSize: "3rem",
-  transition: "0.2s ease-in-out",
-  color: "#e37dcf",
-}));
 
 export default function PartnerSecrectInfo() {
-  const [gender, setGender] = React.useState("female");
-  const AvatarFrame = styled(Box)(({ theme }) => ({
-    ...shapeCircleStyles,
-    ...shapeStyles,
-    "&::before": {
-      borderRadius: "50%",
-      zIndex: "-1",
-      content: '""',
-      display: "block",
-      height: "100%",
-      width: "100%",
-      backgroundImage: `url(${vybat})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-    },
-  }));
-
   const NamePartner = (
     <Stack
       justifyContent="center"
@@ -61,11 +17,9 @@ export default function PartnerSecrectInfo() {
         color="#fff"
         fontSize="2em"
       >
-        Tuong Vy{" "}
+        CherishByChatting
       </Typography>
-      <Typography component={"h4"} fontWeight={600} textAlign="center">
-        {gender == "male" ? <StyledMaleIcon /> : <StyledFemaleIcon />}
-      </Typography>
+      
     </Stack>
   );
   return (
@@ -74,7 +28,6 @@ export default function PartnerSecrectInfo() {
       justifyContent="center"
       alignItems="center"
       sx={{
-        // mt: "12%",
         mt: "20%",
         width: "100%",
         position: "absolute",
@@ -84,7 +37,7 @@ export default function PartnerSecrectInfo() {
     >
       {/* <AvatarFrame /> */}
       {NamePartner}
-      <Box sx={{ padding: "2% 10%", color: "#fff", textAlign: "center" }}>
+      <Box sx={{ padding: "2% 10%", color: "#fff", textAlign: "center", pt:3, fontFamily:"DancingScript-VariableFont_wght", fontSize: "17px" }}>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, accusamus
         qui. Alias facilis perferendis temporibus! Sint dolorem id, minima vero
         consectetur, modi debitis similique mollitia recusandae corrupti nam

@@ -177,228 +177,248 @@ export default function PartnerSetting(props) {
     }
   };
   return (
-    <Box>
-      <DialogContent>
-        <Box
-          component="form"
-          onSubmit={saveDataSearchPartnerSetting}
-          sx={{ mt: 3, color: GRP_COLOR.CODE016, alignItems: "center" }}
-        >
-          <Button
-            ref={props.submitRef}
-            type="submit"
-            style={{ display: "none" }}
+    <Box
+      component="form"
+      onSubmit={saveDataSearchPartnerSetting}
+      sx={{ color: GRP_COLOR.CODE016, alignItems: "center" }}
+    >
+      <Button ref={props.submitRef} type="submit" style={{ display: "none" }} />
+      <Stack sx={{ width: "100%" }}>
+        <CmmnFormControl variant="standard">
+          <CmmnInputLabel shrink htmlFor="location-inpt">
+            Location
+          </CmmnInputLabel>
+          {currentLocationPermision === false ? (
+            <GmapApiChatManualInput />
+          ) : (
+            <GmapApiChatAutoInput />
+          )}
+          {/* <CmmnInput placeholder="Fill your location" id="location-inpt" /> */}
+          <TextField
+            id="__curr_lo"
+            type="hidden"
+            inputProps={{
+              readOnly: true,
+            }}
+            // value={location.lo}
+            sx={{ display: "none" }}
           />
-          <Stack sx={{ width: "100%" }}>
-            <CmmnFormControl variant="standard">
-              <CmmnInputLabel shrink htmlFor="location-inpt">
-                Location
-              </CmmnInputLabel>
-              {currentLocationPermision === false ? (
-                <GmapApiChatManualInput />
-              ) : (
-                <GmapApiChatAutoInput />
-              )}
-              {/* <CmmnInput placeholder="Fill your location" id="location-inpt" /> */}
-              <TextField
-                id="__curr_lo"
-                type="hidden"
-                inputProps={{
-                  readOnly: true,
-                }}
-                // value={location.lo}
-                sx={{ display: "none" }}
-              />
-              <TextField
-                id="__curr_address"
-                type="hidden"
-                inputProps={{
-                  readOnly: true,
-                }}
-                // value={location.address}
-                sx={{ display: "none" }}
-              />
-              <TextField
-                id="__curr_la"
-                type="hidden"
-                inputProps={{
-                  readOnly: true,
-                }}
-                // value={location.la}
-                sx={{ display: "none" }}
-              />
-            </CmmnFormControl>
-            <Grid item xs={6} sm={9}>
-              <Box component="div" sx={{ display: "inline" }}>
-                <Switch
-                  {...label}
-                  id="curLocaAcesPermis"
-                  onChange={setCurrentLocationPermision}
+          <TextField
+            id="__curr_address"
+            type="hidden"
+            inputProps={{
+              readOnly: true,
+            }}
+            // value={location.address}
+            sx={{ display: "none" }}
+          />
+          <TextField
+            id="__curr_la"
+            type="hidden"
+            inputProps={{
+              readOnly: true,
+            }}
+            // value={location.la}
+            sx={{ display: "none" }}
+          />
+        </CmmnFormControl>
+        <Grid item xs={6} sm={9}>
+          <Box component="div" sx={{ display: "inline" }}>
+            <Switch
+              {...label}
+              id="curLocaAcesPermis"
+              onChange={setCurrentLocationPermision}
+            />
+          </Box>
+          <Box component="div" sx={{ display: "inline" }}>
+            Use current location ?
+          </Box>
+        </Grid>
+        <CmmnFormControl variant="standard">
+          <CmmnInputLabel shrink htmlFor="expected-dis-inpt">
+            Expected Distance
+          </CmmnInputLabel>
+          <Box width="xl" sx={{ mt: 3, pl: 1, pr: 1 }}>
+            <Grid container spacing={2}>
+              <Grid item xs>
+                <Slider
+                  min={5}
+                  max={100}
+                  value={typeof slideVal === "number" ? slideVal : 5}
+                  onChange={handleSliderChange}
+                  aria-labelledby="input-slider"
                 />
-              </Box>
-              <Box component="div" sx={{ display: "inline" }}>
-                Use current location ?
-              </Box>
+              </Grid>
+              <Grid item>
+                <Input
+                  name="radius"
+                  value={slideVal}
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  endAdornment={
+                    <InputAdornment position="end">Km</InputAdornment>
+                  }
+                  inputProps={{
+                    step: 10,
+                    min: 5,
+                    max: 100,
+                    type: "number",
+                    "aria-labelledby": "input-slider",
+                  }}
+                  sx={{ width: "75px", pt: 0, pb: 0, mt: 0 }}
+                />
+              </Grid>
             </Grid>
-            <CmmnFormControl variant="standard">
-              <CmmnInputLabel shrink htmlFor="expected-dis-inpt">
-                Expected Distance
-              </CmmnInputLabel>
-              <Box width="xl" sx={{ mt: 3, pl: 1, pr: 1 }}>
-                <Grid container spacing={2}>
-                  <Grid item xs>
-                    <Slider
-                      min={5}
-                      max={100}
-                      value={typeof slideVal === "number" ? slideVal : 5}
-                      onChange={handleSliderChange}
-                      aria-labelledby="input-slider"
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Input
-                      name="radius"
-                      value={slideVal}
-                      onChange={handleInputChange}
-                      onBlur={handleBlur}
-                      endAdornment={
-                        <InputAdornment position="end">Km</InputAdornment>
-                      }
-                      inputProps={{
-                        step: 10,
-                        min: 5,
-                        max: 100,
-                        type: "number",
-                        "aria-labelledby": "input-slider",
-                      }}
-                      sx={{ width: "75px", pt: 0, pb: 0, mt: 0 }}
-                    />
-                  </Grid>
-                </Grid>
-              </Box>
-            </CmmnFormControl>
-            <Stack sx={{ mt: "15px" }}>
-              <CmmnInputLabel shrink htmlFor="gender-inpt">
-                Gender
-              </CmmnInputLabel>
-              <FormControl
-                className="__fc__gender"
-                variant="standard"
-                sx={{ width: "30%" }}
-              >
-                <CmmnSelect
-                  id="gender-inpt"
-                  name="gender"
-                  defaultValue={initData.user_setting.gender}
-                  sx={{ border: "1px solid #e5e0e0", boxShadow: "none" }}
-                  // displayEmpty
-                  // inputProps={{ "aria-label": "Without label" }}
-                >
-                  <MenuItem key="1" value="male">
-                    Male
-                  </MenuItem>
-                  <MenuItem key="2" value="female">
-                    Female
-                  </MenuItem>
-                  <MenuItem key="3" value="others">
-                    <em>Others</em>
-                  </MenuItem>
-                </CmmnSelect>
-              </FormControl>
-            </Stack>
-            <Stack sx={{ mt: "15px" }}>
-              <CmmnInputLabel shrink>Age</CmmnInputLabel>
-              <Stack flexDirection="row">
-                <FormControl
-                  sx={{
-                    width: "150px",
-                    ml: 1,
-                    display: "flex",
-                    flexDirection: "row",
-                  }}
-                >
-                  <FormLabel sx={sxJustifyContent}>
-                    From {ageSlideVal[0]}
-                  </FormLabel>
-                  <CmmnInput
-                    as={TextField}
-                    name="from_age"
-                    type="number"
-                    defaultValue={initData.user_setting.from_age}
-                    value={ageSlideVal[0]}
-                    sx={{ display: "none" }}
-                  />
-                </FormControl>
-                <FormControl
-                  sx={{
-                    ml: 1,
-                    width: "150px",
-                    display: "flex",
-                    flexDirection: "row",
-                  }}
-                >
-                  <FormLabel sx={sxJustifyContent}>
-                    To {ageSlideVal[1]}
-                  </FormLabel>
-                  <CmmnInput
-                    as={TextField}
-                    name="to_age"
-                    type="number"
-                    defaultValue={initData.user_setting.to_age}
-                    value={ageSlideVal[1]}
-                    sx={{ display: "none" }}
-                  />
-                </FormControl>
-              </Stack>
-              <Slider
-                getAriaLabel={() => "Minimum distance"}
-                value={ageSlideVal}
-                onChange={handleChangeAgeSlideVal}
-                valueLabelDisplay="auto"
-                getAriaValueText={valuetext}
-                disableSwap
+          </Box>
+        </CmmnFormControl>
+        <Stack sx={{ mt: "15px" }}>
+          <CmmnInputLabel shrink htmlFor="gender-inpt">
+            Gender
+          </CmmnInputLabel>
+          <FormControl
+            className="__fc__gender"
+            variant="standard"
+            sx={{ width: "30%" }}
+          >
+            <CmmnSelect
+              id="gender-inpt"
+              name="gender"
+              defaultValue={initData.user_setting.gender}
+              sx={{ border: "1px solid #e5e0e0", boxShadow: "none" }}
+              // displayEmpty
+              // inputProps={{ "aria-label": "Without label" }}
+            >
+              <MenuItem key="1" value="male">
+                Male
+              </MenuItem>
+              <MenuItem key="2" value="female">
+                Female
+              </MenuItem>
+              <MenuItem key="3" value="others">
+                <em>Others</em>
+              </MenuItem>
+            </CmmnSelect>
+          </FormControl>
+        </Stack>
+        <Stack sx={{ mt: "15px" }}>
+          <CmmnInputLabel shrink>Age</CmmnInputLabel>
+          <Stack flexDirection="row">
+            <FormControl
+              sx={{
+                width: "150px",
+                ml: 1,
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
+              <FormLabel sx={sxJustifyContent}>From {ageSlideVal[0]}</FormLabel>
+              <CmmnInput
+                as={TextField}
+                name="from_age"
+                type="number"
+                defaultValue={initData.user_setting.from_age}
+                value={ageSlideVal[0]}
+                sx={{ display: "none" }}
               />
-            </Stack>
-            <Stack sx={{ mt: "15px" }}>
-              <CmmnInputLabel shrink htmlFor="demo-multiple-chip">
-                Hobbies
-              </CmmnInputLabel>
-              <CmmnFormControl
-                variant="outlined"
-                sx={{ boxShadow: "none", outline: "none" }}
-              >
-                <CmmnGroupSelect
-                  size="small"
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
-                  multiple
-                  value={hobbies}
-                  onChange={handleChangeHobby}
-                  input={<OutlinedInput id="select-multiple-chip" />}
-                  renderValue={(selected) => (
-                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                      {selected.map((value) => (
-                        <Chip key={value} label={value} />
-                      ))}
-                    </Box>
-                  )}
-                  MenuProps={MenuProps}
-                >
-                  {names.map((name) => (
-                    <MenuItem
-                      key={name}
-                      value={name}
-                      style={getStyles(name, hobbies, theme)}
-                    >
-                      {name}
-                    </MenuItem>
-                  ))}
-                </CmmnGroupSelect>
-              </CmmnFormControl>
-            </Stack>
+            </FormControl>
+            <FormControl
+              sx={{
+                ml: 1,
+                width: "150px",
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
+              <FormLabel sx={sxJustifyContent}>To {ageSlideVal[1]}</FormLabel>
+              <CmmnInput
+                as={TextField}
+                name="to_age"
+                type="number"
+                defaultValue={initData.user_setting.to_age}
+                value={ageSlideVal[1]}
+                sx={{ display: "none" }}
+              />
+            </FormControl>
           </Stack>
-        </Box>
-      </DialogContent>
+          <Slider
+            getAriaLabel={() => "Minimum distance"}
+            value={ageSlideVal}
+            onChange={handleChangeAgeSlideVal}
+            valueLabelDisplay="auto"
+            getAriaValueText={valuetext}
+            disableSwap
+          />
+        </Stack>
+        <Stack sx={{ mt: "15px" }}>
+          <CmmnInputLabel shrink htmlFor="demo-multiple-chip">
+            Hobbies
+          </CmmnInputLabel>
+          <CmmnFormControl
+            variant="outlined"
+            sx={{ boxShadow: "none", outline: "none", mt: "0 !important" }}
+          >
+            <CmmnGroupSelect
+              size="small"
+              labelId="demo-multiple-chip-label"
+              id="demo-multiple-chip"
+              multiple
+              value={hobbies}
+              onChange={handleChangeHobby}
+              input={<OutlinedInput id="select-multiple-chip" />}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+              MenuProps={MenuProps}
+            >
+              {names.map((name) => (
+                <MenuItem
+                  key={name}
+                  value={name}
+                  style={getStyles(name, hobbies, theme)}
+                >
+                  {name}
+                </MenuItem>
+              ))}
+            </CmmnGroupSelect>
+          </CmmnFormControl>
+          <CmmnFormControl
+            variant="outlined"
+            sx={{ boxShadow: "none", outline: "none", mt: "0 !important" }}
+          >
+            <CmmnGroupSelect
+              size="small"
+              labelId="demo-multiple-chip-label"
+              id="demo-multiple-chip"
+              multiple
+              value={hobbies}
+              onChange={handleChangeHobby}
+              input={<OutlinedInput id="select-multiple-chip" />}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+              MenuProps={MenuProps}
+            >
+              {names.map((name) => (
+                <MenuItem
+                  key={name}
+                  value={name}
+                  style={getStyles(name, hobbies, theme)}
+                >
+                  {name}
+                </MenuItem>
+              ))}
+            </CmmnGroupSelect>
+          </CmmnFormControl>
+        </Stack>
+      </Stack>
     </Box>
   );
 }

@@ -107,6 +107,10 @@ export default function NewsFeed() {
                 justifyContent="flex-start"
                 marginBottom="20px"
                 flexWrap="nowrap"
+                component={Link}
+                href={`/users/profile/${localStorage.getItem(
+                  "user_id"
+                )}`}
               >
                 <Badge>{circle}</Badge>
                 <Box sx={{ ml: 2 }}>
