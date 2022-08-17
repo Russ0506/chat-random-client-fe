@@ -1,4 +1,4 @@
-import { Box, Button, Stack, TextField, Typography, IconButton } from "@mui/material";
+import { Box, Button, Stack, TextField, Typography, IconButton, Tooltip } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Link from "@mui/material/Link"
@@ -66,7 +66,7 @@ export default function ResetPassword(props) {
   };
 
   const ResetValidationSchema = Yup.object().shape({
-    password: Yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, 'Password have minimum eight characters, at least one letter and one number').required('Password Required'),
+    password: Yup.string().matches(/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%?=*&]).{8,20})/, 'Password have to be at least one lowercase, one upper case, one number and the special characters of (!,@,#,$,%,?,=,*,&), from 8 to 20 characters').required('Password Required'),
     rePassword: Yup.string().when("password", {
       is: val => (val && val.length > 0 ? true : false),
       then: Yup.string().oneOf(
@@ -130,39 +130,34 @@ export default function ResetPassword(props) {
         >
           {({ errors, touched }) => (<Form>
             <Stack direction="column" spacing={3}>
-              {/* <TextField
-            id="pwd-request-token"
-            label="Request OTP"
-            name="resetPasswordToken"
-            type="text"
-            required
-            autoComplete="current-OTP"
-          /> */}
-              <Field
-                as={TextField}
-                id="new-password"
-                label="New password"
-                name="password"
-                type={showPassword ? "text" : "password"}
-                autoComplete="current-new-password"
-                onCut={handleStopChange}
-                onCopy={handleStopChange}
-                onPaste={handleStopChange}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => handleClickShowPassword("password")}
-                        onMouseDown={() => handleClickShowPassword("password")}
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  )
-                }}
-                helperText={<ErrorMessage className="error-text" name="password" />}
-              />
+              <Tooltip placement="top-start" title = "Password have to be at least one lowercase, one upper case, one number and the special characters of (!,@,#,$,%,?,=,*,&), from 8 to 20 characters">
+                <Field
+                  as={TextField}
+                  id="new-password"
+                  label="New password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="current-new-password"
+                  onCut={handleStopChange}
+                  onCopy={handleStopChange}
+                  onPaste={handleStopChange}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => handleClickShowPassword("password")}
+                          onMouseDown={() => handleClickShowPassword("password")}
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
+                  helperText={<ErrorMessage className="error-text" name="password" />}
+                />
+              </Tooltip>
+              
               <Field
                 as={TextField}
                 id="confirm-new-password"
