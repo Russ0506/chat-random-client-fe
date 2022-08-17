@@ -1,4 +1,4 @@
-import { Dialog, Stack } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogTitle, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
@@ -76,114 +76,94 @@ export default function PartnerSettingModal(props) {
   }
 
   return (
-    <Dialog open={props.open} onClose={props.onClose} fullWidth maxWidth="sm">
-      {/* <Loading show={isSubmit}></Loading> */}
-      <Paper
-        sx={{
-          my: { xs: 0, md: 0 },
-          p: { xs: 0, md: 0 },
-          minHeight: "400px",
-          minWidth: "300px",
-          width: "100%",
-          height: "100%",
-          boxShadow: "none",
-        }}
-      >
-        <Stack
+    <Dialog
+      open={props.open}
+      onClose={props.onClose}
+      fullWidth
+      maxWidth="sm"
+      scroll="paper"
+      aria-labelledby="scroll-dialog-title"
+      aria-describedby="scroll-dialog-description"
+    >
+      <DialogTitle id="scroll-dialog-title" sx={{pt: 1}}>
+        <Typography
+          component="span"
+          variant="subtitle1"
+          sx={{ fontWeight: "600" }}
+        >
+          Ideal Partner
+          <Typography variant="subtitle2">
+            These preferences help us improve suggestion by determining who you
+            will be matched.
+          </Typography>
+        </Typography>
+        <Stack alignItems="center">
+          <Stepper activeStep={activeStep} sx={{ pt: 0.5, width: "100%" }}>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        </Stack>
+      </DialogTitle>
+      <DialogContent dividers={true} sx={{overflow: "auto"}}>
+        <Paper
           sx={{
+            my: { xs: 0, md: 0 },
+            p: { xs: 0, md: 0 },
+            minHeight: "400px",
+            minWidth: "300px",
             width: "100%",
             height: "100%",
+            boxShadow: "none",
           }}
         >
           <Stack
-            flexDirection="row"
-            justifyContent="space-between"
             sx={{
               width: "100%",
-              borderBottom: "1px solid #e5e0e0",
-              padding: "20px",
+              height: "100%",
             }}
           >
-            <Typography component="div" variant="h5" sx={{ fontWeight: "600" }}>
-              Ideal Partner
-              <Typography variant="subtitle1">
-                These preferences help us improve suggestion by determining who
-                you will be matched.
-              </Typography>
-            </Typography>
-            {/* <Button variant="contained">ahihi</Button> */}
+            <React.Fragment>
+              {activeStep === steps.length ? (
+                <React.Fragment></React.Fragment>
+              ) : (
+                <React.Fragment>{getStepContent(activeStep)}</React.Fragment>
+              )}
+            </React.Fragment>
           </Stack>
-          <Stack alignItems="center">
-            <Stepper
-              activeStep={activeStep}
-              sx={{ pt: 2, pb: 1, width: "75%" }}
-            >
-              {steps.map((label) => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </Stack>
-          <React.Fragment>
-            {activeStep === steps.length ? (
-              <React.Fragment>
-                <Typography component="div"  variant="h5" gutterBottom>
-                  Thank you for your order.
-                </Typography>
-                <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
-                </Typography>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                {getStepContent(activeStep)}
-                <Box
-                  sx={{
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                    display: "flex",
-                    mt: 2,
-                    ml: 1,
-                    mr: 3,
-                    mb: 3,
-                  }}
-                >
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} sx={{ ml: 1 }}>
-                      Back
-                    </Button>
-                  )}
 
-                  <Button
-                    // disabled={isSearch && activeStep === 1}
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{ pl: "25px", pr: "25px" }}
-                    // endIcon={
-                    //   activeStep === steps.length - 1 ? (
-                    //     <PersonSearchIcon />
-                    //   ) : (
-                    //     <KeyboardTabIcon />
-                    //   )
-                    // }
-                  >
-                    {activeStep === steps.length - 1 ? "Search" : "Next"}
-                  </Button>
-                </Box>
-              </React.Fragment>
-            )}
-          </React.Fragment>
-        </Stack>
-
-        {/* <DialogContentText sx={{ textAlign: "center", pt: 3 }}>
+          {/* <DialogContentText sx={{ textAlign: "center", pt: 3 }}>
               These preferences help us suggest matches by determining who you will be matched.
             </DialogContentText>
 
              */}
-      </Paper>
+        </Paper>
+      </DialogContent>
+      <DialogActions >
+        <Box
+          sx={{
+            justifyContent: "flex-end",
+            alignItems: "center",
+            display: "flex",
+          }}
+        >
+          {activeStep !== 0 && (
+            <Button onClick={handleBack} sx={{ ml: 1 }}>
+              Back
+            </Button>
+          )}
+          <Button
+            // disabled={isSearch && activeStep === 1}
+            variant="contained"
+            onClick={handleNext}
+            sx={{ pl: "25px", pr: "25px" }}
+          >
+            {activeStep === steps.length - 1 ? "Search" : "Next"}
+          </Button>
+        </Box>
+      </DialogActions>
     </Dialog>
   );
 }

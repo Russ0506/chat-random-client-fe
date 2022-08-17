@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Box } from "@mui/system";
-import wwwws from "../img/sss.png";
+import wwwws from "../../../../assets/img/chat3.png";
 import React from "react";
 import { Button, Stack } from "@mui/material";
 import PartnerSecrectInfo from "./PartnerSecrectInfo";
@@ -8,9 +8,10 @@ import PartnerSecrectInfo from "./PartnerSecrectInfo";
 const MansoryImageBG = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "100%",
-  backgroundPosition: "center",
+  backgroundPosition: "bottom",
+  backgroundPositionY: '80%',
   backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
+  backgroundSize: "100% auto",
   position: "relative",
   backgroundImage: `url(${wwwws})`,
   "&::before": {

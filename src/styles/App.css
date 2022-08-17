@@ -3,6 +3,11 @@
   src: local("Public-Sans"),
     url(./fonts/static/PublicSans-Regular.ttf) format("opentype");
 }
+@font-face {
+  font-family: "DancingScript-VariableFont_wght";
+  src: local("DancingScript-VariableFont_wght"),
+    url(./fonts/DancingScript-VariableFont_wght.ttf) format("opentype");
+}
 * {
   font-family: Public-Sans;
   margin: 0;
