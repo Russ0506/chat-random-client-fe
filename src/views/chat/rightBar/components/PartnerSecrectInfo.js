@@ -19,7 +19,6 @@ export default function PartnerSecrectInfo() {
       >
         CherishByChatting
       </Typography>
-      
     </Stack>
   );
   return (
@@ -37,7 +36,16 @@ export default function PartnerSecrectInfo() {
     >
       {/* <AvatarFrame /> */}
       {NamePartner}
-      <Box sx={{ padding: "2% 10%", color: "#fff", textAlign: "center", pt:3, fontFamily:"DancingScript-VariableFont_wght", fontSize: "17px" }}>
+      <Box
+        sx={{
+          padding: "2% 10%",
+          color: "#fff",
+          textAlign: "center",
+          pt: 3,
+          fontFamily: "DancingScript-VariableFont_wght",
+          fontSize: "17px",
+        }}
+      >
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. At, accusamus
         qui. Alias facilis perferendis temporibus! Sint dolorem id, minima vero
         consectetur, modi debitis similique mollitia recusandae corrupti nam
