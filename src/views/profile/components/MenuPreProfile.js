@@ -84,9 +84,10 @@ export default class MenuPreProfile extends Component {
               </ListItem> */}
               <List>
                 {menuList.map((item, k) => (
-                  <ListItem key={k} disablePadding>
+                  <ListItem key={k} disablePadding fullWidth>
                     <ListItemButton
                       onClick={() => this.handleClick(k)}
+                      fullWidth
                       sx={{
                         borderLeft:
                           k == this.state.index ? "3px solid black" : "",

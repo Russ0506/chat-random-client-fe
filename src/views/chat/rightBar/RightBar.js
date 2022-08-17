@@ -1,4 +1,6 @@
-import React from "react";
+import { Button, Stack } from "@mui/material";
+import { Box } from "@mui/system";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeConversation, selectConversation, selectConversationLatestStatus } from "../../../features/chat/conversationSlice";
 import { axiosClient } from "../../../setup/axiosClient";
@@ -43,18 +45,6 @@ export default function RightBar() {
       }
     />
   ) : (
-    <>
-      <Stack
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ height: "30%", minHeight: "320px" }}
-      >
-        <PartnerInfo partnerInfor={currentConversation.partner} />
-      </Stack>
-      <Box sx={{ height: "40%" }}>
-        <PartnerPoster partnerInfor={currentConversation.partner} />
-      </Box>
-    </>
+    <SharedPartnerInfo partnerInfor={currentConversation.partner} />
   );
 }

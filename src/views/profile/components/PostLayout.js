@@ -15,7 +15,6 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/styles";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { axiosClient } from "../../../setup/axiosClient";
@@ -115,38 +114,40 @@ export default function PostLayout({
             width="440px"
             className="justify-content-between"
           >
-            <div>
             <Typography sx={{ fontWeight: 550, ml: 1 }}>
-            {localStorage.getItem('user_display_name')}
+              {localStorage.getItem("user_display_name")}
             </Typography>
-            {isReadonlyMode ? "" : <Box>
-              <IconButton onClick={handleOpenPostMenu}>
-                <MoreHorizIcon sx={{ width: "30px", height: "30px" }} />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "center",
-                  horizontal: "right",
-                }}
-                elevation={3}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleClosePostMenu}
-              >
-                {menuList.map((menu, index) =>
-                  menu.name === "New Post" ? (
-                    <div key={index}></div>
-                  ) : (
-                    <MenuItem key={index} >
-                      <IconButton onClick={() => handleCasePost(index)}
-                        display="flex"
-                        className="justify-content-end">
+            {isReadonlyMode ? (
+              ""
+            ) : (
+              <Box>
+                <IconButton onClick={handleOpenPostMenu}>
+                  <MoreHorizIcon sx={{ width: "30px", height: "30px" }} />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: "center",
+                    horizontal: "right",
+                  }}
+                  elevation={3}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleClosePostMenu}
+                >
+                  {menuList.map((menu, index) =>
+                    menu.name === "New Post" ? (
+                      <div key={index}></div>
+                    ) : (
+                      <MenuItem
+                        key={index}
+                        onClick={() => handleCasePost(index)}
+                      >
                         <Typography
                           key={index}
                           textAlign="center"
