@@ -103,6 +103,14 @@ export default function UserProfilePage() {
     getPostList();
   }, [userId]);
 
+  const avatarURL = () => {
+    if (userData) {
+      return `/api${userData?.avatar_path}`
+    } else {
+      return null
+    }
+  }
+
   return (
     <Container maxWidth="md" sx={{ justifyContent: "center", display: "flex" }}>
       <Stack
@@ -150,7 +158,7 @@ export default function UserProfilePage() {
           ) : (
             <></>
           )}
-          <Badge><Avatar alt = {userData?.name} src= {userData?.avatar_path} sx={{width: "150px", height: "150px", ...shapeStyles}} /></Badge>
+          <Badge><Avatar alt = {userData?.name} src= {avatarURL()} sx={{width: "150px", height: "150px", ...shapeStyles}} /></Badge>
           <Box sx={{ ml: 2 }}>
             <Stack flexDirection={{ xs: "column", md: "column" }}>
               <Typography
@@ -286,7 +294,7 @@ export default function UserProfilePage() {
           ) : (
             <></>
           )}
-         
+
 
            {/* <NewPosterLayout
               open={false}
