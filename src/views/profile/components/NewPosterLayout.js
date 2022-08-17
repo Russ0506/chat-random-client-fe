@@ -79,10 +79,6 @@ export default function NewPosterLayout({
     onClose();
     setOpenModal(false);
   };
-  const handleCloseSubmit = () => {
-    onClose();
-    setOpenModal(false);
-  };
 
   const handleKeyUp = (event) => {
     if (event.key === "Enter") {
@@ -229,7 +225,7 @@ export default function NewPosterLayout({
       let params = {}
       const formData = new FormData();
 
-      if(checkChangeUrlImg) {
+      if (checkChangeUrlImg) {
         data.append("image", croppedImage, "imagename");
         params = {
           post: {
@@ -249,7 +245,7 @@ export default function NewPosterLayout({
       for (let param in params["post"]) {
         formData.append(`post[${param}]`, params["post"][param]);
       }
-        
+
       if (type === 'new') {
         axiosMultipartForm
           .post(`${URL}`, formData)
@@ -345,7 +341,13 @@ export default function NewPosterLayout({
   };
 
   return (
-    <>
+    <Dialog
+      open={openModal}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={handleCloseModal}
+      aria-describedby="alert-dialog-slide-description"
+    >
       <StartBarCt openStb={openStb} closeStb={handleCloseStb} titleStb={errorMessage} typeNoti="error"></StartBarCt>
       <CropImage
         src={src}
@@ -357,113 +359,106 @@ export default function NewPosterLayout({
         handleClose={handleClose}
         onCropComplete={onCropComplete}
       ></CropImage>
-      <Dialog
-        open={openModal}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleCloseModal}
-        aria-describedby="alert-dialog-slide-description"
+      <DialogTitle
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          pb: 1
+        }}
       >
-        <DialogTitle
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            pb: 1
-          }}
-        >
-          {openLocationBox === true ? (
-            <Button
-              variant="text"
-              startIcon={<ArrowBackIcon />}
-              size="medium"
-              onClick={backLocationToPostTitle}
-            >
-              <Typography variant="body1">Search Your Location</Typography>
-            </Button>
-          ) : (
-            <Typography sx={{ fontSize: "22px" }}>{type === 'new' ? "New Post" : "Update Post"}</Typography>
-          )}
-          <IconButton onClick={handleCloseModal} size="small">
-            <CloseIcon sx={{ width: "30px", height: "30px" }} />
-          </IconButton>
-        </DialogTitle>
         {openLocationBox === true ? (
-          <DialogContent
-            sx={{ position: "relative", minHeight: "420px", marginTop: 0 }}
+          <Button
+            variant="text"
+            startIcon={<ArrowBackIcon />}
+            size="medium"
+            onClick={backLocationToPostTitle}
           >
-            <LocationFormControl variant="standard">
-              <GgmApiForPost
-                reponseLocation={setLocation}
-                onBack={backLocationToPost}
-              />
-            </LocationFormControl>
-          </DialogContent>
+            <Typography variant="body1">Search Your Location</Typography>
+          </Button>
         ) : (
-          <>
-            <DialogContent>
-              <DialogContentText
-                component={Form}
-                id="newPostForm"
-                onSubmit={submitPost}
+          <Typography sx={{ fontSize: "22px" }}>{type === 'new' ? "New Post" : "Update Post"}</Typography>
+        )}
+        <IconButton onClick={handleCloseModal} size="small">
+          <CloseIcon sx={{ width: "30px", height: "30px" }} />
+        </IconButton>
+      </DialogTitle>
+      {openLocationBox === true ? (
+        <DialogContent
+          sx={{ position: "relative", minHeight: "420px", marginTop: 0 }}
+        >
+          <LocationFormControl variant="standard">
+            <GgmApiForPost
+              reponseLocation={setLocation}
+              onBack={backLocationToPost}
+            />
+          </LocationFormControl>
+        </DialogContent>
+      ) : (
+        <>
+          <DialogContent>
+            <DialogContentText
+              component={Form}
+              id="newPostForm"
+              onSubmit={submitPost}
+            >
+              <Stack
+                className="ct-pt-title"
+                flexDirection="row"
+                alignItems="center"
+                sx={{ width: "100%" }}
               >
-                <Stack
-                  className="ct-pt-title"
-                  flexDirection="row"
-                  alignItems="center"
-                  sx={{ width: "100%" }}
-                >
-                  <AvatarFrame />
-                  <Stack justifyContent="center">
-                    <Typography sx={{ fontWeight: 550, ml: 1 }}>
-                      {userDisplayName ?? "User"}
-                    </Typography>
+                <AvatarFrame />
+                <Stack justifyContent="center">
+                  <Typography sx={{ fontWeight: 550, ml: 1 }}>
+                    {userDisplayName ?? "User"}
+                  </Typography>
 
-                    {usingLocation === true ? (
-                      <Stack justifyContent="center" flexDirection="row" alignItems="center" sx={{mt: 0.5, ml: 0.5}}>
-                        <LocationOnIcon />
-                        <Typography
+                  {usingLocation === true ? (
+                    <Stack justifyContent="center" flexDirection="row" alignItems="center" sx={{ mt: 0.5, ml: 0.5 }}>
+                      <LocationOnIcon />
+                      <Typography
                         variant="subtitle2"
-                          component="p"
-                          sx={{
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            maxWidth: "300px",
-                          }}
-                        >
-                          {location.addr}
-                        </Typography>
-                      </Stack>
-                    ) : (
-                      <></>
-                    )}
-                  </Stack>
+                        component="p"
+                        sx={{
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          maxWidth: "300px",
+                        }}
+                      >
+                        {location.addr}
+                      </Typography>
+                    </Stack>
+                  ) : (
+                    <></>
+                  )}
                 </Stack>
+              </Stack>
 
-                <Input
-                  name="caption"
-                  disabled={false}
-                  fullWidth
-                  value={message}
-                  disableUnderline
-                  onKeyUp={handleKeyUp}
-                  onChange={(event) => setMessage(event.target.value)}
-                  aria-label="minimum height"
-                  minRows={4}
-                  placeholder="Write what you are feeling..."
-                  multiline
-                  sx={{
-                    mt: 1,
-                    borderRadius: "10px",
-                    padding: "10px 10px",
-                    display: "flex",
-                    flexDirection: "column",
-                    overflow: "auto",
-                  }}
-                  endAdornment={
-                    <Stack sx={{ position: "relative" }}>
-                      {/* <EmojiPicker
+              <Input
+                name="caption"
+                disabled={false}
+                fullWidth
+                value={message}
+                disableUnderline
+                onKeyUp={handleKeyUp}
+                onChange={(event) => setMessage(event.target.value)}
+                aria-label="minimum height"
+                minRows={4}
+                placeholder="Write what you are feeling..."
+                multiline
+                sx={{
+                  mt: 1,
+                  borderRadius: "10px",
+                  padding: "10px 10px",
+                  display: "flex",
+                  flexDirection: "column",
+                  overflow: "auto",
+                }}
+                endAdornment={
+                  <Stack sx={{ position: "relative" }}>
+                    {/* <EmojiPicker
                         disabled={false}
                         value={message}
                         setValue={setMessage}
@@ -474,13 +469,13 @@ export default function NewPosterLayout({
                           right: "5px",
                         }}
                       /> */}
-                      {/* <InputEmoji
+                    {/* <InputEmoji
                           value={message}
                           onChange={setMessage}
                           placeholder="Type a message"
                         /> */}
 
-                      {/* <IconButton
+                    {/* <IconButton
                         disabled={false}
                         size="small"
                         // onClick={triggerPicker}
@@ -491,135 +486,142 @@ export default function NewPosterLayout({
                           height={20}
                         />
                       </IconButton> */}
-                    </Stack>
-                  }
-                />
-              </DialogContentText>
-              <Box
-                sx={{
-                  width: "100%",
-                  position: "relative",
-                }}
-              >
-                {croppedImageUrl ? (
-                  <>
-                    <Box
-                      borderRadius={4}
-                      sx={{
-                        margin: "0",
-                        overflow: "auto",
-                      }}
-                    >
-                      <img
-                        value="croppedImageUrl"
-                        alt="Crop"
-                        width="100%"
-                        src={croppedImageUrl}
-                      />
-                    </Box>
-                    <IconButton
-                      sx={{ position: "absolute", top: "2px", right: "7px" }}
-                    >
-                      <StyledCloseIcon
-                        onClick={clearImage}
-                        sx={{
-                          color: "#606770",
-                          background: "rgba(255,255,255,.8)",
-                          width: "25px",
-                          height: "25px",
-                        }}
-                      />
-                    </IconButton>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </Box>
-            </DialogContent>
-            <DialogActions>
-              <DialogContent>
-                <Stack width="100%" flexDirection="column">
-                  <Stack
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="space-between"
-                    spacing={1}
+                  </Stack>
+                }
+              />
+            </DialogContentText>
+            <Box
+              sx={{
+                width: "100%",
+                position: "relative",
+              }}
+            >
+              {croppedImageUrl ? (
+                <>
+                  <Box
+                    borderRadius={4}
                     sx={{
-                      flexShrink: 0,
-                      mr: 1.5,
-                      width: "100%",
-                      borderRadius: 4,
-                      padding: 1,
-                      border: "1px solid #e5e0e0",
+                      margin: "0",
+                      overflow: "auto",
                     }}
                   >
-                    <Typography>  {type === 'new' ? "Add to your post" : "Update your post"}</Typography>
-                    <Stack flexDirection="row">
-                      <IconButton
-                        disabled={false}
-                        size="small"
-                        sx={{ width: 37, height: 37 }}
-                      >
-                        <input
-                          type="file"
-                          accept="image/*"
-                          multiple
-                          id="file-input"
-                          className="upload"
-                          onChange={onSelectFile}
-                          hidden
-                        />
-
-                        <label
-                          htmlFor="file-input"
-                          style={{ margin: 0, padding: 0 }}
-                        >
-                          <Iconify
-                            icon="ic:round-add-photo-alternate"
-                            width={22}
-                            height={22}
-                          />
-                        </label>
-                      </IconButton>
-
-                      <IconButton
-                        disabled={false}
-                        size="small"
-                        onClick={handleOpenLocationBox}
-                        sx={{
-                          background:
-                            usingLocation === true ? "rgb(236, 236, 250)" : "",
-                          width: 37,
-                          height: 37,
-                          ml: "5px",
-                        }}
-                      >
-                        <LocationOnIcon />
-                      </IconButton>
+                    <img
+                      value="croppedImageUrl"
+                      alt="Crop"
+                      width="100%"
+                      src={croppedImageUrl}
+                    />
+                  </Box>
+                  <IconButton
+                    sx={{ position: "absolute", top: "2px", right: "7px" }}
+                  >
+                    <StyledCloseIcon
+                      onClick={clearImage}
+                      sx={{
+                        color: "#606770",
+                        background: "rgba(255,255,255,.8)",
+                        width: "25px",
+                        height: "25px",
+                      }}
+                    />
+                  </IconButton>
+                </>
+              ) : (
+                <Box
+                borderRadius={4}
+                sx={{
+                  margin: "0",
+                  overflow: "auto",
+                  minWidth: "500px",
+                  maxWidth: "800px"
+                }}>
+                </Box>
+              )}
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <DialogContent>
+              <Stack width="100%" flexDirection="column">
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  spacing={1}
+                  sx={{
+                    flexShrink: 0,
+                    mr: 1.5,
+                    width: "100%",
+                    borderRadius: 4,
+                    padding: 1,
+                    border: "1px solid #e5e0e0",
+                  }}
+                >
+                  <Typography>  {type === 'new' ? "Add to your post" : "Update your post"}</Typography>
+                  <Stack flexDirection="row">
+                    <IconButton
+                      disabled={false}
+                      size="small"
+                      sx={{ width: 37, height: 37 }}
+                    >
                       <input
                         type="file"
-                        ref={fileInputRef}
-                        style={{ display: "none" }}
+                        accept="image/*"
+                        multiple
+                        id="file-input"
+                        className="upload"
+                        onChange={onSelectFile}
+                        hidden
                       />
-                    </Stack>
-                  </Stack>
 
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    disabled={isPost}
-                    sx={{ mt: 2, mb: 0 }}
-                    form="newPostForm"
-                  >
-                    {type === 'new' ? "Post" : "Update Post"}
-                  </Button>
+                      <label
+                        htmlFor="file-input"
+                        style={{ margin: 0, padding: 0 }}
+                      >
+                        <Iconify
+                          icon="ic:round-add-photo-alternate"
+                          width={22}
+                          height={22}
+                        />
+                      </label>
+                    </IconButton>
+
+                    <IconButton
+                      disabled={false}
+                      size="small"
+                      onClick={handleOpenLocationBox}
+                      sx={{
+                        background:
+                          usingLocation === true ? "rgb(236, 236, 250)" : "",
+                        width: 37,
+                        height: 37,
+                        ml: "5px",
+                      }}
+                    >
+                      <LocationOnIcon />
+                    </IconButton>
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      style={{ display: "none" }}
+                    />
+                  </Stack>
                 </Stack>
-              </DialogContent>
-            </DialogActions>
-          </>
-        )}
-      </Dialog>
-    </>
+
+                <Button
+                  variant="contained"
+                  type="submit"
+                  disabled={isPost}
+                  sx={{ mt: 2, mb: 0 }}
+                  form="newPostForm"
+                >
+                  {type === 'new' ? "Post" : "Update Post"}
+                </Button>
+              </Stack>
+            </DialogContent>
+          </DialogActions>
+        </>
+      )}
+    </Dialog>
   );
 }
 
