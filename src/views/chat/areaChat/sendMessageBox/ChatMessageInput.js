@@ -15,26 +15,26 @@ export default function ChatMessageInput({ disabled, conversation }) {
   const [message, setMessage] = useState("");
   const [src, setSrc] = useState(null);
   const [srcUrl, setSrcUrl] = useState(null);
-  const curentConversation = useSelector((state) => state.conversation)
+  const curentConversation = useSelector((state) => state.conversation);
 
   useEffect(() => {
     clearImage();
-  }, [curentConversation])
+  }, [curentConversation]);
 
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
       reader.addEventListener("load", () => setSrc(reader.result));
       reader.readAsDataURL(e.target.files[0]);
-      setSrcUrl(e.target.files[0])
+      setSrcUrl(e.target.files[0]);
     }
   };
 
   const clearImage = () => {
-    setSrc(null)
-    setSrcUrl(null)
-    document.getElementById('file-input').value = null
-  }
+    setSrc(null);
+    setSrcUrl(null);
+    document.getElementById("file-input").value = null;
+  };
 
   const handleKeyUp = (event) => {
     if (event.key === "Enter") {
@@ -43,8 +43,8 @@ export default function ChatMessageInput({ disabled, conversation }) {
   };
 
   const handleSend = () => {
-    let params = {}
-    if (!message || (message.trim() === '')) {
+    let params = {};
+    if (!src && (!message || message.trim() === "")) {
       return "";
     }
 
@@ -54,6 +54,8 @@ export default function ChatMessageInput({ disabled, conversation }) {
           conversationId: conversation.id,
           text: message,
           attachment: srcUrl || null,
+          attachment_path: src,
+          is_new_message: true,
           recipient_id: conversation.partner.id,
           created_at: moment().format()
         };
@@ -62,9 +64,8 @@ export default function ChatMessageInput({ disabled, conversation }) {
         params = {
           conversationId: conversation.id,
           text: message,
-          // attachment: srcUrl || null,
           recipient_id: conversation.partner.id,
-          created_at: moment().format()
+          created_at: moment().format(),
         };
         dispatch(sendNewMessage(params));
       }
@@ -73,7 +74,8 @@ export default function ChatMessageInput({ disabled, conversation }) {
       element.scrollTop = element.scrollHeight;
     }
 
-    if (conversation.id) dispatch(touchConversation({ conversationId: conversation.id }));
+    if (conversation.id)
+      dispatch(touchConversation({ conversationId: conversation.id }));
     return setMessage("");
   };
 
@@ -96,9 +98,7 @@ export default function ChatMessageInput({ disabled, conversation }) {
               src={src}
             />
           </Box>
-          <IconButton
-            sx={{ position: "absolute", top: "2px", left: "7px" }}
-          >
+          <IconButton sx={{ position: "absolute", top: "2px", left: "7px" }}>
             <StyledCloseIcon
               onClick={clearImage}
               sx={{
@@ -111,7 +111,7 @@ export default function ChatMessageInput({ disabled, conversation }) {
           </IconButton>
         </Box>
       ) : (
-        ''
+        ""
       )}
       <Input
         disabled={disabled}
@@ -133,10 +133,7 @@ export default function ChatMessageInput({ disabled, conversation }) {
         endAdornment={
           <Stack direction="row" spacing={1} sx={{ flexShrink: 0, mr: 1.5 }}>
             <IconButton disabled={disabled} size="small" onClick={onSelectFile}>
-              <label
-                htmlFor="file-input"
-                style={{ margin: 0, padding: 0 }}
-              >
+              <label htmlFor="file-input" style={{ margin: 0, padding: 0 }}>
                 <Iconify
                   icon="ic:round-add-photo-alternate"
                   width={22}
@@ -169,7 +166,7 @@ export default function ChatMessageInput({ disabled, conversation }) {
 
       <IconButton
         color="primary"
-        disabled={!message || (message.trim() === '')}
+        disabled={!src && (!message || message.trim() === "")}
         onClick={handleSend}
         sx={{ mx: 1 }}
       >

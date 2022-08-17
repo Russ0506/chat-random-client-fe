@@ -21,6 +21,7 @@ import AdminLayout from "./components/layouts/AdminLayout/AdminLayout";
 import UserManagement from "./views/admin/tables/UserManagement";
 import UserProfilePage from "./views/profile/UserProfilePage";
 import WelcomePage from "./views/welcome/WelcomePage";
+import AdminLogin from "./views/auth/AdminLogin";
 
 export const ProtectedRoute = ({ link = "/", children }) => {
   return <AuthenLoading link={link} children={children} />;
@@ -61,6 +62,12 @@ export default function Routes() {
     {
       path: "/admin",
       children: [
+        {
+          path: "login",
+          element: (
+            <AdminLogin />
+          ),
+        },
         {
           path: "",
           element: (

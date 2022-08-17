@@ -44,7 +44,7 @@ export default function RegisterConfirm() {
           type="submit"
           variant="contained"
           sx={button_style}
-          href="/admin"
+          href="/users/login"
            >
               Continue
           </Button>

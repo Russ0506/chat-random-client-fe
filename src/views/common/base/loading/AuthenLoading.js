@@ -8,7 +8,6 @@ import {
   authenRoute,
   authenFailButStillCanAccess,
 } from "../../../../constant/RouterPermission";
-import Homepage from "../../../Homepage";
 export default function AuthenLoading(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -114,7 +114,7 @@ class SignUp extends React.PureComponent {
   checkIfFilesAreTooBig(file) {
     let valid = true
     const size = file.size / 1024 / 1024
-    if (size > 2) {
+    if (size > 5) {
       valid = false
     }
     return valid
