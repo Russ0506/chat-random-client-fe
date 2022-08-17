@@ -140,7 +140,7 @@ export default function Homepage() {
               borderRadius: "0 15px 15px 0",
               position: "absolute",
               left: "100%",
-              top: theme.spacing(1),
+              top: "2.5px",
               background: "rgb(236, 236, 250)",
               display: { xs: "", md: "none" },
             }}

@@ -1,29 +1,18 @@
 import {
   Avatar,
   Box,
-  Collapse,
+  Button,
   Divider,
-  Grid,
   ImageList,
   List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Stack,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import React, { useEffect } from "react";
-import { Badge } from "react-bootstrap";
-import PartnerInfo from "./PartnerInfo";
-import PartnerPoster from "./PartnerPoster";
-import InfoIcon from "@mui/icons-material/Info";
-import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useSelector } from "react-redux";
 import { axiosClient } from "../../../../setup/axiosClient";
-import ModalPoster from "./ModalPoster";
 import { URL } from "../../../../service/chat.service";
 import {
   StyledFemaleIcon,
@@ -32,6 +21,7 @@ import {
 import { POST_COVER, POST_COVER_MB } from "../../../../constant/css_constant";
 import ImagePoster from "../../../profile/components/ImagePoster";
 import PostLayout from "../../../profile/components/PostLayout";
+import { Link } from "react-router-dom";
 const URL_IMAGE = `${URL}/api`;
 export default function SharedPartnerInfo(props) {
   const [listPartnerPost, setListPartnerPost] = React.useState([]);
@@ -80,13 +70,13 @@ export default function SharedPartnerInfo(props) {
     <>
       <Stack flexDirection="column" justifyContent="center" alignItems="center">
         <Stack
-          justifyContent={isMobile === true ? "center" : "flex-start"}
+          justifyContent="center"
           alignItems="center"
-          flexDirection="row"
+          flexDirection="column"
           sx={{
             width: "100%",
             pt: isMobile === true ? 6 : 2,
-            mb: 3,
+            mb: 0,
             pl: isMobile === true ? 0 : 2,
           }}
           flexGrow={1}
@@ -94,31 +84,48 @@ export default function SharedPartnerInfo(props) {
           <Avatar
             src={URL_IMAGE + props.partnerInfor.avatar_path}
             alt={props.partnerInfor.name}
-            style={{ width: 80, height: 80 }}
+            style={{ width: 78, height: 78 }}
           />
-          <Typography
-            variant="h5"
-            textTransform="uppercase"
-            fontWeight={600}
-            textAlign="center"
-            sx={{ ml: 2 }}
-            color="#636363"
-          >
-            {props.partnerInfor.name}
-          </Typography>
-          <Typography
-            variant="h5"
-            fontWeight={600}
-            textAlign="center"
-            sx={{ pb: 1 }}
-          >
-            {props.partnerInfor.gender === "male" ? (
-              <StyledMaleIcon />
-            ) : (
-              <StyledFemaleIcon />
-            )}
-          </Typography>
+          <Stack flexDirection="row">
+            <Typography
+              variant="h5"
+              textTransform="uppercase"
+              fontWeight={600}
+              textAlign="center"
+              sx={{ mt: 1 }}
+              color="#636363"
+            >
+              {props.partnerInfor.name}
+            </Typography>
+            <Typography
+              variant="h5"
+              fontWeight={600}
+              textAlign="center"
+              sx={{ pb: 1 }}
+            >
+              {props.partnerInfor.gender === "male" ? (
+                <StyledMaleIcon />
+              ) : (
+                <StyledFemaleIcon />
+              )}
+            </Typography>
+          </Stack>
         </Stack>
+        <Button
+          component={Link}
+          to={`/users/profile/${currentConversation?.partner?.id}`}
+          variant="outlined"
+          sx={{
+            ml: 1,
+            mb: 1,
+            maxWidth: 180,
+            border: "1px solid rgb(30 20 189 / 50%)",
+            color: "rgb(30 20 189 / 70%)",
+          }}
+          size="small"
+        >
+          View Profile
+        </Button>
       </Stack>
       <List
         sx={{ width: "100%", backgroundColor: "#fff", height: "100%" }}
@@ -152,8 +159,8 @@ export default function SharedPartnerInfo(props) {
           <ImageList
             variant="standard"
             cols={isMobile ? 2 : 2}
-            gap={3}
-            rowHeight={isMobile ? POST_COVER_MB : POST_COVER}
+            gap={1}
+            rowHeight={isMobile ? POST_COVER_MB : 170}
             style={{ overflow: "hidden" }}
           >
             <>
@@ -162,6 +169,8 @@ export default function SharedPartnerInfo(props) {
                   key={index}
                   item={item}
                   index={index}
+                  height={170}
+                  mbHeight={POST_COVER_MB}
                   handleOpenPoster={handleOpenPoster}
                 />
               ))}

@@ -15,7 +15,13 @@ export default function ImagePoster(props) {
       <Box
         sx={{
           width: "100%",
-          height: isMobile ? POST_COVER_MB : POST_COVER,
+          height: isMobile
+            ? props.mbHeight
+              ? props.mbHeight
+              : POST_COVER_MB
+            : props.height
+            ? props.height
+            : POST_COVER,
           padding: "5px",
           borderRadius: "4px",
           display: loadingContext ? "" : "none",

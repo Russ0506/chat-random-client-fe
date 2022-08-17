@@ -23,8 +23,8 @@ export default function MessageLayout({ openBar }) {
             src={ChatBg}
             alt=""
             height={isMobile ? "auto" : "80%"}
-            width={isMobile ? "100%" : ""}
-          ></img>
+            width={isMobile ? "75%" : ""}
+          />
         </Stack>
       );
     return (
