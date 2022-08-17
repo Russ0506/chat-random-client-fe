@@ -1,6 +1,7 @@
 import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import {
   Dialog,
   DialogActions,
@@ -13,14 +14,14 @@ import {
   MenuItem,
   Stack,
   Typography,
+  Box,
+  Avatar
 } from "@mui/material";
 import { styled } from "@mui/styles";
-import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { axiosClient } from "../../../setup/axiosClient";
 import AvatarFrame from "../../common/base/AvatarFrame";
 import Loading from "../../common/base/loading/Loading";
-// import myIdol from "../components/img/myidol.jpg";
 
 const menuList = [
   {
@@ -38,13 +39,12 @@ function handleClose() {
   return false;
 }
 export default function PostLayout({
-  open = true,
+  open = false,
   data,
   onClose = handleClose(),
-  isReadonlyMode = false,
-  onOpenEditBox = handleClose(),
+  isPartnerView,
+  onOpenEditBox,
 }) {
-  const [openM, setOpenM] = useState(open);
   const [loading, setLoading] = useState(false);
   const [anchorElNav, setAnchorElNav] = useState(false);
   const handleClosePostMenu = () => {
@@ -55,7 +55,6 @@ export default function PostLayout({
   };
   const handleCloseModal = () => {
     onClose();
-    setOpenM(false);
   };
 
   const handleCasePost = (index) => {
@@ -76,7 +75,7 @@ export default function PostLayout({
       .delete(`${URL}/${data?.id}`)
       .then((data) => {
         setTimeout(() => {
-          onClose(data.data);
+          onClose("delete");
         }, 500);
       })
       .catch(() => {
@@ -86,7 +85,7 @@ export default function PostLayout({
 
   return (
     <Dialog
-      open={openM}
+      open={open}
       TransitionComponent={Transition}
       keepMounted
       onClose={handleCloseModal}
@@ -107,17 +106,36 @@ export default function PostLayout({
           alignItems="center"
           sx={{ width: "100%" }}
         >
-          <AvatarFrame />
+        <Avatar alt={data?.name} src= {data?.avatar} />
           <Stack
             flexDirection="row"
             alignItems="center"
             width="440px"
             className="justify-content-between"
           >
+            <div>
             <Typography sx={{ fontWeight: 550, ml: 1 }}>
-              {localStorage.getItem("user_display_name")}
+              {data?.name}
+            {/* {(data.name) ? data.name : localStorage.getItem('user_display_name')} */}
             </Typography>
-            {isReadonlyMode ? (
+            <Stack justifyContent="center" flexDirection="row" alignItems="center" sx={{mt: 0.5, ml: 0.5}}>
+              {data?.location ? <LocationOnIcon /> : "" }
+              <Typography
+              variant="subtitle2"
+                component="p"
+                sx={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  maxWidth: "300px",
+                }}
+              >
+                {data?.location}
+              </Typography>
+              </Stack>
+            </div>
+			
+            {isPartnerView ? (
               ""
             ) : (
               <Box>
@@ -137,7 +155,7 @@ export default function PostLayout({
                     vertical: "top",
                     horizontal: "left",
                   }}
-                  open={Boolean(anchorElNav)}
+                  open={anchorElNav}
                   onClose={handleClosePostMenu}
                 >
                   {menuList.map((menu, index) =>
@@ -165,12 +183,6 @@ export default function PostLayout({
           </Stack>
         </Stack>
 
-        {/* <IconButton size="small" onClick={handleCloseModal}>
-          <EditIcon sx={{ width: "22px", height: "22px" }} />
-        </IconButton>
-        <IconButton size="small">
-          <DeleteOutlineIcon sx={{ width: "25px", height: "25px" }} />
-        </IconButton> */}
         <IconButton size="small" onClick={handleCloseModal}>
           <CloseIcon sx={{ width: "30px", height: "30px" }} />
         </IconButton>
@@ -184,7 +196,7 @@ export default function PostLayout({
           }}
         >
           <Typography variant="body1" marginBottom={1.5}>
-            {data.content}
+            {data?.content}
           </Typography>
           <Box
             borderRadius={4}
@@ -193,7 +205,7 @@ export default function PostLayout({
               overflow: "auto",
             }}
           >
-            <img width="100%" src={data.image} alt=""></img>
+            <img width="100%" src={data?.image} alt=""></img>
           </Box>
         </Box>
       </DialogContent>
@@ -210,17 +222,9 @@ export default function PostLayout({
           <IconButton aria-label="add to favorites">
             <FavoriteIcon />
           </IconButton>
-          <Typography>{data.likeCount} likes</Typography>
+          <Typography>{data?.likeCount} likes</Typography>
         </Stack>
 
-        {/* <Stack flexDirection="row">
-          <IconButton size="small" onClick={handleCloseModal}>
-            <EditIcon sx={{ width: "22px", height: "22px" }} />
-          </IconButton>
-          <IconButton size="small">
-            <DeleteOutlineIcon sx={{ width: "25px", height: "25px" }} />
-          </IconButton>
-        </Stack> */}
       </DialogActions>
     </Dialog>
   );

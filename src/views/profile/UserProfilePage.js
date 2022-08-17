@@ -9,7 +9,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import Badge from "@mui/material/Badge";
 import NewPosterLayout from "./components/NewPosterLayout";
 // import $ from "jquery";
@@ -17,6 +17,11 @@ import {
   StyledFemaleIcon,
   StyledMaleIcon,
 } from "../common/base/icon/GenderIcon";
+
+import {
+  shapeCircleStyles,
+  shapeStyles,
+} from "../common/ShapeAvatar"
 import PostLayout from "./components/PostLayout";
 import AddIcon from "@mui/icons-material/Add";
 import { axiosClient } from "../../setup/axiosClient";
@@ -28,65 +33,55 @@ import { Link, useParams } from "react-router-dom";
 import useFetch from "../../utils/useFetch";
 
 const URL_IMAGE = `${URL}/api`;
-const shapeStyles = {
-  bgcolor: "primary.main",
-  width: { xs: 80, md: 120 },
-  height: { xs: 80, md: 120 },
-  marginTop: 1,
-};
-const shapeCircleStyles = {
-  borderRadius: "50%",
-};
 
 export default function UserProfilePage() {
   const { userId } = useParams();
   const [userData] = useFetch(`users/${userId}`);
-  const [openPoster, setOpenPoster] = React.useState(false);
   const [posterData, setPosterData] = React.useState({
+    open : false,
     caption: "",
-    image_path: "",
     no_of_reactions: 0,
+    locaton: null,
+    name: "",
+    image: "",
+    likeCount: 0,
+    id: null,
+    avatar: null,
   });
   const [listPosterData, setListPosterData] = React.useState([]);
-  const [currentPosterData, setCurrentPosterData] = React.useState(null);
   const [openNewPoster, setOpenNewPoster] = React.useState({
     value: false,
     type: "new",
   });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const circle = (
-    <Box
-      component="span"
-      sx={{
-        ...shapeStyles,
-        ...shapeCircleStyles,
-        backgroundImage: `url(/api${userData?.avatar_path})`,
-      }}
-    />
-  );
-  function handleOpenPoster(item) {
-    setPosterData({
+
+  async function handleOpenPoster(item) {
+    await setPosterData({
+      open: true,
+      avatar: item.user.avatar_path,
       content: item.caption,
       image: item.image_path,
       likeCount: item.no_of_reactions,
       id: item.id,
+      avatar: item.user.avatar_path,
+      location: item.location,
+      name: item.user.name,
     });
-    setOpenPoster(true);
   }
 
-  async function handleClosePoster() {
-    await getPostList();
-    setTimeout(() => {
-      setOpenPoster(false);
-    }, 500);
+  async function handleClosePoster(type = null) {
+    if(type === "delete") {
+      await getPostList();
+    }
+    await setPosterData({...posterData, open: false})
   }
 
-  function handleOpenNewPost(type, posterData = null) {
-    setCurrentPosterData(posterData);
+  function handleOpenNewPost(type) {
     setOpenNewPoster({ value: true, type: type });
   }
-  function handleCloseNewPost() {
+  async function handleCloseNewPost(data) {
+    await getPostList();
     setOpenNewPoster({ value: false, type: "new" });
   }
 
@@ -104,8 +99,9 @@ export default function UserProfilePage() {
   }
 
   useLayoutEffect(() => {
+    setListPosterData([])
     getPostList();
-  }, [openNewPoster]);
+  }, [userId]);
 
   return (
     <Container maxWidth="md" sx={{ justifyContent: "center", display: "flex" }}>
@@ -154,7 +150,7 @@ export default function UserProfilePage() {
           ) : (
             <></>
           )}
-          <Badge>{circle}</Badge>
+          <Badge><Avatar alt = {userData?.name} src= {userData?.avatar_path} sx={{width: "150px", height: "150px", ...shapeStyles}} /></Badge>
           <Box sx={{ ml: 2 }}>
             <Stack flexDirection={{ xs: "column", md: "column" }}>
               <Typography
@@ -215,7 +211,7 @@ export default function UserProfilePage() {
                     My Posts
                   </Typography>
                   <Button
-                    onClick={() => handleOpenNewPost("new", null)}
+                    onClick={() => handleOpenNewPost("new")}
                     variant="outlined"
                     sx={{
                       ml: 1,
@@ -262,7 +258,7 @@ export default function UserProfilePage() {
                     key={index}
                     item={item}
                     index={index}
-                    handleOpenPoster={handleOpenPoster}
+                    onClickImage={()=> handleOpenPoster(item)}
                   />
                 ))}
               </>
@@ -272,22 +268,32 @@ export default function UserProfilePage() {
             <NewPosterLayout
               open={openNewPoster.value}
               type={openNewPoster.type}
-              posterData={currentPosterData}
+              posterData={openNewPoster.type == "new" ? {} : posterData}
               onClose={handleCloseNewPost}
             />
           ) : (
             <></>
           )}
-          {openPoster === true ? (
-            <PostLayout
-              open={openPoster}
-              onClose={handleClosePoster}
-              data={posterData}
-              onOpenEditBox={() => handleOpenNewPost("edit", posterData)}
-            />
+
+          {posterData.open == true ? (
+             <PostLayout
+             isPartnerView={posterData?.id != localStorage.getItem('user_id')}
+             open={posterData.open}
+             onClose={handleClosePoster}
+             data={posterData}
+             onOpenEditBox={() => handleOpenNewPost("edit")}
+           />
           ) : (
             <></>
           )}
+         
+
+           {/* <NewPosterLayout
+              open={false}
+              type={openNewPoster.type}
+              posterData={openNewPoster.type == "new" ? {} : posterData}
+              onClose={handleCloseNewPost}
+            /> */}
         </Box>
       </Stack>
     </Container>

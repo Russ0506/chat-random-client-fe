@@ -77,10 +77,9 @@ export default class MenuPreProfile extends Component {
             <Stack flexDirection="column" sx={{ width: "100%" }}>
               <List>
                 {menuList.map((item, k) => (
-                  <ListItem key={k} disablePadding fullWidth>
+                  <ListItem key={k} disablePadding>
                     <ListItemButton
                       onClick={() => this.handleClick(k)}
-                      fullWidth
                       sx={{
                         borderLeft:
                           k === this.state.index ? "3px solid black" : "",
