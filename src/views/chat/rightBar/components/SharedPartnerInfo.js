@@ -154,6 +154,8 @@ export default function SharedPartnerInfo(props) {
         <Box
           sx={{
             width: "100%",
+            overflow: "auto",
+            height: "inherit",
           }}
         >
           <ImageList
