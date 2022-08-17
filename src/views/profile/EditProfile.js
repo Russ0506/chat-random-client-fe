@@ -66,15 +66,16 @@ class EditProfileCls extends Component {
           background: "#fff",
         }}
       >
-        <Grid
-          container
-          columns={{ xs: 1, sm: 1, md: 1, lg: 2 }}
-          sx={{ width: "100%", height: "100%", p: 2 }}
+        <Stack
+          display="flex"
+          flexDirection={{ xs: "column", md: "row" }}
+          alignItems="center"
+          sx={{ width: "100%", height: { xs: "auto", md: "100%" }, p: 2 }}
         >
           <Stack
             flexDirection="column"
             alignItems="center"
-            sx={{ width: "200px", height: "100%" }}
+            sx={{ width: { xs: "100%", md: "200px" }, height: "100%" }}
           >
             <AvatarFramEdit
               img={avatar_path}
@@ -88,14 +89,14 @@ class EditProfileCls extends Component {
               {user_display_name}
             </Typography>
           </Stack>
-
           <Stack
             flexDirection="column"
             sx={{
-              width: "calc(100% - 200px)",
+              width: { xs: "100%", md: "calc(100% - 200px)" },
               overflow: "auto",
               pl: 2,
               pr: 2,
+              pt: { xs: 3, md: 6 },
             }}
           >
             <CmmnFormControl
@@ -205,7 +206,12 @@ class EditProfileCls extends Component {
               </CmmnInputLabel>
               <CmmnFormControl
                 variant="outlined"
-                sx={{ boxShadow: "none", outline: "none", mt: "0 !important" }}
+                sx={{
+                  boxShadow: "none",
+                  outline: "none",
+                  mt: "0 !important",
+                  pt: "0 !important"
+                }}
               >
                 <CmmnGroupSelect
                   size="small"
@@ -249,7 +255,7 @@ class EditProfileCls extends Component {
               </Button>
             </Stack>
           </Stack>
-        </Grid>
+        </Stack>
       </Box>
     );
   }

@@ -55,21 +55,20 @@ class ChangePwdCls extends Component {
         sx={{
           width: "100%",
           height: "100%",
-          // p: 2,
           pt: 2,
           background: "#fff",
         }}
       >
-        <Grid
-          container
-          columns={{ xs: 1, sm: 1, md: 1, lg: 2 }}
-          sx={{ width: "100%", height: "100%", p: 2 }}
+        <Stack
+          display="flex"
+          flexDirection={{ xs: "column", md: "row" }}
+          alignItems="center"
+          sx={{ width: "100%", height: { xs: "auto", md: "100%" }, p: 2 }}
         >
           <Stack
             flexDirection="column"
             alignItems="center"
-            // justifyContent="center"
-            sx={{ width: "200px", height: "100%" }}
+            sx={{ width: { xs: "100%", md: "200px" }, height: "100%" }}
           >
             <AvatarFramEdit
               img={null}
@@ -79,17 +78,17 @@ class ChangePwdCls extends Component {
               variant="body1"
               sx={{ mt: 1, color: "#4f4f4f", justifySelf: "flex-end" }}
             >
-              {localStorage.getItem('user_display_name')}
+              {localStorage.getItem("user_display_name")}
             </Typography>
           </Stack>
-
           <Stack
             flexDirection="column"
             sx={{
-              width: "calc(100% - 200px)",
+              width: { xs: "100%", md: "calc(100% - 200px)" },
               overflow: "auto",
               pl: 2,
               pr: 2,
+              pt: { xs: 3, md: 6 },
             }}
           >
             <CmmnFormControl
@@ -157,7 +156,7 @@ class ChangePwdCls extends Component {
               Change Password
             </Button>
           </Stack>
-        </Grid>
+        </Stack>
       </Box>
     );
   }

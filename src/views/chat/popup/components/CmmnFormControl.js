@@ -2,7 +2,7 @@ import { FormControl } from "@mui/material";
 import { styled } from "@mui/styles";
 
 export const CmmnFormControl = styled(FormControl)(({ theme }) => ({
-  marginTop: "15px !important",
+  marginTop: "15px",
   "& .MuiOutlinedInput-root:hover": {
     outline: "none !important",
   },

@@ -9,12 +9,16 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { Component } from "react";
-import { DRAWER_WITH_EDIT_PRF } from "../../../constant/css_constant";
+import {
+  DRAWER_WITH_EDIT_PRF,
+  DRAWER_WITH_EDIT_PRF_MB,
+} from "../../../constant/css_constant";
 import { styled } from "@mui/styles";
 import { Link } from "react-router-dom";
 import EditProfile from "../EditProfile";
 import ChangePwd from "../ChangePwd";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import LockResetIcon from "@mui/icons-material/LockReset";
 export default class MenuPreProfile extends Component {
   constructor(props) {
     super(props);
@@ -54,7 +58,7 @@ export default class MenuPreProfile extends Component {
             margin: "2% 2%",
             background: "#fff",
             width: "100%",
-            borderRadius: "10px",
+            borderRadius: "8px",
             overflow: "hidden",
             maxWidth: "1200px",
           }}
@@ -64,24 +68,13 @@ export default class MenuPreProfile extends Component {
             alignItems="flex-start"
             justifyContent="flex-start"
             sx={{
-              width: DRAWER_WITH_EDIT_PRF,
+              width: { xs: DRAWER_WITH_EDIT_PRF_MB, md: DRAWER_WITH_EDIT_PRF },
               borderRight: "1px solid #e5e0e0",
               padding: "15px 0",
+              background: "#fff",
             }}
           >
             <Stack flexDirection="column" sx={{ width: "100%" }}>
-              {/* <ListItem key="Return back profile Page" disablePadding fullWidth>
-                <Button
-                  component={Link}
-                  to={ `/users/${localStorage.getItem('user_id')}/profile` }
-                  startIcon={<ArrowBackIcon />}
-                  sx={{ borderRadius: "0 10px 10px 0" }}
-                >
-                  <Typography variant="button" sx={{ p: 1, fontWeight:"500" }}>
-                    Back to Profile Page
-                  </Typography>
-                </Button>
-              </ListItem> */}
               <List>
                 {menuList.map((item, k) => (
                   <ListItem key={k} disablePadding fullWidth>
@@ -90,12 +83,32 @@ export default class MenuPreProfile extends Component {
                       fullWidth
                       sx={{
                         borderLeft:
-                          k == this.state.index ? "3px solid black" : "",
-                        fontWeight: k == this.state.index ? "bold" : "",
-                        color: k == this.state.index ? "#817cce" : "",
+                          k === this.state.index ? "3px solid black" : "",
+                        fontWeight: k === this.state.index ? "bold" : "",
+                        color: k === this.state.index ? "#817cce" : "",
                       }}
                     >
-                      <MenuLayer>{item.name}</MenuLayer>
+                      <MenuLayer display="flex" flexDirection="row" justifyContent="flex-start !important" alignItems="center">
+                        <Typography
+                          sx={{
+                            position: "relative",
+                            right: { xs: "15px", md: "0" },
+                            display: "inline",
+                            width: "fit-content",
+                          }}
+                        >
+                          {item.icon}
+                        </Typography>
+                        <Typography
+                          display={{
+                            xs: "none",
+                            md: "inline",
+                          }}
+                          sx={{width:"fix-content", pl: 1}}
+                        >
+                          {item.name}
+                        </Typography>
+                      </MenuLayer>
                     </ListItemButton>
                   </ListItem>
                 ))}
@@ -104,7 +117,10 @@ export default class MenuPreProfile extends Component {
           </Stack>
           <Box
             sx={{
-              width: `calc(100% - ${DRAWER_WITH_EDIT_PRF}px)`,
+              width: {
+                xs: `calc(100% - ${DRAWER_WITH_EDIT_PRF_MB}px)`,
+                md: `calc(100% - ${DRAWER_WITH_EDIT_PRF}px)`,
+              },
               height: "100%",
               overflow: "auto",
             }}
@@ -121,11 +137,13 @@ export default class MenuPreProfile extends Component {
 const menuList = [
   {
     name: "Edit Profile",
+    icon: <ManageAccountsIcon sx={{ height: "32px", width: "32px" }} />,
     link: "/users/profile/edit",
     component: <EditProfile />,
   },
   {
     name: "Change password",
+    icon: <LockResetIcon sx={{ height: "32px", width: "32px" }} />,
     link: "/users/profile/change-password",
     component: <ChangePwd />,
   },

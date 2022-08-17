@@ -57,6 +57,7 @@ export const BOX_SHADOW = {
 export const DRAWER_WITH = 320;
 export const MB_LEFT_SIDEBAR_WIDTH = 85;
 export const DRAWER_WITH_EDIT_PRF = 250;
+export const DRAWER_WITH_EDIT_PRF_MB = 50;
 export const CHAT_HEADER_HEIGHT = "70px";
 export const APP_BAR_HEIGHT = "60px";
 export const POST_COVER = 250;
