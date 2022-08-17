@@ -280,6 +280,7 @@ class SignUp extends React.PureComponent {
   // end css
 
   componentDidMount() {
+    window.localStorage.clear();
     axiosClient.get(`time_zones.json`).then((data) => {
       this.setState({
         options: data.time_zones.map((it) => ({ value: it, label: it })),
@@ -623,7 +624,7 @@ class SignUp extends React.PureComponent {
                                 value={this.state.selectedDate}
                                 minDate={new Date("1920-01-01")}
                                 maxDate={subtractFromDate(new Date(), { years: 15 })}
-                                openTo= {subtractFromDate(new Date(), { years: 15 })}
+                                openTo= "year"
                                 onChange={this.handleDateChange}
                                 renderInput={(params) => <TextField {...params} />}
                                 id="birthday"
