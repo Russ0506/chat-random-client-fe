@@ -19,7 +19,7 @@ import Loading from "../common/base/loading/Loading";
 import Select from "react-select";
 import { axiosClient, axiosMultipartForm } from "../../setup/axiosClient";
 import "react-image-crop/dist/ReactCrop.css";
-import { Fade, IconButton, MenuItem, Slide, Stack, Zoom } from "@mui/material";
+import { Fade, IconButton, MenuItem, Slide, Stack, Tooltip, Zoom } from "@mui/material";
 import bgNew from "../auth/img/conv.png";
 import CropImage from "../common/modal/CropImage";
 import StartBarCt from "../common/error/StackBarCt";
@@ -29,6 +29,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputAdornment from "@mui/material/InputAdornment";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import AvatarFramEdit from "../profile/components/AvatarFramEdit";
 const URL = "users";
 
 class SignUp extends React.PureComponent {
@@ -45,7 +46,7 @@ class SignUp extends React.PureComponent {
         aspect: 16 / 16,
       },
       open: false,
-      selectedDate: new Date(),
+      selectedDate: null,
       isSubmit: false,
       message: "",
       options: [],
@@ -85,8 +86,8 @@ class SignUp extends React.PureComponent {
   }
 
   onSelectFile = (e) => {
-    this.setState({isValidPhoto : this.validateFile(e.target.files[0])})
-    if(!this.validateFile(e.target.files[0])) return;
+    this.setState({ isValidPhoto: this.validateFile(e.target.files[0]) })
+    if (!this.validateFile(e.target.files[0])) return;
     else {
       if (e.target.files && e.target.files.length > 0) {
         const reader = new FileReader();
@@ -101,10 +102,10 @@ class SignUp extends React.PureComponent {
   };
 
   validateFile(file = null) {
-    if(!this.checkIfFilesAreTooBig(file)) {
+    if (!this.checkIfFilesAreTooBig(file)) {
       return false
     }
-    if(!this.checkIfFilesAreCorrectType(file)) {
+    if (!this.checkIfFilesAreCorrectType(file)) {
       return false
     }
     return true;
@@ -119,7 +120,7 @@ class SignUp extends React.PureComponent {
     return valid
   }
 
- checkIfFilesAreCorrectType(file) {
+  checkIfFilesAreCorrectType(file) {
     let valid = true
     if (!this.SUPPORTED_FORMATS.includes(file.type)) {
       valid = false
@@ -308,7 +309,7 @@ class SignUp extends React.PureComponent {
       .max(50, 'Please enter less than 50 characters')
       .required('Last Name Required'),
     email: Yup.string().email('Please enter the right email format').required('Email Required'),
-    password: Yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, 'Password have minimum eight characters, at least one letter and one number').required('Password Required'),
+    password: Yup.string().matches(/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%?=*&]).{8,20})/, 'Password have to be at least one lowercase, one upper case, one number and the special characters of (!,@,#,$,%,?,=,*,&), from 8 to 20 characters').required('Password Required'),
     rePassword: Yup.string().when("password", {
       is: val => (val && val.length > 0 ? true : false),
       then: Yup.string().oneOf(
@@ -322,6 +323,29 @@ class SignUp extends React.PureComponent {
 
   render() {
     const { crop, croppedImageUrl, src, croppedImage } = this.state;
+
+    const subtractFromDate = (
+      date,
+      { years, days, hours, minutes, seconds, milliseconds } = {}
+    ) => {
+      const millisecondsOffset = milliseconds ?? 0
+      const secondsOffset = seconds ? 1000 * seconds : 0
+      const minutesOffset = minutes ? 1000 * 60 * minutes : 0
+      const hoursOffset = hours ? 1000 * 60 * 60 * hours : 0
+      const daysOffset = days ? 1000 * 60 * 60 * 24 * days : 0
+      const dateOffset =
+        millisecondsOffset +
+        secondsOffset +
+        minutesOffset +
+        hoursOffset +
+        daysOffset
+
+      let newDate = date
+      if (years) newDate = date.setFullYear(date.getFullYear() - years)
+      newDate = new Date(newDate - dateOffset)
+
+      return newDate
+    }
 
     return (
       <Box
@@ -437,7 +461,20 @@ class SignUp extends React.PureComponent {
                         {/* avatar */}
                         <Grid item xs={12} sx={this.customAvatarField}>
                           <Box>
-                            <TextField
+                            <Box className="d-flex justify-content-center">
+                              <label
+                                htmlFor="contain-select-image"
+                                style={{ margin: 0, padding: 0 }}
+                              >
+                                <AvatarFramEdit
+
+                                  img={null}
+                                  sx={{ width: "150px", height: "150px", position: "relative" }}
+                                />
+                              </label>
+                            </Box>
+                            <input
+                              hidden
                               className="custom-select-box"
                               type="file"
                               accept="image/*"
@@ -464,7 +501,7 @@ class SignUp extends React.PureComponent {
                               <img
                                 value="croppedImageUrl"
                                 alt="Crop"
-                                name = "photo"
+                                name="photo"
                                 style={{ maxWidth: "100%" }}
                                 src={croppedImageUrl}
                               />
@@ -476,7 +513,7 @@ class SignUp extends React.PureComponent {
                             hidden
                             value={croppedImageUrl}
                           ></input>
-                            {!this.state.isValidPhoto ? (<p className="css-1wc848c-MuiFormHelperText-root error-text" id="date-helper-text">Avatar have to be in image format and under 2MB</p>) : null}
+                          {!this.state.isValidPhoto ? (<p className="css-1wc848c-MuiFormHelperText-root error-text" id="date-helper-text">Avatar have to be in image format and under 2MB</p>) : null}
                         </Grid>
                         {/* end-avatar */}
                         <Grid item xs={12} sm={6}>
@@ -517,77 +554,84 @@ class SignUp extends React.PureComponent {
                         </Grid>
 
                         <Grid item xs={12}>
-                          <Field
-                            as={TextField}
-                            required
-                            fullWidth
-                            name="password"
-                            label="Enter Password"
-                            type={this.state.showPassword ? "text" : "password"}
-                            id="password"
-                            autoComplete="new-password"
-                            onCut={this.handleStopChange}
-                            onCopy={this.handleStopChange}
-                            onPaste={this.handleStopChange}
-                            InputProps={{
-                              endAdornment: (
-                                <InputAdornment position="end">
-                                  <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={() => this.handleClickShowPassword("password")}
-                                    onMouseDown={() => this.handleClickShowPassword("password")}
-                                  >
-                                    {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
-                                  </IconButton>
-                                </InputAdornment>
-                              )
-                            }}
-                            helperText={<ErrorMessage className="error-text" name="password" />}
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Field
-                            as={TextField}
-                            required
-                            fullWidth
-                            name="rePassword"
-                            label="Confirm Password"
-                            type={this.state.showRePassword ? "text" : "password"}
-                            id="re-password"
-                            autoComplete="re-password"
-                            onCut={this.handleStopChange}
-                            onCopy={this.handleStopChange}
-                            onPaste={this.handleStopChange}
-                            InputProps={{
-                              endAdornment: (
-                                <InputAdornment position="end">
-                                  <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={() => this.handleClickShowPassword("repassword")}
-                                    onMouseDown={() => this.handleClickShowPassword("repassword")}
-                                  >
-                                    {this.state.showRePassword ? <Visibility /> : <VisibilityOff />}
-                                  </IconButton>
-                                </InputAdornment>
-                              )
-                            }}
-                            helperText={<ErrorMessage className="error-text" name="rePassword" />}
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DesktopDatePicker
-                              label="Birthday"
-                              value={this.state.selectedDate}
-                              minDate={new Date("1920-01-01")}
-                              maxDate={new Date()}
-                              onChange={this.handleDateChange}
-                              renderInput={(params) => <TextField {...params} />}
-                              id="birthday"
-                              name="birthday"
+                          <Tooltip placement="top-start" title="Password have to be at least one lowercase, one upper case, one number and the special characters of (!,@,#,$,%,?,=,*,&), from 8 to 20 characters">
+                            <Field
+                              as={TextField}
+                              required
+                              fullWidth
+                              name="password"
+                              label="Enter Password"
+                              type={this.state.showPassword ? "text" : "password"}
+                              id="password"
+                              autoComplete="new-password"
+                              onCut={this.handleStopChange}
+                              onCopy={this.handleStopChange}
+                              onPaste={this.handleStopChange}
+                              InputProps={{
+                                endAdornment: (
+                                  <InputAdornment position="end">
+                                    <IconButton
+                                      aria-label="toggle password visibility"
+                                      onClick={() => this.handleClickShowPassword("password")}
+                                      onMouseDown={() => this.handleClickShowPassword("password")}
+                                    >
+                                      {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                  </InputAdornment>
+                                )
+                              }}
+                              helperText={<ErrorMessage className="error-text" name="password" />}
                             />
-                            {errors.birthday && touched.birthday ? (<p className="css-1wc848c-MuiFormHelperText-root error-text" id="date-helper-text">{errors.birthday}</p>) : null}
-                          </LocalizationProvider>
+                          </Tooltip>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Tooltip placement="top-start" title="Confirm password need to match with new password">
+                            <Field
+                              as={TextField}
+                              required
+                              fullWidth
+                              name="rePassword"
+                              label="Confirm Password"
+                              type={this.state.showRePassword ? "text" : "password"}
+                              id="re-password"
+                              autoComplete="re-password"
+                              onCut={this.handleStopChange}
+                              onCopy={this.handleStopChange}
+                              onPaste={this.handleStopChange}
+                              InputProps={{
+                                endAdornment: (
+                                  <InputAdornment position="end">
+                                    <IconButton
+                                      aria-label="toggle password visibility"
+                                      onClick={() => this.handleClickShowPassword("repassword")}
+                                      onMouseDown={() => this.handleClickShowPassword("repassword")}
+                                    >
+                                      {this.state.showRePassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                  </InputAdornment>
+                                )
+                              }}
+                              helperText={<ErrorMessage className="error-text" name="rePassword" />}
+                            />
+                          </Tooltip>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Tooltip placement="top-start" title="You have to be over 15 years old" >
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                              <DesktopDatePicker
+                                label="Birthday"
+                                value={this.state.selectedDate}
+                                minDate={new Date("1920-01-01")}
+                                maxDate={subtractFromDate(new Date(), { years: 15 })}
+                                openTo= {subtractFromDate(new Date(), { years: 15 })}
+                                onChange={this.handleDateChange}
+                                renderInput={(params) => <TextField {...params} />}
+                                id="birthday"
+                                name="birthday"
+                              />
+                              {errors.birthday && touched.birthday ? (<p className="css-1wc848c-MuiFormHelperText-root error-text" id="date-helper-text">{errors.birthday}</p>) : null}
+                            </LocalizationProvider>
+                          </Tooltip>
                         </Grid>
 
                         <Grid item xs={12}>
