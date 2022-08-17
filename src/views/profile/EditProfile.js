@@ -46,8 +46,8 @@ class EditProfileCls extends Component {
   render() {
     // Get it from props
     const { theme } = this.props;
-    const avatar_path = localStorage.getItem('avatar_path');
-    const user_display_name= localStorage.getItem('user_display_name');
+    const avatar_path = localStorage.getItem("avatar_path");
+    const user_display_name = localStorage.getItem("user_display_name");
 
     function getStyles(name, selectName, theme) {
       return {
@@ -68,14 +68,18 @@ class EditProfileCls extends Component {
       >
         <Stack
           display="flex"
-          flexDirection={{ xs: "column", md: "row" }}
-          alignItems="center"
-          sx={{ width: "100%", height: { xs: "auto", md: "100%" }, p: 2 }}
+          flexDirection={{ xs: "column", sm: "row" }}
+          alignItems={{ xs: "center", sm: "flex-start" }}
+          sx={{ width: "100%", height: { xs: "auto", sm: "100%" }, p: 2 }}
         >
           <Stack
             flexDirection="column"
             alignItems="center"
-            sx={{ width: { xs: "100%", md: "200px" }, height: "100%" }}
+            sx={{
+              width: { xs: "100%", sm: "200px" },
+              height: "100%",
+              pt: { xs: 0, sm: 2 },
+            }}
           >
             <AvatarFramEdit
               img={avatar_path}
@@ -92,11 +96,11 @@ class EditProfileCls extends Component {
           <Stack
             flexDirection="column"
             sx={{
-              width: { xs: "100%", md: "calc(100% - 200px)" },
+              width: { xs: "100%", sm: "calc(100% - 200px)" },
               overflow: "auto",
               pl: 2,
               pr: 2,
-              pt: { xs: 3, md: 6 },
+              // pt: { xs: 3, md: 6 },
             }}
           >
             <CmmnFormControl
@@ -210,7 +214,7 @@ class EditProfileCls extends Component {
                   boxShadow: "none",
                   outline: "none",
                   mt: "0 !important",
-                  pt: "0 !important"
+                  pt: "0 !important",
                 }}
               >
                 <CmmnGroupSelect
