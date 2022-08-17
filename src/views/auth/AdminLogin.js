@@ -28,14 +28,13 @@ import "../../styles/login.scss";
 import bgNew from "../auth/img/conv.png";
 import { Fade, Slide, Stack, Zoom } from "@mui/material";
 import StartBarCt from "../common/error/StackBarCt";
-export default function SignIn(props) {
+export default function AdminLogin(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const [showPassword , setShowPassword] = useState(false)
   const [openStb, setOpenStb] = useState(false)
-  const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
   const containerRef = React.useRef(null);
 
@@ -69,11 +68,8 @@ export default function SignIn(props) {
     setOpenStb(false)
   }
 
-
   const handleSubmit = (value) => {
-    // event.preventDefault();
     setIsSubmit(true);
-    // const data = new FormData(event.currentTarget);
 
     dispatch(
       login({
@@ -83,7 +79,7 @@ export default function SignIn(props) {
       .unwrap()
       .then((data) => {
         if (data.success) {
-          navigate("/homepage");
+          navigate("/admin");
         }
       })
       .catch(() => {
@@ -240,27 +236,6 @@ export default function SignIn(props) {
                       >
                         Forgot password?
                       </Link>
-                    </Grid>
-                    <Grid item>
-                      <Stack flexDirection="row">
-                        <Typography variant="body2">
-                          Don't have an account?
-                        </Typography>
-                        <Typography variant="body2">
-                          <Link
-                            href="/register"
-                            variant="body1"
-                            sx={{
-                              lineHeight: LINE_HEIGHT.lh17,
-                              fontWeight: FONT_WEIGHT.middle,
-                              textDecoration: "none",
-                              ml: "3px",
-                            }}
-                          >
-                            Sign Up
-                          </Link>
-                        </Typography>
-                      </Stack>
                     </Grid>
                   </Grid>
                 </Box>
