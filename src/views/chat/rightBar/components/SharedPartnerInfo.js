@@ -1,35 +1,20 @@
 import {
   Avatar,
-  Box,
-  Collapse,
-  Divider,
-  Grid,
-  ImageList,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Stack,
+  Box, Divider, ImageList,
+  List, Stack,
   Typography,
   useMediaQuery,
-  useTheme,
+  useTheme
 } from "@mui/material";
 import React, { useEffect } from "react";
-import { Badge } from "react-bootstrap";
-import PartnerInfo from "./PartnerInfo";
-import PartnerPoster from "./PartnerPoster";
-import InfoIcon from "@mui/icons-material/Info";
-import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useSelector } from "react-redux";
-import { axiosClient } from "../../../../setup/axiosClient";
-import ModalPoster from "./ModalPoster";
+import { POST_COVER, POST_COVER_MB } from "../../../../constant/css_constant";
 import { URL } from "../../../../service/chat.service";
+import { axiosClient } from "../../../../setup/axiosClient";
 import {
   StyledFemaleIcon,
-  StyledMaleIcon,
+  StyledMaleIcon
 } from "../../../common/base/icon/GenderIcon";
-import { POST_COVER, POST_COVER_MB } from "../../../../constant/css_constant";
 import ImagePoster from "../../../profile/components/ImagePoster";
 import PostLayout from "../../../profile/components/PostLayout";
 const URL_IMAGE = `${URL}/api`;
