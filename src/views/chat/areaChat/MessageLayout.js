@@ -24,7 +24,7 @@ export default function MessageLayout({ openBar }) {
             alt=""
             height={isMobile ? "auto" : "80%"}
             width={isMobile ? "75%" : ""}
-          ></img>
+          />
         </Stack>
       );
     return (
