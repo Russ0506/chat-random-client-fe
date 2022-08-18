@@ -190,9 +190,6 @@ export default function SignIn(props) {
                     type={showPassword ? "text" : "password"}
                     id="password"
                     autoComplete="current-password"
-                    onCut={handleStopChange}
-                    onCopy={handleStopChange}
-                    onPaste={handleStopChange}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">

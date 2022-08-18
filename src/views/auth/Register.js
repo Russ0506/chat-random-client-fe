@@ -259,7 +259,7 @@ class SignUp extends React.PureComponent {
       .catch(
         function (error) {
           this.setState({ isSubmit: false });
-          this.setState({ message: error.response.statusText });
+          this.setState({ message: error.response.data.error || error.response.data.errors[0] });
           this.handleOpenStb();
           return Promise.reject(error);
         }.bind(this)
