@@ -184,5 +184,5 @@ const RootStyle = styled("div")(({ theme }) => ({
   alignItems: "center",
   paddingLeft: theme.spacing(2),
   height: "100%",
-  borderTop: "1px solid #e5e0e0",
+  borderTop: "1px solid #ebebeb",
 }));

@@ -117,7 +117,7 @@ const CherishAppBar = ({ index = 1 }) => {
         height: APP_BAR_HEIGHT,
         background: "#fff",
         // boxShadow: "none",
-        // border: "1px solid #e5e0e0",
+        borderBottom: "1px solid #ebebeb",
         boxShadow: "0 1px 20px 0 rgb(69 90 100 / 8%)",
         borderLeft: 0,
         borderTop: 0,

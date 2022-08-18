@@ -98,7 +98,7 @@ export default function Conversation({ data }) {
             variant="dot"
           >
             <Avatar
-              sx={{ width: 50, height: 50 }}
+              sx={{ width: 46, height: 46 }}
               alt={data.partner.name}
               src={URL_IMAGE + data.partner.avatar_path}
             />

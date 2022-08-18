@@ -191,5 +191,6 @@ a.MuiTypography-root:hover, .__mui_navigate {
   color: #6748da !important;
 }
 .__chosen_conversation {
-  background: #f4f3fd;
+  background: #f4f7fa;
+  border: 1px solid #ebebeb;
 }
