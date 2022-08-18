@@ -20,7 +20,8 @@ export const icoList = {
   },
   newConversation: {
     notChosen: "mdi:chat-plus-outline",
-    chosen: "mdi:chat-plus",
+    // chosen: "mdi:chat-plus",
+    chosen: "line-md:loading-twotone-loop",
   },
 };
 export const icoMenuList = [
