@@ -327,18 +327,6 @@ export default function NewPosterLayout({
     textShadow: " 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue",
   };
 
-  const style = {
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 700,
-    bgcolor: "background.paper",
-    border: "1px solid rgb(157, 168, 183)",
-    boxShadow: 24,
-    p: 4,
-    borderRadius: "10px",
-  };
 
   return (
     <Dialog
@@ -352,7 +340,6 @@ export default function NewPosterLayout({
       <CropImage
         src={src}
         open={openCropImgModal}
-        style={style}
         crop={crop}
         onImageLoaded={onImageLoaded}
         onCropChange={onCropChange}
