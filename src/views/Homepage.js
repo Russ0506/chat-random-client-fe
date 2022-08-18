@@ -177,11 +177,10 @@ export default function Homepage() {
           sx={{
             flexGrow: 1,
             width: { sm: `calc(100% - ${DRAWER_WITH}px)` },
-            bgcolor: "white",
+            bgcolor: "#fff",
             zIndex: 10,
           }}
         >
-          {/* <Toolbar /> */}
           <Grid
             container
             sx={{

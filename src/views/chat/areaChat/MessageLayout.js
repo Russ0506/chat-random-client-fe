@@ -46,12 +46,17 @@ export default function MessageLayout({ openBar }) {
         padding: "0px",
       }}
     >
-      <Box sx={{ height: "calc(100% - 70px)", width: "100%", pt: 0 }}>
+      {/* <Toolbar /> */}
+      <Box
+        sx={{
+          height: "calc(100% - 70px)",
+          width: "100%",
+          pt: 0,
+        }}
+      >
         {renderChatHeader()}
       </Box>
-      <Box sx={{ height: "60px", padding: "0px", paddingBottom: "10px" }}>
-        {renderChatInput()}
-      </Box>
+      <Box sx={{ height: "65px", padding: "0px" }}>{renderChatInput()}</Box>
     </Box>
   );
 }

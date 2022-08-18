@@ -70,34 +70,56 @@ export default function ChatMessageList({conversation}) {
 
   return (
     <>
-      <Box sx={{ height: `calc(100% - ${CHAT_HEADER_HEIGHT})`, pl: 2, overflow: "auto"}}>
+      <Box
+        sx={{
+          height: `calc(100% - ${CHAT_HEADER_HEIGHT})`,
+          pl: 2,
+          overflow: "auto",
+          background: "#f4f7fa",
+        }}
+      >
         <Scrollbar
           scrollableNodeProps={{ ref: scrollRef }}
           sx={{ height: "auto" }}
           scrollBottom={scrollToBottom}
           indentify="chat-scroll-ult"
         >
-          { loading ? <div className="items-center"><div className="lds-dual-ring"></div></div>: <></> }
+          {loading ? (
+            <div className="items-center">
+              <div className="lds-dual-ring"></div>
+            </div>
+          ) : (
+            <></>
+          )}
           <div ref={loader} />
-          { messagesList.length > 0 ? <div id='loadMessage'/> : null }
-          {messagesList.slice().reverse().map((message,i) => (
-            <ChatMessageItem
-              key={i}
-              message={message}
-              nextMessage={(i< messagesList.length -1 ) ? messagesList[i+1] : newMessages[0]}
-              onOpenLightbox={handleOpenLightbox}
-              avatarPath = {avatarPath}
-              name = {name}
-            />
-          ))}
+          {messagesList.length > 0 ? <div id="loadMessage" /> : null}
+          {messagesList
+            .slice()
+            .reverse()
+            .map((message, i) => (
+              <ChatMessageItem
+                key={i}
+                message={message}
+                nextMessage={
+                  i < messagesList.length - 1
+                    ? messagesList[i + 1]
+                    : newMessages[0]
+                }
+                onOpenLightbox={handleOpenLightbox}
+                avatarPath={avatarPath}
+                name={name}
+              />
+            ))}
           {newMessages.map((message, i) => (
             <ChatMessageItem
               key={i}
               message={message}
-              nextMessage={(i< newMessages.length -1 ) ? newMessages[i+1] : null}
+              nextMessage={
+                i < newMessages.length - 1 ? newMessages[i + 1] : null
+              }
               onOpenLightbox={handleOpenLightbox}
-              avatarPath = {avatarPath}
-              name = {name}
+              avatarPath={avatarPath}
+              name={name}
             />
           ))}
         </Scrollbar>

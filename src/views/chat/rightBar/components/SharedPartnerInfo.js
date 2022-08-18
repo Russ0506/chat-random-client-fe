@@ -162,6 +162,7 @@ export default function SharedPartnerInfo(props) {
             width: "100%",
             overflow: "auto",
             height: "inherit",
+            pb: 1
           }}
         >
           <ImageList

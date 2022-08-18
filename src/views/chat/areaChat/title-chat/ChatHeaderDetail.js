@@ -26,6 +26,8 @@ const RootStyle = styled("div")(({ theme }) => ({
   alignItems: "center",
   // boxShadow: 'rgb(0 0 0 / 5%) 0px 1px 2px 0px'
   boxShadow: "0 0 4px rgba(0, 0, 0, 0.2)",
+  background: "#fff",
+  borderBottom: "1px solid #e5e0e0",
 }));
 
 export default function ChatHeaderDetail({ openBar, partner }) {
