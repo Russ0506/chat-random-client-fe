@@ -19,7 +19,15 @@ import Loading from "../common/base/loading/Loading";
 import Select from "react-select";
 import { axiosClient, axiosMultipartForm } from "../../setup/axiosClient";
 import "react-image-crop/dist/ReactCrop.css";
-import { Fade, IconButton, MenuItem, Slide, Stack, Tooltip, Zoom } from "@mui/material";
+import {
+  Fade,
+  IconButton,
+  MenuItem,
+  Slide,
+  Stack,
+  Tooltip,
+  Zoom,
+} from "@mui/material";
 import bgNew from "../auth/img/conv.png";
 import CropImage from "../common/modal/CropImage";
 import StartBarCt from "../common/error/StackBarCt";
@@ -67,26 +75,28 @@ class SignUp extends React.PureComponent {
   handleClose = () => this.setState({ open: false });
 
   handleOpenStb = () => {
-    this.setState({ openStb: true })
-  }
+    this.setState({ openStb: true });
+  };
   handleCloseStb = () => {
-    this.setState({ openStb: false })
-  }
+    this.setState({ openStb: false });
+  };
   handleDateChange(date) {
     this.setState({ selectedDate: date });
   }
 
   handleStopChange(e) {
     e.preventDefault();
-  };
+  }
 
   handleClickShowPassword(type) {
-    if (type === 'password') this.setState({ showPassword: !this.state.showPassword })
-    if (type === 'repassword') this.setState({ showRePassword: !this.state.showRePassword })
+    if (type === "password")
+      this.setState({ showPassword: !this.state.showPassword });
+    if (type === "repassword")
+      this.setState({ showRePassword: !this.state.showRePassword });
   }
 
   onSelectFile = (e) => {
-    this.setState({ isValidPhoto: this.validateFile(e.target.files[0]) })
+    this.setState({ isValidPhoto: this.validateFile(e.target.files[0]) });
     if (!this.validateFile(e.target.files[0])) return;
     else {
       if (e.target.files && e.target.files.length > 0) {
@@ -103,29 +113,29 @@ class SignUp extends React.PureComponent {
 
   validateFile(file = null) {
     if (!this.checkIfFilesAreTooBig(file)) {
-      return false
+      return false;
     }
     if (!this.checkIfFilesAreCorrectType(file)) {
-      return false
+      return false;
     }
     return true;
   }
 
   checkIfFilesAreTooBig(file) {
-    let valid = true
-    const size = file.size / 1024 / 1024
+    let valid = true;
+    const size = file.size / 1024 / 1024;
     if (size > 5) {
-      valid = false
+      valid = false;
     }
-    return valid
+    return valid;
   }
 
   checkIfFilesAreCorrectType(file) {
-    let valid = true
+    let valid = true;
     if (!this.SUPPORTED_FORMATS.includes(file.type)) {
-      valid = false
+      valid = false;
     }
-    return valid
+    return valid;
   }
 
   // If you setState the crop in here you should return false.
@@ -230,7 +240,7 @@ class SignUp extends React.PureComponent {
         email: event.email,
         password: event.password,
         gender: event.gender,
-        avatar: (this.state.croppedImage) ? this.state.croppedImage : null,
+        avatar: this.state.croppedImage ? this.state.croppedImage : null,
       },
     };
 
@@ -249,16 +259,16 @@ class SignUp extends React.PureComponent {
       .catch(
         function (error) {
           this.setState({ isSubmit: false });
-          this.setState({ message: error.response.statusText })
-          this.handleOpenStb()
-          return Promise.reject(error)
+          this.setState({ message: error.response.statusText });
+          this.handleOpenStb();
+          return Promise.reject(error);
         }.bind(this)
       );
-  };
+  }
 
   clearImage() {
-    this.setState({ croppedImageUrl: "" })
-    this.setState({ src: null })
+    this.setState({ croppedImageUrl: "" });
+    this.setState({ src: null });
   }
 
   // css
@@ -273,10 +283,6 @@ class SignUp extends React.PureComponent {
     boxShadow: 24,
     p: 4,
   };
-
-  customAvatarField = {
-    marginTop: "30px"
-  }
   // end css
 
   componentDidMount() {
@@ -302,21 +308,28 @@ class SignUp extends React.PureComponent {
 
   SignupSchema = Yup.object().shape({
     firstName: Yup.string()
-      .min(2, 'Please enter more than 1 character')
-      .max(50, 'Please enter less than 50 characters')
-      .required('First Name Required'),
+      .min(2, "Please enter more than 1 character")
+      .max(50, "Please enter less than 50 characters")
+      .required("First Name Required"),
     lastName: Yup.string()
-      .min(2, 'Please enter more than 1 character')
-      .max(50, 'Please enter less than 50 characters')
-      .required('Last Name Required'),
-    email: Yup.string().email('Please enter the right email format').required('Email Required'),
-    password: Yup.string().matches(/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%?=*&]).{8,20})/, 'Password have to be at least one lowercase, one upper case, one number and the special characters of (!,@,#,$,%,?,=,*,&), from 8 to 20 characters').required('Password Required'),
+      .min(2, "Please enter more than 1 character")
+      .max(50, "Please enter less than 50 characters")
+      .required("Last Name Required"),
+    email: Yup.string()
+      .email("Please enter the right email format")
+      .required("Email Required"),
+    password: Yup.string()
+      .matches(
+        /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%?=*&]).{8,20})/,
+        "Password have to be at least one lowercase, one upper case, one number and the special characters of (!,@,#,$,%,?,=,*,&), from 8 to 20 characters"
+      )
+      .required("Password Required"),
     rePassword: Yup.string().when("password", {
-      is: val => (val && val.length > 0 ? true : false),
+      is: (val) => (val && val.length > 0 ? true : false),
       then: Yup.string().oneOf(
         [Yup.ref("password")],
         "Confirm password need to match your password"
-      )
+      ),
     }),
     // birthday: Yup.object().,
     // photo: Yup.mixed().test(1000, "File Size is too large", value => value.size <= this.FILE_SIZE) .test('fileType', "Unsupported File Format", value => this.SUPPORTED_FORMATS.includes(['image/*']) )
@@ -329,24 +342,24 @@ class SignUp extends React.PureComponent {
       date,
       { years, days, hours, minutes, seconds, milliseconds } = {}
     ) => {
-      const millisecondsOffset = milliseconds ?? 0
-      const secondsOffset = seconds ? 1000 * seconds : 0
-      const minutesOffset = minutes ? 1000 * 60 * minutes : 0
-      const hoursOffset = hours ? 1000 * 60 * 60 * hours : 0
-      const daysOffset = days ? 1000 * 60 * 60 * 24 * days : 0
+      const millisecondsOffset = milliseconds ?? 0;
+      const secondsOffset = seconds ? 1000 * seconds : 0;
+      const minutesOffset = minutes ? 1000 * 60 * minutes : 0;
+      const hoursOffset = hours ? 1000 * 60 * 60 * hours : 0;
+      const daysOffset = days ? 1000 * 60 * 60 * 24 * days : 0;
       const dateOffset =
         millisecondsOffset +
         secondsOffset +
         minutesOffset +
         hoursOffset +
-        daysOffset
+        daysOffset;
 
-      let newDate = date
-      if (years) newDate = date.setFullYear(date.getFullYear() - years)
-      newDate = new Date(newDate - dateOffset)
+      let newDate = date;
+      if (years) newDate = date.setFullYear(date.getFullYear() - years);
+      newDate = new Date(newDate - dateOffset);
 
-      return newDate
-    }
+      return newDate;
+    };
 
     return (
       <Box
@@ -358,18 +371,22 @@ class SignUp extends React.PureComponent {
           justifyContent: "space-between",
         }}
       >
-        <StartBarCt openStb={this.state.openStb} closeStb={this.handleCloseStb} titleStb={this.state.message} typeNoti="error"></StartBarCt>
+        <StartBarCt
+          openStb={this.state.openStb}
+          closeStb={this.handleCloseStb}
+          titleStb={this.state.message}
+          typeNoti="error"
+        ></StartBarCt>
         <Loading show={this.state.isSubmit}></Loading>
         <CropImage
           src={src}
           open={this.state.open}
-          style={this.style}
           crop={crop}
           onImageLoaded={this.onImageLoaded}
           onCropChange={this.onCropChange}
           handleClose={this.handleClose}
-          onCropComplete={this.onCropComplete} >
-        </CropImage>
+          onCropComplete={this.onCropComplete}
+        ></CropImage>
 
         <Grid
           container
@@ -453,248 +470,357 @@ class SignUp extends React.PureComponent {
                   validationSchema={this.SignupSchema}
                   onSubmit={this.handleSubmit}
                 >
-                  {({ errors, touched }) => (<Form>
-                    <Box
-                      noValidate
-                      sx={{ mt: 3, fontSize: FONT_SIZE.smallText }}
-                    >
-                      <Grid container spacing={2}>
-                        {/* avatar */}
-                        <Grid item xs={12} sx={this.customAvatarField}>
-                          <Box>
-                            <Box className="d-flex justify-content-center">
-                              <label
-                                htmlFor="contain-select-image"
-                                style={{ margin: 0, padding: 0 }}
-                              >
-                                <AvatarFramEdit
-
-                                  img={null}
-                                  sx={{ width: "150px", height: "150px", position: "relative" }}
-                                />
-                              </label>
+                  {({ errors, touched }) => (
+                    <Form>
+                      <Box
+                        noValidate
+                        sx={{ fontSize: FONT_SIZE.smallText }}
+                      >
+                        <Grid container spacing={2} sx={{mt:0}}>
+                          {/* avatar */}
+                          <Grid item xs={12} sx={this.customAvatarField} >
+                            <Box>
+                              <Box className="d-flex justify-content-center">
+                                <label
+                                  htmlFor="contain-select-image"
+                                  style={{ margin: 0, padding: 0 }}
+                                >
+                                  {croppedImageUrl != null &&
+                                  croppedImageUrl != "" ? (
+                                    <Box
+                                      sx={{
+                                        position: "relative",
+                                        width: "125px",
+                                        height: "125px",
+                                      }}
+                                    >
+                                      <IconButton
+                                        sx={{
+                                          position: "absolute",
+                                          top: "-16px",
+                                          right: "-16px",
+                                        }}
+                                      >
+                                        <StyledCloseIcon
+                                          onClick={this.clearImage}
+                                          sx={{
+                                            color: "#606770",
+                                            background: "rgba(255,255,255,.8)",
+                                            width: "25px",
+                                            height: "25px",
+                                          }}
+                                        />
+                                      </IconButton>
+                                      <img
+                                        value="croppedImageUrl"
+                                        alt="Crop"
+                                        name="photo"
+                                        style={{
+                                          width: "100%",
+                                          height: "100%",
+                                          overflow: "hidden",
+                                          borderRadius: "50%",
+                                          border:
+                                            "1px solid rgba(0, 0, 0, 0.23)",
+                                        }}
+                                        src={croppedImageUrl}
+                                      />
+                                    </Box>
+                                  ) : (
+                                    <AvatarFramEdit
+                                      img={null}
+                                      sx={{
+                                        width: "125px",
+                                        height: "125px",
+                                        position: "relative",
+                                      }}
+                                    />
+                                  )}
+                                </label>
+                              </Box>
+                              <input
+                                hidden
+                                className="custom-select-box"
+                                type="file"
+                                accept="image/*"
+                                onChange={this.onSelectFile}
+                                id="contain-select-image"
+                                multiple
+                              />
                             </Box>
+
                             <input
+                              type="image"
+                              name="avatar"
                               hidden
-                              className="custom-select-box"
-                              type="file"
-                              accept="image/*"
-                              onChange={this.onSelectFile}
-                              id="contain-select-image"
-                              multiple
-                            />
-                          </Box>
-                          {croppedImageUrl && (
-                            <Box sx={{ position: "relative" }}>
-                              <IconButton
-                                sx={{ position: "absolute", top: "2px", right: "7px" }}
+                              value={croppedImageUrl}
+                            ></input>
+                            {!this.state.isValidPhoto ? (
+                              <p
+                                className="css-1wc848c-MuiFormHelperText-root error-text"
+                                id="date-helper-text"
                               >
-                                <StyledCloseIcon
-                                  onClick={this.clearImage}
-                                  sx={{
-                                    color: "#606770",
-                                    background: "rgba(255,255,255,.8)",
-                                    width: "25px",
-                                    height: "25px",
-                                  }}
+                                Avatar have to be in image format and under 2MB
+                              </p>
+                            ) : null}
+                          </Grid>
+                          {/* end-avatar */}
+                          <Grid item xs={12} sm={6}>
+                            <Field
+                              as={TextField}
+                              name="firstName"
+                              required
+                              fullWidth
+                              id="firstName"
+                              label="First Name"
+                              autoComplete="firstName"
+                              helperText={
+                                <ErrorMessage
+                                  className="error-text"
+                                  name="firstName"
                                 />
-                              </IconButton>
-                              <img
-                                value="croppedImageUrl"
-                                alt="Crop"
-                                name="photo"
-                                style={{ maxWidth: "100%" }}
-                                src={croppedImageUrl}
-                              />
-                            </Box>
-                          )}
-                          <input
-                            type="image"
-                            name="avatar"
-                            hidden
-                            value={croppedImageUrl}
-                          ></input>
-                          {!this.state.isValidPhoto ? (<p className="css-1wc848c-MuiFormHelperText-root error-text" id="date-helper-text">Avatar have to be in image format and under 2MB</p>) : null}
-                        </Grid>
-                        {/* end-avatar */}
-                        <Grid item xs={12} sm={6}>
-                          <Field
-                            as={TextField}
-                            name="firstName"
-                            required
-                            fullWidth
-                            id="firstName"
-                            label="First Name"
-                            autoComplete="firstName"
-                            helperText={<ErrorMessage className="error-text" name="firstName" />}
-                          />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <Field
-                            as={TextField}
-                            required
-                            fullWidth
-                            id="lastName"
-                            label="Last Name"
-                            name="lastName"
-                            autoComplete="lastName"
-                            helperText={<ErrorMessage className="error-text" name="lastName" />}
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Field
-                            as={TextField}
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            helperText={<ErrorMessage className="error-text" name="email" />}
-                          />
-                        </Grid>
-
-                        <Grid item xs={12}>
-                          <Tooltip placement="top-start" title="Password have to be at least one lowercase, one upper case, one number and the special characters of (!,@,#,$,%,?,=,*,&), from 8 to 20 characters">
+                              }
+                            />
+                          </Grid>
+                          <Grid item xs={12} sm={6}>
                             <Field
                               as={TextField}
                               required
                               fullWidth
-                              name="password"
-                              label="Enter Password"
-                              type={this.state.showPassword ? "text" : "password"}
-                              id="password"
-                              autoComplete="new-password"
-                              onCut={this.handleStopChange}
-                              onCopy={this.handleStopChange}
-                              onPaste={this.handleStopChange}
-                              InputProps={{
-                                endAdornment: (
-                                  <InputAdornment position="end">
-                                    <IconButton
-                                      aria-label="toggle password visibility"
-                                      onClick={() => this.handleClickShowPassword("password")}
-                                      onMouseDown={() => this.handleClickShowPassword("password")}
-                                    >
-                                      {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
-                                    </IconButton>
-                                  </InputAdornment>
-                                )
-                              }}
-                              helperText={<ErrorMessage className="error-text" name="password" />}
+                              id="lastName"
+                              label="Last Name"
+                              name="lastName"
+                              autoComplete="lastName"
+                              helperText={
+                                <ErrorMessage
+                                  className="error-text"
+                                  name="lastName"
+                                />
+                              }
                             />
-                          </Tooltip>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Tooltip placement="top-start" title="Confirm password need to match with new password">
+                          </Grid>
+                          <Grid item xs={12}>
                             <Field
                               as={TextField}
                               required
                               fullWidth
-                              name="rePassword"
-                              label="Confirm Password"
-                              type={this.state.showRePassword ? "text" : "password"}
-                              id="re-password"
-                              autoComplete="re-password"
-                              onCut={this.handleStopChange}
-                              onCopy={this.handleStopChange}
-                              onPaste={this.handleStopChange}
-                              InputProps={{
-                                endAdornment: (
-                                  <InputAdornment position="end">
-                                    <IconButton
-                                      aria-label="toggle password visibility"
-                                      onClick={() => this.handleClickShowPassword("repassword")}
-                                      onMouseDown={() => this.handleClickShowPassword("repassword")}
-                                    >
-                                      {this.state.showRePassword ? <Visibility /> : <VisibilityOff />}
-                                    </IconButton>
-                                  </InputAdornment>
-                                )
-                              }}
-                              helperText={<ErrorMessage className="error-text" name="rePassword" />}
+                              id="email"
+                              label="Email Address"
+                              name="email"
+                              autoComplete="email"
+                              helperText={
+                                <ErrorMessage
+                                  className="error-text"
+                                  name="email"
+                                />
+                              }
                             />
-                          </Tooltip>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Tooltip placement="top-start" title="You have to be over 15 years old" >
-                            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                              <DesktopDatePicker
-                                label="Birthday"
-                                value={this.state.selectedDate}
-                                minDate={new Date("1920-01-01")}
-                                maxDate={subtractFromDate(new Date(), { years: 15 })}
-                                openTo= "year"
-                                onChange={this.handleDateChange}
-                                renderInput={(params) => <TextField {...params} />}
-                                id="birthday"
-                                name="birthday"
-                              />
-                              {errors.birthday && touched.birthday ? (<p className="css-1wc848c-MuiFormHelperText-root error-text" id="date-helper-text">{errors.birthday}</p>) : null}
-                            </LocalizationProvider>
-                          </Tooltip>
-                        </Grid>
+                          </Grid>
 
-                        <Grid item xs={12}>
-                          <FormControl>
-                            <FormLabel id="demo-row-radio-buttons-group-label">
-                              Gender
-                            </FormLabel>
-                            <Field
-                              as={RadioGroup}
-                              row
-                              aria-labelledby="demo-row-radio-buttons-group-label"
-                              name="gender"
-                              id="gender"
-                              defaultValue="female"
+                          <Grid item xs={12}>
+                            <Tooltip
+                              placement="top-start"
+                              title="Password have to be at least one lowercase, one upper case, one number and the special characters of (!,@,#,$,%,?,=,*,&), from 8 to 20 characters"
                             >
-                              <FormControlLabel
-                                value="female"
-                                control={<Radio />}
-                                label="Female"
+                              <Field
+                                as={TextField}
+                                required
+                                fullWidth
+                                name="password"
+                                label="Enter Password"
+                                type={
+                                  this.state.showPassword ? "text" : "password"
+                                }
+                                id="password"
+                                autoComplete="new-password"
+                                onCut={this.handleStopChange}
+                                onCopy={this.handleStopChange}
+                                onPaste={this.handleStopChange}
+                                InputProps={{
+                                  endAdornment: (
+                                    <InputAdornment position="end">
+                                      <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={() =>
+                                          this.handleClickShowPassword(
+                                            "password"
+                                          )
+                                        }
+                                        onMouseDown={() =>
+                                          this.handleClickShowPassword(
+                                            "password"
+                                          )
+                                        }
+                                      >
+                                        {this.state.showPassword ? (
+                                          <Visibility />
+                                        ) : (
+                                          <VisibilityOff />
+                                        )}
+                                      </IconButton>
+                                    </InputAdornment>
+                                  ),
+                                }}
+                                helperText={
+                                  <ErrorMessage
+                                    className="error-text"
+                                    name="password"
+                                  />
+                                }
                               />
-                              <FormControlLabel
-                                value="male"
-                                control={<Radio />}
-                                label="Male"
+                            </Tooltip>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Tooltip
+                              placement="top-start"
+                              title="Confirm password need to match with new password"
+                            >
+                              <Field
+                                as={TextField}
+                                required
+                                fullWidth
+                                name="rePassword"
+                                label="Confirm Password"
+                                type={
+                                  this.state.showRePassword
+                                    ? "text"
+                                    : "password"
+                                }
+                                id="re-password"
+                                autoComplete="re-password"
+                                onCut={this.handleStopChange}
+                                onCopy={this.handleStopChange}
+                                onPaste={this.handleStopChange}
+                                InputProps={{
+                                  endAdornment: (
+                                    <InputAdornment position="end">
+                                      <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={() =>
+                                          this.handleClickShowPassword(
+                                            "repassword"
+                                          )
+                                        }
+                                        onMouseDown={() =>
+                                          this.handleClickShowPassword(
+                                            "repassword"
+                                          )
+                                        }
+                                      >
+                                        {this.state.showRePassword ? (
+                                          <Visibility />
+                                        ) : (
+                                          <VisibilityOff />
+                                        )}
+                                      </IconButton>
+                                    </InputAdornment>
+                                  ),
+                                }}
+                                helperText={
+                                  <ErrorMessage
+                                    className="error-text"
+                                    name="rePassword"
+                                  />
+                                }
                               />
-                              <FormControlLabel
-                                value="other"
-                                control={<Radio />}
-                                label="Other"
-                              />
-                            </Field>
-                          </FormControl>
+                            </Tooltip>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Tooltip
+                              placement="top-start"
+                              title="You have to be over 15 years old"
+                            >
+                              <LocalizationProvider
+                                dateAdapter={AdapterDateFns}
+                              >
+                                <DesktopDatePicker
+                                  label="Birthday"
+                                  value={this.state.selectedDate}
+                                  minDate={new Date("1920-01-01")}
+                                  maxDate={subtractFromDate(new Date(), {
+                                    years: 15,
+                                  })}
+                                  openTo="year"
+                                  onChange={this.handleDateChange}
+                                  renderInput={(params) => (
+                                    <TextField {...params} />
+                                  )}
+                                  id="birthday"
+                                  name="birthday"
+                                />
+                                {errors.birthday && touched.birthday ? (
+                                  <p
+                                    className="css-1wc848c-MuiFormHelperText-root error-text"
+                                    id="date-helper-text"
+                                  >
+                                    {errors.birthday}
+                                  </p>
+                                ) : null}
+                              </LocalizationProvider>
+                            </Tooltip>
+                          </Grid>
+
+                          <Grid item xs={12}>
+                            <FormControl>
+                              <FormLabel id="demo-row-radio-buttons-group-label">
+                                Gender
+                              </FormLabel>
+                              <Field
+                                as={RadioGroup}
+                                row
+                                aria-labelledby="demo-row-radio-buttons-group-label"
+                                name="gender"
+                                id="gender"
+                                defaultValue="female"
+                              >
+                                <FormControlLabel
+                                  value="female"
+                                  control={<Radio />}
+                                  label="Female"
+                                />
+                                <FormControlLabel
+                                  value="male"
+                                  control={<Radio />}
+                                  label="Male"
+                                />
+                                <FormControlLabel
+                                  value="other"
+                                  control={<Radio />}
+                                  label="Other"
+                                />
+                              </Field>
+                            </FormControl>
+                          </Grid>
                         </Grid>
-                      </Grid>
-                      <Stack alignItems="flex-start" sx={{ mt: 3 }}>
-                        <Button
-                          type="submit"
-                          fullWidth
-                          variant="contained"
-                          sx={{
-                            // background: "#ff6392e6",
-                            boxShadow: "none",
-                            // width: "200px",
-                          }}
-                        >
-                          Sign Up
-                        </Button>
-                        <Stack flexDirection="row" marginTop={2}>
-                          <Typography variant="body1">
-                            Already have an account?
-                          </Typography>
-                          <Link
-                            href="/users/login"
-                            variant="body2"
-                            marginLeft="5px"
+                        <Stack alignItems="flex-start" sx={{ mt: 3 }}>
+                          <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{
+                              // background: "#ff6392e6",
+                              boxShadow: "none",
+                              // width: "200px",
+                            }}
                           >
-                            <Typography variant="body1">Sign in</Typography>
-                          </Link>
+                            Sign Up
+                          </Button>
+                          <Stack flexDirection="row" marginTop={2}>
+                            <Typography variant="body1">
+                              Already have an account?
+                            </Typography>
+                            <Link
+                              href="/users/login"
+                              variant="body2"
+                              marginLeft="5px"
+                            >
+                              <Typography variant="body1">Sign in</Typography>
+                            </Link>
+                          </Stack>
                         </Stack>
-                      </Stack>
-                    </Box>
-                  </Form>)}
+                      </Box>
+                    </Form>
+                  )}
                 </Formik>
               </Box>
             </Container>
