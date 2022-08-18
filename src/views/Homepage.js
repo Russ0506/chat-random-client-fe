@@ -113,7 +113,7 @@ export default function Homepage() {
           display: "flex",
           height: "100%",
           position: "relative",
-          borderTop: "1px solid #e5e0e0",
+          // borderTop: "1px solid #e5e0e0",
           zIndex: 12,
         }}
         className="v11"
@@ -128,7 +128,7 @@ export default function Homepage() {
             left: { xs: openMbLeftBar ? 0 : "-320px", md: "0" },
             bottom: 0,
             background: "#fff",
-            borderRight: "1px solid #e5e0e0",
+            borderRight: "1px solid #ebebeb",
             transition: "left 0.5s ease",
             zIndex: 12,
           }}

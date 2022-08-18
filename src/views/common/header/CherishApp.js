@@ -137,6 +137,7 @@ export default function CherishApp({ index = 1, body }) {
             width: "100%",
             height: `calc(100vh - ${APP_BAR_HEIGHT})`,
             overflow: "auto",
+            background: "#f9fbff",
           }}
         >
           {body}
