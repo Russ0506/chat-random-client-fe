@@ -2,16 +2,9 @@ import {
   Button,
   Chip,
   FormControl,
-  Grid,
-  IconButton,
-  Input,
-  List,
-  ListItem,
-  ListItemButton,
   MenuItem,
   OutlinedInput,
   Stack,
-  TextareaAutosize,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
@@ -22,32 +15,107 @@ import { CmmnInputLabel } from "../chat/popup/components/CmmnInputLabel";
 import { CmmnSelect } from "../chat/popup/components/CmmnSelect";
 import { CmmnGroupSelect } from "../chat/popup/components/CmmnGroupSelect";
 import { useTheme } from "@mui/material/styles";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import AvatarFramEdit from "./components/AvatarFramEdit";
+import { axiosClient, axiosMultipartForm } from "../../setup/axiosClient";
+import StartBarCt from "../common/error/StackBarCt";
+import Loading from "../common/base/loading/Loading";
+import CONSTANT from "../../constant/constant"
+const URL = "users";
 class EditProfileCls extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      hobbies: this.props.hobbies == null ? [] : this.props.hobbies,
+      userData: {
+        address: null,
+        age: null,
+        avatar_path: null,
+        birthday: null,
+        email: null,
+        first_name: null,
+        gender: null,
+        hobbies: [],
+        id: null,
+        is_online: false,
+        last_name: null
+      },
+      isSubmit: false,
+      message: null,
+      openStb: false,
+      typeNoti: "error"
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleOpenStb = this.handleOpenStb.bind(this);
+    this.handleCloseStb = this.handleCloseStb.bind(this);
   }
+
+  componentDidMount() {
+    axiosClient.get(`/users/${localStorage.getItem("user_id")}`).then((data) => {
+      this.setState({
+        userData: data
+      })
+    }).catch((error) => { console.log(error); });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.setState({
+      isSubmit: "true",
+    });
+    const data = new FormData(event.currentTarget);
+    const params = {
+      user: {
+        first_name: data.get('first_name'),
+        last_name: data.get('last_name'),
+        gender: data.get('gender'),
+        hobbies: this.state.userData.hobbies
+      },
+    };
+
+    const formData = new FormData();
+    for (let param in params["user"]) {
+      formData.append(`user[${param}]`, params["user"][param]);
+    }
+
+    axiosMultipartForm
+      .patch(`${URL}/`+localStorage.getItem('user_id'), formData)
+      .then((data) => {
+        if (data.data.success) {
+          this.setState({message: "Success"})
+          this.setState({
+            typeNoti: "success"
+          })
+        }
+      })
+      .catch(
+        function (error) {
+          this.setState({ isSubmit: false });
+          this.setState({ message: error.response.data.error || error.response.data.errors[0] });
+          this.handleOpenStb();
+          return Promise.reject(error);
+        }.bind(this)
+      );
+  }
+
+  handleOpenStb = () => {
+    this.setState({ openStb: true });
+  };
+  handleCloseStb = () => {
+    this.setState({ openStb: false });
+  };
 
   handleChangeHobby = (event) => {
     let {
       target: { value },
     } = event;
     this.setState({
-      // On autofill we get a stringified value.
-      ...this.state,
-      hobbies: typeof value === "string" ? value.split(",") : value,
+      userData: {
+        ...this.state.userData, hobbies: typeof value === "string" ? value.split(",") : value
+      }
     });
   };
   render() {
     // Get it from props
     const { theme } = this.props;
-    const avatar_path = localStorage.getItem("avatar_path");
-    const user_display_name = localStorage.getItem("user_display_name");
 
     function getStyles(name, selectName, theme) {
       return {
@@ -66,6 +134,13 @@ class EditProfileCls extends Component {
           background: "#fff",
         }}
       >
+        <StartBarCt
+          openStb={this.state.openStb}
+          closeStb={this.handleCloseStb}
+          titleStb={this.state.message}
+          typeNoti={this.state.typeNoti}
+        ></StartBarCt>
+        <Loading show={this.state.isSubmit}></Loading>
         <Stack
           display="flex"
           flexDirection={{ xs: "column", sm: "row" }}
@@ -82,7 +157,7 @@ class EditProfileCls extends Component {
             }}
           >
             <AvatarFramEdit
-              img={avatar_path}
+              img={this.state.userData.avatar_path}
               sx={{ width: "100px", height: "100px", position: "relative" }}
             />
 
@@ -90,22 +165,21 @@ class EditProfileCls extends Component {
               variant="body1"
               sx={{ mt: 1, color: "#4f4f4f", justifySelf: "flex-end" }}
             >
-              {user_display_name}
+              {this.state.userData.name}
             </Typography>
           </Stack>
           <Stack
+            component="form" noValidate onSubmit={this.handleSubmit}
             flexDirection="column"
             sx={{
               width: { xs: "100%", sm: "calc(100% - 200px)" },
               overflow: "auto",
               pl: 2,
               pr: 2,
-              // pt: { xs: 3, md: 6 },
             }}
           >
             <CmmnFormControl
               variant="standard"
-              // // fullWidth
               sx={{ maxWidth: "500px" }}
             >
               <CmmnInputLabel shrink htmlFor="last-nm-inpt">
@@ -114,16 +188,19 @@ class EditProfileCls extends Component {
               <CmmnInput
                 id="last-nm-inpt"
                 type="text"
-                name="lastNm"
-                defaultValue="Bui Anh"
-                // InputLabelProps={{
-                //   shrink: true,
-                // }}
+                name="last_name"
+                value={this.state.userData.last_name || null}
+                onChange={(event) => {
+                  this.setState({
+                    userData: {
+                      ...this.state.userData, last_name: event.currentTarget.value
+                    }
+                  })
+                }}
               />
             </CmmnFormControl>
             <CmmnFormControl
               variant="standard"
-              // // fullWidth
               sx={{ maxWidth: "500px" }}
             >
               <CmmnInputLabel shrink htmlFor="first-nm-inpt">
@@ -132,16 +209,19 @@ class EditProfileCls extends Component {
               <CmmnInput
                 id="first-nm-inpt"
                 type="text"
-                name="firstNm"
-                defaultValue="Tuong Vy"
-                // InputLabelProps={{
-                //   shrink: true,
-                // }}
+                name="first_name"
+                value={this.state.userData.first_name || null}
+                onChange={(event) => {
+                  this.setState({
+                    userData: {
+                      ...this.state.userData, first_name: event.currentTarget.value
+                    }
+                  })
+                }}
               />
             </CmmnFormControl>
             <CmmnFormControl
               variant="standard"
-              // fullWidth
               sx={{ maxWidth: "500px" }}
             >
               <CmmnInputLabel shrink htmlFor="email-inpt">
@@ -151,11 +231,8 @@ class EditProfileCls extends Component {
                 id="email-inpt"
                 type="text"
                 name="email"
-                defaultValue="VyBAT@fsoft.com.vn"
+                value={this.state.userData.email || null}
                 disabled
-                // InputLabelProps={{
-                //   shrink: true,
-                // }}
               />
             </CmmnFormControl>
             <Stack sx={{ mt: "15px", maxWidth: "500px" }}>
@@ -170,7 +247,14 @@ class EditProfileCls extends Component {
                 <CmmnSelect
                   id="gender-inpt"
                   name="gender"
-                  defaultValue="male"
+                  value={this.state.userData.gender}
+                  onChange={(event) => {
+                    this.setState({
+                      userData: {
+                        ...this.state.userData, gender: event.target.value
+                      }
+                    })
+                  }}
                   sx={{ border: "1px solid #e5e0e0", boxShadow: "none" }}
                 >
                   <MenuItem key="1" value="male">
@@ -191,16 +275,14 @@ class EditProfileCls extends Component {
               sx={{ maxWidth: "500px" }}
             >
               <CmmnInputLabel shrink htmlFor="age-inpt">
-                Age
+                Birthday
               </CmmnInputLabel>
               <CmmnInput
                 id="age-inpt"
-                type="number"
+                type="date"
                 name="age"
-                defaultValue="22"
-                // InputLabelProps={{
-                //   shrink: true,
-                // }}
+                disabled
+                value={this.state.userData.birthday}
                 sx={{ width: "150px" }}
               />
             </CmmnFormControl>
@@ -212,17 +294,18 @@ class EditProfileCls extends Component {
                 variant="outlined"
                 sx={{
                   boxShadow: "none",
-                  outline: "none",
+                  // outline: "none",
                   mt: "0 !important",
                   pt: "0 !important",
                 }}
               >
                 <CmmnGroupSelect
+                  name="hobbies"
                   size="small"
                   labelId="demo-multiple-chip-label"
                   id="demo-multiple-chip"
                   multiple
-                  value={this.state.hobbies}
+                  value={this.state.userData.hobbies}
                   onChange={this.handleChangeHobby}
                   input={<OutlinedInput id="select-multiple-chip" />}
                   renderValue={(selected) => (
@@ -232,13 +315,12 @@ class EditProfileCls extends Component {
                       ))}
                     </Box>
                   )}
-                  MenuProps={MenuProps}
                 >
-                  {names.map((name) => (
+                  {CONSTANT.HobbiesNames.map((name) => (
                     <MenuItem
                       key={name}
                       value={name}
-                      style={getStyles(name, this.state.hobbies, theme)}
+                      style={getStyles(name, this.state.userData.hobbies, theme)}
                     >
                       {name}
                     </MenuItem>
@@ -246,6 +328,7 @@ class EditProfileCls extends Component {
                 </CmmnGroupSelect>
               </CmmnFormControl>
               <Button
+                type="submit"
                 variant="contained"
                 size="small"
                 sx={{
@@ -264,29 +347,6 @@ class EditProfileCls extends Component {
     );
   }
 }
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-const names = [
-  "Camping",
-  "Read Book",
-  "Climb",
-  "Sport",
-  "Music",
-  "Foodt",
-  "Forest",
-  "Ocean",
-  "Animal",
-  "Romantic",
-];
 
 export default function EditProfile() {
   const theme = useTheme();

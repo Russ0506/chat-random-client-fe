@@ -21,7 +21,8 @@ import * as React from "react";
 import { useDispatch } from "react-redux";
 import GgmCurrentPlaceText2 from "../../../components/googleMapAPI/GgmCurrentPlaceText2";
 import GoogleMapPlaceSearchBox from "../../../components/googleMapAPI/GoogleMapPlaceSearchBox";
-import { GRP_COLOR } from "../../../constant/css_constant";
+import { GRP_COLOR } from "../../../constant/css_constant"
+import CONSTANT from  "../../../constant/constant"
 import { saveDataSearch } from "../../../features/user-setting";
 import { CmmnInput } from "./components/CmmnInput";
 import GmapApiChatAutoInput from "../popup/components/GmapApiChatAutoInput";
@@ -209,7 +210,7 @@ export default function PartnerSetting(props) {
             defaultValue={topic}
             sx={{ border: "1px solid #e5e0e0", boxShadow: "none", width: "100%" }}
           >
-            {topicList.map((item, index) => (
+            {CONSTANT.TopicList.map((item, index) => (
               <MenuItem key={index} value={item} selected={true}>
                 {item}
               </MenuItem>
@@ -408,7 +409,7 @@ export default function PartnerSetting(props) {
               )}
               MenuProps={MenuProps}
             >
-              {names.map((name) => (
+              {CONSTANT.HobbiesNames.map((name) => (
                 <MenuItem
                   key={name}
                   value={name}
@@ -445,7 +446,7 @@ export default function PartnerSetting(props) {
               )}
               MenuProps={MenuProps}
             >
-              {majorNames.map((name) => (
+              {CONSTANT.MajorNames.map((name) => (
                 <MenuItem
                   key={name}
                   value={name}
@@ -478,36 +479,3 @@ const sxJustifyContent = {
   flexDirection: "column",
   justifyContent: "center",
 };
-
-const names = [
-  "Camping",
-  "Read Book",
-  "Climb",
-  "Sport",
-  "Music",
-  "Foodt",
-  "Forest",
-  "Ocean",
-  "Animal",
-  "Romantic",
-];
-
-const majorNames = [
-  "Software Engineering",
-  "Information Assurance",
-  "Graphic Design",
-  "Business Administration",
-  "International Business",
-  "Travel and Tourism Management",
-  "Hotel Management",
-  "Multimedia Communication",
-  "English Language",
-  "Japanese Language",
-];
-const topicList = [
-  "Sharing Stories",
-  "Education",
-  "Entertainment",
-  "Small talk",
-  "finding a lover",
-];
