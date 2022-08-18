@@ -84,7 +84,6 @@ export default function ChatMessageInput({ disabled, conversation }) {
       {src ? (
         <Box className="image-contain">
           <Box
-            // borderRadius={4}
             sx={{
               margin: "0",
               overflow: "auto",
@@ -184,4 +183,6 @@ const RootStyle = styled("div")(({ theme }) => ({
   position: "relative",
   alignItems: "center",
   paddingLeft: theme.spacing(2),
+  height: "100%",
+  borderTop: "1px solid #e5e0e0",
 }));

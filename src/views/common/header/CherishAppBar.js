@@ -11,7 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Badge, Stack, styled, useMediaQuery, useTheme } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import { APP_BAR_HEIGHT} from "../../../constant/css_constant";
+import { APP_BAR_HEIGHT } from "../../../constant/css_constant";
 import { Link } from "react-router-dom";
 import { icoList } from "../../../constant/AppBarConstant";
 import CBCLogo from "../../../assets/img/cbc_logo_sm.png";
@@ -55,8 +55,8 @@ const CherishAppBar = ({ index = 1 }) => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [useNewPost, setUseNewPost] = React.useState(false);
   const [openTips, setOpenTips] = React.useState(false);
-  const theme= useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -240,49 +240,67 @@ const CherishAppBar = ({ index = 1 }) => {
             > */}
             <Box height="100%" display="flex">
               {index === 1 ? (
-                <ChosenButtonNav component={Link} to={icoList.home.link}>
-                  <Iconify
-                    icon={icoList.home.chosen}
-                    style={{ width: "31px", height: "31px" }}
-                  />
-                </ChosenButtonNav>
+                <Tooltip disableFocusListener title="Newsfeeds" arrow>
+                  <ChosenButtonNav component={Link} to={icoList.home.link}>
+                    <Iconify
+                      icon={icoList.home.chosen}
+                      style={{ width: "31px", height: "31px" }}
+                    />
+                  </ChosenButtonNav>
+                </Tooltip>
               ) : (
-                <ButtonNav component={Link} to={icoList.home.link}>
-                  <Iconify
-                    icon={icoList.home.notChosen}
-                    style={{ width: "31px", height: "31px" }}
-                  />
-                </ButtonNav>
+                <Tooltip disableFocusListener title="Newsfeeds" arrow>
+                  <ButtonNav component={Link} to={icoList.home.link}>
+                    <Iconify
+                      icon={icoList.home.notChosen}
+                      style={{ width: "31px", height: "31px" }}
+                    />
+                  </ButtonNav>
+                </Tooltip>
               )}
               {index === 2 ? (
-                <ChosenButtonNav component={Link} to={icoList.chat.link}>
-                  <Badge color="secondary" badgeContent={idsOfUnreadCon.length}>
-                    <Iconify
-                      icon={icoList.chat.chosen}
-                      style={{ width: "25px", height: "25px" }}
-                    />
-                  </Badge>
-                </ChosenButtonNav>
+                <Tooltip disableFocusListener title="Messages" arrow>
+                  <ChosenButtonNav component={Link} to={icoList.chat.link}>
+                    <Badge
+                      color="secondary"
+                      badgeContent={idsOfUnreadCon.length}
+                    >
+                      <Iconify
+                        icon={icoList.chat.chosen}
+                        style={{ width: "25px", height: "25px" }}
+                      />
+                    </Badge>
+                  </ChosenButtonNav>
+                </Tooltip>
               ) : (
-                <ButtonNav component={Link} to={icoList.chat.link}>
-                  <Badge color="secondary" badgeContent={idsOfUnreadCon.length}>
-                    <Iconify
-                      icon={icoList.chat.notChosen}
-                      style={{ width: "25px", height: "25px" }}
+                <Tooltip disableFocusListener title="Messages" arrow>
+                  <ButtonNav component={Link} to={icoList.chat.link}>
+                    <Badge
+                      color="secondary"
+                      badgeContent={idsOfUnreadCon.length}
+                    >
+                      <Iconify
+                        icon={icoList.chat.notChosen}
+                        style={{ width: "25px", height: "25px" }}
+                      />
+                    </Badge>
+                  </ButtonNav>
+                </Tooltip>
+              )}
+              <Tooltip disableFocusListener title="New Conversation" arrow>
+                <ButtonNav>
+                  <ConversationControlBox isNav={true} />
+                </ButtonNav>
+              </Tooltip>
+              <Tooltip disableFocusListener title="Notifications" arrow>
+                <ButtonNav>
+                  <Badge color="secondary">
+                    <NotificationsNoneIcon
+                      sx={{ width: "28px", height: "28px" }}
                     />
                   </Badge>
                 </ButtonNav>
-              )}
-              <ButtonNav>
-                <ConversationControlBox isNav={true} />
-              </ButtonNav>
-              <ButtonNav>
-                <Badge color="secondary">
-                  <NotificationsNoneIcon
-                    sx={{ width: "28px", height: "28px" }}
-                  />
-                </Badge>
-              </ButtonNav>
+              </Tooltip>
             </Box>
             <Box
               sx={{
@@ -292,7 +310,7 @@ const CherishAppBar = ({ index = 1 }) => {
               }}
             ></Box>
             {/* </Stack> */}
-            <Tooltip title="Open settings">
+            <Tooltip disableFocusListener arrow title="Open settings">
               <IconButton onClick={handleOpenUserMenu} size="small">
                 <Avatar
                   alt="Memy Sharp"

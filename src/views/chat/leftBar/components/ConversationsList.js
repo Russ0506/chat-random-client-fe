@@ -15,10 +15,10 @@ import {
 import { seenLastMessage } from "../../../../features/chat/messagesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { onlineStatusSocket } from "../../../sockets/Socket";
+import { CHAT_HEADER_HEIGHT } from "../../../../constant/css_constant";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
-  margin: theme.spacing(1),
   backgroundColor: alpha(theme.palette.common.white, 1),
   color: alpha(theme.palette.common.black, 0.5),
   border: "1px solid rgb(0 0 0 / 7%)",
@@ -146,7 +146,7 @@ export default function ConversationsList() {
             position: "sticky",
             zIndex: 10,
             p: theme.spacing(1),
-            height: "75px",
+            height: CHAT_HEADER_HEIGHT,
           }}
         >
           <Search>
