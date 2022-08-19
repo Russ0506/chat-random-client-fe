@@ -75,7 +75,7 @@ class GetLocate extends Component {
             //If denied then you have to show instructions to enable location
           }
           result.onchange = function () {
-            console.log(result.state);
+            // console.log(result.state);
           };
         });
     } else {

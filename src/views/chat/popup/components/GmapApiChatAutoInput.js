@@ -40,8 +40,6 @@ function success(pos) {
       document.getElementById("__curr_address").value = address;
       document.getElementById("__curr_lo").value = crd.latitude;
       document.getElementById("__curr_la").value = crd.longitude;
-      console.log(city, state, country);
-      console.log(address);
       //   return {
       //     addr: address,
       //     la: crd.latitude,
@@ -53,10 +51,6 @@ function success(pos) {
       return null;
     }
   );
-  console.log("Your current position is:");
-  console.log(`Latitude : ${crd.latitude}`);
-  console.log(`Longitude: ${crd.longitude}`);
-  console.log(`More or less ${crd.accuracy} meters.`);
 }
 
 function errors(err) {

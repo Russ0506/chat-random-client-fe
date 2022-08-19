@@ -65,7 +65,6 @@ export default function GgmApiForPost(props) {
     }
 
     fetch({ input: inputValue }, (results) => {
-      console.log(results);
       if (active) {
         let newOptions = [];
 
