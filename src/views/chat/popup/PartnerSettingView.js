@@ -21,9 +21,6 @@ import { enqueuingChat } from "../../../features/chat";
 import { clearMessage } from "../../../features/message";
 import { saveDataSearch } from "../../../features/user-setting";
 
-// const ITEM_HEIGHT = 48;
-// const ITEM_PADDING_TOP = 8;
-
 export default function PartnerSettingView(props) {
   const [data, setData] = React.useState(props.data.user_setting);
   const [isSubmit, setIsSubmit] = React.useState(false);
@@ -173,17 +170,7 @@ export default function PartnerSettingView(props) {
                       ))}
                     </Box>
                   )}
-                  // MenuProps={MenuProps}
                 >
-                  {/* {names.map((name) => (
-                      <MenuItem
-                        key={name}
-                        value={name}
-                        style={getStyles(name, hobbies, theme)}
-                      >
-                        {name}
-                      </MenuItem>
-                    ))} */}
                 </Select>
                 {message ? (
                   <Box

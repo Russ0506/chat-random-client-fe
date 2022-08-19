@@ -135,7 +135,7 @@ export default function NewPosterLayout({
 
   const onSelectFile = (e) => {
     if (!validateFile(e.target.files[0])) {
-      setErrorMessage("Image have to be in image format and under 2MB")
+      setErrorMessage("Image have to be in image format and under 5MB")
       setOpenStb(true)
       setIsPost(false)
       return;
@@ -288,7 +288,7 @@ export default function NewPosterLayout({
   // validate file
   function validateFile(file = null) {
     if (!checkIfFilesAreTooBig(file)) {
-      setErrorMessage("Your image have to in the right format and under 2MB")
+      setErrorMessage("Your image have to in the right format and under 5MB")
       setOpenStb(true)
       setIsPost(false);
       return false

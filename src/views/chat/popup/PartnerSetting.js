@@ -3,6 +3,7 @@ import {
   Input,
   InputBase,
   InputLabel,
+  Select,
   Stack,
   Typography,
 } from "@mui/material";
@@ -12,7 +13,6 @@ import DialogContent from "@mui/material/DialogContent";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
-import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { useTheme } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
@@ -33,6 +33,8 @@ import { CmmnSelect } from "./components/CmmnSelect";
 import { CmmnGroupSelect } from "./components/CmmnGroupSelect";
 import Slider from "@mui/material/Slider";
 import InputAdornment from "@mui/material/InputAdornment";
+import { Checkbox, ListItemText,MenuItem } from "@mui/material";
+
 const minDistance = 0;
 function valuetext(value) {
   return `${value}°C`;
@@ -52,7 +54,8 @@ export default function PartnerSetting(props) {
       address: props.userSetting.address,
       radius: props.userSetting.radius,
       gender: props.userSetting.gender || "female",
-      hobbies: ["Camping"],
+      hobbies: props.userSetting?.hobbies || [],
+      majors: props.userSetting?.majors || [],
       enable_age_filter: props.userSetting.enable_age_filter,
       enable_gender_filter: props.userSetting.enable_gender_filter,
       enable_location_filter: props.userSetting.enable_location_filter,
@@ -123,7 +126,7 @@ export default function PartnerSetting(props) {
         to_age: parseInt(data.get("to_age")),
         lat: document.getElementById("__curr_la").value,
         long: document.getElementById("__curr_lo").value,
-        address: document.getElementById("__curr_address").value,
+        address: document.getElementById("__curr_address").value || initData.user_setting.address,
         radius: parseInt(data.get("radius")),
         gender: data.get("gender"),
         hobbies: hobbies,
@@ -206,7 +209,7 @@ export default function PartnerSetting(props) {
         >
           <CmmnSelect
             id="gender-inpt"
-            name="gender"
+            name="topic"
             defaultValue={topic}
             sx={{ border: "1px solid #e5e0e0", boxShadow: "none", width: "100%" }}
           >
@@ -224,7 +227,7 @@ export default function PartnerSetting(props) {
             Location
           </CmmnInputLabel>
           {currentLocationPermision === false ? (
-            <GmapApiChatManualInput />
+            <GmapApiChatManualInput locationName={initData.user_setting.address}/>
           ) : (
             <GmapApiChatAutoInput />
           )}
@@ -235,7 +238,6 @@ export default function PartnerSetting(props) {
             inputProps={{
               readOnly: true,
             }}
-            // value={location.lo}
             sx={{ display: "none" }}
           />
           <TextField
@@ -244,7 +246,6 @@ export default function PartnerSetting(props) {
             inputProps={{
               readOnly: true,
             }}
-            // value={location.address}
             sx={{ display: "none" }}
           />
           <TextField
@@ -253,7 +254,6 @@ export default function PartnerSetting(props) {
             inputProps={{
               readOnly: true,
             }}
-            // value={location.la}
             sx={{ display: "none" }}
           />
         </CmmnFormControl>
@@ -315,10 +315,10 @@ export default function PartnerSetting(props) {
             variant="standard"
             sx={{ width: "30%" }}
           >
-            <CmmnSelect
+            <Select
               id="gender-inpt"
               name="gender"
-              defaultValue={initData.user_setting.gender}
+              value={initData.user_setting.gender}
               sx={{ border: "1px solid #e5e0e0", boxShadow: "none" }}
               // displayEmpty
               // inputProps={{ "aria-label": "Without label" }}
@@ -332,7 +332,7 @@ export default function PartnerSetting(props) {
               <MenuItem key="3" value="others">
                 <em>Others</em>
               </MenuItem>
-            </CmmnSelect>
+            </Select>
           </FormControl>
         </Stack>
         <Stack sx={{ mt: "15px" }}>
@@ -410,13 +410,18 @@ export default function PartnerSetting(props) {
               MenuProps={MenuProps}
             >
               {CONSTANT.HobbiesNames.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, hobbies, theme)}
-                >
-                  {name}
+
+                <MenuItem key={name} value={name}>
+                  <ListItemText primary={name} />
+                  <Checkbox checked={hobbies.indexOf(name) > -1} />
                 </MenuItem>
+                // <MenuItem
+                //   key={name}
+                //   value={name}
+                //   style={getStyles(name, hobbies, theme)}
+                // >
+                //   {name}
+                // </MenuItem>
               ))}
             </CmmnGroupSelect>
           </CmmnFormControl>
@@ -447,12 +452,9 @@ export default function PartnerSetting(props) {
               MenuProps={MenuProps}
             >
               {CONSTANT.MajorNames.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, majors, theme)}
-                >
-                  {name}
+                <MenuItem key={name} value={name}>
+                  <ListItemText primary={name} />
+                  <Checkbox checked={majors.indexOf(name) > -1} />
                 </MenuItem>
               ))}
             </CmmnGroupSelect>

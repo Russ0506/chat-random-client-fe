@@ -24,7 +24,7 @@ function loadScript(src, position, id) {
 const autocompleteService = { current: null };
 export default function GmapApiChatManualInput(props) {
 
-  const [value, setValue] = React.useState(null);
+  const [value, setValue] = React.useState(props.locationName);
   const [inputValue, setInputValue] = React.useState("");
   const [options, setOptions] = React.useState([]);
   const loaded = React.useRef(false);
@@ -66,7 +66,7 @@ export default function GmapApiChatManualInput(props) {
     }
 
     fetch({ input: inputValue }, (results) => {
-      console.log(results);
+      // console.log(results);
       if (active) {
         let newOptions = [];
 
