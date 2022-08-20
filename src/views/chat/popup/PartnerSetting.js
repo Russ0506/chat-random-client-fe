@@ -129,7 +129,7 @@ export default function PartnerSetting(props) {
         long: document.getElementById("__curr_lo").value,
         address: document.getElementById("__curr_address").value || initData.user_setting.address,
         radius: parseInt(data.get("radius")),
-        gender: data.get("gender"),
+        gender: genderValue,
         hobbies: hobbies,
       },
     };
