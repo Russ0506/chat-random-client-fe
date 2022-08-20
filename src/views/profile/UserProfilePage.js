@@ -31,11 +31,14 @@ import { POST_COVER, POST_COVER_MB } from "../../constant/css_constant";
 import { useTheme } from "@mui/styles";
 import { Link, useParams } from "react-router-dom";
 import useFetch from "../../utils/useFetch";
+import { useSelector, useDispatch } from "react-redux"
+import { selectPosts, setPostList } from "../../features/chat/postSlice";
 
 const URL_IMAGE = `${URL}/api`;
 
 export default function UserProfilePage() {
   const { userId } = useParams();
+  const postList = useSelector(state => state.post.posts)
   const [userData] = useFetch(`users/${userId}`);
   const [posterData, setPosterData] = React.useState({
     open : false,
@@ -48,13 +51,13 @@ export default function UserProfilePage() {
     id: null,
     avatar: null,
   });
-  const [listPosterData, setListPosterData] = React.useState([]);
   const [openNewPoster, setOpenNewPoster] = React.useState({
     value: false,
     type: "new",
   });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const dispatch = useDispatch()
 
   async function handleOpenPoster(item) {
     await setPosterData({
@@ -81,6 +84,7 @@ export default function UserProfilePage() {
     setOpenNewPoster({ value: true, type: type });
   }
   async function handleCloseNewPost(data) {
+    dispatch(setPostList([]));
     await getPostList();
     setOpenNewPoster({ value: false, type: "new" });
   }
@@ -93,13 +97,12 @@ export default function UserProfilePage() {
           ...item,
           image_path: `${URL_IMAGE + item.image_path}`,
         }));
-        setListPosterData(newData);
+        dispatch(setPostList(newData))
       })
       .catch(() => {});
   }
 
   useLayoutEffect(() => {
-    setListPosterData([])
     getPostList();
   }, [userId]);
 
@@ -261,7 +264,7 @@ export default function UserProfilePage() {
               style={{ overflow: "hidden" }}
             >
               <>
-                {listPosterData.map((item, index) => (
+                {postList.map((item, index) => (
                   <ImagePoster
                     key={index}
                     item={item}
