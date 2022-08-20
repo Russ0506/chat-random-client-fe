@@ -75,8 +75,8 @@ export default function PartnerSetting(props) {
     la: initData.user_setting.lat,
   });
   const label = { inputProps: { "aria-label": "Switch demo" } };
-  const min = 0;
-  const max = 100;
+  const MIN = 15;
+  const MAX = 100;
   const [ageSlideVal, setAgeSlideVal] = React.useState([
     props.userSetting.from_age,
     props.userSetting.to_age,
@@ -86,6 +86,7 @@ export default function PartnerSetting(props) {
       currentLocationPermision === false ? true : false
     );
   };
+  const [genderValue, setGenderValue] = React.useState(props.userSetting.gender || "female",)
 
   useEffect(() => {
     if (props.events) {
@@ -318,7 +319,10 @@ export default function PartnerSetting(props) {
             <Select
               id="gender-inpt"
               name="gender"
-              value={initData.user_setting.gender}
+              value={genderValue}
+              onChange={(event) => {
+                setGenderValue(event.target.value)
+              }}
               sx={{ border: "1px solid #e5e0e0", boxShadow: "none" }}
               // displayEmpty
               // inputProps={{ "aria-label": "Without label" }}
@@ -376,6 +380,8 @@ export default function PartnerSetting(props) {
             </FormControl>
           </Stack>
           <Slider
+            min={MIN}
+            max={MAX}
             getAriaLabel={() => "Minimum distance"}
             value={ageSlideVal}
             onChange={handleChangeAgeSlideVal}
