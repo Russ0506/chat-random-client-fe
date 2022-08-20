@@ -4,6 +4,7 @@ import messageReducer from "../features/message";
 import conversationReducer from "../features/chat/conversationSlice";
 import messagesReducer from "../features/chat/messagesSlice";
 import onlineStatusesReducer from "../features/chat/onlineStatusesSlice";
+import postReducer from "../features/chat/postSlice";
 import {
   useDispatch as useReduxDispatch,
   useSelector as useReduxSelector,
@@ -15,6 +16,7 @@ const reducer = {
   conversation: conversationReducer,
   messages: messagesReducer,
   onlineStatuses: onlineStatusesReducer,
+  post: postReducer,
 };
 export const useSelector = useReduxSelector;
 
