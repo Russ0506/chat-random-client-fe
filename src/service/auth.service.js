@@ -34,13 +34,19 @@ const userVerify = async (params, thunkAPI) => {
   }
 };
 
-const confirmRegister = async (params) => {
+const confirmRegister = async (params, thunkAPI) => {
   try {
     const res = await axiosClient.get(`${URL}/confirmation`, { params: params })
     return res
   } catch (error) {
     console.log(error)
   }
+  // try {
+  //   const res = await axiosClient.get(`${URL}/confirmation`, { params: params })
+  //   return res
+  // } catch (error) {
+  //   console.log(error)
+  // }
 }
 
 const login = async (params, thunkAPI) => {

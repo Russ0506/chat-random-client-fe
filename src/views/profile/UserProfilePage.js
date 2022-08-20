@@ -64,7 +64,7 @@ export default function UserProfilePage() {
       image: item.image_path,
       likeCount: item.no_of_reactions,
       id: item.id,
-      avatar: item.user.avatar_path,
+      avatar: URL + "/api" +item.user.avatar_path,
       location: item.location,
       name: item.user.name,
     });
@@ -285,7 +285,7 @@ export default function UserProfilePage() {
 
           {posterData.open == true ? (
              <PostLayout
-             isPartnerView={posterData?.id != localStorage.getItem('user_id')}
+             isPartnerView={userId != localStorage.getItem('user_id')}
              open={posterData.open}
              onClose={handleClosePoster}
              data={posterData}
