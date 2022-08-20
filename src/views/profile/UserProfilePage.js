@@ -75,6 +75,7 @@ export default function UserProfilePage() {
 
   async function handleClosePoster(type = null) {
     if(type === "delete") {
+      dispatch(setPostList([]));
       await getPostList();
     }
     await setPosterData({...posterData, open: false})
