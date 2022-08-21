@@ -10,6 +10,8 @@ import { pairingSocket } from "../../../sockets/Socket";
 import { selectNewestConversations } from "../../../../features/chat/conversationSlice";
 import { useSelector } from "react-redux";
 import { icoList } from "../../../../constant/AppBarConstant";
+import PairingSuccessModal from "../../popup/components/PairingSuccessModal"
+import WaitingConfirmModal from "../../popup/components/WaitingConfirmModal"
 
 let pairingInterval = setInterval(() => {}, 1000);
 export default function ConversationControlBox({ isNav = false }) {
