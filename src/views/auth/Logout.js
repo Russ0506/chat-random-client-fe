@@ -4,6 +4,7 @@ import authService from "../../service/auth.service";
 
 const Logout = () => {
   useEffect(() => {
+    localStorage.clear();
     authService.logout().then(() => window.location.replace("/users/login"));
   }, []);
 
