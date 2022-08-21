@@ -85,8 +85,6 @@ class ChangePwdCls extends Component {
       },
     };
 
-    console.log(params);
-
     setTimeout(() => {
       this.setState({
         isSubmit: false,

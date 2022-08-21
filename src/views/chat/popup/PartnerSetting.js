@@ -116,11 +116,7 @@ export default function PartnerSetting(props) {
   const saveDataSearchPartnerSetting = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // setLocation({
-    //   address: document.getElementById("__curr_address").value,
-    //   lo: document.getElementById("__curr_lo").value,
-    //   la: document.getElementById("__curr_la").value,
-    // });
+
     let dataSearch = {
       user_setting: {
         from_age: parseInt(data.get("from_age")),
@@ -138,12 +134,6 @@ export default function PartnerSetting(props) {
     dispatch(saveDataSearch(dataSearch))
       .unwrap()
       .then(() => {
-        // props.onClose()
-        // props.handleOpenViewSettingModal()
-        // if(isLoggedIn) {
-        // navigate("/chat-main-screen");
-        //   window.location.reload();
-        // }
       })
       .catch(() => {
         setLoading(false);

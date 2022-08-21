@@ -157,7 +157,7 @@ class EditProfileCls extends Component {
             }}
           >
             <AvatarFramEdit
-              img={this.state.userData.avatar_path}
+              img={null}
               sx={{ width: "100px", height: "100px", position: "relative" }}
             />
 
