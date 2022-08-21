@@ -150,7 +150,7 @@ export default function NewsFeed() {
                     variant="subtitle2"
                     fontWeight="bold"
                     sx={{ cursor: "pointer" }}
-                    onClick={() => alert("chua lam :>")}
+                    // onClick={() => alert("chua lam :>")}
                   >
                     See All
                   </Typography>

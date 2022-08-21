@@ -56,7 +56,6 @@ const NavRight = () => {
                       <img className="img-radius" src={avatar1} alt="Generic placeholder" />
                       <Media.Body>
                         <p>
-                          <strong>John Doe</strong>
                           <span className="n-time text-muted">
                             <i className="icon feather icon-clock m-r-10" />
                             30 min
@@ -128,13 +127,6 @@ const NavRight = () => {
               <i className="icon feather icon-settings" />
             </Dropdown.Toggle>
             <Dropdown.Menu alignRight className="profile-notification">
-              <div className="pro-head">
-                <img src={avatar1} className="img-radius" alt="User Profile" />
-                <span>John Doe</span>
-                <Link to="#" className="dud-logout" title="Logout">
-                  <i className="feather icon-log-out" />
-                </Link>
-              </div>
               <ListGroup as="ul" bsPrefix=" " variant="flush" className="pro-body">
                 <ListGroup.Item as="li" bsPrefix=" ">
                   <Link to="#" className="dropdown-item">
@@ -157,7 +149,7 @@ const NavRight = () => {
                   </Link>
                 </ListGroup.Item>
                 <ListGroup.Item as="li" bsPrefix=" ">
-                  <Link to="#" className="dropdown-item" onClick={handleLogout}>
+                  <Link to="/users/logout" className="dropdown-item" onClick={handleLogout}>
                     <i className="feather icon-log-out" /> Logout
                   </Link>
                 </ListGroup.Item>

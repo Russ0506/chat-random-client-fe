@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import avatar1 from '../../assets/images/user/avatar-1.jpg';
 import avatar2 from '../../assets/images/user/avatar-2.jpg';
 import avatar3 from '../../assets/images/user/avatar-3.jpg';
+import CPUDiagram from './CPUDiagram';
+import FrequenceDiagram from './FrequenceDiagram';
 
 const DashDefault = () => {
   const tabContent = (
@@ -97,8 +99,9 @@ const DashDefault = () => {
   return (
     <React.Fragment>
       <Row>
-        <Col md={6} xl={4}>
-          <Card>
+        <Col md={6} xl={3}>
+          <CPUDiagram title="CPU 1" />
+          {/* <Card>
             <Card.Body>
               <h6 className="mb-4">Daily Sales</h6>
               <div className="row d-flex align-items-center">
@@ -123,10 +126,11 @@ const DashDefault = () => {
                 />
               </div>
             </Card.Body>
-          </Card>
+          </Card> */}
         </Col>
-        <Col md={6} xl={4}>
-          <Card>
+        <Col md={6} xl={3}>
+          <CPUDiagram title="CPU 2" />
+          {/* <Card>
             <Card.Body>
               <h6 className="mb-4">Monthly Sales</h6>
               <div className="row d-flex align-items-center">
@@ -151,10 +155,40 @@ const DashDefault = () => {
                 />
               </div>
             </Card.Body>
-          </Card>
+          </Card> */}
         </Col>
-        <Col xl={4}>
-          <Card>
+        <Col md={6} xl={3}>
+          <CPUDiagram title="CPU 3" />
+          {/* <Card>
+            <Card.Body>
+              <h6 className="mb-4">Monthly Sales</h6>
+              <div className="row d-flex align-items-center">
+                <div className="col-9">
+                  <h3 className="f-w-300 d-flex align-items-center m-b-0">
+                    <i className="feather icon-arrow-down text-c-red f-30 m-r-5" /> $2.942.32
+                  </h3>
+                </div>
+
+                <div className="col-3 text-right">
+                  <p className="m-b-0">36%</p>
+                </div>
+              </div>
+              <div className="progress m-t-30" style={{ height: '7px' }}>
+                <div
+                  className="progress-bar progress-c-theme2"
+                  role="progressbar"
+                  style={{ width: '35%' }}
+                  aria-valuenow="35"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                />
+              </div>
+            </Card.Body>
+          </Card> */}
+        </Col>
+        <Col xl={3}>
+          <CPUDiagram title="CPU 4" />
+          {/* <Card>
             <Card.Body>
               <h6 className="mb-4">Yearly Sales</h6>
               <div className="row d-flex align-items-center">
@@ -179,10 +213,10 @@ const DashDefault = () => {
                 />
               </div>
             </Card.Body>
-          </Card>
+          </Card> */}
         </Col>
         <Col md={6} xl={8}>
-        <Card className="Recent-Users">
+          {/* <Card className="Recent-Users">
             <Card.Header>
               <Card.Title as="h5">Recent Users</Card.Title>
             </Card.Header>
@@ -306,10 +340,10 @@ const DashDefault = () => {
                 </tbody>
               </Table>
             </Card.Body>
-          </Card>
+          </Card> */}
         </Col>
         <Col md={6} xl={4}>
-        <Card className="card-event">
+          {/* <Card className="card-event">
             <Card.Body>
               <div className="row align-items-center justify-content-center">
                 <div className="col">
@@ -349,10 +383,10 @@ const DashDefault = () => {
                 </div>
               </div>
             </Card.Body>
-          </Card>
+          </Card> */}
         </Col>
         <Col md={6} xl={4}>
-          <Card className="card-social">
+          {/* <Card className="card-social">
             <Card.Body className="border-bottom">
               <div className="row align-items-center justify-content-center">
                 <div className="col-auto">
@@ -400,10 +434,10 @@ const DashDefault = () => {
                 </div>
               </div>
             </Card.Body>
-          </Card>
+          </Card> */}
         </Col>
         <Col md={6} xl={4}>
-          <Card className="card-social">
+          {/* <Card className="card-social">
             <Card.Body className="border-bottom">
               <div className="row align-items-center justify-content-center">
                 <div className="col-auto">
@@ -451,10 +485,10 @@ const DashDefault = () => {
                 </div>
               </div>
             </Card.Body>
-          </Card>
+          </Card> */}
         </Col>
         <Col xl={4}>
-          <Card className="card-social">
+          {/* <Card className="card-social">
             <Card.Body className="border-bottom">
               <div className="row align-items-center justify-content-center">
                 <div className="col-auto">
@@ -502,10 +536,10 @@ const DashDefault = () => {
                 </div>
               </div>
             </Card.Body>
-          </Card>
+          </Card> */}
         </Col>
-        <Col md={6} xl={4}>
-          <Card>
+        <Col md={6} xl={0}>
+          {/* <Card>
             <Card.Header>
               <Card.Title as="h5">Rating</Card.Title>
             </Card.Header>
@@ -609,10 +643,11 @@ const DashDefault = () => {
                 </div>
               </div>
             </Card.Body>
-          </Card>
+          </Card> */}
         </Col>
-        <Col md={6} xl={8}>
-        <Tabs defaultActiveKey="today" id="uncontrolled-tab-example">
+        <Col md={6} xl={12}>
+          <FrequenceDiagram />
+          {/* <Tabs defaultActiveKey="today" id="uncontrolled-tab-example">
             <Tab eventKey="today" title="Today">
               {tabContent}
             </Tab>
@@ -622,7 +657,7 @@ const DashDefault = () => {
             <Tab eventKey="all" title="All">
               {tabContent}
             </Tab>
-          </Tabs>
+          </Tabs> */}
         </Col>
       </Row>
     </React.Fragment>

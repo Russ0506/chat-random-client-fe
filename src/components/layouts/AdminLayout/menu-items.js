@@ -20,13 +20,6 @@ const menuItems = {
           url: "/admin/user-management",
           icon: "feather icon-home",
         },
-        {
-          id: "emplManagement",
-          title: "Employees",
-          type: "item",
-          url: "/admin/empl-management",
-          icon: "feather icon-home",
-        },
       ],
     },
     // {
