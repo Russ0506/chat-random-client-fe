@@ -67,7 +67,9 @@ export const messagesSlice = createSlice({
       })
       .addCase(sendNewMessage.fulfilled, (state, { payload }) => {
         state.status = 'idle';
-        state.latestStatuses[payload.uuid] = 'sent'
+        if (!state.latestStatuses[payload.uuid]) {
+          state.latestStatuses[payload.uuid] = 'sent'
+        }
       });
   }
 });
