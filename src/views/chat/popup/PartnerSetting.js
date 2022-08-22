@@ -21,8 +21,8 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GgmCurrentPlaceText2 from "../../../components/googleMapAPI/GgmCurrentPlaceText2";
 import GoogleMapPlaceSearchBox from "../../../components/googleMapAPI/GoogleMapPlaceSearchBox";
-import { GRP_COLOR } from "../../../constant/css_constant"
-import CONSTANT from  "../../../constant/constant"
+import { GRP_COLOR } from "../../../constant/css_constant";
+import CONSTANT from "../../../constant/constant";
 import { saveDataSearch } from "../../../features/user-setting";
 import { CmmnInput } from "./components/CmmnInput";
 import GmapApiChatAutoInput from "../popup/components/GmapApiChatAutoInput";
@@ -33,7 +33,7 @@ import { CmmnSelect } from "./components/CmmnSelect";
 import { CmmnGroupSelect } from "./components/CmmnGroupSelect";
 import Slider from "@mui/material/Slider";
 import InputAdornment from "@mui/material/InputAdornment";
-import { Checkbox, ListItemText,MenuItem } from "@mui/material";
+import { Checkbox, ListItemText, MenuItem } from "@mui/material";
 import { setUserSettingState } from "../../../features/chat/postSlice";
 
 const minDistance = 0;
@@ -43,7 +43,7 @@ function valuetext(value) {
 export default function PartnerSetting(props) {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const userSettingData = useSelector(state => state.post.userSetting)
+  const userSettingData = useSelector((state) => state.post.userSetting);
 
   // var initData
   const [initData, setInitData] = React.useState({
@@ -79,15 +79,17 @@ export default function PartnerSetting(props) {
   const MIN = 15;
   const MAX = 100;
   const [ageSlideVal, setAgeSlideVal] = React.useState([
-    userSettingData.from_age,
-    userSettingData.to_age,
+    userSettingData.from_age != null ? userSettingData.from_age : 15,
+    userSettingData.to_age != null ? userSettingData.to_age : 23,
   ]);
   const setCurrentLocationPermision = (event, child) => {
     setcurrentLocationPermision(
       currentLocationPermision === false ? true : false
     );
   };
-  const [genderValue, setGenderValue] = React.useState(userSettingData.gender || "female",)
+  const [genderValue, setGenderValue] = React.useState(
+    userSettingData.gender || "male"
+  );
 
   const handleChangeHobby = (event) => {
     const {
@@ -109,7 +111,7 @@ export default function PartnerSetting(props) {
   };
 
   const saveDataSearchPartnerSetting = (event) => {
-    dispatch(setUserSettingState({}))
+    dispatch(setUserSettingState({}));
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -119,21 +121,22 @@ export default function PartnerSetting(props) {
         to_age: parseInt(data.get("to_age")),
         lat: document.getElementById("__curr_la").value,
         long: document.getElementById("__curr_lo").value,
-        address: document.getElementById("__curr_address").value || initData.user_setting.address,
+        address:
+          document.getElementById("__curr_address").value ||
+          initData.user_setting.address,
         radius: parseInt(data.get("radius")),
         gender: genderValue,
         hobbies: hobbies,
         topic: topic,
-        majors: majors
+        majors: majors,
       },
     };
 
-    dispatch(setUserSettingState(dataSearch.user_setting))
+    dispatch(setUserSettingState(dataSearch.user_setting));
 
     dispatch(saveDataSearch(dataSearch))
       .unwrap()
-      .then(() => {
-      })
+      .then(() => {})
       .catch(() => {
         setLoading(false);
       });
@@ -199,10 +202,17 @@ export default function PartnerSetting(props) {
           sx={{ width: "70%" }}
         >
           <CmmnSelect
-            id="gender-inpt"
+            id="topic-inpt"
             name="topic"
             defaultValue={topic}
-            sx={{ border: "1px solid #e5e0e0", boxShadow: "none", width: "100%" }}
+            sx={{
+              border: "1px solid #e5e0e0",
+              boxShadow: "none",
+              width: "100%",
+            }}
+            onChange={(event) => {
+              setTopic(event.target.value);
+            }}
           >
             {CONSTANT.TopicList.map((item, index) => (
               <MenuItem key={index} value={item} selected={true}>
@@ -218,7 +228,9 @@ export default function PartnerSetting(props) {
             Location
           </CmmnInputLabel>
           {currentLocationPermision === false ? (
-            <GmapApiChatManualInput locationName={initData.user_setting.address}/>
+            <GmapApiChatManualInput
+              locationName={initData.user_setting.address}
+            />
           ) : (
             <GmapApiChatAutoInput />
           )}
@@ -270,7 +282,7 @@ export default function PartnerSetting(props) {
                 <Slider
                   min={5}
                   max={100}
-                  value={typeof slideVal === "number" ? slideVal : 5}
+                  value={slideVal != null ? slideVal : 5}
                   onChange={handleSliderChange}
                   aria-labelledby="input-slider"
                 />
@@ -278,7 +290,7 @@ export default function PartnerSetting(props) {
               <Grid item>
                 <Input
                   name="radius"
-                  value={slideVal}
+                  value={slideVal != null ? slideVal : 5}
                   onChange={handleInputChange}
                   onBlur={handleBlur}
                   endAdornment={
@@ -311,9 +323,9 @@ export default function PartnerSetting(props) {
               name="gender"
               value={genderValue}
               onChange={(event) => {
-                setGenderValue(event.target.value)
+                setGenderValue(event.target.value);
               }}
-              sx={{ border: "1px solid #e5e0e0", boxShadow: "none" }}
+              sx={{ border: "1px solid #e5e0e0", boxShadow: "none", pl: 1.5 }}
               // displayEmpty
               // inputProps={{ "aria-label": "Without label" }}
             >
@@ -340,12 +352,15 @@ export default function PartnerSetting(props) {
                 flexDirection: "row",
               }}
             >
-              <FormLabel sx={sxJustifyContent}>From {ageSlideVal[0]}</FormLabel>
+              <FormLabel sx={sxJustifyContent}>
+                From {ageSlideVal[0] != null ? ageSlideVal[0] : 15}
+              </FormLabel>
               <CmmnInput
                 as={TextField}
                 name="from_age"
                 type="number"
-                value={ageSlideVal[0]}
+                defaultValue={15}
+                value={ageSlideVal[0] != null ? ageSlideVal[0] : 15}
                 sx={{ display: "none" }}
               />
             </FormControl>
@@ -357,12 +372,15 @@ export default function PartnerSetting(props) {
                 flexDirection: "row",
               }}
             >
-              <FormLabel sx={sxJustifyContent}>To {ageSlideVal[1]}</FormLabel>
+              <FormLabel sx={sxJustifyContent}>
+                To {ageSlideVal[1] != null ? ageSlideVal[1] : 23}
+              </FormLabel>
               <CmmnInput
                 as={TextField}
                 name="to_age"
                 type="number"
-                value={ageSlideVal[1]}
+                defaultValue={23}
+                value={ageSlideVal[1] != null ? ageSlideVal[1] : 23}
                 sx={{ display: "none" }}
               />
             </FormControl>
