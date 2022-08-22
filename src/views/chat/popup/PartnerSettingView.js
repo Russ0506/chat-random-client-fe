@@ -20,11 +20,13 @@ import { FONT_SIZE, GRP_COLOR } from "../../../constant/css_constant";
 import { enqueuingChat } from "../../../features/chat";
 import { clearMessage } from "../../../features/message";
 import { saveDataSearch } from "../../../features/user-setting";
+import { setUserSettingState } from "../../../features/chat/postSlice";
 
 export default function PartnerSettingView(props) {
-  const [data, setData] = React.useState(props.data.user_setting);
   const [isSubmit, setIsSubmit] = React.useState(false);
   const { message } = useSelector((state) => state.message);
+  const userSettingData = useSelector(state => state.post.userSetting)
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,9 +34,9 @@ export default function PartnerSettingView(props) {
   }, [dispatch]);
 
   const [state, setState] = React.useState({
-    checkedLocation: props.userSetting.enable_location_filter,
-    checkedGender: props.userSetting.enable_gender_filter,
-    checkedAge: props.userSetting.enable_age_filter,
+    checkedLocation: userSettingData.enable_location_filter || false,
+    checkedGender: userSettingData.enable_gender_filter || false,
+    checkedAge: userSettingData.enable_age_filter || false,
     checkedHobbies: true,
   });
 
@@ -100,8 +102,14 @@ export default function PartnerSettingView(props) {
           <Stack flexDirection="column">
             <StackLayerRow flexDirection="row" >
               <FormLabel>
+                <Typography variant="body1">Conversation Topic</Typography>
+                <Typography variant="subtitle2">{userSettingData?.topic}</Typography>
+              </FormLabel>
+            </StackLayerRow>
+            <StackLayerRow flexDirection="row" >
+              <FormLabel>
                 <Typography variant="body1">Location</Typography>
-                <Typography variant="subtitle2">{data.address}</Typography>
+                <Typography variant="subtitle2">{userSettingData?.address}</Typography>
               </FormLabel>
               <FormControlLabel
                 name="checkedLocation"
@@ -113,7 +121,7 @@ export default function PartnerSettingView(props) {
             <StackLayerRow flexDirection="row" justifyContent="space-between">
               <FormLabel>
                 <Typography variant="body1">Expected Distance</Typography>
-                <Typography variant="subtitle2">{data.radius} km</Typography>
+                <Typography variant="subtitle2">{userSettingData.radius} km</Typography>
               </FormLabel>
               <FormControlLabel
                 name="checkedExpectedDistance"
@@ -127,7 +135,7 @@ export default function PartnerSettingView(props) {
             <StackLayerRow flexDirection="row" justifyContent="space-between">
               <FormLabel>
                 <Typography variant="body1">Gender</Typography>
-                <Typography variant="subtitle2">{data.gender}</Typography>
+                <Typography variant="subtitle2">{userSettingData?.gender}</Typography>
               </FormLabel>
               <FormControlLabel
                 name="checkedGender"
@@ -139,7 +147,7 @@ export default function PartnerSettingView(props) {
             <StackLayerRow flexDirection="row" justifyContent="space-between">
               <FormLabel>
                 <Typography variant="body1">Age</Typography>
-                <Typography variant="subtitle2">{`From ${data.from_age} to ${data.to_age} year old`}</Typography>
+                <Typography variant="subtitle2">{`From ${userSettingData?.from_age} to ${userSettingData?.to_age} year old`}</Typography>
               </FormLabel>
               <FormControlLabel
                 name="checkedAge"
@@ -156,7 +164,33 @@ export default function PartnerSettingView(props) {
                   id="demo-multiple-chip"
                   multiple
                   disabled
-                  value={data.hobbies}
+                  value={userSettingData?.hobbies}
+                  input={
+                    <OutlinedInput
+                      id="select-multiple-chip"
+                      sx={{ border: "none" }}
+                    />
+                  }
+                  renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} />
+                      ))}
+                    </Box>
+                  )}
+                >
+                </Select>
+              </FormControl>
+            </StackLayerCol>
+            <StackLayerCol flexDirection="column">
+              <FormLabel>Majors</FormLabel>
+              <FormControl fullWidth sx={{ mt: 1 }}>
+                <Select
+                  labelId="demo-multiple-chip-label"
+                  id="demo-multiple-chip"
+                  multiple
+                  disabled
+                  value={userSettingData?.majors}
                   input={
                     <OutlinedInput
                       id="select-multiple-chip"
@@ -194,7 +228,7 @@ export default function PartnerSettingView(props) {
 }
 const StackLayerCol = styled(Stack)(({ theme }) => ({
   marginTop: theme.spacing(1),
-  justifyContent:"space-between",
+  justifyContent: "space-between",
 }));
 const StackLayerRow = styled(Stack)(({ theme }) => ({
   marginTop: theme.spacing(1),

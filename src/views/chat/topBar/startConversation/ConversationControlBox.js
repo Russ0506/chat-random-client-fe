@@ -12,14 +12,17 @@ import { useSelector } from "react-redux";
 import { icoList } from "../../../../constant/AppBarConstant";
 import PairingSuccessModal from "../../popup/components/PairingSuccessModal"
 import WaitingConfirmModal from "../../popup/components/WaitingConfirmModal"
+import { setUserSettingState } from "../../../../features/chat/postSlice";
 
 let pairingInterval = setInterval(() => {}, 1000);
 export default function ConversationControlBox({ isNav = false }) {
   const dispatch = useDispatch();
   const [pairing, setPairing] = useState(false);
-  const [userSetting, setUserSetting] = useState(null);
   const [openPartnerDialog, setOpenPartnerDialog] = useState(false);
   const [finishLoading, setFinishLoading] = useState(false);
+
+  const userSettingData = useSelector(state=> state.post.userSetting)
+
   const [openWaitingModal, setOpenWaitingModal] = useState({
     open: false,
     vertical: "bottom",
@@ -55,7 +58,7 @@ export default function ConversationControlBox({ isNav = false }) {
     dispatch(getDataSearch())
       .unwrap()
       .then((data) => {
-        setUserSetting(data);
+        dispatch(setUserSettingState(data))
         setFinishLoading(true);
       })
       .catch(() => {});
@@ -195,7 +198,7 @@ export default function ConversationControlBox({ isNav = false }) {
         open={openPartnerDialog} // status modal event listenter
         onClose={handleCloseSettingModal} // close modal event listener
         onParing={handlePairing} // waiting pairing event listener
-        userSetting={userSetting} // pairing setting
+        userSetting={userSettingData} // pairing setting
       />
       {/* <WaitingConfirmModal
         open={openWaitingModal} // status modal event listener

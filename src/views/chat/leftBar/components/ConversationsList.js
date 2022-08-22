@@ -77,7 +77,7 @@ export default function ConversationsList() {
   }, [newConversation]);
 
   useEffect(() => {
-    if (currentConversationId != null && currentConversationId != "")
+    if (currentConversationId != null && currentConversationId != "" && conversations === [])
       document
         .getElementById("conversationList_item_" + currentConversationId)
         .classList.add("__chosen_conversation");
