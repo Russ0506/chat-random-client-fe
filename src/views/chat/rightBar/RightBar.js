@@ -32,7 +32,7 @@ export default function RightBar() {
     dispatch(changeConversation(changedCurrentConversation));
   }
 
-  if (conversationLatestStatus || currentConversation?.status === "closed") return <></>
+  if ((conversationLatestStatus || currentConversation?.status) === "closed") return <></>
 
   return (conversationLatestStatus || currentConversation?.status) !==
     "sharing" ? (
