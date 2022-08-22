@@ -156,8 +156,9 @@ export default function ConversationControlBox({ isNav = false }) {
       return (
         <Button
           variant="contained"
+          size="small"
           onClick={pairing === false ? handleOpenSettingModal : cancelPairing}
-          sx={{ boxShadow: "0px 8px 10px rgb(237 221 255)" }}
+          sx={{ boxShadow: "0px 5px 5px rgb(237 221 255)" }}
           endIcon={
             pairing === false ? (
               <Iconify icon={"mdi:chat-plus-outline"} />

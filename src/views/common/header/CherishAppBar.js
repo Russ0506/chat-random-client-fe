@@ -239,6 +239,9 @@ const CherishAppBar = ({ index = 1 }) => {
               }}
             > */}
             <Box height="100%" display="flex">
+              <ButtonNav>
+                <ConversationControlBox />
+              </ButtonNav>
               {index === 1 ? (
                 <Tooltip disableFocusListener title="Newsfeeds" arrow>
                   <ChosenButtonNav component={Link} to={icoList.home.link}>
@@ -287,11 +290,9 @@ const CherishAppBar = ({ index = 1 }) => {
                   </ButtonNav>
                 </Tooltip>
               )}
-              <Tooltip disableFocusListener title="New Conversation" arrow>
-                <ButtonNav>
-                  <ConversationControlBox isNav={true} />
-                </ButtonNav>
-              </Tooltip>
+              {/* <Tooltip disableFocusListener title="New Conversation" arrow> */}
+
+              {/* </Tooltip> */}
               <Tooltip disableFocusListener title="Notifications" arrow>
                 <ButtonNav>
                   <Badge color="secondary">

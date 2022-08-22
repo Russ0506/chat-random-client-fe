@@ -64,9 +64,7 @@ export default function Routes() {
       children: [
         {
           path: "login",
-          element: (
-            <AdminLogin />
-          ),
+          element: <AdminLogin />,
         },
         {
           path: "",
@@ -152,7 +150,7 @@ export default function Routes() {
                       children={<MenuPreProfile />}
                     />
                   }
-                  index={3}
+                  index={-1}
                 />
               ),
             },
@@ -166,6 +164,7 @@ export default function Routes() {
                       children={<UserProfilePage />}
                     />
                   }
+                  index={-1}
                 />
               ),
             },

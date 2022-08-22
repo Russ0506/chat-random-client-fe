@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { axiosClient } from "../../setup/axiosClient";
 import useFetch from "../../utils/useFetch";
 import { useTheme } from "@mui/material/styles";
+import emptyState from "../../assets/img/empty-state.svg"
 
 const shapeStyles = {
   bgcolor: "primary.main",
@@ -68,20 +69,33 @@ export default function NewsFeed() {
         maxWidth={isMobile ? "xl" : "md"}
         width="100%"
         position="relative"
+        justifyContent="space-between"
         sx={{ pt: isMobile ? 3 : 4 }}
       >
         <Container
           maxWidth="xl"
           sx={{
-            width: isMobile === true ? "100%" : "60%",
+            width: isMobile === true ? "100%" : "55%",
             display: "flex",
             alignItems: "center",
             flexDirection: "column",
           }}
         >
-          {posts.map((item, key) => (
-            <PostLayout data={item} key={key} />
-          ))}
+          {posts.length === 0 ? (
+            <>
+              <img alt="" src={emptyState} width="100%"></img>
+              <Typography variant="h6" sx={{mt:1}}>
+                No posts? Let's make friends and share information to make your
+                wall more diversified!
+              </Typography>
+            </>
+          ) : (
+            <>
+              {posts.map((item, key) => (
+                <PostLayout data={item} key={key} />
+              ))}
+            </>
+          )}
         </Container>
         {!isMobile === true ? (
           <Container
@@ -108,9 +122,8 @@ export default function NewsFeed() {
                 marginBottom="20px"
                 flexWrap="nowrap"
                 component={Link}
-                href={`/users/profile/${localStorage.getItem(
-                  "user_id"
-                )}`}
+                href={`/users/profile/${localStorage.getItem("user_id")}`}
+                sx={{ textDecoration: "none" }}
               >
                 <Badge>{circle}</Badge>
                 <Box sx={{ ml: 2 }}>
