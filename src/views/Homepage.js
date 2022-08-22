@@ -15,12 +15,6 @@ import { DRAWER_WITH, MB_LEFT_SIDEBAR_WIDTH } from "../constant/css_constant";
 import LeftSideBar from "./chat/leftBar/LeftSideBar";
 import RightBar from "./chat/rightBar/RightBar";
 import MessageLayout from "./chat/areaChat/MessageLayout";
-import {
-  appearanceSocket,
-  newMessageSocket,
-  msgLatestStatusSocket,
-  conversationStatusSocket,
-} from "./sockets/Socket";
 import React, { useEffect, useState } from "react";
 import { receiveNewMessage } from "../features/chat/messagesSlice";
 import { useSelector, useDispatch } from "react-redux";
@@ -57,10 +51,6 @@ export default function Homepage() {
   };
 
   useEffect(() => {
-    appearanceSocket();
-    newMessageSocket();
-    msgLatestStatusSocket();
-    conversationStatusSocket();
     window.addEventListener(
       "resize",
       function (event) {

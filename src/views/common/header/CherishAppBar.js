@@ -28,6 +28,12 @@ import {
 } from "../../../features/chat/conversationSlice";
 import { axiosClient } from "../../../setup/axiosClient";
 import ConversationControlBox from "../../chat/topBar/startConversation/ConversationControlBox";
+import {
+  appearanceSocket,
+  newMessageSocket,
+  msgLatestStatusSocket,
+  conversationStatusSocket,
+} from "./../../sockets/Socket";
 const settings = [
   {
     name: "Profile",
@@ -88,6 +94,10 @@ const CherishAppBar = ({ index = 1 }) => {
   }
 
   React.useEffect(() => {
+    appearanceSocket();
+    newMessageSocket();
+    msgLatestStatusSocket();
+    conversationStatusSocket();
     if (listConversation.length <= 0) {
       dispatch(resetIdsOfUnreadCon);
       let unreadIds = [];
