@@ -34,6 +34,8 @@ import {
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ReportModal from "./chat/rightBar/components/ReportModal";
+import { axiosClient } from "../setup/axiosClient";
+import { confirm } from "react-confirm-box";
 
 export default function Homepage() {
   const conversation = useSelector(selectConversation);
@@ -92,8 +94,11 @@ export default function Homepage() {
   function reportUser() {
     setReportModal(true);
   }
-  function endConversation() {
-    alert("chua lam Ly oi!!!")
+  const endConversation = async () =>{
+    const result = await confirm("Are you sure? After end chat, you both can not chat and see each other information");
+    if (result) {
+      axiosClient.put(`/conversations/${conversation.id}/close`)
+    }
   }
   const menuList = [
     {

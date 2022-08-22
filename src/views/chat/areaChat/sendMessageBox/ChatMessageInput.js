@@ -6,7 +6,7 @@ import { Stack, Input, IconButton, Box } from "@mui/material";
 import Iconify from "../../../common/base/icon/Iconify";
 import EmojiPicker from "../../../common/base/emoji/EmojiPicker";
 import { sendNewMessage } from "../../../../features/chat/messagesSlice";
-import { touchConversation } from "../../../../features/chat/conversationSlice";
+import { selectConversationLatestStatus, touchConversation } from "../../../../features/chat/conversationSlice";
 import StyledCloseIcon from "../../../common/base/style-icon/StyledCloseIcon";
 
 export default function ChatMessageInput({ disabled, conversation }) {
@@ -16,6 +16,9 @@ export default function ChatMessageInput({ disabled, conversation }) {
   const [src, setSrc] = useState(null);
   const [srcUrl, setSrcUrl] = useState(null);
   const curentConversation = useSelector((state) => state.conversation);
+  const conversationLatestStatus = useSelector((state) => {
+    return selectConversationLatestStatus(state, conversation?.id);
+  });
 
   useEffect(() => {
     clearImage();
@@ -113,13 +116,13 @@ export default function ChatMessageInput({ disabled, conversation }) {
         ""
       )}
       <Input
-        disabled={disabled}
+        disabled={disabled || ((conversationLatestStatus || conversation.status) == 'closed')}
         fullWidth
         value={message}
         disableUnderline
         onKeyUp={handleKeyUp}
         onChange={(event) => setMessage(event.target.value)}
-        placeholder="Type a message"
+        placeholder= { ((conversationLatestStatus || conversation.status) == 'closed') ? "This conversation was ended" : "Type a message" }
         sx={{
           borderRadius: "10px",
           border: "0.2px solid #f6f6f6",
@@ -146,15 +149,16 @@ export default function ChatMessageInput({ disabled, conversation }) {
                 id="file-input"
                 className="upload"
                 onChange={onSelectFile}
+                disabled={conversation.status == 'closed'}
                 hidden
               />
             </IconButton>
 
             <EmojiPicker
-              disabled={disabled}
+              disabled={disabled || ((conversationLatestStatus || conversation.status) == 'closed')}
               value={message}
               setValue={setMessage}
-              sx={{ zIndex: 11 }}
+              sx={{ zIndex: 11, paddingTop: '4px' }}
             />
             <IconButton disabled={disabled} size="small">
               <Iconify icon="eva:mic-fill" width={22} height={22} />
