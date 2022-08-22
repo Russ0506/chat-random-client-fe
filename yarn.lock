@@ -9598,6 +9598,11 @@ react-chartjs-2@^4.3.1:
   resolved "https://registry.yarnpkg.com/react-chartjs-2/-/react-chartjs-2-4.3.1.tgz#9941e7397fb963f28bb557addb401e9ff96c6681"
   integrity sha512-5i3mjP6tU7QSn0jvb8I4hudTzHJqS8l00ORJnVwI2sYu0ihpj83Lv2YzfxunfxTZkscKvZu2F2w9LkwNBhj6xA==
 
+react-confirm-box@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/react-confirm-box/-/react-confirm-box-1.2.0.tgz#20d036257869d7cff4f96e6121ee3b6d5e5d8089"
+  integrity sha512-emltOsrQcJ9yFJIfgCEnAn8Srv9T6fJSjdAqf6zHXfO2k7AgM6xEO9dDZkybb8GWTm0Zq/nh2fAGJQN3jpkvKw==
+
 react-cookie@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/react-cookie/-/react-cookie-4.1.1.tgz#832e134ad720e0de3e03deaceaab179c4061a19d"

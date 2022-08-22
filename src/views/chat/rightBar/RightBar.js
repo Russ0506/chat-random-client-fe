@@ -11,8 +11,6 @@ import SecrectPartnerPoster from "./components/SecrectPartnerPoster";
 import SharedPartnerInfo from "./components/SharedPartnerInfo";
 
 export default function RightBar() {
-
-
   const dispatch = useDispatch();
   const currentConversation = useSelector(selectConversation);
   const conversationLatestStatus = useSelector((state) => {
@@ -34,7 +32,7 @@ export default function RightBar() {
     dispatch(changeConversation(changedCurrentConversation));
   }
 
-
+  if (conversationLatestStatus || currentConversation?.status === "closed") return <></>
 
   return (conversationLatestStatus || currentConversation?.status) !==
     "sharing" ? (
