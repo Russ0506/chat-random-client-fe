@@ -15,34 +15,25 @@ export default function PartnerSettingModal(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isSubmit, setIsSubmit] = React.useState(false);
   const [isSearch, setIsSearch] = React.useState(false);
-  const [outputData, setOutputData] = React.useState(false);
-  const [isSaveDataSearch, setIsSaveDataSearch] = React.useState(false);
-  const childEvents = { saveDataSearchPartnerSetting: () => {} };
+  
   const submitRef = React.useRef();
   const searchRef = React.useRef();
 
-  const handleNext = () => {
-    // childEvents.saveDataSearchPartnerSetting()
-    if (activeStep === 0) {
-      submitRef.current.click();
-      setActiveStep(activeStep + 1);
-    }
-
-    if (activeStep === 1) {
-      setIsSearch(true);
-      searchRef.current.click();
-      props.onParing();
-      setActiveStep(0);
-      props.onClose();
-    }
+  const handleNext = (e) => {
+    submitRef.current.click();
+    setActiveStep(activeStep + 1);
   };
+
+  const handleSearch = () => {
+    setIsSearch(true);
+    searchRef.current.click();
+    props.onParing();
+    setActiveStep(0);
+    props.onClose();
+  }
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
-  };
-
-  const takeDataSubmit = (event) => {
-    setOutputData(event);
   };
 
   const outIsSearch = (event) => {
@@ -56,16 +47,12 @@ export default function PartnerSettingModal(props) {
           <PartnerSetting
             submitRef={submitRef}
             isSubmit={isSubmit}
-            takeDataSubmit={takeDataSubmit}
-            userSetting={props.userSetting}
           />
         );
       case 1:
         // setOnClosePopUpSearch(true)
         return (
-          <PartnerSettingView
-            data={outputData}
-            userSetting={props.userSetting}
+            <PartnerSettingView
             outIsSearch={outIsSearch}
             searchRef={searchRef}
           />
@@ -85,7 +72,7 @@ export default function PartnerSettingModal(props) {
       aria-labelledby="scroll-dialog-title"
       aria-describedby="scroll-dialog-description"
     >
-      <DialogTitle id="scroll-dialog-title" sx={{pt: 1}}>
+      <DialogTitle id="scroll-dialog-title" sx={{ pt: 1 }}>
         <Typography
           component="span"
           variant="subtitle1"
@@ -107,7 +94,7 @@ export default function PartnerSettingModal(props) {
           </Stepper>
         </Stack>
       </DialogTitle>
-      <DialogContent dividers={true} sx={{overflow: "auto"}}>
+      <DialogContent dividers={true} sx={{ overflow: "auto" }}>
         <Paper
           sx={{
             my: { xs: 0, md: 0 },
@@ -154,14 +141,33 @@ export default function PartnerSettingModal(props) {
               Back
             </Button>
           )}
-          <Button
-            // disabled={isSearch && activeStep === 1}
+          {/* <Button
             variant="contained"
             onClick={handleNext}
             sx={{ pl: "25px", pr: "25px" }}
           >
             {activeStep === steps.length - 1 ? "Search" : "Next"}
-          </Button>
+          </Button> */}
+
+          {
+            activeStep === 0 ?
+              <Button
+                // disabled={isSearch && activeStep === 1}
+                variant="contained"
+                onClick={handleNext}
+                sx={{ pl: "25px", pr: "25px" }}
+              >
+                Next
+              </Button> :
+              <Button
+                // disabled={isSearch && activeStep === 1}
+                variant="contained"
+                onClick={handleSearch}
+                sx={{ pl: "25px", pr: "25px" }}
+              >
+                Search
+              </Button>
+          }
         </Box>
       </DialogActions>
     </Dialog>

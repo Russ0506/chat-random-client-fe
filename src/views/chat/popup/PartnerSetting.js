@@ -18,7 +18,7 @@ import { useTheme } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GgmCurrentPlaceText2 from "../../../components/googleMapAPI/GgmCurrentPlaceText2";
 import GoogleMapPlaceSearchBox from "../../../components/googleMapAPI/GoogleMapPlaceSearchBox";
 import { GRP_COLOR } from "../../../constant/css_constant"
@@ -34,6 +34,7 @@ import { CmmnGroupSelect } from "./components/CmmnGroupSelect";
 import Slider from "@mui/material/Slider";
 import InputAdornment from "@mui/material/InputAdornment";
 import { Checkbox, ListItemText,MenuItem } from "@mui/material";
+import { setUserSettingState } from "../../../features/chat/postSlice";
 
 const minDistance = 0;
 function valuetext(value) {
@@ -41,32 +42,32 @@ function valuetext(value) {
 }
 export default function PartnerSetting(props) {
   const theme = useTheme();
-  const useEffect = React.useEffect;
   const dispatch = useDispatch();
+  const userSettingData = useSelector(state => state.post.userSetting)
 
   // var initData
   const [initData, setInitData] = React.useState({
     user_setting: {
-      from_age: props.userSetting.from_age,
-      to_age: props.userSetting.to_age,
-      lat: props.userSetting.lat,
-      long: props.userSetting.long,
-      address: props.userSetting.address,
-      radius: props.userSetting.radius,
-      gender: props.userSetting.gender || "female",
-      hobbies: props.userSetting?.hobbies || [],
-      majors: props.userSetting?.majors || [],
-      enable_age_filter: props.userSetting.enable_age_filter,
-      enable_gender_filter: props.userSetting.enable_gender_filter,
-      enable_location_filter: props.userSetting.enable_location_filter,
+      from_age: userSettingData.from_age,
+      to_age: userSettingData.to_age,
+      lat: userSettingData.lat,
+      long: userSettingData.long,
+      address: userSettingData.address,
+      radius: userSettingData.radius,
+      gender: userSettingData.gender || "female",
+      hobbies: userSettingData.hobbies || [],
+      majors: userSettingData.majors || [],
+      enable_age_filter: userSettingData.enable_age_filter,
+      enable_gender_filter: userSettingData.enable_gender_filter,
+      enable_location_filter: userSettingData.enable_location_filter,
     },
   });
-  const [slideVal, setSlideVal] = React.useState(props.userSetting.radius);
+  const [slideVal, setSlideVal] = React.useState(userSettingData.radius);
   const [currentLocationPermision, setcurrentLocationPermision] =
     React.useState(false);
 
   const [hobbies, setHobbies] = React.useState(initData.user_setting.hobbies);
-  const [majors, setMajors] = React.useState([]);
+  const [majors, setMajors] = React.useState(initData.user_setting.majors);
   const [topic, setTopic] = React.useState(["Sharing Stories"]);
   const [loading, setLoading] = React.useState(false);
   const [location, setLocation] = React.useState({
@@ -78,21 +79,15 @@ export default function PartnerSetting(props) {
   const MIN = 15;
   const MAX = 100;
   const [ageSlideVal, setAgeSlideVal] = React.useState([
-    props.userSetting.from_age,
-    props.userSetting.to_age,
+    userSettingData.from_age,
+    userSettingData.to_age,
   ]);
   const setCurrentLocationPermision = (event, child) => {
     setcurrentLocationPermision(
       currentLocationPermision === false ? true : false
     );
   };
-  const [genderValue, setGenderValue] = React.useState(props.userSetting.gender || "female",)
-
-  useEffect(() => {
-    if (props.events) {
-      props.events.saveDataSearchPartnerSetting = saveDataSearchPartnerSetting;
-    }
-  }, []);
+  const [genderValue, setGenderValue] = React.useState(userSettingData.gender || "female",)
 
   const handleChangeHobby = (event) => {
     const {
@@ -114,6 +109,7 @@ export default function PartnerSetting(props) {
   };
 
   const saveDataSearchPartnerSetting = (event) => {
+    dispatch(setUserSettingState({}))
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -127,10 +123,13 @@ export default function PartnerSetting(props) {
         radius: parseInt(data.get("radius")),
         gender: genderValue,
         hobbies: hobbies,
+        topic: topic,
+        majors: majors
       },
     };
 
-    props.takeDataSubmit(dataSearch);
+    dispatch(setUserSettingState(dataSearch.user_setting))
+
     dispatch(saveDataSearch(dataSearch))
       .unwrap()
       .then(() => {
@@ -185,6 +184,7 @@ export default function PartnerSetting(props) {
   return (
     <Box
       component="form"
+      noValidate
       onSubmit={saveDataSearchPartnerSetting}
       sx={{ color: GRP_COLOR.CODE016, alignItems: "center" }}
     >
@@ -345,7 +345,6 @@ export default function PartnerSetting(props) {
                 as={TextField}
                 name="from_age"
                 type="number"
-                defaultValue={initData.user_setting.from_age}
                 value={ageSlideVal[0]}
                 sx={{ display: "none" }}
               />
@@ -363,7 +362,6 @@ export default function PartnerSetting(props) {
                 as={TextField}
                 name="to_age"
                 type="number"
-                defaultValue={initData.user_setting.to_age}
                 value={ageSlideVal[1]}
                 sx={{ display: "none" }}
               />
@@ -406,18 +404,10 @@ export default function PartnerSetting(props) {
               MenuProps={MenuProps}
             >
               {CONSTANT.HobbiesNames.map((name) => (
-
                 <MenuItem key={name} value={name}>
                   <ListItemText primary={name} />
                   <Checkbox checked={hobbies.indexOf(name) > -1} />
                 </MenuItem>
-                // <MenuItem
-                //   key={name}
-                //   value={name}
-                //   style={getStyles(name, hobbies, theme)}
-                // >
-                //   {name}
-                // </MenuItem>
               ))}
             </CmmnGroupSelect>
           </CmmnFormControl>
@@ -435,6 +425,7 @@ export default function PartnerSetting(props) {
               labelId="demo-multiple-chip-label"
               id="demo-multiple-chip"
               multiple
+              name="majors"
               value={majors}
               onChange={handleChangeMajor}
               input={<OutlinedInput id="select-multiple-chip" />}
