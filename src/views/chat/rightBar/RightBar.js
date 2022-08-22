@@ -2,7 +2,7 @@ import { Button, Stack } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeConversation, selectConversation, selectConversationLatestStatus } from "../../../features/chat/conversationSlice";
+import { selectConversation, selectConversationLatestStatus, updateConversationLatestStatus } from "../../../features/chat/conversationSlice";
 import { axiosClient } from "../../../setup/axiosClient";
 import PartnerInfo from "./components/PartnerInfo";
 import PartnerPoster from "./components/PartnerPoster";
@@ -16,6 +16,7 @@ export default function RightBar() {
   const conversationLatestStatus = useSelector((state) => {
     return selectConversationLatestStatus(state, currentConversation?.id);
   })
+  const [clickedShare, setClickedShare] = useState(false);
   if (!currentConversation) return null
 
   function shareInformation() {
@@ -25,11 +26,8 @@ export default function RightBar() {
     axiosClient.put(url).then((data) => {
     });
 
-    let changedCurrentConversation = { ...currentConversation };
-    let temp = { ...changedCurrentConversation.current_user_conversation };
-    temp.status = 'sharing';
-    changedCurrentConversation.current_user_conversation = temp;
-    dispatch(changeConversation(changedCurrentConversation));
+    setClickedShare(true);
+    dispatch(updateConversationLatestStatus({conversationId: currentConversation.id, status: 'sharing'}));
   }
 
   if ((conversationLatestStatus || currentConversation?.status) === "closed") return <></>
@@ -39,7 +37,7 @@ export default function RightBar() {
     <SecrectPartnerPoster
       showInfo={shareInformation}
       accepted={
-        currentConversation?.current_user_conversation?.status === "sharing"
+        clickedShare || (currentConversation?.current_user_conversation?.status === "sharing")
       }
     />
   ) : (
